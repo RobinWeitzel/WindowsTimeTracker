@@ -1,0 +1,15 @@
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Release\TimeTracker.exe.config
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Release\TimeTracker.exe
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Release\TimeTracker.pdb
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.csprojAssemblyReference.cache
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\MainWindow.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\App.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker_MarkupCompile.cache
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker_MarkupCompile.lref
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\MainWindow.baml
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.g.resources
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.Properties.Resources.resources
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.csproj.GenerateResource.cache
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.csproj.CoreCompileInputs.cache
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.exe
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Release\TimeTracker.pdb

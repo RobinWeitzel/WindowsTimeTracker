@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="window_active" EntityType="mainModel.window_active" />
+    <EntitySet Name="activity_active" EntityType="mainModel.activity_active" />
+    <EntitySet Name="activities" EntityType="mainModel.activities" />
+  </EntityContainer>
+  <EntityType Name="window_active">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="details" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="from" Type="DateTime" />
+    <Property Name="to" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="activity_active">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="from" Type="DateTime" />
+    <Property Name="to" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="activities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
