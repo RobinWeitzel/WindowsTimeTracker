@@ -4,6 +4,7 @@
     <EntitySet Name="window_active" EntityType="mainModel.window_active" />
     <EntitySet Name="activity_active" EntityType="mainModel.activity_active" />
     <EntitySet Name="activities" EntityType="mainModel.activities" />
+    <EntitySet Name="settings" EntityType="mainModel.settings" />
   </EntityContainer>
   <EntityType Name="window_active">
     <Key>
@@ -30,5 +31,12 @@
     </Key>
     <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="settings">
+    <Key>
+      <PropertyRef Name="key" />
+    </Key>
+    <Property Name="key" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="value" Type="Int64" Nullable="false" />
   </EntityType>
 </Schema>

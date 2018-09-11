@@ -16,6 +16,13 @@
     <Property Name="from" Type="datetime" />
     <Property Name="to" Type="datetime" />
   </EntityType>
+  <EntityType Name="settings">
+    <Key>
+      <PropertyRef Name="key" />
+    </Key>
+    <Property Name="key" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="value" Type="integer" Nullable="false" />
+  </EntityType>
   <EntityType Name="window_active">
     <Key>
       <PropertyRef Name="id" />
@@ -29,6 +36,7 @@
   <EntityContainer Name="mainModelStoreContainer">
     <EntitySet Name="activities" EntityType="Self.activities" store:Type="Tables" />
     <EntitySet Name="activity_active" EntityType="Self.activity_active" store:Type="Tables" />
+    <EntitySet Name="settings" EntityType="Self.settings" store:Type="Tables" />
     <EntitySet Name="window_active" EntityType="Self.window_active" store:Type="Tables" />
   </EntityContainer>
 </Schema>

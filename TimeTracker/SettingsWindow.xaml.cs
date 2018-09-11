@@ -24,58 +24,126 @@ namespace TimeTracker
             InitializeComponent();
         }
 
-        public void redrawList()
+        public void redrawSettings()
         {
             using (mainEntities db = new mainEntities())
             {
+                // Redraw list
                 ActivityList.Items.Clear();
                 foreach(activities item in db.activities.ToList())
                 {
                     ActivityList.Items.Add(new { Key = item.id, Value = item.name });
                 }
+
+                // Redraw inputs
+                TimeOut.Text = ((db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout) / 1000).ToString();
+                TimeNotUsed.Text = ((db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed) / (1000 * 60)).ToString();
+                TimeRecordsKept.Text = (db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept).ToString();
             }
         }
 
         private void AddActivity_Click(object sender, RoutedEventArgs e)
         {
-            using (mainEntities db = new mainEntities())
+
+            if(ActivityList.Items.Count >= 5)
             {
-                List<activities> activities = db.activities.ToList();
-
-                if(activities.Count() >= 5)
-                {
-                    // Todo handle error
-                } else
-                {
-                    activities new_activity = new activities();
-                    new_activity.name = NewActivity.Text;
-                    db.activities.Add(new_activity);
-                    db.SaveChanges();
-
-                    NewActivity.Clear();
-                    redrawList();
-                }
-            }
+                // Todo handle error
+            } else
+            {
+                // Key is irrelevant as it is auto generated when the new item is saved in the db
+                ActivityList.Items.Add(new { Key = -1, Value = NewActivity.Text });
+                NewActivity.Clear();
+            }  
         }
 
         private void RemoveActivity_Click(object sender, RoutedEventArgs e)
         {
-            using (mainEntities db = new mainEntities())
+            List<object> helper = new List<object>();
+            foreach (object item in ActivityList.SelectedItems)
             {
-                foreach (dynamic item in ActivityList.SelectedItems)
-                {
-                    activities activity = db.activities.Find(item.Key);
-                    db.activities.Remove(activity);
-                }
+                helper.Add(item);
+            }
 
-                db.SaveChanges();
-                redrawList();
+            foreach (object item in helper)
+            {
+                ActivityList.Items.Remove(item);
             }
         }
 
-            private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
+            using (mainEntities db = new mainEntities())
+            {
+                /* Save activities list */
+                List<long> existingKeys = new List<long>();
 
+                // Add new activities
+                foreach(dynamic item in ActivityList.Items)
+                {
+                    existingKeys.Add(item.Key);
+                    if (db.activities.Find(item.Key) == null) // activity does not exist in db
+                    {
+                        activities activitiy = new activities();
+                        activitiy.name = item.Value;
+                        db.activities.Add(activitiy);
+                    }
+                }
+
+                // Delete removed activities
+                db.activities.RemoveRange(db.activities.Where(a => !existingKeys.Contains(a.id)));
+
+                /* Save Timeout */
+                settings timeout = db.settings.Find("timeout");
+
+                if(timeout == null)
+                {
+                    timeout = new settings();
+                    timeout.key = "timeout";
+                    db.settings.Add(timeout);
+                }
+
+                int timeoutResult;
+                if(int.TryParse(TimeOut.Text, out timeoutResult))
+                {
+                    timeout.value = timeoutResult * 1000; // Convert to ms 
+                }
+
+                /* Save TimeNotUsed */
+                settings timeNotUsed = db.settings.Find("timeNotUsed");
+
+                if (timeNotUsed == null)
+                {
+                    timeNotUsed = new settings();
+                    timeNotUsed.key = "timeNotUsed";
+                    db.settings.Add(timeNotUsed);
+                }
+
+                int timeNotUsedResult;
+                if (int.TryParse(TimeNotUsed.Text, out timeNotUsedResult))
+                {
+                    timeNotUsed.value = timeNotUsedResult * 60 * 1000; // Convert to ms 
+                }
+
+                /* Save TimeRecordsKept */
+                settings timeRecordsKept = db.settings.Find("timeRecordsKept");
+
+                if (timeRecordsKept == null)
+                {
+                    timeRecordsKept = new settings();
+                    timeRecordsKept.key = "timeRecordsKept";
+                    db.settings.Add(timeRecordsKept);
+                }
+
+                int timeRecordsKeptResult;
+                if (int.TryParse(TimeRecordsKept.Text, out timeRecordsKeptResult))
+                {
+                    timeRecordsKept.value = timeRecordsKeptResult; // Keep as days
+                }
+
+                db.SaveChanges();
+
+                Hide();
+            }
         }
     }
 }

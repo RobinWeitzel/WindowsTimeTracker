@@ -42,7 +42,6 @@ namespace TimeTracker
             SettingsWindow = new SettingsWindow();
             SettingsWindow.Closing += SettingsWindow_Closing;
 
-
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => ShowMainWindow();
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
@@ -79,6 +78,18 @@ namespace TimeTracker
                 0,
                 WINEVENT_OUTOFCONTEXT);
 
+            // Delete old records
+            using (mainEntities db = new mainEntities()) {
+                long timeRecordsKept = db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept;
+  
+                // If timeRecordsKept is 0 records are never deleted
+                if (timeRecordsKept != 0)
+                {
+                    DateTime oldDate = DateTime.Now.Subtract(new TimeSpan((int)timeRecordsKept, 0, 0, 0, 0));
+                    db.window_active.RemoveRange(db.window_active.Where(wa => wa.to != null && wa.to < oldDate));
+                    db.activity_active.RemoveRange(db.activity_active.Where(aa => aa.to != null && aa.to < oldDate));
+                }
+            }
         }
 
         /************* Methods for handeling app running in background ***************/
@@ -87,10 +98,10 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
-
         }
         private void ExitApplication()
         {
+            DesktopNotificationManagerCompat.History.Clear();
             _isExit = true;
             MainWindow.Close();
             _notifyIcon.Dispose();
@@ -125,7 +136,7 @@ namespace TimeTracker
             }
             else
             {
-                SettingsWindow.redrawList();
+                SettingsWindow.redrawSettings();
                 SettingsWindow.Show();
             }
         }
@@ -134,7 +145,8 @@ namespace TimeTracker
         {
             if (!_isExit)
             {
-                e.Cancel = true; MainWindow.Hide(); // A hidden window can be shown again, a closed one not             
+                e.Cancel = true;
+                MainWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
 
@@ -142,7 +154,8 @@ namespace TimeTracker
         {
             if (!_isExit)
             {
-                e.Cancel = true; SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
+                e.Cancel = true;
+                SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
 
@@ -250,13 +263,15 @@ namespace TimeTracker
                 {
                     // Determine if this window has been used in the last 5 minutes
                     bool hasBeenSeen = false;
-                    int timeNotUsed = 1000 * 60 * 5; // 5 minutes
+
+                    // Load timeNotUsed from settings
+                    long timeNotUsed = db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed; // 5 minutes
 
                     List<window_active> old_windows = db.window_active.Where(wa => wa.name.Equals(name)).ToList();
 
                     if (old_windows != null)
                     {
-                        hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.to) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds;
+                        hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.to) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds || timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.from) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds;
                     }
 
                     /* Handle active window */
@@ -298,7 +313,16 @@ namespace TimeTracker
 
                         db.SaveChanges();
 
-                        showNotification(new_activity.id, arr.Last(), "For which project are you using this app?", db.activities.Select(a => a.name).ToArray(), new_activity.name);
+                        // Load timeout from settings
+                        long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
+
+                        showNotification(
+                            new_activity.id, arr.Last(),
+                            "For which project are you using this app?",
+                            db.activities.Select(a => a.name).ToArray(),
+                            new_activity.name,
+                            timeout
+                        );
 
                     } else
                     {
@@ -308,7 +332,7 @@ namespace TimeTracker
             }
         }
 
-        private void showNotification(long tag_long, string title, string subtitle, string[] activities, string selected)
+        private void showNotification(long tag_long, string title, string subtitle, string[] activities, string selected, long timeout)
         {
             string tag = tag_long.ToString();
             string group = "ProjectQuestions";
@@ -317,13 +341,12 @@ namespace TimeTracker
             doc.LoadXml(createToast(tag_long, title, subtitle, activities, selected).GetContent());
             // And create the toast notification 
             var toast = new ToastNotification(doc);
-            int timeout = 10000;
             
             toast.Tag = tag;
             toast.Group = group;
-            toast.Data = new NotificationData();
-            toast.Data.Values["progressValue"] = "0";
-            toast.Data.Values["progressValueString"] = Math.Round(timeout / 1000.0).ToString() + " Second(s)";
+            //toast.Data = new NotificationData();
+            //toast.Data.Values["progressValue"] = "0";
+            //toast.Data.Values["progressValueString"] = Math.Round(timeout / 1000.0).ToString() + " Second(s)";
 
             // And then show it 
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
@@ -353,7 +376,7 @@ namespace TimeTracker
 
             timer.Start();*/
 
-            Task.Delay(timeout).ContinueWith(_ =>
+            Task.Delay((int)timeout).ContinueWith(_ =>
             {
                 DesktopNotificationManagerCompat.History.Remove(tag, group);
             });

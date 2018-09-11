@@ -26,7 +26,7 @@
             <PropertyRef Name="key" />
           </Key>
           <Property Name="key" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-          <Property Name="value" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="value" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="window_active">
           <Key>
@@ -85,7 +85,7 @@
             <PropertyRef Name="key" />
           </Key>
           <Property Name="key" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="value" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="Int64" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>

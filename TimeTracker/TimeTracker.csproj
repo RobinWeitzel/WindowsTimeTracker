@@ -154,12 +154,16 @@
     <Compile Include="activity_active.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="DataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DesktopNotificationManagerCompat.cs" />
+    <Compile Include="settings.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
