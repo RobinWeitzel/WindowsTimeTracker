@@ -1,0 +1,23 @@
+﻿<Window x:Class="TimeTracker.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTracker"
+        mc:Ignorable="d"
+        Title="TimeTracker Settings" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="ActivityList" HorizontalAlignment="Left" Height="280" Margin="25,93,0,0" VerticalAlignment="Top" Width="231" SelectionChanged="ListView_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Value}" Tag="{Binding Key}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListView>
+        <Button x:Name="AddActivity" Content="Add" HorizontalAlignment="Left" Height="44" Margin="287,24,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="0.428,-0.229" Click="AddActivity_Click"/>
+        <Button x:Name="RemoveActivity" Content="Remove" HorizontalAlignment="Left" Height="44" Margin="287,93,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="0.428,-0.229" Click="RemoveActivity_Click"/>
+        <TextBox x:Name="NewActivity" HorizontalAlignment="Left" Height="44" Margin="25,24,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="231"/>
+    </Grid>
+</Window>

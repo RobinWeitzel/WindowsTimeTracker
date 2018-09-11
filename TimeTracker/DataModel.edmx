@@ -21,6 +21,13 @@
           <Property Name="from" Type="datetime" />
           <Property Name="to" Type="datetime" />
         </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="key" />
+          </Key>
+          <Property Name="key" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
         <EntityType Name="window_active">
           <Key>
             <PropertyRef Name="id" />
@@ -34,6 +41,7 @@
         <EntityContainer Name="mainModelStoreContainer">
           <EntitySet Name="activities" EntityType="Self.activities" store:Type="Tables" />
           <EntitySet Name="activity_active" EntityType="Self.activity_active" store:Type="Tables" />
+          <EntitySet Name="settings" EntityType="Self.settings" store:Type="Tables" />
           <EntitySet Name="window_active" EntityType="Self.window_active" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -44,6 +52,7 @@
           <EntitySet Name="window_active" EntityType="mainModel.window_active" />
           <EntitySet Name="activity_active" EntityType="mainModel.activity_active" />
           <EntitySet Name="activities" EntityType="mainModel.activities" />
+          <EntitySet Name="settings" EntityType="mainModel.settings" />
         </EntityContainer>
         <EntityType Name="window_active">
           <Key>
@@ -70,6 +79,13 @@
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="key" />
+          </Key>
+          <Property Name="key" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -103,6 +119,14 @@
               <MappingFragment StoreEntitySet="activities">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="mainModel.settings">
+              <MappingFragment StoreEntitySet="settings">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="key" ColumnName="key" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

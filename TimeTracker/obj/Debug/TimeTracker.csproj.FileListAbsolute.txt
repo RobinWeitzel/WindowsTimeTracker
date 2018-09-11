@@ -15,8 +15,6 @@ C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Deb
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\Notifications.Wpf.dll
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\TimeTracker.csprojAssemblyReference.cache
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\TimeTracker.csproj.CopyComplete
-C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\Alert.g.cs
-C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\Alert.baml
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\TimeTracker_Content.g.cs
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\EntityFramework.dll
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\EntityFramework.SqlServer.dll
@@ -59,3 +57,5 @@ C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Deb
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\QueryString.NETCore.dll
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\QueryString.NETCore.pdb
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\bin\Debug\QueryString.NETCore.xml
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\SettingsWindow.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\Debug\SettingsWindow.baml

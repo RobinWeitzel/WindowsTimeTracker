@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using Windows.Data.Xml.Dom;
@@ -28,6 +29,7 @@ namespace TimeTracker
         private bool _isExit;
 
         private string[] blacklist = { "TimeTracker" };
+        private SettingsWindow SettingsWindow;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -36,6 +38,11 @@ namespace TimeTracker
 
             MainWindow = new MainWindow();
             MainWindow.Closing += MainWindow_Closing;
+
+            SettingsWindow = new SettingsWindow();
+            SettingsWindow.Closing += SettingsWindow_Closing;
+
+
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => ShowMainWindow();
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
@@ -78,7 +85,7 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("MainWindow...").Click += (s, e) => ShowMainWindow();
+            _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
 
         }
@@ -105,11 +112,37 @@ namespace TimeTracker
                 MainWindow.Show();
             }
         }
+
+        private void ShowSettingsWindow()
+        {
+            if (SettingsWindow.IsVisible)
+            {
+                if (SettingsWindow.WindowState == WindowState.Minimized)
+                {
+                    SettingsWindow.WindowState = WindowState.Normal;
+                }
+                SettingsWindow.Activate();
+            }
+            else
+            {
+                SettingsWindow.redrawList();
+                SettingsWindow.Show();
+            }
+        }
+
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (!_isExit)
             {
                 e.Cancel = true; MainWindow.Hide(); // A hidden window can be shown again, a closed one not             
+            }
+        }
+
+        private void SettingsWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (!_isExit)
+            {
+                e.Cancel = true; SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
 
@@ -137,11 +170,11 @@ namespace TimeTracker
                     QueryString args = QueryString.Parse(invokedArgs);
 
                     // See what action is being requested 
-                    if (invokedArgs.Equals("dismiss"))
+                    if (args["action"].Equals("dismiss"))
                     {
                         using (mainEntities db = new mainEntities())
                         {
-                            activity_active current_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
+                            activity_active current_activity = db.activity_active.Find(int.Parse(args["activityId"]));
 
                             current_activity.name = userInput["activity"];
 
@@ -228,7 +261,7 @@ namespace TimeTracker
 
                     /* Handle active window */
                     // Set to date for old window if one exists
-                    window_active old_window = db.window_active.Where(wa => wa.to == null).LastOrDefault();
+                    window_active old_window = db.window_active.Where(wa => wa.to == null).FirstOrDefault();
                     if (old_window != null)
                     {
                         old_window.to = DateTime.Now;
@@ -252,7 +285,7 @@ namespace TimeTracker
                     if(!hasBeenSeen)
                     {
                         /* Handle active activity */
-                        activity_active old_activity = db.activity_active.Where(aa => aa.to == null).LastOrDefault();
+                        activity_active old_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
                         if (old_activity != null)
                         {
                             old_activity.to = DateTime.Now;
@@ -260,13 +293,17 @@ namespace TimeTracker
 
                         activity_active new_activity = new activity_active();
                         new_activity.from = DateTime.Now;
-                        new_activity.name = old_activity.name ?? db.activities.LastOrDefault().name;
+                        new_activity.name = old_activity.name ?? db.activities.FirstOrDefault().name;
                         db.activity_active.Add(new_activity);
+
+                        db.SaveChanges();
 
                         showNotification(new_activity.id, arr.Last(), "For which project are you using this app?", db.activities.Select(a => a.name).ToArray(), new_activity.name);
 
+                    } else
+                    {
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
                 }
             }
         }
@@ -277,39 +314,24 @@ namespace TimeTracker
             string group = "ProjectQuestions";
             // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
             var doc = new XmlDocument();
-            doc.LoadXml(createToast(title, subtitle, activities, selected).GetContent());
+            doc.LoadXml(createToast(tag_long, title, subtitle, activities, selected).GetContent());
             // And create the toast notification 
             var toast = new ToastNotification(doc);
             int timeout = 10000;
-            uint counter = 1;
-            int intervall = 1000;
+            
             toast.Tag = tag;
             toast.Group = group;
             toast.Data = new NotificationData();
             toast.Data.Values["progressValue"] = "0";
             toast.Data.Values["progressValueString"] = Math.Round(timeout / 1000.0).ToString() + " Second(s)";
 
-            toast.Activated += (ToastNotification sender, object e) =>
-            {
-                var toastActivationArgs = e as ToastActivatedEventArgs;
-                var toastXml = sender.Content;
-            };
-
-            // Add listener to the dismiss event
-
-            toast.Dismissed += (ToastNotification sender, ToastDismissedEventArgs args) =>
-            {
-                using (mainEntities db = new mainEntities())
-                {
-                    activity_active current_activity = db.activity_active.Find(tag_long);
-                    Console.WriteLine("dismissed");
-                }
-            };
-
             // And then show it 
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
 
+            /*
             Timer timer = new Timer();
+            uint counter = 1;
+            int intervall = 1000;
             timer.Elapsed += new ElapsedEventHandler((object source, ElapsedEventArgs e) =>
             {
                 if (timeout / intervall < counter)
@@ -325,13 +347,20 @@ namespace TimeTracker
                     counter++;
                 }
             });
+
             timer.Interval = intervall;
             timer.Enabled = true;
 
-            timer.Start();
+            timer.Start();*/
+
+            Task.Delay(timeout).ContinueWith(_ =>
+            {
+                DesktopNotificationManagerCompat.History.Remove(tag, group);
+            });
+
         }
 
-        private void UpdateProgressBar(uint seq, string val, string timeRemaining, string tag, string group)
+        /*private void UpdateProgressBar(uint seq, string val, string timeRemaining, string tag, string group)
         {
             var data = new NotificationData
             {
@@ -342,9 +371,9 @@ namespace TimeTracker
             data.Values["progressValueString"] = timeRemaining + " Second(s)";
 
             DesktopNotificationManagerCompat.CreateToastNotifier().Update(data, tag, group);
-        }
+        }*/
 
-        private ToastContent createToast(string title, string subtitle, string[] activities, string selected)
+        private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
         {
             ToastContent content = new ToastContent()
             {
@@ -370,13 +399,13 @@ namespace TimeTracker
                             {
                                 Text = subtitle
                             },
-                            new AdaptiveProgressBar()
+                            /*new AdaptiveProgressBar()
                             {
                                 Title = "Time until automatically dismissed",
                                 Value = new BindableProgressBarValue("progressValue"),
                                 ValueStringOverride = new BindableString("progressValueString"),
                                 Status = ""
-                            }
+                            }*/
                         }
                     }
                 }
@@ -398,7 +427,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
@@ -419,7 +448,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
@@ -441,7 +470,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
@@ -464,7 +493,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
@@ -488,7 +517,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
@@ -513,7 +542,7 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
-                            new ToastButton("Confirm", "dismiss")
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
                             }
