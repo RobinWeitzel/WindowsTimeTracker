@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+    <Product Id="AFCAC851-4464-464E-B3B0-0BE72190FBAD" Name="TimeTracker" Language="1033" Version="0.0.0.1" Manufacturer="Robin Weitzel" UpgradeCode="1E716498-9206-451E-B7A3-9DD7BD93A1E3">
+        <Package Description="Test file in a Product" Comments="Simple test" InstallerVersion="200" Compressed="yes" />
+        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder" Name="PFiles">
+                <Directory Name="TimeTracker" Id="TIMETRACKER">
+                    <Directory Name="TimeTracker 1.0" Id="INSTALLDIR">
+                        <Component Id="TimeTracker" DiskId="1" KeyPath="yes" Guid="7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff">
+                            <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\Debug\TimeTracker.exe">
+                                <Shortcut Id="ExeShortcut" Directory="ProgramMenuDir" Name="TimeTracker 1.0" Advertise="no" Icon="StartMenuIcon.exe" IconIndex="0">
+                                    <!--AUMID-->
+                                    <ShortcutProperty Key="System.AppUserModel.ID" Value="Robin.TimeTracker" />
+                                    <!--COM CLSID-->
+                                    <ShortcutProperty Key="System.AppUserModel.ToastActivatorCLSID" Value="{7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff}" />
+                                </Shortcut>
+                            </File>
+                            <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\Debug\EntityFramework.dll" />
+                            <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\Debug\EntityFramework.SqlServer.dll" />
+                            <File Id="ENTITYFRAMEWORK.SQLSERVER.XML" Name="EntityFramework.SqlServer.xml" Source="..\bin\Debug\EntityFramework.SqlServer.xml" />
+                            <File Id="ENTITYFRAMEWORK.XML" Name="EntityFramework.xml" Source="..\bin\Debug\EntityFramework.xml" />
+                            <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\Debug\LiveCharts.dll" />
+                            <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\Debug\LiveCharts.pdb" />
+                            <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\Debug\LiveCharts.Wpf.dll" />
+                            <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\Debug\LiveCharts.Wpf.pdb" />
+                            <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\Debug\LiveCharts.Wpf.xml" />
+                            <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\Debug\LiveCharts.xml" />
+                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.dll" />
+                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb" />
+                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
+                            <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\Debug\Microsoft.Win32.Primitives.dll" />
+                            <File Id="NOTIFICATIONS.WPF.DLL" Name="Notifications.Wpf.dll" Source="..\bin\Debug\Notifications.Wpf.dll" />
+                            <File Id="QUERYSTRING.NETCORE.DLL" Name="QueryString.NETCore.dll" Source="..\bin\Debug\QueryString.NETCore.dll" />
+                            <File Id="QUERYSTRING.NETCORE.PDB" Name="QueryString.NETCore.pdb" Source="..\bin\Debug\QueryString.NETCore.pdb" />
+                            <File Id="QUERYSTRING.NETCORE.XML" Name="QueryString.NETCore.xml" Source="..\bin\Debug\QueryString.NETCore.xml" />
+                            <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\Debug\System.AppContext.dll" />
+                            <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\Debug\System.Console.dll" />
+                            <File Id="SYSTEM.DATA.SQLITE.DLL" Name="System.Data.SQLite.dll" Source="..\bin\Debug\System.Data.SQLite.dll" />
+                            <File Id="SYSTEM.DATA.SQLITE.DLL.CONFIG" Name="System.Data.SQLite.dll.config" Source="..\bin\Debug\System.Data.SQLite.dll.config" />
+                            <File Id="SYSTEM.DATA.SQLITE.EF6.DLL" Name="System.Data.SQLite.EF6.dll" Source="..\bin\Debug\System.Data.SQLite.EF6.dll" />
+                            <File Id="SYSTEM.DATA.SQLITE.LINQ.DLL" Name="System.Data.SQLite.Linq.dll" Source="..\bin\Debug\System.Data.SQLite.Linq.dll" />
+                            <File Id="SYSTEM.DATA.SQLITE.XML" Name="System.Data.SQLite.xml" Source="..\bin\Debug\System.Data.SQLite.xml" />
+                            <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\Debug\System.Diagnostics.DiagnosticSource.dll" />
+                            <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\Debug\System.Diagnostics.DiagnosticSource.xml" />
+                            <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\Debug\System.Globalization.Calendars.dll" />
+                            <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\Debug\System.IO.Compression.dll" />
+                            <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\Debug\System.IO.Compression.ZipFile.dll" />
+                            <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\Debug\System.IO.FileSystem.dll" />
+                            <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\Debug\System.IO.FileSystem.Primitives.dll" />
+                            <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\Debug\System.Net.Http.dll" />
+                            <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\Debug\System.Net.Sockets.dll" />
+                            <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll" />
+                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\Debug\System.Security.Cryptography.Algorithms.dll" />
+                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\Debug\System.Security.Cryptography.Encoding.dll" />
+                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\Debug\System.Security.Cryptography.Primitives.dll" />
+                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\Debug\System.Security.Cryptography.X509Certificates.dll" />
+                            <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\Debug\System.Xml.ReaderWriter.dll" />
+                            <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\Debug\TimeTracker.exe.config" />
+                            <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\Debug\TimeTracker.pdb" />
+                            <RegistryKey Id="TimeTrackerInstallDir" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" Action="createAndRemoveOnUninstall">
+                                <RegistryValue Type="string" Name="InstallDir" Value="[INSTALLDIR]" />
+                                <RegistryValue Type="integer" Name="Flag" Value="0" />
+                            </RegistryKey>
+
+                            <util:XmlFile Id="ModifyConnectionString"
+                            Action="setValue"
+                            Permanent="yes"
+                            ElementPath="/configuration/connectionStrings/add[\[]@name='mainEntities'[\]]"
+                            Name="connectionString"
+                            File="[#TIMETRACKER.EXE.CONFIG]"
+                            Value='metadata=res://*/DataModel.csdl|res://*/DataModel.ssdl|res://*/DataModel.msl;provider=System.Data.SQLite.EF6;provider connection string=&quot;data source=[#DB.DB]&quot;'
+                            SelectionLanguage="XSLPattern"
+                            Sequence="1" />
+                                            
+                        </Component>
+                        <Directory Name="de" Id="deFolder">
+                            <Component Id="de" Guid="f60e314f-c408-4b6b-b71c-2c93bf8e3d1c">
+                                <File Id="ENTITYFRAMEWORK.RESOURCES.DLL" Name="EntityFramework.resources.dll" Source="..\bin\Debug\de\EntityFramework.resources.dll" />
+                                <File Id="ENTITYFRAMEWORK.SQLSERVER.RESOURCES.DLL" Name="EntityFramework.SqlServer.resources.dll" Source="..\bin\Debug\de\EntityFramework.SqlServer.resources.dll" />
+                            </Component>
+                        </Directory>
+                        <Directory Name="x64" Id="x64Folder">
+                            <Component Id="x64" Guid="d0ae0dac-3a5e-467e-8f37-f097343d889f">
+                                <File Id="SQLITE.INTEROP.DLL" Name="SQLite.Interop.dll" Source="..\bin\Debug\x64\SQLite.Interop.dll" />
+                            </Component>
+                        </Directory>
+                        <Directory Name="x86" Id="x86Folder">
+                            <Component Id="x86" Guid="508341ba-450a-4b33-964c-2c0b212c5fcd">
+                                <File Id="SQLITE.INTEROP.DLL_1" Name="SQLite.Interop.dll" Source="..\bin\Debug\x86\SQLite.Interop.dll" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ProgramMenuDir" Name="TimeTracker">
+                    <Component Id="StartMenuShortcuts" Guid="BA12DC34-A26B-4A4E-97C5-F15B0549F1FE">
+                        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+                        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="PersonalFolder">
+                <Directory Id="DBFolder" Name="TimeTracker">
+                    <Component Id="DB" Guid="ad3af52f-b047-4aeb-8079-96cb94ffb9a4">
+                        <RemoveFolder Id="DBFolder" On="uninstall" />
+                        <File Id="DB.DB" Name="db.db" Source="..\db.db" />                   
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+
+        <Feature Id="DefaultFeature" Title="Main Feature" Level="1" ConfigurableDirectory="INSTALLDIR">
+            <ComponentRef Id="TimeTracker" />
+            <ComponentRef Id="de" />
+            <ComponentRef Id="x64" />
+            <ComponentRef Id="x86" />
+            <ComponentRef Id="DB" />
+            <ComponentRef Id="StartMenuShortcuts" />
+        </Feature>
+        <Icon Id="StartMenuIcon.exe" SourceFile="..\bin\Debug\TimeTracker.exe" />
+        <Property Id="INSTALLDIR">
+            <RegistrySearch Id="TimeTrackerRegistry" Type="raw" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" Name="InstallDir" />
+        </Property>
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_InstallDir" />
+        <UI />
+    </Product>
+</Wix>

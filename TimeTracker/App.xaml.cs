@@ -104,8 +104,10 @@ namespace TimeTracker
             DesktopNotificationManagerCompat.History.Clear();
             _isExit = true;
             MainWindow.Close();
+            SettingsWindow.Close();
             _notifyIcon.Dispose();
             _notifyIcon = null;
+            this.Shutdown(1);
         }
 
         private void ShowMainWindow()

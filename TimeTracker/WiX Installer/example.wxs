@@ -1,39 +1,40 @@
-﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" UpgradeCode="12345678-1234-1234-1234-111111111111" Name="TimeTracker" Version="0.0.1" Manufacturer="Robin" Language="1033">
-    <Package InstallerVersion="200" Compressed="yes" Comments="Windows Installer Package"/>
-    <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
-    <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker"/>
-      </Directory>
-      <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="TimeTracker"/>
-      </Directory>
-    </Directory>
-
-    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-      <Component Id="TimeTracker.exe" Guid="aac8e5b7-fcf1-42a0-ab75-85203b4b76ff">
-        <File Id="TimeTracker.exe" Source="TimeTracker.exe" KeyPath="yes" Checksum="yes"/>
-      </Component>
-    </DirectoryRef>
-
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff">
-        <Shortcut Id="ApplicationStartMenuShortcut" Name="TimeTracker" Description="TimeTracker" Target="[#TimeTracker.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
-          <!--AUMID-->
-          <ShortcutProperty Key="System.AppUserModel.ID" Value="Robin.TimeTracker"/>
-          <!--COM CLSID-->
-          <ShortcutProperty Key="System.AppUserModel.ToastActivatorCLSID" Value="{7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff}"/>
-
-        </Shortcut>
-        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-      </Component>
-    </DirectoryRef>
-
-    <Feature Id="DefaultFeature" Level="1">
-      <ComponentRef Id="TimeTracker.exe" />
-      <ComponentRef Id="ApplicationShortcut" />
-    </Feature>
-  </Product>
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" UpgradeCode="12345678-1234-1234-1234-111111111111" Name="TimeTracker" Version="0.0.1" Manufacturer="Robin" Language="1033">
+        <Package InstallerVersion="200" Compressed="yes" Comments="Windows Installer Package" />
+        <Media Id="1" Cabinet="product.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker" />
+            </Directory>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ApplicationProgramsFolder" Name="TimeTracker" />
+            </Directory>
+        </Directory>
+        <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+            <Component Id="TimeTracker.exe" Guid="aac8e5b7-fcf1-42a0-ab75-85203b4b76ff">
+                <File Id="TimeTracker.exe" Source="..\bin\Debug\TimeTracker.exe" KeyPath="yes" Checksum="yes" />
+                <File Id="DB.DB" Name="db.db" Source="..\db.db" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff">
+                <Shortcut Id="ApplicationStartMenuShortcut" Name="TimeTracker" Description="TimeTracker" Target="[#TimeTracker.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
+                    <!--AUMID-->
+                    <ShortcutProperty Key="System.AppUserModel.ID" Value="Robin.TimeTracker" />
+                    <!--COM CLSID-->
+                    <ShortcutProperty Key="System.AppUserModel.ToastActivatorCLSID" Value="{7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff}" />
+                </Shortcut>
+                <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
+                <RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+            </Component>
+        </DirectoryRef>
+        <Feature Id="DefaultFeature" Level="1">
+            <ComponentRef Id="TimeTracker.exe" />
+            <ComponentRef Id="ApplicationShortcut" />
+        </Feature>
+        <UIRef Id="WixUI_Mondo" />
+        <UIRef Id="WixUI_ErrorProgressText" />
+        <UI />
+    </Product>
 </Wix>
