@@ -39,6 +39,7 @@ namespace TimeTracker
                 TimeOut.Text = ((db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout) / 1000).ToString();
                 TimeNotUsed.Text = ((db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed) / (1000 * 60)).ToString();
                 TimeRecordsKept.Text = (db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept).ToString();
+                FuzzyMatching.IsChecked = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
             }
         }
 
@@ -139,6 +140,18 @@ namespace TimeTracker
                 {
                     timeRecordsKept.value = timeRecordsKeptResult; // Keep as days
                 }
+
+                /* Save FuzzyMatching */
+                settings fuzzyMatching = db.settings.Find("fuzzyMatching");
+
+                if (fuzzyMatching == null)
+                {
+                    fuzzyMatching = new settings();
+                    fuzzyMatching.key = "fuzzyMatching";
+                    db.settings.Add(fuzzyMatching);
+                }
+
+                fuzzyMatching.value = FuzzyMatching.IsChecked == true ? 1 : 0;
 
                 db.SaveChanges();
 

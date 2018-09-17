@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Windows.Interop;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using System.Data.Entity.SqlServer;
 
 namespace TimeTracker
 {
@@ -23,40 +25,9 @@ namespace TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
-            SeriesCollection = new SeriesCollection {
-                new StackedColumnSeries {
-                    Values = new ChartValues<double> { 3, 5, 7, 4 },
-                    StackMode = StackMode.Values,
-                    DataLabels = true
-                },
-                new StackedColumnSeries {
-                    Values = new ChartValues<decimal> { 5, 6, 2, 7 },
-                    StackMode = StackMode.Values,
-                    DataLabels = true
-                }
-            };
-
-            SeriesCollection.Add(new StackedColumnSeries
-            {
-                Values = new ChartValues<double> { 2, 4, 9, 4 },
-                StackMode = StackMode.Values,
-                DataLabels = true
-            });
-
-            Labels = new[] { "Chrome", "Firefox", "IE" };
-            Formatter = value => value + "Mill";
-
-            DataContext = this;
         }
-
-        public SeriesCollection SeriesCollection { get; set;}
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
     }
-
-  
 }

@@ -16,7 +16,7 @@ namespace TimeTracker
     {
         public long id { get; set; }
         public string name { get; set; }
-        public Nullable<System.DateTime> from { get; set; }
+        public System.DateTime from { get; set; }
         public Nullable<System.DateTime> to { get; set; }
     }
 }

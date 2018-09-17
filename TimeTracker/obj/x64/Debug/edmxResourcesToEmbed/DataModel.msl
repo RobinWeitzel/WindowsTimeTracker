@@ -1,27 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
-    <EntitySetMapping Name="window_active">
-      <EntityTypeMapping TypeName="mainModel.window_active">
-        <MappingFragment StoreEntitySet="window_active">
-          <ScalarProperty Name="to" ColumnName="to" />
-          <ScalarProperty Name="from" ColumnName="from" />
-          <ScalarProperty Name="details" ColumnName="details" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="activity_active">
-      <EntityTypeMapping TypeName="mainModel.activity_active">
-        <MappingFragment StoreEntitySet="activity_active">
-          <ScalarProperty Name="to" ColumnName="to" />
-          <ScalarProperty Name="from" ColumnName="from" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="activities">
       <EntityTypeMapping TypeName="mainModel.activities">
         <MappingFragment StoreEntitySet="activities">
@@ -35,6 +14,28 @@
         <MappingFragment StoreEntitySet="settings">
           <ScalarProperty Name="value" ColumnName="value" />
           <ScalarProperty Name="key" ColumnName="key" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="activity_active">
+      <EntityTypeMapping TypeName="mainModel.activity_active">
+        <MappingFragment StoreEntitySet="activity_active">
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="window_active">
+      <EntityTypeMapping TypeName="mainModel.window_active">
+        <MappingFragment StoreEntitySet="window_active">
+          <ScalarProperty Name="handle" ColumnName="handle" />
+          <ScalarProperty Name="to" ColumnName="to" />
+          <ScalarProperty Name="from" ColumnName="from" />
+          <ScalarProperty Name="details" ColumnName="details" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

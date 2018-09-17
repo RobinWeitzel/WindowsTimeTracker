@@ -175,6 +175,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataWindow.xaml.cs">
+      <DependentUpon>DataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,6 +193,10 @@
     <Compile Include="window_active.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Page Include="DataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

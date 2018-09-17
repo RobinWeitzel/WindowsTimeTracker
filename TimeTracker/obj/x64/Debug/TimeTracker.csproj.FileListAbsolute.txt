@@ -59,3 +59,5 @@ C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.csproj.CopyComplete
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.exe
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.pdb
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\DataWindow.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\DataWindow.baml

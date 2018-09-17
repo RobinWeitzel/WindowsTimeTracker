@@ -6,18 +6,6 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="None" Margin="0,0,503,-2.5">
-<!--
-        <lvc:CartesianChart.AxisX  >
-            <lvc:Axis Title="Browser"
-                          Labels="{Binding Labels}"
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" Visibility="Hidden" 
-                          />
-            </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Usage" LabelFormatter="{Binding Formatter}" Visibility="Hidden"/>
-            </lvc:CartesianChart.AxisY>
--->
-        </lvc:CartesianChart>
+        Title="MainWindow - TimeTracker" Height="1000" Width="1500" WindowStartupLocation="CenterScreen">
+    
 </Window>

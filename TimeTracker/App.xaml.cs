@@ -1,6 +1,7 @@
 ﻿using DesktopNotifications;
 using Microsoft.QueryStringDotNET;
 using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,8 +29,9 @@ namespace TimeTracker
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
 
-        private string[] blacklist = { "TimeTracker" };
+        private string[] blacklist = { "TimeTracker", "Neue Benachrichtigung", "Explorer", "Cortana" };
         private SettingsWindow SettingsWindow;
+        private DataWindow DataWindow;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -42,8 +44,11 @@ namespace TimeTracker
             SettingsWindow = new SettingsWindow();
             SettingsWindow.Closing += SettingsWindow_Closing;
 
+            DataWindow = new DataWindow();
+            DataWindow.Closing += DataWindow_Closing;
+
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.DoubleClick += (s, args) => ShowMainWindow();
+            _notifyIcon.DoubleClick += (s, args) => ShowDataWindow();
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
             _notifyIcon.Visible = true;
             CreateContextMenu();
@@ -78,6 +83,9 @@ namespace TimeTracker
                 0,
                 WINEVENT_OUTOFCONTEXT);
 
+            // Set up callback if computers powerstate changes
+            SystemEvents.PowerModeChanged += OnPowerChange;
+
             // Delete old records
             using (mainEntities db = new mainEntities()) {
                 long timeRecordsKept = db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept;
@@ -96,18 +104,25 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
+            _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => ShowDataWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
         private void ExitApplication()
         {
-            DesktopNotificationManagerCompat.History.Clear();
             _isExit = true;
             MainWindow.Close();
             SettingsWindow.Close();
             _notifyIcon.Dispose();
             _notifyIcon = null;
             this.Shutdown(1);
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            DesktopNotificationManagerCompat.History.Clear();
+            saveWindows();
         }
 
         private void ShowMainWindow()
@@ -143,6 +158,23 @@ namespace TimeTracker
             }
         }
 
+        private void ShowDataWindow()
+        {
+            if (DataWindow.IsVisible)
+            {
+                if (DataWindow.WindowState == WindowState.Minimized)
+                {
+                    DataWindow.WindowState = WindowState.Normal;
+                }
+                DataWindow.Activate();
+            }
+            else
+            {
+                DataWindow.loadData(null);
+                DataWindow.Show();
+            }
+        }
+
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (!_isExit)
@@ -160,6 +192,31 @@ namespace TimeTracker
                 SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
+
+        private void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (!_isExit)
+            {
+                e.Cancel = true;
+                DataWindow.Hide(); // A hidden window can be shown again, a closed one not             
+            }
+        }
+
+        /*** Methods for handling power state change ***/
+        private void OnPowerChange(object s, PowerModeChangedEventArgs e)
+        {
+            switch (e.Mode)
+            {
+                case PowerModes.Resume:
+                    // ToDo: Ask what user did during time away from pc
+                    break;
+                case PowerModes.Suspend:
+                    saveWindows();
+                    break;
+            }
+        }
+
+        /*** Methods for andling toast notifications ***/
 
         // The GUID CLSID must be unique to your app. Create a new GUID if copying this code.
         [ClassInterface(ClassInterfaceType.None)]
@@ -198,7 +255,6 @@ namespace TimeTracker
                     }
                 });
             }
-
             private void OpenWindowIfNeeded()
             {
                 // Make sure we have a window open (in case user clicked toast while app closed)
@@ -228,15 +284,18 @@ namespace TimeTracker
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
 
-        [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern long GetWindowText(IntPtr hwnd, StringBuilder lpString, long cch);
 
-        private string GetActiveWindowTitle()
+        [DllImport("User32.dll")]
+        static extern IntPtr GetParent(IntPtr hwnd);
+
+        private string GetActiveWindowTitle(IntPtr handle)
         {
             const int nChars = 256;
-            IntPtr handle = IntPtr.Zero;
             StringBuilder Buff = new StringBuilder(nChars);
-            handle = GetForegroundWindow();
+            if(handle.ToInt64() == 0)
+                handle = GetForegroundWindow();
 
             if (GetWindowText(handle, Buff, nChars) > 0)
             {
@@ -247,17 +306,37 @@ namespace TimeTracker
 
         public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            if (GetActiveWindowTitle() == null)
+            IntPtr handle;
+            long handleLong;
+
+            // Check if parent exists, if it does use it (meaning the active window is only a sub window)
+            IntPtr newParent = GetParent(hwnd);
+            IntPtr oldParent = hwnd;
+            while (newParent.ToInt64() > 0)
+            {
+                oldParent = newParent;
+                newParent = GetParent(oldParent);
+            }
+
+            handle = oldParent;
+
+            handleLong = hwnd.ToInt64();
+
+            if (handleLong <= 0)
+                return;
+
+            string windowTitle = GetActiveWindowTitle(handle);
+            if (windowTitle == null)
             {
                 return;
             }
 
-            string[] arr = GetActiveWindowTitle().Split(new string[] { "- " }, StringSplitOptions.None);
+            string[] arr = windowTitle.Split(new string[] { "- " }, StringSplitOptions.None);
             if (arr.Length >= 1)
             {
                 string name = arr.Last();
-                // Stop if the current activity is blacklisted
-                if (blacklist.Contains(arr.Last())) {
+                // Stop if the current activity is blacklisted or a file path
+                if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\")) {
                     return;
                 }
 
@@ -268,17 +347,22 @@ namespace TimeTracker
 
                     // Load timeNotUsed from settings
                     long timeNotUsed = db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed; // 5 minutes
+                    bool fuzzyMatching = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
+                    List<window_active> old_windows = db.window_active.Where(wa => wa.handle == handleLong || (fuzzyMatching && wa.name.Equals(name))).ToList();
 
-                    List<window_active> old_windows = db.window_active.Where(wa => wa.name.Equals(name)).ToList();
-
-                    if (old_windows != null)
+                    if (old_windows.Count() > 0)
                     {
-                        hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.to) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds || timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.from) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds;
+                        hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.to) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds || timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.from)).TotalMilliseconds;
                     }
 
                     /* Handle active window */
                     // Set to date for old window if one exists
-                    window_active old_window = db.window_active.Where(wa => wa.to == null).FirstOrDefault();
+                    window_active old_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
+
+                    // If window has not changed do nothing
+                    if (old_window != null && (old_window.handle == handleLong || (fuzzyMatching && old_window.name.Equals(name))))
+                        return;
+
                     if (old_window != null)
                     {
                         old_window.to = DateTime.Now;
@@ -288,6 +372,7 @@ namespace TimeTracker
 
                     new_window.name = arr.Last();
                     new_window.from = DateTime.Now;
+                    new_window.handle = handleLong;
 
                     Console.WriteLine("Window: " + name);
                     if (arr.Length >= 2)
@@ -296,41 +381,74 @@ namespace TimeTracker
                         new_window.details = string.Join("- ", arr.Take(arr.Length - 1));
                     }
 
+                    Console.WriteLine("Handle: " + handleLong.ToString());
+
                     db.window_active.Add(new_window);
 
+                    db.SaveChanges();
+
                     // Show notification if app has not been seen in last few minutes
-                    if(!hasBeenSeen)
+                    if (!hasBeenSeen)
                     {
-                        /* Handle active activity */
-                        activity_active old_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
-                        if (old_activity != null)
-                        {
-                            old_activity.to = DateTime.Now;
-                        }
-
-                        activity_active new_activity = new activity_active();
-                        new_activity.from = DateTime.Now;
-                        new_activity.name = old_activity.name ?? db.activities.FirstOrDefault().name;
-                        db.activity_active.Add(new_activity);
-
-                        db.SaveChanges();
-
-                        // Load timeout from settings
-                        long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
-
-                        showNotification(
-                            new_activity.id, arr.Last(),
-                            "For which project are you using this app?",
-                            db.activities.Select(a => a.name).ToArray(),
-                            new_activity.name,
-                            timeout
-                        );
-
-                    } else
-                    {
-                        db.SaveChanges();
+                        changeActivity(arr.Last());
                     }
                 }
+            }
+        }
+
+        private void changeActivity(string name)
+        {
+            using (mainEntities db = new mainEntities())
+            {
+                if(name == null) // If no name is specified check which window is active
+                {
+                    window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
+                    if (current_window != null)
+                        name = current_window.name;
+                    else
+                        name = "No window active";
+                }
+
+                /* Handle active activity */
+                activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
+                if (old_activity != null)
+                {
+                    old_activity.to = DateTime.Now;
+                }
+
+                activity_active new_activity = new activity_active();
+                new_activity.from = DateTime.Now;
+                new_activity.name = old_activity != null ? old_activity.name : db.activities.FirstOrDefault().name;
+                db.activity_active.Add(new_activity);
+
+                db.SaveChanges();
+
+                // Load timeout from settings
+                long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
+
+                showNotification(
+                    new_activity.id,
+                    name,
+                    "For which project are you using this app?",
+                    db.activities.Select(a => a.name).ToArray(),
+                    new_activity.name,
+                    timeout
+                );
+            }
+        }
+
+        private void saveWindows()
+        {
+            // Save open activities and windows
+            using (mainEntities db = new mainEntities())
+            {
+                List<window_active> open_windows = db.window_active.Where(wa => wa.to == null).ToList();
+                open_windows.ForEach(aa => aa.to = DateTime.Now);
+
+                List<activity_active> open_activities = db.activity_active.Where(aa => aa.to == null).ToList();
+                open_activities.ForEach(aa => aa.to = DateTime.Now);
+
+                db.SaveChanges();
             }
         }
 
@@ -346,37 +464,9 @@ namespace TimeTracker
             
             toast.Tag = tag;
             toast.Group = group;
-            //toast.Data = new NotificationData();
-            //toast.Data.Values["progressValue"] = "0";
-            //toast.Data.Values["progressValueString"] = Math.Round(timeout / 1000.0).ToString() + " Second(s)";
 
             // And then show it 
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-
-            /*
-            Timer timer = new Timer();
-            uint counter = 1;
-            int intervall = 1000;
-            timer.Elapsed += new ElapsedEventHandler((object source, ElapsedEventArgs e) =>
-            {
-                if (timeout / intervall < counter)
-                {
-                    DesktopNotificationManagerCompat.History.Remove(tag, group);
-                    timer.Stop();
-                }
-                else
-                {
-                    string val = (counter / (timeout / (double)intervall)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
-                    string timeRemaining = Math.Round((timeout - ((double)intervall * counter)) / 1000).ToString();
-                    UpdateProgressBar(counter, val, timeRemaining, tag, group);
-                    counter++;
-                }
-            });
-
-            timer.Interval = intervall;
-            timer.Enabled = true;
-
-            timer.Start();*/
 
             Task.Delay((int)timeout).ContinueWith(_ =>
             {
@@ -384,19 +474,6 @@ namespace TimeTracker
             });
 
         }
-
-        /*private void UpdateProgressBar(uint seq, string val, string timeRemaining, string tag, string group)
-        {
-            var data = new NotificationData
-            {
-                SequenceNumber = seq
-            };
-
-            data.Values["progressValue"] = val;
-            data.Values["progressValueString"] = timeRemaining + " Second(s)";
-
-            DesktopNotificationManagerCompat.CreateToastNotifier().Update(data, tag, group);
-        }*/
 
         private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
         {
@@ -423,14 +500,7 @@ namespace TimeTracker
                             new AdaptiveText()
                             {
                                 Text = subtitle
-                            },
-                            /*new AdaptiveProgressBar()
-                            {
-                                Title = "Time until automatically dismissed",
-                                Value = new BindableProgressBarValue("progressValue"),
-                                ValueStringOverride = new BindableString("progressValueString"),
-                                Status = ""
-                            }*/
+                            }
                         }
                     }
                 }
@@ -575,7 +645,6 @@ namespace TimeTracker
                     };
                     break;
             }
-
 
             return content;
         }

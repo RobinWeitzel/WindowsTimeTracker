@@ -1,0 +1,200 @@
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace TimeTracker
+{
+    /// <summary>
+    /// Interaktionslogik für Data.xaml
+    /// </summary>
+    public partial class DataWindow : Window
+    {
+        public SeriesCollection WindowSeries { get; set; }
+        public SeriesCollection ActivitySeries { get; set; }
+        public Func<ChartPoint, string> labelPoint { get; set; }
+
+        public DataWindow()
+        {
+            InitializeComponent();
+
+            WindowSeries = new SeriesCollection();
+            ActivitySeries = new SeriesCollection();
+
+            loadData(Time_Picker.Text);
+
+            labelPoint = chartPoint => {
+                int hours = (int)Math.Floor(chartPoint.Y / 60);
+                int minutes = (int)Math.Round(chartPoint.Y % 60);
+
+                if (hours > 0)
+                    return hours.ToString() + "h " + minutes.ToString() + "m";
+                else
+                    return minutes.ToString() + "m";
+            };
+
+            DataContext = this;
+        }
+
+        public class Helper
+        {
+            public string name { get; set; }
+            public DateTime from { get; set; }
+            public DateTime to { get; set; }
+            public double time { get; set; }
+        }
+
+        public void loadData(string newItem)
+        {
+            if (WindowSeries == null || ActivitySeries == null)
+                return;
+
+            if (newItem == null)
+                newItem = ((dynamic)Time_Picker.SelectedItem).Content;
+
+            using (mainEntities db = new mainEntities())
+            {
+                List<PieSeries> WindowSeriesItems = new List<PieSeries>();
+                List<PieSeries> ActivitySeriesItems = new List<PieSeries>();
+                List<Helper> windowHelper = new List<Helper>();
+                List<Helper> activityHelper = new List<Helper>();
+                switch (newItem)
+                {
+                    case "Today":
+                        windowHelper = db.window_active
+                            .Where(wa => wa.to >= DateTime.Today || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > DateTime.Today ? wa.from : DateTime.Today,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        activityHelper = db.activity_active
+                            .Where(wa => wa.to >= DateTime.Today || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > DateTime.Today ? wa.from : DateTime.Today,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        break;
+                    case "Yesterday":
+                        DateTime yesterday = DateTime.Today.AddDays(-1);
+                        windowHelper = db.window_active
+                            .Where(wa => (wa.from < DateTime.Today && wa.to >= yesterday) || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > yesterday ? wa.from : yesterday,
+                                to = (wa.to ?? DateTime.Today) < DateTime.Today ? (wa.to ?? DateTime.Today) : DateTime.Today
+                            }).ToList();
+                        activityHelper = db.activity_active
+                            .Where(wa => (wa.from < DateTime.Today && wa.to >= yesterday) || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > yesterday ? wa.from : yesterday,
+                                to = (wa.to ?? DateTime.Today) < DateTime.Today ? (wa.to ?? DateTime.Today) : DateTime.Today
+                            }).ToList();
+                        break;
+                    case "Last 3 days":
+                        DateTime three_days = DateTime.Now.AddDays(-3);
+                        windowHelper = db.window_active
+                            .Where(wa => wa.to >= three_days || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > three_days ? wa.from : three_days,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        activityHelper = db.activity_active
+                            .Where(wa => wa.to >= three_days || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > three_days ? wa.from : three_days,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        break;
+                    case "Last week":
+                        DateTime mondayOfLastWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - 6);
+                        DateTime mondayOfThisWeek = mondayOfLastWeek.AddDays(7);
+                        windowHelper = db.window_active
+                            .Where(wa => (wa.from < mondayOfThisWeek && wa.to >= mondayOfLastWeek) || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from  > mondayOfLastWeek ? wa.from  : mondayOfLastWeek,
+                                to = (wa.to ?? DateTime.Today) < mondayOfThisWeek ? (wa.to ?? DateTime.Today) : mondayOfThisWeek
+                            }).ToList();
+                        activityHelper = db.activity_active
+                           .Where(wa => (wa.from < mondayOfThisWeek && wa.to >= mondayOfLastWeek) || wa.to == null)
+                           .Select(wa => new Helper
+                           {
+                               name = wa.name,
+                               from = wa.from > mondayOfLastWeek ? wa.from : mondayOfLastWeek,
+                               to = (wa.to ?? DateTime.Today) < mondayOfThisWeek ? (wa.to ?? DateTime.Today) : mondayOfThisWeek
+                           }).ToList();
+                        break;
+                }
+
+                foreach (Helper h in windowHelper)
+                {
+                    h.time = Math.Max(Math.Round((h.to - h.from).TotalMinutes), 0);
+                }
+
+                WindowSeriesItems = windowHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new PieSeries
+                {
+                    Title = g.Key,
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                }).ToList();
+
+                foreach (Helper h in activityHelper)
+                {
+                    h.time = Math.Max(Math.Round((h.to - h.from).TotalMinutes), 0);
+                }
+
+                ActivitySeriesItems = activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new PieSeries
+                {
+                    Title = g.Key,
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                }).ToList();
+
+                WindowSeries.Clear();
+
+                foreach (PieSeries series in WindowSeriesItems)
+                {
+                    WindowSeries.Add(series);
+                }
+
+                ActivitySeries.Clear();
+
+                foreach (PieSeries series in ActivitySeriesItems)
+                {
+                    ActivitySeries.Add(series);
+                }
+            }
+        }
+
+        private void Time_Picker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            loadData(((dynamic)e.AddedItems[0]).Content);
+        }
+    }
+}

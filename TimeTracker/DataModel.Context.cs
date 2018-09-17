@@ -25,9 +25,9 @@ namespace TimeTracker
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<window_active> window_active { get; set; }
-        public virtual DbSet<activity_active> activity_active { get; set; }
         public virtual DbSet<activities> activities { get; set; }
         public virtual DbSet<settings> settings { get; set; }
+        public virtual DbSet<activity_active> activity_active { get; set; }
+        public virtual DbSet<window_active> window_active { get; set; }
     }
 }

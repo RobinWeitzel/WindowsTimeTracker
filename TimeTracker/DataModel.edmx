@@ -17,8 +17,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="from" Type="datetime" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="from" Type="datetime" Nullable="false" />
           <Property Name="to" Type="datetime" />
         </EntityType>
         <EntityType Name="settings">
@@ -33,10 +33,11 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="details" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="from" Type="datetime" />
+          <Property Name="from" Type="datetime" Nullable="false" />
           <Property Name="to" Type="datetime" />
+          <Property Name="handle" Type="integer" Nullable="false" />
         </EntityType>
         <EntityContainer Name="mainModelStoreContainer">
           <EntitySet Name="activities" EntityType="Self.activities" store:Type="Tables" />
@@ -49,30 +50,11 @@
     <edmx:ConceptualModels>
       <Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="mainEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="window_active" EntityType="mainModel.window_active" />
-          <EntitySet Name="activity_active" EntityType="mainModel.activity_active" />
           <EntitySet Name="activities" EntityType="mainModel.activities" />
           <EntitySet Name="settings" EntityType="mainModel.settings" />
+          <EntitySet Name="activity_active" EntityType="mainModel.activity_active" />
+          <EntitySet Name="window_active" EntityType="mainModel.window_active" />
         </EntityContainer>
-        <EntityType Name="window_active">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="details" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="from" Type="DateTime" />
-          <Property Name="to" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="activity_active">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="from" Type="DateTime" />
-          <Property Name="to" Type="DateTime" />
-        </EntityType>
         <EntityType Name="activities">
           <Key>
             <PropertyRef Name="id" />
@@ -87,33 +69,32 @@
           <Property Name="key" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="value" Type="Int64" Nullable="false" />
         </EntityType>
+        <EntityType Name="activity_active">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="from" Type="DateTime" Nullable="false" />
+          <Property Name="to" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="window_active">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="details" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="from" Type="DateTime" Nullable="false" />
+          <Property Name="to" Type="DateTime" />
+          <Property Name="handle" Type="Int64" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities">
-          <EntitySetMapping Name="window_active">
-            <EntityTypeMapping TypeName="mainModel.window_active">
-              <MappingFragment StoreEntitySet="window_active">
-                <ScalarProperty Name="to" ColumnName="to" />
-                <ScalarProperty Name="from" ColumnName="from" />
-                <ScalarProperty Name="details" ColumnName="details" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="activity_active">
-            <EntityTypeMapping TypeName="mainModel.activity_active">
-              <MappingFragment StoreEntitySet="activity_active">
-                <ScalarProperty Name="to" ColumnName="to" />
-                <ScalarProperty Name="from" ColumnName="from" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="activities">
             <EntityTypeMapping TypeName="mainModel.activities">
               <MappingFragment StoreEntitySet="activities">
@@ -127,6 +108,28 @@
               <MappingFragment StoreEntitySet="settings">
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="key" ColumnName="key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="activity_active">
+            <EntityTypeMapping TypeName="mainModel.activity_active">
+              <MappingFragment StoreEntitySet="activity_active">
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="window_active">
+            <EntityTypeMapping TypeName="mainModel.window_active">
+              <MappingFragment StoreEntitySet="window_active">
+                <ScalarProperty Name="handle" ColumnName="handle" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
