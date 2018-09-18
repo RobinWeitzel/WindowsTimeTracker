@@ -96,8 +96,9 @@
             </Directory>
             <Directory Id="PersonalFolder">
                 <Directory Id="DBFolder" Name="TimeTracker">
-                    <Component Id="DB" Guid="" KeyPath="yes">
+                    <Component Id="DB" Guid="aa23ed2d-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
                         <File Id="DB.DB" Name="db.db" Source="..\db.db" />
+                        <RemoveFolder Id="DBFolder" On="uninstall" />
                     </Component>
                 </Directory>
             </Directory>

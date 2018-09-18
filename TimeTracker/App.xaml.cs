@@ -29,7 +29,25 @@ namespace TimeTracker
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
 
-        private string[] blacklist = { "TimeTracker", "Neue Benachrichtigung", "Explorer", "Cortana" };
+        private string[] blacklist = {
+            "TimeTracker",
+            "Neue Benachrichtigung",
+            "Explorer",
+            "Cortana",
+            "Akkuinformationen",
+            "Start",
+            "UnlockingWindow",
+            "Cortana",
+            "Akkuinformationen",
+            "Status",
+            "Aktive Anwendungen",
+            "Window Dialog",
+            "Info-Center",
+            "Windows-Standardsperrbildschirm",
+            "Host für die Windows Shell-Oberfläche",
+            "F12PopupWindow"
+        };
+
         private SettingsWindow SettingsWindow;
         private DataWindow DataWindow;
 
@@ -85,6 +103,9 @@ namespace TimeTracker
 
             // Set up callback if computers powerstate changes
             SystemEvents.PowerModeChanged += OnPowerChange;
+
+            SystemEvents.SessionSwitch +=
+       new SessionSwitchEventHandler(OnSessionSwitch);
 
             // Delete old records
             using (mainEntities db = new mainEntities()) {
@@ -170,7 +191,7 @@ namespace TimeTracker
             }
             else
             {
-                DataWindow.loadData(null);
+                DataWindow.Navigate(new Gantt2());
                 DataWindow.Show();
             }
         }
@@ -211,7 +232,25 @@ namespace TimeTracker
                     // ToDo: Ask what user did during time away from pc
                     break;
                 case PowerModes.Suspend:
+                    Console.WriteLine("Sleep mode activated");
                     saveWindows();
+                    break;
+            }
+        }
+
+        /*** Method for handling session change ***/
+        private void OnSessionSwitch(object s, SessionSwitchEventArgs e)
+        {
+            switch (e.Reason)
+            {
+                case SessionSwitchReason.SessionLock:
+                    saveWindows();
+                    break;
+                case SessionSwitchReason.SessionLogoff:
+                    saveWindows();
+                    break;
+                case SessionSwitchReason.SessionLogon:
+                    // ToDo: Ask what user did during time away from pc
                     break;
             }
         }

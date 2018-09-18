@@ -61,3 +61,9 @@ C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.pdb
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\DataWindow.g.cs
 C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\DataWindow.baml
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Overview.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Overview.baml
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Gantt.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Gantt.baml
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Gantt2.g.cs
+C:\Users\robin\OneDrive\Dokumente\04_Code\CSharp\TimeTracker\TimeTracker\obj\x64\Debug\Gantt2.baml

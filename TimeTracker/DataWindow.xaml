@@ -3,49 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
         Title="Data - TimeTracker" 
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="382*"/>
-            <ColumnDefinition Width="381*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="53*"/>
-            <RowDefinition Height="201*"/>
-        </Grid.RowDefinitions>
-        <Label Content="Overview over " HorizontalAlignment="Left" Margin="40,33,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="128"/>
-        <ComboBox Name="Time_Picker" HorizontalAlignment="Left" Margin="168,33,0,0" VerticalAlignment="Top" Width="120" FontSize="18" SelectionChanged="Time_Picker_SelectionChanged" Height="30">
-            <ComboBoxItem IsSelected="True">Today</ComboBoxItem>
-            <ComboBoxItem>Yesterday</ComboBoxItem>
-            <ComboBoxItem>Last 3 days</ComboBoxItem>
-            <ComboBoxItem>Last Week</ComboBoxItem>
-        </ComboBox>
-
-        <lvc:PieChart Name="Window_Chart" Series="{Binding WindowSeries}" 
-                      LegendLocation="None" InnerRadius="100" Margin="10,46,10,46.5" Grid.Row="1">
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
-            </lvc:PieChart.ChartLegend>
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-        <Label Content="Windows" HorizontalAlignment="Left" Margin="140,4,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="83" Grid.Row="1"/>
-        <Label Content="Activities" HorizontalAlignment="Left" Margin="141,4,0,0" VerticalAlignment="Top" FontSize="18" Width="99" Grid.Column="1" Height="34" Grid.Row="1" RenderTransformOrigin="1.03,0.599"/>
-        <lvc:PieChart Name="Activity_Chart" Series="{Binding ActivitySeries}" 
-            LegendLocation="None" InnerRadius="100" Margin="10,46,10,46.5" Grid.Column="1" Grid.Row="1">
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="20"/>
-            </lvc:PieChart.ChartLegend>
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="20"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-
-
-    </Grid>
 </Window>
