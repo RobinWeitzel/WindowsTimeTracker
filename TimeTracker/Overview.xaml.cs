@@ -34,8 +34,6 @@ namespace TimeTracker
             WindowSeries = new SeriesCollection();
             ActivitySeries = new SeriesCollection();
 
-            loadData(Time_Picker.Text);
-
             labelPoint = chartPoint => {
                 int hours = (int)Math.Floor(chartPoint.Y / 60);
                 int minutes = (int)Math.Round(chartPoint.Y % 60);
@@ -45,6 +43,8 @@ namespace TimeTracker
                 else
                     return minutes.ToString() + "m";
             };
+
+            loadData(Time_Picker.Text);
 
             DataContext = this;
         }
@@ -171,6 +171,13 @@ namespace TimeTracker
 
                 ActivitySeriesItems = activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new PieSeries
                 {
+                    Title = g.Key,
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                }).ToList();
+
+                var test = activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new                 {
                     Title = g.Key,
                     Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
                     DataLabels = true,

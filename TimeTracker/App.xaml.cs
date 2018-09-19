@@ -45,7 +45,8 @@ namespace TimeTracker
             "Info-Center",
             "Windows-Standardsperrbildschirm",
             "Host für die Windows Shell-Oberfläche",
-            "F12PopupWindow"
+            "F12PopupWindow",
+            "LockingWindow"
         };
 
         private SettingsWindow SettingsWindow;
@@ -108,9 +109,10 @@ namespace TimeTracker
        new SessionSwitchEventHandler(OnSessionSwitch);
 
             // Delete old records
-            using (mainEntities db = new mainEntities()) {
+            using (mainEntities db = new mainEntities())
+            {
                 long timeRecordsKept = db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept;
-  
+
                 // If timeRecordsKept is 0 records are never deleted
                 if (timeRecordsKept != 0)
                 {
@@ -191,7 +193,7 @@ namespace TimeTracker
             }
             else
             {
-                DataWindow.Navigate(new Gantt2());
+                DataWindow.Navigate(new Overview());
                 DataWindow.Show();
             }
         }
@@ -333,7 +335,7 @@ namespace TimeTracker
         {
             const int nChars = 256;
             StringBuilder Buff = new StringBuilder(nChars);
-            if(handle.ToInt64() == 0)
+            if (handle.ToInt64() == 0)
                 handle = GetForegroundWindow();
 
             if (GetWindowText(handle, Buff, nChars) > 0)
@@ -375,7 +377,9 @@ namespace TimeTracker
             {
                 string name = arr.Last();
                 // Stop if the current activity is blacklisted or a file path
-                if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\")) {
+                if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
+                {
+                    saveWindows();
                     return;
                 }
 
@@ -439,7 +443,7 @@ namespace TimeTracker
         {
             using (mainEntities db = new mainEntities())
             {
-                if(name == null) // If no name is specified check which window is active
+                if (name == null) // If no name is specified check which window is active
                 {
                     window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
                     if (current_window != null)
@@ -455,9 +459,11 @@ namespace TimeTracker
                     old_activity.to = DateTime.Now;
                 }
 
+                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.from).FirstOrDefault();
+
                 activity_active new_activity = new activity_active();
                 new_activity.from = DateTime.Now;
-                new_activity.name = old_activity != null ? old_activity.name : db.activities.FirstOrDefault().name;
+                new_activity.name = last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name;
                 db.activity_active.Add(new_activity);
 
                 db.SaveChanges();
@@ -500,7 +506,7 @@ namespace TimeTracker
             doc.LoadXml(createToast(tag_long, title, subtitle, activities, selected).GetContent());
             // And create the toast notification 
             var toast = new ToastNotification(doc);
-            
+
             toast.Tag = tag;
             toast.Group = group;
 
