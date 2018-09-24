@@ -16,11 +16,11 @@ namespace TimeTracker
             TimeSpan relativeTime = (TimeSpan)values[1];
             double containerWidth = (double)values[2];
             double factor = relativeTime.TotalSeconds / timelineDuration.TotalSeconds;
-            double rval = factor * containerWidth;
+            double rval = factor * containerWidth * 8;
 
             if (targetType == typeof(Thickness))
             {
-                return new Thickness(rval, 0, 0, 0);
+                return new Thickness(0, rval, 0, 0);
             }
             else
             {

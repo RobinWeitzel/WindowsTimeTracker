@@ -35,5 +35,25 @@ namespace TimeTracker
         {
             this.Content = nextPage;
         }
+
+        private void Window_Click(object sender, RoutedEventArgs e)
+        {
+            if (e == null || e.OriginalSource == null)
+                return;
+            Button btn = e.OriginalSource as Button;
+
+            if (btn == null || btn.Content == null)
+                return;
+
+            switch(btn.Content)
+            {
+                case "Details":
+                    Navigate(new Details());
+                    break;
+                case "Overview":
+                    Navigate(new Overview());
+                    break;
+            }
+        }
     }
 }

@@ -6,5 +6,6 @@
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
         Title="Data - TimeTracker" 
-        WindowStartupLocation="CenterScreen">
+        ButtonBase.Click="Window_Click"
+        WindowStartupLocation="CenterScreen" Width="800" Height="800">
 </Window>

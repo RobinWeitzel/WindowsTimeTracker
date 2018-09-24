@@ -46,7 +46,8 @@ namespace TimeTracker
             "Windows-Standardsperrbildschirm",
             "Host für die Windows Shell-Oberfläche",
             "F12PopupWindow",
-            "LockingWindow"
+            "LockingWindow",
+            "SurfaceDTX"
         };
 
         private SettingsWindow SettingsWindow;
@@ -435,6 +436,20 @@ namespace TimeTracker
                     {
                         changeActivity(arr.Last());
                     }
+                    // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
+                    else if (!db.activity_active.Any(aa => aa.to == null))
+                    {
+                        if (db.activities.FirstOrDefault() == null)
+                            return;
+                        activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
+
+                        activity_active new_activity = new activity_active();
+                        new_activity.from = DateTime.Now;
+                        new_activity.name = last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name;
+                        db.activity_active.Add(new_activity);
+
+                        db.SaveChanges();
+                    }
                 }
             }
         }
@@ -443,6 +458,9 @@ namespace TimeTracker
         {
             using (mainEntities db = new mainEntities())
             {
+                if (db.activities.FirstOrDefault() == null)
+                    return;
+
                 if (name == null) // If no name is specified check which window is active
                 {
                     window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();

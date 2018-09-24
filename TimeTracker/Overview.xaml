@@ -26,7 +26,7 @@
         </ComboBox>
 
         <lvc:PieChart Name="Window_Chart" Series="{Binding WindowSeries}" 
-                      LegendLocation="None" InnerRadius="100" Margin="10,46,10,46.5" Grid.Row="1" Grid.ColumnSpan="2">
+                      LegendLocation="None"  Margin="10,46,10,46.5" Grid.Row="1" Grid.ColumnSpan="2">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
             </lvc:PieChart.ChartLegend>
@@ -37,7 +37,7 @@
         <Label Content="Windows" HorizontalAlignment="Left" Margin="95.71,4,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="83" Grid.Row="1" Grid.Column="1"/>
         <Label Content="Activities" HorizontalAlignment="Left" Margin="141,4,0,0" VerticalAlignment="Top" FontSize="18" Width="99" Grid.Column="2" Height="34" Grid.Row="1" RenderTransformOrigin="1.03,0.599"/>
         <lvc:PieChart Name="Activity_Chart" Series="{Binding ActivitySeries}" 
-            LegendLocation="None" InnerRadius="100" Margin="10,46,10,46.5" Grid.Column="2" Grid.Row="1">
+            LegendLocation="None" Margin="10,46,10,46.5" Grid.Column="2" Grid.Row="1">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"/>
             </lvc:PieChart.ChartLegend>
@@ -45,5 +45,6 @@
                 <lvc:DefaultTooltip BulletSize="20"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
+        <Button Content="Details" Grid.Column="2" HorizontalAlignment="Left" Height="30" Margin="239.5,33,0,0" VerticalAlignment="Top" Width="133" FontSize="18"/>
     </Grid>
 </UserControl>
