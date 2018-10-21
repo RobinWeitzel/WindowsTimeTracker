@@ -294,6 +294,13 @@ namespace TimeTracker
 
                             db.SaveChanges();
                         }
+                    } else if(args["action"].Equals("other"))
+                    {
+                        showNotification2(
+                            int.Parse(args["activityId"]),
+                            args["name"],
+                            "For which project are you using this app?"
+                        );
                     }
                 });
             }
@@ -486,6 +493,11 @@ namespace TimeTracker
 
                 db.SaveChanges();
 
+                List<string> selectable_activities = db.activities.Select(a => a.name).ToList();
+
+                if (!selectable_activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
+                    selectable_activities.Add(new_activity.name);
+
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
 
@@ -493,7 +505,7 @@ namespace TimeTracker
                     new_activity.id,
                     name,
                     "For which project are you using this app?",
-                    db.activities.Select(a => a.name).ToArray(),
+                    selectable_activities.ToArray(),
                     new_activity.name,
                     timeout
                 );
@@ -535,7 +547,23 @@ namespace TimeTracker
             {
                 DesktopNotificationManagerCompat.History.Remove(tag, group);
             });
+        }
 
+        private static void showNotification2(long tag_long, string title, string subtitle)
+        {
+            string tag = tag_long.ToString();
+            string group = "ProjectQuestions";
+            // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
+            var doc = new XmlDocument();
+            doc.LoadXml(createToast2(tag_long, title, subtitle).GetContent());
+            // And create the toast notification 
+            var toast = new ToastNotification(doc);
+
+            toast.Tag = tag;
+            toast.Group = group;
+
+            // And then show it 
+            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
         }
 
         private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
@@ -585,6 +613,10 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
@@ -606,10 +638,14 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
-                            }
+                            },
                         }
                     };
                     break;
@@ -628,6 +664,10 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
@@ -651,6 +691,10 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
@@ -675,6 +719,10 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
@@ -700,6 +748,10 @@ namespace TimeTracker
                         }
                         },
                         Buttons = {
+                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
                             new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
                             {
                                 ActivationType = ToastActivationType.Background,
@@ -708,6 +760,58 @@ namespace TimeTracker
                     };
                     break;
             }
+
+            return content;
+        }
+
+        private static ToastContent createToast2(long tag_long, string title, string subtitle) {
+            ToastContent content = new ToastContent()
+            {
+                Duration = ToastDuration.Short,
+                Header = new ToastHeader("792374127", "TimeTracker", "")
+                {
+                    Id = "792374127",
+                    Title = "TimeTracker",
+                    Arguments = "",
+                },
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children = {
+                            new AdaptiveText()
+                            {
+                                Text = title,
+                                HintMaxLines = 1
+                            },
+
+                            new AdaptiveText()
+                            {
+                                Text = subtitle
+                            }
+                        }
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Inputs = {
+                         new ToastTextBox("activity")
+                            {
+                                PlaceholderContent = "Other Activity"
+                            }
+                        },
+                    Buttons = {
+                            new ToastButton("Cancle", "action=cancel2&activityId=" + tag_long)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            },
+                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
+                            {
+                                ActivationType = ToastActivationType.Background,
+                            }
+                        }
+                }
+            };
 
             return content;
         }

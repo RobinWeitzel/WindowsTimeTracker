@@ -46,7 +46,7 @@ namespace TimeTracker
         private void AddActivity_Click(object sender, RoutedEventArgs e)
         {
 
-            if(ActivityList.Items.Count >= 5)
+            if(ActivityList.Items.Count >= 4)
             {
                 // Todo handle error
             } else

@@ -149,6 +149,45 @@ namespace TimeTracker
                                to = (wa.to ?? DateTime.Today) < mondayOfThisWeek ? (wa.to ?? DateTime.Today) : mondayOfThisWeek
                            }).ToList();
                         break;
+                    case "This month":
+                        DateTime start_this_month = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                        windowHelper = db.window_active
+                            .Where(wa => wa.to >= start_this_month || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > start_this_month ? wa.from : start_this_month,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        activityHelper = db.activity_active
+                            .Where(wa => wa.to >= start_this_month || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > start_this_month ? wa.from : start_this_month,
+                                to = wa.to ?? DateTime.Now
+                            }).ToList();
+                        break;
+                    case "Last month":
+                        DateTime start_last_month = (new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)).AddMonths(-1);
+                        DateTime start_next_month = start_last_month.AddMonths(1);
+                        windowHelper = db.window_active
+                            .Where(wa => (wa.from < start_last_month && wa.to >= start_last_month) || wa.to == null)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > start_last_month ? wa.from : start_last_month,
+                                to = (wa.to ?? DateTime.Today) < start_last_month ? (wa.to ?? DateTime.Today) : start_last_month
+                            }).ToList();
+                        activityHelper = db.activity_active
+                           .Where(wa => (wa.from < start_last_month && wa.to >= start_last_month) || wa.to == null)
+                           .Select(wa => new Helper
+                           {
+                               name = wa.name,
+                               from = wa.from > start_last_month ? wa.from : start_last_month,
+                               to = (wa.to ?? DateTime.Today) < start_last_month ? (wa.to ?? DateTime.Today) : start_last_month
+                           }).ToList();
+                        break;
                 }
 
                 foreach (Helper h in windowHelper)

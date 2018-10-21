@@ -22,7 +22,9 @@
             <ComboBoxItem IsSelected="True">Today</ComboBoxItem>
             <ComboBoxItem>Yesterday</ComboBoxItem>
             <ComboBoxItem>Last 3 days</ComboBoxItem>
-            <ComboBoxItem>Last Week</ComboBoxItem>
+            <ComboBoxItem>Last week</ComboBoxItem>
+            <ComboBoxItem>This month</ComboBoxItem>
+            <ComboBoxItem>Last month</ComboBoxItem>
         </ComboBox>
 
         <lvc:PieChart Name="Window_Chart" Series="{Binding WindowSeries}" 
