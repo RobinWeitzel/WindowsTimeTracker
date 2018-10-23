@@ -468,6 +468,8 @@ namespace TimeTracker
                 if (db.activities.FirstOrDefault() == null)
                     return;
 
+                bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
+
                 if (name == null) // If no name is specified check which window is active
                 {
                     window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
@@ -493,10 +495,15 @@ namespace TimeTracker
 
                 db.SaveChanges();
 
-                List<string> selectable_activities = db.activities.Select(a => a.name).ToList();
+                List<string> selectable_activities;
 
-                if (!selectable_activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
-                    selectable_activities.Add(new_activity.name);
+                if (lastActivities) {
+                    selectable_activities = db.activity_active.OrderByDescending(aa => aa.from).Select(aa => aa.name).Distinct().Take(5).ToList();
+                } else {
+                    selectable_activities = db.activities.Select(a => a.name).ToList();
+                    if (!selectable_activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
+                        selectable_activities.Add(new_activity.name);
+                }
 
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
@@ -559,7 +566,7 @@ namespace TimeTracker
             // And create the toast notification 
             var toast = new ToastNotification(doc);
 
-            toast.Tag = tag;
+            toast.Tag = tag + "Other Activity";
             toast.Group = group;
 
             // And then show it 
@@ -570,7 +577,7 @@ namespace TimeTracker
         {
             ToastContent content = new ToastContent()
             {
-                Duration = ToastDuration.Short,
+                Duration = ToastDuration.Long,
                 Header = new ToastHeader("792374127", "TimeTracker", "")
                 {
                     Id = "792374127",
@@ -767,7 +774,7 @@ namespace TimeTracker
         private static ToastContent createToast2(long tag_long, string title, string subtitle) {
             ToastContent content = new ToastContent()
             {
-                Duration = ToastDuration.Short,
+                Duration = ToastDuration.Long,
                 Header = new ToastHeader("792374127", "TimeTracker", "")
                 {
                     Id = "792374127",
@@ -797,7 +804,7 @@ namespace TimeTracker
                     Inputs = {
                          new ToastTextBox("activity")
                             {
-                                PlaceholderContent = "Other Activity"
+                                PlaceholderContent = "Activity - Subactivity"
                             }
                         },
                     Buttons = {

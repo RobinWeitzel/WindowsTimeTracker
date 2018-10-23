@@ -14,6 +14,7 @@ namespace TimeTracker
         public static long defaultTimeRecordsKept = 30; // A month
         public static bool fuzzyMatching = false;
         public static bool useHashColors = false;
+        public static bool lastActivities = true;
 
         /*
            <Color A="255" R="33" G="149" B="242" />
