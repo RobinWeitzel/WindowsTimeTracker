@@ -175,20 +175,20 @@ namespace TimeTracker
                         DateTime start_last_month = (new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)).AddMonths(-1);
                         DateTime start_next_month = start_last_month.AddMonths(1);
                         windowHelper = db.window_active
-                            .Where(wa => (wa.from < start_last_month && wa.to >= start_last_month) || wa.to == null)
+                            .Where(wa => (wa.from < start_next_month && wa.to >= start_last_month) || wa.to == null)
                             .Select(wa => new Helper
                             {
                                 name = wa.name,
                                 from = wa.from > start_last_month ? wa.from : start_last_month,
-                                to = (wa.to ?? DateTime.Today) < start_last_month ? (wa.to ?? DateTime.Today) : start_last_month
+                                to = (wa.to ?? DateTime.Today) < start_next_month ? (wa.to ?? DateTime.Today) : start_next_month
                             }).ToList();
                         activityHelper = db.activity_active
-                           .Where(wa => (wa.from < start_last_month && wa.to >= start_last_month) || wa.to == null)
+                           .Where(wa => (wa.from < start_next_month && wa.to >= start_last_month) || wa.to == null)
                            .Select(wa => new Helper
                            {
                                name = wa.name,
                                from = wa.from > start_last_month ? wa.from : start_last_month,
-                               to = (wa.to ?? DateTime.Today) < start_last_month ? (wa.to ?? DateTime.Today) : start_last_month
+                               to = (wa.to ?? DateTime.Today) < start_next_month ? (wa.to ?? DateTime.Today) : start_next_month
                            }).ToList();
                         break;
                 }
