@@ -236,7 +236,6 @@ namespace TimeTracker
                     // ToDo: Ask what user did during time away from pc
                     break;
                 case PowerModes.Suspend:
-                    Console.WriteLine("Sleep mode activated");
                     saveWindows();
                     break;
             }
@@ -426,14 +425,10 @@ namespace TimeTracker
                     new_window.from = DateTime.Now;
                     new_window.handle = handleLong;
 
-                    Console.WriteLine("Window: " + name);
                     if (arr.Length >= 2)
                     {
-                        Console.WriteLine("Additional information: " + string.Join("- ", arr.Take(arr.Length - 1)));
                         new_window.details = string.Join("- ", arr.Take(arr.Length - 1));
                     }
-
-                    Console.WriteLine("Handle: " + handleLong.ToString());
 
                     db.window_active.Add(new_window);
 

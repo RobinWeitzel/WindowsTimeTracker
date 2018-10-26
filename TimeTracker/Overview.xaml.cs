@@ -25,6 +25,7 @@ namespace TimeTracker
     {
         public SeriesCollection WindowSeries { get; set; }
         public SeriesCollection ActivitySeries { get; set; }
+        public SeriesCollection ActivityGroupSeries { get; set; }
         public Func<ChartPoint, string> labelPoint { get; set; }
 
         public Overview()
@@ -32,6 +33,7 @@ namespace TimeTracker
             InitializeComponent();
 
             WindowSeries = new SeriesCollection();
+            ActivityGroupSeries = new SeriesCollection();
             ActivitySeries = new SeriesCollection();
 
             labelPoint = chartPoint => {
@@ -59,7 +61,7 @@ namespace TimeTracker
 
         public void loadData(string newItem)
         {
-            if (WindowSeries == null || ActivitySeries == null)
+            if (ActivityGroupSeries == null ||WindowSeries == null || ActivitySeries == null)
                 return;
 
             if (newItem == null)
@@ -68,6 +70,7 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 List<PieSeries> WindowSeriesItems = new List<PieSeries>();
+                List<PieSeries> ActivityGroupSeriesItems = new List<PieSeries>();
                 List<PieSeries> ActivitySeriesItems = new List<PieSeries>();
                 List<Helper> windowHelper = new List<Helper>();
                 List<Helper> activityHelper = new List<Helper>();
@@ -208,7 +211,9 @@ namespace TimeTracker
                     h.time = Math.Max(Math.Round((h.to - h.from).TotalMinutes), 0);
                 }
 
-                ActivitySeriesItems = activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new PieSeries
+                List<Helper> activityHelper2 = activityHelper.OrderBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).SelectMany(h => h).ToList();
+
+                ActivityGroupSeriesItems = activityHelper2.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => new PieSeries
                 {
                     Title = g.Key,
                     Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
@@ -216,7 +221,8 @@ namespace TimeTracker
                     LabelPoint = labelPoint
                 }).ToList();
 
-                var test = activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 5).Select(g => new                 {
+                ActivitySeriesItems = activityHelper2.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).Last()).Select(g => new PieSeries
+                {
                     Title = g.Key,
                     Values = new ChartValues<ObservableValue> { new ObservableValue(g.Sum(h => h.time)) },
                     DataLabels = true,
@@ -228,6 +234,13 @@ namespace TimeTracker
                 foreach (PieSeries series in WindowSeriesItems)
                 {
                     WindowSeries.Add(series);
+                }
+
+                ActivityGroupSeries.Clear();
+
+                foreach (PieSeries series in ActivityGroupSeriesItems)
+                {
+                    ActivityGroupSeries.Add(series);
                 }
 
                 ActivitySeries.Clear();

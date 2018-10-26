@@ -27,8 +27,8 @@
             <ComboBoxItem>Last month</ComboBoxItem>
         </ComboBox>
 
-        <lvc:PieChart Name="Window_Chart" Series="{Binding WindowSeries}" 
-                      LegendLocation="None"  Margin="10,46,10,46.5" Grid.Row="1" Grid.ColumnSpan="2">
+        <lvc:PieChart Name="Window_Group_Chart" Series="{Binding ActivityGroupSeries}" 
+                      LegendLocation="None" InnerRadius="150" Margin="10,38,10,10" Grid.Row="1" Grid.ColumnSpan="2">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
             </lvc:PieChart.ChartLegend>
@@ -36,10 +36,20 @@
                 <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
+        <lvc:PieChart Name="Window_Chart" Series="{Binding ActivitySeries}" 
+                      LegendLocation="None" Margin="35,63,35,35" Grid.Row="1" Grid.ColumnSpan="2">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+        
         <Label Content="Windows" HorizontalAlignment="Left" Margin="95.71,4,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="83" Grid.Row="1" Grid.Column="1"/>
         <Label Content="Activities" HorizontalAlignment="Left" Margin="141,4,0,0" VerticalAlignment="Top" FontSize="18" Width="99" Grid.Column="2" Height="34" Grid.Row="1" RenderTransformOrigin="1.03,0.599"/>
-        <lvc:PieChart Name="Activity_Chart" Series="{Binding ActivitySeries}" 
-            LegendLocation="None" Margin="10,46,10,46.5" Grid.Column="2" Grid.Row="1">
+        <lvc:PieChart Name="Activity_Chart" Series="{Binding WindowSeries}" 
+            LegendLocation="None" Margin="10,38,10,10" Grid.Column="2" Grid.Row="1">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"/>
             </lvc:PieChart.ChartLegend>
