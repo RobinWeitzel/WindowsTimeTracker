@@ -37,7 +37,7 @@
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
         <lvc:PieChart Name="Window_Chart" Series="{Binding ActivitySeries}" 
-                      LegendLocation="None" Margin="35,63,35,35" Grid.Row="1" Grid.ColumnSpan="2">
+                      LegendLocation="None" Margin="45,73,45,45" Grid.Row="1" Grid.ColumnSpan="2">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
             </lvc:PieChart.ChartLegend>
