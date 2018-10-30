@@ -494,7 +494,7 @@ namespace TimeTracker
                 List<string> selectable_activities;
 
                 if (lastActivities) {
-                    selectable_activities = db.Database.SqlQuery<string>("SELECT DISTINCT name FROM activity_active ORDER BY [from] DESC LIMIT 5").ToList();
+                    selectable_activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").ToList();
                 } else {
                     selectable_activities = db.activities.Select(a => a.name).ToList();
                     if (!selectable_activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
