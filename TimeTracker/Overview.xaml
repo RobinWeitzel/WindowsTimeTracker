@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TimeTracker.Overview"
+﻿<UserControl x:Name="OverviewControl" x:Class="TimeTracker.Overview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,7 +17,7 @@
             <RowDefinition Height="53*"/>
             <RowDefinition Height="201*"/>
         </Grid.RowDefinitions>
-        <Label Content="Overview over " HorizontalAlignment="Left" Margin="40,33,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="128" Grid.ColumnSpan="2"/>
+        <Label Name="Label" Content="Overview over " HorizontalAlignment="Left" Margin="40,33,0,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="128" Grid.ColumnSpan="2"/>
         <ComboBox Name="Time_Picker" HorizontalAlignment="Left" Margin="123.71,33,0,0" VerticalAlignment="Top" Width="120" FontSize="18" SelectionChanged="Time_Picker_SelectionChanged" Height="30" Grid.Column="1">
             <ComboBoxItem IsSelected="True">Today</ComboBoxItem>
             <ComboBoxItem>Yesterday</ComboBoxItem>

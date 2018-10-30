@@ -49,6 +49,9 @@ namespace TimeTracker
             loadData(Time_Picker.Text);
 
             DataContext = this;
+
+            Window_Group_Chart.MouseMove += new System.Windows.Input.MouseEventHandler(this.chartMouseMove); ;
+            Window_Chart.MouseMove += new System.Windows.Input.MouseEventHandler(this.chartMouseMove); ;
         }
 
         public class Helper
@@ -57,6 +60,26 @@ namespace TimeTracker
             public DateTime from { get; set; }
             public DateTime to { get; set; }
             public double time { get; set; }
+        }
+
+        public void chartMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var relativePosition = e.GetPosition(Window_Group_Chart);
+
+            double x = relativePosition.X - Window_Group_Chart.ActualWidth / 2;
+            double y = relativePosition.Y - Window_Group_Chart.ActualHeight / 2;
+
+            int radius = 150;
+
+            if (Math.Pow(x, 2) + Math.Pow(y, 2) < Math.Pow(radius, 2))
+            {
+                Panel.SetZIndex(Window_Group_Chart, 1);
+                Panel.SetZIndex(Window_Chart, 2);
+            } else
+            {
+                Panel.SetZIndex(Window_Group_Chart, 2);
+                Panel.SetZIndex(Window_Chart, 1);
+            }
         }
 
         public void loadData(string newItem)
