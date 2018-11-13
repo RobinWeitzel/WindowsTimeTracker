@@ -15,6 +15,7 @@ namespace TimeTracker
         public static bool fuzzyMatching = false;
         public static bool useHashColors = false;
         public static bool lastActivities = true;
+        public static bool useNativeToast = false;
 
         /*
            <Color A="255" R="33" G="149" B="242" />

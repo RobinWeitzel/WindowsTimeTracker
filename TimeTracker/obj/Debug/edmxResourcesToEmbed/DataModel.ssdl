@@ -12,8 +12,8 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
-    <Property Name="from" Type="datetime" />
+    <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+    <Property Name="from" Type="datetime" Nullable="false" />
     <Property Name="to" Type="datetime" />
   </EntityType>
   <EntityType Name="settings">
@@ -28,10 +28,11 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="2147483647" />
+    <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
     <Property Name="details" Type="nvarchar" MaxLength="2147483647" />
-    <Property Name="from" Type="datetime" />
+    <Property Name="from" Type="datetime" Nullable="false" />
     <Property Name="to" Type="datetime" />
+    <Property Name="handle" Type="integer" Nullable="false" />
   </EntityType>
   <EntityContainer Name="mainModelStoreContainer">
     <EntitySet Name="activities" EntityType="Self.activities" store:Type="Tables" />

@@ -175,6 +175,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="CustomToast.xaml.cs">
+      <DependentUpon>CustomToast.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataWindow.xaml.cs">
       <DependentUpon>DataWindow.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
     <Compile Include="window_active.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Page Include="CustomToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

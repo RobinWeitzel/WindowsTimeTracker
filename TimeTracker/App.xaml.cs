@@ -48,11 +48,17 @@ namespace TimeTracker
             "F12PopupWindow",
             "LockingWindow",
             "SurfaceDTX",
-            "CTX_RX_SYSTRAY"
+            "CTX_RX_SYSTRAY",
+            "[]",
+            "Select Activity",
+            "TimeTracker - Select Activity"
         };
 
-        private SettingsWindow SettingsWindow;
-        private DataWindow DataWindow;
+        private static SettingsWindow SettingsWindow;
+        private static DataWindow DataWindow;
+
+        private static string lastNameSelected;
+        private static bool paused = false;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -129,7 +135,8 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
+            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null, true);
+            _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => ShowDataWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
@@ -183,7 +190,7 @@ namespace TimeTracker
             }
         }
 
-        private void ShowDataWindow()
+        private static void ShowDataWindow()
         {
             if (DataWindow.IsVisible)
             {
@@ -226,7 +233,7 @@ namespace TimeTracker
                 DataWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
-
+        
         /*** Methods for handling power state change ***/
         private void OnPowerChange(object s, PowerModeChangedEventArgs e)
         {
@@ -258,6 +265,19 @@ namespace TimeTracker
             }
         }
 
+        private void pause()
+        {
+            if(paused)
+            {
+                _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
+                paused = false;
+            } else
+            {
+                _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
+                paused = true;
+            }
+        }
+
         /*** Methods for andling toast notifications ***/
 
         // The GUID CLSID must be unique to your app. Create a new GUID if copying this code.
@@ -273,8 +293,7 @@ namespace TimeTracker
                     // Tapping on the top-level header launches with empty args
                     if (invokedArgs.Length == 0)
                     {
-                        // Perform a normal launch
-                        OpenWindowIfNeeded();
+                        ShowDataWindow();
                         return;
                     }
 
@@ -291,7 +310,7 @@ namespace TimeTracker
                             activity_active current_activity = db.activity_active.Find(int.Parse(args["activityId"]));
 
                             current_activity.name = userInput["activity"];
-
+                            lastNameSelected = userInput["activity"];
                             db.SaveChanges();
                         }
                     } else if(args["action"].Equals("other"))
@@ -301,6 +320,13 @@ namespace TimeTracker
                             args["name"],
                             "For which project are you using this app?"
                         );
+                    } else if(args["action"].Equals("customToast"))
+                    {
+                        using (mainEntities db = new mainEntities())
+                        {
+                            CustomToast newToast = new CustomToast(args["activityId"], args["window"]);
+                            newToast.Show();
+                        }
                     }
                 });
             }
@@ -355,6 +381,9 @@ namespace TimeTracker
 
         public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
+            if (paused)
+                return;
+
             IntPtr handle;
             long handleLong;
 
@@ -437,7 +466,7 @@ namespace TimeTracker
                     // Show notification if app has not been seen in last few minutes
                     if (!hasBeenSeen)
                     {
-                        changeActivity(arr.Last());
+                        changeActivity(arr.Last(), false);
                     }
                     // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
                     else if (!db.activity_active.Any(aa => aa.to == null))
@@ -457,7 +486,7 @@ namespace TimeTracker
             }
         }
 
-        private void changeActivity(string name)
+        private void changeActivity(string name, bool directly)
         {
             using (mainEntities db = new mainEntities())
             {
@@ -486,7 +515,7 @@ namespace TimeTracker
 
                 activity_active new_activity = new activity_active();
                 new_activity.from = DateTime.Now;
-                new_activity.name = last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name;
+                new_activity.name = lastNameSelected ?? (last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name);
                 db.activity_active.Add(new_activity);
 
                 db.SaveChanges();
@@ -501,17 +530,34 @@ namespace TimeTracker
                         selectable_activities.Add(new_activity.name);
                 }
 
+                if(directly)
+                {
+                    CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
+                    newToast.Show();
+                    return;
+                }
+
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
 
-                showNotification(
-                    new_activity.id,
-                    name,
-                    "For which project are you using this app?",
-                    selectable_activities.ToArray(),
-                    new_activity.name,
-                    timeout
-                );
+                bool useNativeToast = db.settings.Find("useNativeToast") != null ? db.settings.Find("useNativeToast").value == 1 : Constants.useNativeToast;
+
+                if (useNativeToast)
+                    showNotification(
+                        new_activity.id,
+                        name,
+                        "For which project are you using this app?",
+                        selectable_activities.ToArray(),
+                        new_activity.name,
+                        timeout
+                    );
+                else
+                    showNotification3(
+                       new_activity.id,
+                       name,
+                       "Click here if you are no longer working on " + new_activity.name + ".",
+                       timeout
+                   );
             }
         }
 
@@ -567,6 +613,28 @@ namespace TimeTracker
 
             // And then show it 
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
+        }
+
+        private void showNotification3(long tag_long, string title, string subtitle, long timeout)
+        {
+            string tag = tag_long.ToString();
+            string group = "ProjectQuestions";
+            // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
+            var doc = new XmlDocument();
+            doc.LoadXml(createToast3(tag_long, title, subtitle).GetContent());
+            // And create the toast notification 
+            var toast = new ToastNotification(doc);
+
+            toast.Tag = tag;
+            toast.Group = group;
+
+            // And then show it 
+            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
+
+            Task.Delay((int)timeout).ContinueWith(_ =>
+            {
+                DesktopNotificationManagerCompat.History.Remove(tag, group);
+            });
         }
 
         private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
@@ -814,6 +882,47 @@ namespace TimeTracker
                             }
                         }
                 }
+            };
+
+            return content;
+        }
+
+        private static ToastContent createToast3(long tag_long, string title, string subtitle)
+        {
+            ToastContent content = new ToastContent()
+            {
+                Duration = ToastDuration.Long,
+                Header = new ToastHeader("792374127", "TimeTracker", "")
+                {
+                    Id = "792374127",
+                    Title = "TimeTracker",
+                    Arguments = "",
+                },
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children = {
+                            new AdaptiveText()
+                            {
+                                Text = title,
+                                HintMaxLines = 1
+                            },
+
+                            new AdaptiveText()
+                            {
+                                Text = subtitle
+                            }
+                        }
+                    }
+                },
+                Launch = new QueryString()
+                {
+                    { "activityId", tag_long.ToString() },
+                    { "action", "customToast" },
+                    { "window", title }
+
+                }.ToString()
             };
 
             return content;

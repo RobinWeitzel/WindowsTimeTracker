@@ -39,5 +39,7 @@
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="666,470,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
         <CheckBox x:Name="LastActivities" Content="Shows the last 5 activities instead of the above." HorizontalAlignment="Left" Margin="39,404,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Show last activities instead" HorizontalAlignment="Left" Margin="39,370,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Use native notifications" HorizontalAlignment="Left" Margin="39,426,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <CheckBox x:Name="UseNativeToast" Content="Use the native Windows 10 notifications" HorizontalAlignment="Left" Margin="39,465,0,0" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </Window>

@@ -41,6 +41,7 @@ namespace TimeTracker
                 TimeRecordsKept.Text = (db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept).ToString();
                 FuzzyMatching.IsChecked = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
                 LastActivities.IsChecked = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
+                UseNativeToast.IsChecked = db.settings.Find("useNativeToast") != null ? db.settings.Find("useNativeToast").value == 1 : Constants.useNativeToast;
             }
         }
 
@@ -165,6 +166,18 @@ namespace TimeTracker
                 }
 
                 lastActivities.value = LastActivities.IsChecked == true ? 1 : 0;
+
+                /* Save UseNativeToast */
+                settings useNativeToast = db.settings.Find("useNativeToast");
+
+                if (useNativeToast == null)
+                {
+                    useNativeToast = new settings();
+                    useNativeToast.key = "useNativeToast";
+                    db.settings.Add(useNativeToast);
+                }
+
+                useNativeToast.value = UseNativeToast.IsChecked == true ? 1 : 0;
 
                 db.SaveChanges();
 
