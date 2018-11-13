@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -62,6 +63,18 @@ namespace TimeTracker
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Set connection string
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTracker";
+
+            if(!File.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            if(!File.Exists(path + "\\db.db"))
+                System.IO.File.Copy(System.AppDomain.CurrentDomain.BaseDirectory + "default.db", path + "\\db.db", false);
+
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
+
             // Set up app to run in the background
             base.OnStartup(e);
 

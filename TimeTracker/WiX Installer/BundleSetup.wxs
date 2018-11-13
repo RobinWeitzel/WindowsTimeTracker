@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+    <Bundle Name="TimeTrackerBundle" Version="0.8" UpgradeCode="fcef1123-6a65-4143-9c59-60c0a7d733bf">
+        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+        <Chain>
+            <ExePackage 
+            SourceFile="SqliteNet.exe"
+            DetectCondition="ExeDetectedVariable"
+            DownloadUrl="https://system.data.sqlite.org/downloads/1.0.109.0/sqlite-netFx46-setup-x86-2015-1.0.109.0.exe"
+            Permanent="yes"
+            PerMachine="yes"
+            InstallCommand="/VERYSLIENT /SUPPRESSMSGBOXES" />
+
+            <MsiPackage Id="MainPackage" 
+                SourceFile="TimeTrackerSetup.msi" 
+                DisplayInternalUI="yes" 
+                Compressed="yes" 
+                Vital="yes"/>
+        </Chain>
+    </Bundle>
+</Wix>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
     <Product Id="AFCAC851-4464-464E-B3B0-0BE72190FBAD" Name="TimeTracker" Language="1033" Version="0.0.0.1" Manufacturer="Robin Weitzel" UpgradeCode="1E716498-9206-451E-B7A3-9DD7BD93A1E3">
-        <Package Description="Test file in a Product" Comments="Simple test" InstallerVersion="200" Compressed="yes" />
+        <Package Description="Test file in a Product" Comments="Simple test" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
         <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="ProgramFilesFolder" Name="PFiles">
                 <Directory Name="TimeTracker" Id="TIMETRACKER">
                     <Directory Name="TimeTracker 1.0" Id="INSTALLDIR">
                         <Component Id="TimeTracker" DiskId="1" Guid="BA12DC34-A26B-4A4E-97C5-F15B0549F1FE" KeyPath="yes">
-                            <RegistryKey Id="TimeTrackerInstallDir" Root="HKCU" Key="Software\TimeTracker\TimeTracker 1.0" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                            <RegistryKey Id="TimeTrackerInstallDir" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
                                 <RegistryValue Type="string" Name="InstallDir" Value="[INSTALLDIR]" />
                                 <RegistryValue Type="integer" Name="Flag" Value="0" />
                             </RegistryKey>
                             <RegistryKey Id="TimeTrackerAutoStart" Root="HKMU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
                                 <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
                             </RegistryKey>
-                            <util:XmlFile Id="ModifyConnectionString" Action="setValue" Permanent="yes" ElementPath="/configuration/connectionStrings/add[\[]@name='mainEntities'[\]]" Name="connectionString" File="[#TIMETRACKER.EXE.CONFIG]" Value="metadata=res://*/DataModel.csdl|res://*/DataModel.ssdl|res://*/DataModel.msl;provider=System.Data.SQLite.EF6;provider connection string=&quot;data source=[#DB.DB]&quot;" SelectionLanguage="XSLPattern" Sequence="1" />
+                            <!--<util:XmlFile Id="ModifyConnectionString" Action="setValue" Permanent="yes" ElementPath="/configuration/connectionStrings/add[\[]@name='mainEntities'[\]]" Name="connectionString" File="[#TIMETRACKER.EXE.CONFIG]" Value="metadata=res://*/DataModel.csdl|res://*/DataModel.ssdl|res://*/DataModel.msl;provider=System.Data.SQLite.EF6;provider connection string=&quot;data source=[#DB.DB]&quot;" SelectionLanguage="XSLPattern" Sequence="1" />-->
                             <RemoveFolder Id="TIMETRACKER" On="uninstall" />
                             <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\x64\Debug\EntityFramework.dll" />
                             <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\x64\Debug\EntityFramework.SqlServer.dll" />
@@ -60,6 +60,7 @@
                             <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe" />
                             <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
                             <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
+                            <File Id="DEFAULT.DB" Name="default.db" Source="..\default.db" />
                         </Component>
                         <Directory Name="de" Id="deFolder">
                             <Component Id="de" Guid="f60e314f-c408-4b6b-b71c-2c93bf8e3d1c" KeyPath="yes">
@@ -90,18 +91,18 @@
                             <ShortcutProperty Key="System.AppUserModel.ToastActivatorCLSID" Value="{7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff}" />
                         </Shortcut>
                         <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
-                        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                        <RegistryValue Root="HKLM" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
                     </Component>
                 </Directory>
             </Directory>
-            <Directory Id="PersonalFolder">
+            <!--<Directory Id="PersonalFolder">
                 <Directory Id="DBFolder" Name="TimeTracker">
                     <Component Id="DB" Guid="aa23ed2d-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
                         <File Id="DB.DB" Name="db.db" Source="..\db.db" />
                         <RemoveFolder Id="DBFolder" On="uninstall" />
                     </Component>
                 </Directory>
-            </Directory>
+            </Directory>-->
         </Directory>
         <Feature Id="DefaultFeature" Title="Main Feature" Level="1" ConfigurableDirectory="INSTALLDIR">
             <ComponentRef Id="TimeTracker" />
@@ -111,9 +112,9 @@
             <ComponentRef Id="DB" />
             <ComponentRef Id="StartMenuShortcuts" />
         </Feature>
-        <Icon Id="StartMenuIcon.exe" SourceFile="..\bin\Debug\TimeTracker.exe" />
+        <Icon Id="StartMenuIcon.exe" SourceFile="..\bin\x64\Debug\TimeTracker.exe" />
         <Property Id="INSTALLDIR">
-            <RegistrySearch Id="TimeTrackerRegistry" Type="raw" Root="HKCU" Key="Software\TimeTracker\TimeTracker 1.0" Name="InstallDir" />
+            <RegistrySearch Id="TimeTrackerRegistry" Type="raw" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" Name="InstallDir" />
         </Property>
         <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
         <UIRef Id="WixUI_InstallDir" />
