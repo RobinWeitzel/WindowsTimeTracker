@@ -50,9 +50,7 @@ namespace TimeTracker
             "LockingWindow",
             "SurfaceDTX",
             "CTX_RX_SYSTRAY",
-            "[]",
-            "Select Activity",
-            "TimeTracker - Select Activity"
+            "[]"
         };
 
         private static SettingsWindow SettingsWindow;
@@ -148,7 +146,7 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null, true);
+            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => ShowDataWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
@@ -479,7 +477,7 @@ namespace TimeTracker
                     // Show notification if app has not been seen in last few minutes
                     if (!hasBeenSeen)
                     {
-                        changeActivity(arr.Last(), false);
+                        changeActivity(arr.Last());
                     }
                     // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
                     else if (!db.activity_active.Any(aa => aa.to == null))
@@ -499,7 +497,7 @@ namespace TimeTracker
             }
         }
 
-        private void changeActivity(string name, bool directly)
+        private void changeActivity(string name)
         {
             using (mainEntities db = new mainEntities())
             {
@@ -543,13 +541,6 @@ namespace TimeTracker
                         selectable_activities.Add(new_activity.name);
                 }
 
-                if(directly)
-                {
-                    CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
-                    newToast.Show();
-                    return;
-                }
-
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
 
@@ -565,12 +556,10 @@ namespace TimeTracker
                         timeout
                     );
                 else
-                    showNotification3(
-                       new_activity.id,
-                       name,
-                       "Click here if you are no longer working on " + new_activity.name + ".",
-                       timeout
-                   );
+                {
+                    CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
+                    newToast.Show();
+                }
             }
         }
 
@@ -626,28 +615,6 @@ namespace TimeTracker
 
             // And then show it 
             DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-        }
-
-        private void showNotification3(long tag_long, string title, string subtitle, long timeout)
-        {
-            string tag = tag_long.ToString();
-            string group = "ProjectQuestions";
-            // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
-            var doc = new XmlDocument();
-            doc.LoadXml(createToast3(tag_long, title, subtitle).GetContent());
-            // And create the toast notification 
-            var toast = new ToastNotification(doc);
-
-            toast.Tag = tag;
-            toast.Group = group;
-
-            // And then show it 
-            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-
-            Task.Delay((int)timeout).ContinueWith(_ =>
-            {
-                DesktopNotificationManagerCompat.History.Remove(tag, group);
-            });
         }
 
         private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
@@ -895,47 +862,6 @@ namespace TimeTracker
                             }
                         }
                 }
-            };
-
-            return content;
-        }
-
-        private static ToastContent createToast3(long tag_long, string title, string subtitle)
-        {
-            ToastContent content = new ToastContent()
-            {
-                Duration = ToastDuration.Long,
-                Header = new ToastHeader("792374127", "TimeTracker", "")
-                {
-                    Id = "792374127",
-                    Title = "TimeTracker",
-                    Arguments = "",
-                },
-                Visual = new ToastVisual()
-                {
-                    BindingGeneric = new ToastBindingGeneric()
-                    {
-                        Children = {
-                            new AdaptiveText()
-                            {
-                                Text = title,
-                                HintMaxLines = 1
-                            },
-
-                            new AdaptiveText()
-                            {
-                                Text = subtitle
-                            }
-                        }
-                    }
-                },
-                Launch = new QueryString()
-                {
-                    { "activityId", tag_long.ToString() },
-                    { "action", "customToast" },
-                    { "window", title }
-
-                }.ToString()
             };
 
             return content;

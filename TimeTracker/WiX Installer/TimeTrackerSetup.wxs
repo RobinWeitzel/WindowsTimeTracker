@@ -109,7 +109,7 @@
             <ComponentRef Id="de" />
             <ComponentRef Id="x64" />
             <ComponentRef Id="x86" />
-            <ComponentRef Id="DB" />
+            <!--<ComponentRef Id="DB" />-->
             <ComponentRef Id="StartMenuShortcuts" />
         </Feature>
         <Icon Id="StartMenuIcon.exe" SourceFile="..\bin\x64\Debug\TimeTracker.exe" />

@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="TimeTracker - Select Activity" Height="212.6" Width="366.248" Topmost="True" WindowStartupLocation="CenterScreen">
-    <Grid Margin="0,0,0,-1">
-        <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="335" Height="37" IsEditable="True" FontSize="16" KeyUp="ComboBox_OnKeyUp"/>
-        <Button x:Name="Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="270,140,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Confirm_Click"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Cancel_Click"/>
-        <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="58" Width="335" FontSize="16"/>
-    </Grid>
+        Title="NotificationsWindow - TimeTracker" Height="150" Width="350" Topmost="True" WindowStartupLocation="Manual" WindowStyle="None" WindowState="Normal" ResizeMode="NoResize" Background="#147ec9" Foreground="AntiqueWhite" ShowInTaskbar="False" ShowActivated="False" Activated="Window_Activated" Deactivated="Window_Deactivated">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect Opacity="0.5" ShadowDepth="1" BlurRadius="2" />
+        </Border.Effect>
+        <Grid Margin="0,0,0,-1">
+            <Button Name="CloseButton" Content="x" Click="CloseButton_Click" Margin="319,0,0,121" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
+            <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp" />
+            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
+        </Grid>
+    </Border>
 </Window>

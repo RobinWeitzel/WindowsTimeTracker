@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,9 +23,14 @@ namespace TimeTracker
     {
         List<string> Activities;
         int id;
+        bool cancelClose = false;
         public CustomToast(string id_string, string window)
         {
             InitializeComponent();
+
+            var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width - 15;
+            this.Top = desktopWorkingArea.Bottom - this.Height - 12;
 
             using (mainEntities db = new mainEntities())
             {
@@ -47,8 +53,29 @@ namespace TimeTracker
                 ComboBox.ItemsSource = Activities;
                 ComboBox.SelectedItem = new_activity.name;
 
-                TextBlock.Text = window + " is being used for: ";
+                TextBlock.Text = window.Trim() + " used for:";
             }
+
+            setupClose();
+        }
+
+        private async void setupClose()
+        {
+            await Task.Delay(5000);
+
+            if(!cancelClose)
+                this.Close();
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            cancelClose = true;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            cancelClose = false;
+            setupClose();
         }
 
         private void setNewActivity()
@@ -64,15 +91,7 @@ namespace TimeTracker
             }
         }
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            using (mainEntities db = new mainEntities())
-            {
-                setNewActivity();
-            }
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
