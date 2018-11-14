@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -87,6 +88,9 @@ namespace TimeTracker
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => ShowDataWindow();
+
+            //Icon icon = Icon.FromHandle(((Bitmap)Image.FromFile("Resources/time-tracking-icon-0.png")).GetHicon());
+
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
             _notifyIcon.Visible = true;
             CreateContextMenu();
