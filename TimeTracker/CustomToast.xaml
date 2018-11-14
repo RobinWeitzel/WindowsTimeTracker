@@ -12,7 +12,7 @@
         </Border.Effect>
         <Grid Margin="0,0,0,-1">
             <Button Name="CloseButton" Content="x" Click="CloseButton_Click" Margin="319,0,0,121" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
-            <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp" />
+            <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp"/>
             <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
         </Grid>
     </Border>

@@ -24,6 +24,10 @@ namespace TimeTracker
         List<string> Activities;
         int id;
         bool cancelClose = false;
+
+        long timeout = 5000;
+
+
         public CustomToast(string id_string, string window)
         {
             InitializeComponent();
@@ -54,6 +58,8 @@ namespace TimeTracker
                 ComboBox.SelectedItem = new_activity.name;
 
                 TextBlock.Text = window.Trim() + " used for:";
+
+                timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
             }
 
             setupClose();
@@ -61,7 +67,7 @@ namespace TimeTracker
 
         private async void setupClose()
         {
-            await Task.Delay(5000);
+            await Task.Delay((int)timeout);
 
             if(!cancelClose)
                 this.Close();
