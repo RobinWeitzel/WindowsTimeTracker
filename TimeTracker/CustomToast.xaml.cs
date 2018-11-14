@@ -82,7 +82,7 @@ namespace TimeTracker
 
                 ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(new_activity.name)).FirstOrDefault();
 
-                TextBlock2.Text = window.Trim() + "?";
+                TextBlock2.Text = window.Trim();
 
                 timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
             }

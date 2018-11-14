@@ -21,8 +21,8 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
-            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
-            <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="10,47,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,48,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
+            <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="10,15,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20" FontWeight="Bold"/>
             <Button x:Name="CloseButton2" Content="Cancel" Click="CloseButton_Click" Margin="10,138,252,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
             <Button x:Name="ConfirmButton2" Content="Confirm" Click="ConfirmButton_Click" Margin="252,138,10,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
         </Grid>
