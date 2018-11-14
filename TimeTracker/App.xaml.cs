@@ -288,6 +288,7 @@ namespace TimeTracker
                 paused = false;
             } else
             {
+                saveWindows();
                 _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
                 paused = true;
             }
