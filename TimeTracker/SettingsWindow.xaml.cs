@@ -73,6 +73,11 @@ namespace TimeTracker
             }
         }
 
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             using (mainEntities db = new mainEntities())
@@ -180,8 +185,6 @@ namespace TimeTracker
                 useNativeToast.value = UseNativeToast.IsChecked == true ? 1 : 0;
 
                 db.SaveChanges();
-
-                Hide();
             }
         }
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="Settings - TimeTracker">
+        Title="Settings - TimeTracker" Height="655.787" Width="1058.376">
     <Grid>
         <ListView x:Name="ActivityList" HorizontalAlignment="Left" Height="221" Margin="39,145,0,0" VerticalAlignment="Top" Width="205" FontSize="18">
             <ListBox.ItemTemplate>
@@ -21,7 +21,7 @@
         <TextBox x:Name="NewActivity" HorizontalAlignment="Left" Height="29" Margin="39,106,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="18"/>
         <Label Content="Settings" HorizontalAlignment="Left" Margin="31,1,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <Label Content="Activities" HorizontalAlignment="Left" Margin="31,41,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="TimeTracker can record up to five different activities." HorizontalAlignment="Left" Margin="31,72,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
+        <Label Content="TimeTracker can record up to four different activities." HorizontalAlignment="Left" Margin="31,72,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <TextBox x:Name="TimeOut" HorizontalAlignment="Left" Height="29" Margin="409,106,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="18"/>
         <Label Content="Notification time" HorizontalAlignment="Left" Margin="401,41,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="The time a notification is visible." HorizontalAlignment="Left" Margin="401,72,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
@@ -36,10 +36,11 @@
         <Label Content="second(s)" HorizontalAlignment="Left" Margin="619,106,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <Label Content="Fuzzy matching" HorizontalAlignment="Left" Margin="401,370,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="FuzzyMatching" Content="Detect programs by name instead of id." HorizontalAlignment="Left" Margin="409,404,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="666,470,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="934,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
         <CheckBox x:Name="LastActivities" Content="Shows the last 5 activities instead of the above." HorizontalAlignment="Left" Margin="39,404,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Show last activities instead" HorizontalAlignment="Left" Margin="39,370,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="Use native notifications" HorizontalAlignment="Left" Margin="39,426,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="UseNativeToast" Content="Use the native Windows 10 notifications" HorizontalAlignment="Left" Margin="39,465,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="39,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
     </Grid>
 </Window>

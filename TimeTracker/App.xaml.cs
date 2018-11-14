@@ -87,7 +87,7 @@ namespace TimeTracker
             DataWindow.Closing += DataWindow_Closing;
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.DoubleClick += (s, args) => ShowDataWindow();
+            _notifyIcon.DoubleClick += (s, args) => changeActivity(null);
 
             //Icon icon = Icon.FromHandle(((Bitmap)Image.FromFile("Resources/time-tracking-icon-0.png")).GetHicon());
 
@@ -104,7 +104,6 @@ namespace TimeTracker
                 // Our NotificationActivator code will run after this completes,
                 // and will show a window if necessary.
             }
-
             else
             {
                 // Show the window

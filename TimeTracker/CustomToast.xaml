@@ -5,15 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="NotificationsWindow - TimeTracker" Height="150" Width="350" Topmost="True" WindowStartupLocation="Manual" WindowStyle="None" WindowState="Normal" ResizeMode="NoResize" Background="#147ec9" Foreground="AntiqueWhite" ShowInTaskbar="False" ShowActivated="False" Activated="Window_Activated" Deactivated="Window_Deactivated">
+        Title="NotificationsWindow - TimeTracker" Height="180" Width="350" Topmost="True" WindowStartupLocation="Manual" WindowStyle="None" WindowState="Normal" ResizeMode="NoResize" Background="#147ec9" Foreground="AntiqueWhite" ShowInTaskbar="False" ShowActivated="False" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <Border>
         <Border.Effect>
             <DropShadowEffect Opacity="0.5" ShadowDepth="1" BlurRadius="2" />
         </Border.Effect>
         <Grid Margin="0,0,0,-1">
-            <Button Name="CloseButton" Content="x" Click="CloseButton_Click" Margin="319,0,0,121" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
-            <ComboBox x:Name="ComboBox" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp"/>
-            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
+            <Button Name="CloseButton" Content="x" Click="CloseButton_Click" Margin="320,0,0,151" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
+            <ComboBox x:Name="ComboBox" DisplayMemberPath="Name" SelectedValuePath="Name" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter
+                    Property="IsEnabled"
+                    Value="{Binding Selectable}" />
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
+            <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="10,47,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20" FontWeight="Bold"/>
+            <Button x:Name="CloseButton2" Content="Cancel" Click="CloseButton_Click" Margin="10,138,252,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
+            <Button x:Name="ConfirmButton2" Content="Confirm" Click="ConfirmButton_Click" Margin="252,138,10,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
         </Grid>
     </Border>
 </Window>

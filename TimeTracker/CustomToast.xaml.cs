@@ -21,11 +21,17 @@ namespace TimeTracker
     /// </summary>
     public partial class CustomToast : Window
     {
-        List<string> Activities;
+        List<CustomComboBoxItem> Activities;
         int id;
         bool cancelClose = false;
 
         long timeout = 5000;
+
+        class CustomComboBoxItem
+        {
+            public string Name { get; set; }
+            public bool Selectable { get; set; }
+        }
 
 
         public CustomToast(string id_string, string window)
@@ -45,19 +51,38 @@ namespace TimeTracker
 
                 if (lastActivities)
                 {
-                    Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").ToList();
+                    Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").Select(a => new CustomComboBoxItem()
+                    {
+                        Name = a,
+                        Selectable = true
+                    }).ToList();
                 }
                 else
                 {
-                    Activities = db.activities.Select(a => a.name).ToList();
-                    if (!Activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
-                        Activities.Add(new_activity.name);
+                    Activities = db.activities.Select(a => a.name).Select(a => new CustomComboBoxItem()
+                    {
+                        Name = a,
+                        Selectable = true
+                    }).ToList();
+                    if (!(Activities.Where(a => a.Name.Equals(new_activity.name)).Count() > 0)) // If a custom activity was entered add this as an option
+                        Activities.Add(new CustomComboBoxItem()
+                        {
+                            Name = new_activity.name,
+                            Selectable = true
+                        });
                 }
 
-                ComboBox.ItemsSource = Activities;
-                ComboBox.SelectedItem = new_activity.name;
+                Activities.Insert(0, new CustomComboBoxItem()
+                {
+                    Name = "Activity - Subactivity",
+                    Selectable = false
+                });
 
-                TextBlock.Text = window.Trim() + " used for:";
+                ComboBox.ItemsSource = Activities;
+
+                ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(new_activity.name)).FirstOrDefault();
+
+                TextBlock2.Text = window.Trim() + "?";
 
                 timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
             }
@@ -102,14 +127,16 @@ namespace TimeTracker
             this.Close();
         }
 
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            setNewActivity();
+        }
+
         private void ComboBox_OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                using (mainEntities db = new mainEntities())
-                {
-                    setNewActivity();
-                }
+                setNewActivity();
             }
         }
     }
