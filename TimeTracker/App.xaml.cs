@@ -134,6 +134,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
+
         private void ExitApplication()
         {
             _isExit = true;
@@ -142,6 +143,13 @@ namespace TimeTracker
             _notifyIcon.Dispose();
             _notifyIcon = null;
             this.Shutdown(1);
+        }
+
+        private void CloseAllToasts()
+        {
+            for (int intCounter = App.Current.Windows.Count - 1; intCounter > 0; intCounter--)
+                if(App.Current.Windows[intCounter].GetType().Name.Equals("CustomToast"))
+                    App.Current.Windows[intCounter].Close();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
@@ -465,6 +473,8 @@ namespace TimeTracker
 
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
+
+                CloseAllToasts();
 
                 CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
                 newToast.Show();

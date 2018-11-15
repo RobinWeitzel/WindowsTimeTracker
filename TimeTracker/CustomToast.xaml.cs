@@ -102,8 +102,8 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 activity_active new_activity = db.activity_active.Find(id);
-
-                new_activity.name = ComboBox.Text;
+                if(new_activity != null)
+                    new_activity.name = ComboBox.Text;
 
                 db.SaveChanges();
                 this.Close();

@@ -49,9 +49,13 @@ namespace TimeTracker
                         db.activity_active.Remove(db.activity_active.Find(activity_duplicate.id));
                     else
                     {
-                        db.activity_active.Find(activity_duplicate.id).name = activity.name;
-                        db.activity_active.Find(activity_duplicate.id).from = activity.from;
-                        db.activity_active.Find(activity_duplicate.id).to = activity.to;
+                        activity_active activity_db = db.activity_active.Find(activity_duplicate.id);
+                        if(activity_db != null)
+                        {
+                            activity_db.name = activity.name;
+                            activity_db.from = activity.from;
+                            activity_db.to = activity.to;
+                        }
                     }
                 }
                 db.SaveChanges();
