@@ -1,5 +1,4 @@
-﻿using DesktopNotifications;
-using Microsoft.QueryStringDotNET;
+﻿using Microsoft.QueryStringDotNET;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
@@ -16,8 +15,6 @@ using System.Timers;
 using System.Windows;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
-//using static DesktopNotifications.NotificationActivator;
-//using DesktopNotifications;
 
 namespace TimeTracker
 {
@@ -57,7 +54,6 @@ namespace TimeTracker
         private static SettingsWindow SettingsWindow;
         private static DataWindow DataWindow;
 
-        private static string lastNameSelected;
         private static bool paused = false;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -94,24 +90,6 @@ namespace TimeTracker
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
             _notifyIcon.Visible = true;
             CreateContextMenu();
-
-            DesktopNotificationManagerCompat.RegisterAumidAndComServer<MyNotificationActivator>("Robin.TimeTracker");
-            DesktopNotificationManagerCompat.RegisterActivator<MyNotificationActivator>();
-
-            // If launched from a toast
-            if (e.Args.Contains("-ToastActivated"))
-            {
-                // Our NotificationActivator code will run after this completes,
-                // and will show a window if necessary.
-            }
-            else
-            {
-                // Show the window
-                // In App.xaml, be sure to remove the StartupUri so that a window doesn't
-                // get created by default, since we're creating windows ourselves (and sometimes we
-                // don't want to create a window if handling a background activation).
-                //new MainWindow().Show();
-            }
 
             // Set up callback if active window changes
             dele = new WinEventDelegate(WinEventProc);
@@ -152,6 +130,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => ShowDataWindow();
+            _notifyIcon.ContextMenuStrip.Items.Add("Edit last Activities").Click += (s, e) => new ManualEdit().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
@@ -167,7 +146,6 @@ namespace TimeTracker
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            DesktopNotificationManagerCompat.History.Clear();
             saveWindows();
         }
 
@@ -221,6 +199,7 @@ namespace TimeTracker
             }
         }
 
+        
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (!_isExit)
@@ -247,7 +226,7 @@ namespace TimeTracker
                 DataWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
-        
+
         /*** Methods for handling power state change ***/
         private void OnPowerChange(object s, PowerModeChangedEventArgs e)
         {
@@ -290,74 +269,6 @@ namespace TimeTracker
                 saveWindows();
                 _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
                 paused = true;
-            }
-        }
-
-        /*** Methods for andling toast notifications ***/
-
-        // The GUID CLSID must be unique to your app. Create a new GUID if copying this code.
-        [ClassInterface(ClassInterfaceType.None)]
-        [ComSourceInterfaces(typeof(INotificationActivationCallback))]
-        [Guid("7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff"), ComVisible(true)]
-        public class MyNotificationActivator : NotificationActivator
-        {
-            public override void OnActivated(string invokedArgs, NotificationUserInput userInput, string appUserModelId)
-            {
-                Application.Current.Dispatcher.Invoke(delegate
-                {
-                    // Tapping on the top-level header launches with empty args
-                    if (invokedArgs.Length == 0)
-                    {
-                        ShowDataWindow();
-                        return;
-                    }
-
-                    NotificationUserInput helper = userInput;
-
-                    // Parse the query string (using NuGet package QueryString.NET)
-                    QueryString args = QueryString.Parse(invokedArgs);
-
-                    // See what action is being requested 
-                    if (args["action"].Equals("dismiss"))
-                    {
-                        using (mainEntities db = new mainEntities())
-                        {
-                            activity_active current_activity = db.activity_active.Find(int.Parse(args["activityId"]));
-
-                            current_activity.name = userInput["activity"];
-                            lastNameSelected = userInput["activity"];
-                            db.SaveChanges();
-                        }
-                    } else if(args["action"].Equals("other"))
-                    {
-                        showNotification2(
-                            int.Parse(args["activityId"]),
-                            args["name"],
-                            "For which project are you using this app?"
-                        );
-                    } else if(args["action"].Equals("customToast"))
-                    {
-                        using (mainEntities db = new mainEntities())
-                        {
-                            CustomToast newToast = new CustomToast(args["activityId"], args["window"]);
-                            newToast.Show();
-                        }
-                    }
-                });
-            }
-            private void OpenWindowIfNeeded()
-            {
-                // Make sure we have a window open (in case user clicked toast while app closed)
-                if (App.Current.Windows.Count == 0)
-                {
-                    new MainWindow().Show();
-                }
-
-                // Activate the window, bringing it to focus
-                App.Current.Windows[0].Activate();
-
-                // And make sure to maximize the window too, in case it was currently minimized
-                App.Current.Windows[0].WindowState = WindowState.Normal;
             }
         }
 
@@ -486,13 +397,13 @@ namespace TimeTracker
                     // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
                     else if (!db.activity_active.Any(aa => aa.to == null))
                     {
-                        if (db.activities.FirstOrDefault() == null)
-                            return;
+                        closeOldActivity();
+
                         activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
 
                         activity_active new_activity = new activity_active();
                         new_activity.from = DateTime.Now;
-                        new_activity.name = last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name;
+                        new_activity.name = last_activity != null ? last_activity.name : "";
                         db.activity_active.Add(new_activity);
 
                         db.SaveChanges();
@@ -501,13 +412,31 @@ namespace TimeTracker
             }
         }
 
+        private void closeOldActivity()
+        {
+            using (mainEntities db = new mainEntities())
+            {
+                activity_active old_activity = db.activity_active.OrderByDescending(aa => aa.from).FirstOrDefault();
+                activity_active older_activity = db.activity_active.OrderByDescending(aa => aa.from).Skip(1).FirstOrDefault();
+                if (old_activity != null)
+                {
+                    old_activity.to = DateTime.Now;
+
+                    if (older_activity != null && old_activity.name.Equals(older_activity.name) && (old_activity.from - (DateTime)older_activity.to).Seconds <= 1)
+                    {
+                        old_activity.from = older_activity.from;
+                        db.activity_active.Remove(older_activity);
+                    }
+                }
+
+                db.SaveChanges();
+            }
+        }
+
         private void changeActivity(string name)
         {
             using (mainEntities db = new mainEntities())
             {
-                if (db.activities.FirstOrDefault() == null)
-                    return;
-
                 bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
 
                 if (name == null) // If no name is specified check which window is active
@@ -519,51 +448,26 @@ namespace TimeTracker
                         name = "No window active";
                 }
 
-                /* Handle active activity */
-                activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
-                if (old_activity != null)
-                {
-                    old_activity.to = DateTime.Now;
-                }
+                closeOldActivity();
 
-                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.from).FirstOrDefault();
+                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
 
                 activity_active new_activity = new activity_active();
                 new_activity.from = DateTime.Now;
-                new_activity.name = lastNameSelected ?? (last_activity != null ? last_activity.name : db.activities.FirstOrDefault().name);
+                new_activity.name = last_activity != null ? last_activity.name : "";
                 db.activity_active.Add(new_activity);
 
                 db.SaveChanges();
 
                 List<string> selectable_activities;
 
-                if (lastActivities) {
-                    selectable_activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").ToList();
-                } else {
-                    selectable_activities = db.activities.Select(a => a.name).ToList();
-                    if (!selectable_activities.Contains(new_activity.name)) // If a custom activity was entered add this as an option
-                        selectable_activities.Add(new_activity.name);
-                }
+                selectable_activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").ToList();
 
                 // Load timeout from settings
                 long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
 
-                bool useNativeToast = db.settings.Find("useNativeToast") != null ? db.settings.Find("useNativeToast").value == 1 : Constants.useNativeToast;
-
-                if (useNativeToast)
-                    showNotification(
-                        new_activity.id,
-                        name,
-                        "For which project are you using this app?",
-                        selectable_activities.ToArray(),
-                        new_activity.name,
-                        timeout
-                    );
-                else
-                {
-                    CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
-                    newToast.Show();
-                }
+                CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
+                newToast.Show();
             }
         }
 
@@ -580,295 +484,6 @@ namespace TimeTracker
 
                 db.SaveChanges();
             }
-        }
-
-        private void showNotification(long tag_long, string title, string subtitle, string[] activities, string selected, long timeout)
-        {
-            string tag = tag_long.ToString();
-            string group = "ProjectQuestions";
-            // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
-            var doc = new XmlDocument();
-            doc.LoadXml(createToast(tag_long, title, subtitle, activities, selected).GetContent());
-            // And create the toast notification 
-            var toast = new ToastNotification(doc);
-
-            toast.Tag = tag;
-            toast.Group = group;
-
-            // And then show it 
-            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-
-            Task.Delay((int)timeout).ContinueWith(_ =>
-            {
-                DesktopNotificationManagerCompat.History.Remove(tag, group);
-            });
-        }
-
-        private static void showNotification2(long tag_long, string title, string subtitle)
-        {
-            string tag = tag_long.ToString();
-            string group = "ProjectQuestions";
-            // Create the XML document (BE SURE TO REFERENCE WINDOWS.DATA.XML.DOM) 
-            var doc = new XmlDocument();
-            doc.LoadXml(createToast2(tag_long, title, subtitle).GetContent());
-            // And create the toast notification 
-            var toast = new ToastNotification(doc);
-
-            toast.Tag = tag + "Other Activity";
-            toast.Group = group;
-
-            // And then show it 
-            DesktopNotificationManagerCompat.CreateToastNotifier().Show(toast);
-        }
-
-        private ToastContent createToast(long tag_long, string title, string subtitle, string[] activities, string selected)
-        {
-            ToastContent content = new ToastContent()
-            {
-                Duration = ToastDuration.Long,
-                Header = new ToastHeader("792374127", "TimeTracker", "")
-                {
-                    Id = "792374127",
-                    Title = "TimeTracker",
-                    Arguments = "",
-                },
-                Visual = new ToastVisual()
-                {
-                    BindingGeneric = new ToastBindingGeneric()
-                    {
-                        Children = {
-                            new AdaptiveText()
-                            {
-                                Text = title,
-                                HintMaxLines = 1
-                            },
-
-                            new AdaptiveText()
-                            {
-                                Text = subtitle
-                            }
-                        }
-                    }
-                }
-            };
-
-            switch (activities.Length)
-            {
-                case 0:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = "no activity created",
-                            Items =
-                            {
-                                new ToastSelectionBoxItem("no activity created", "no activity created")
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                    };
-                    break;
-                case 1:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = selected,
-                            Items =
-                            {
-                                new ToastSelectionBoxItem(activities[0], activities[0])
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                        }
-                    };
-                    break;
-                case 2:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = selected,
-                            Items =
-                            {
-                                new ToastSelectionBoxItem(activities[0], activities[0]),
-                                new ToastSelectionBoxItem(activities[1], activities[1])
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                    };
-                    break;
-                case 3:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = selected,
-                            Items =
-                            {
-                                new ToastSelectionBoxItem(activities[0], activities[0]),
-                                new ToastSelectionBoxItem(activities[1], activities[1]),
-                                new ToastSelectionBoxItem(activities[2], activities[2])
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                    };
-                    break;
-                case 4:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = selected,
-                            Items =
-                            {
-                                new ToastSelectionBoxItem(activities[0], activities[0]),
-                                new ToastSelectionBoxItem(activities[1], activities[1]),
-                                new ToastSelectionBoxItem(activities[2], activities[2]),
-                                new ToastSelectionBoxItem(activities[3], activities[3])
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                    };
-                    break;
-                case 5:
-                    content.Actions = new ToastActionsCustom()
-                    {
-                        Inputs = {
-                        new ToastSelectionBox("activity")
-                        {
-                            DefaultSelectionBoxItemId = selected,
-                            Items =
-                            {
-                                new ToastSelectionBoxItem(activities[0], activities[0]),
-                                new ToastSelectionBoxItem(activities[1], activities[1]),
-                                new ToastSelectionBoxItem(activities[2], activities[2]),
-                                new ToastSelectionBoxItem(activities[3], activities[3]),
-                                new ToastSelectionBoxItem(activities[4], activities[4])
-                            }
-                        }
-                        },
-                        Buttons = {
-                            new ToastButton("Other", "action=other&activityId=" + tag_long + "&name=" + title)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                    };
-                    break;
-            }
-
-            return content;
-        }
-
-        private static ToastContent createToast2(long tag_long, string title, string subtitle) {
-            ToastContent content = new ToastContent()
-            {
-                Duration = ToastDuration.Long,
-                Header = new ToastHeader("792374127", "TimeTracker", "")
-                {
-                    Id = "792374127",
-                    Title = "TimeTracker",
-                    Arguments = "",
-                },
-                Visual = new ToastVisual()
-                {
-                    BindingGeneric = new ToastBindingGeneric()
-                    {
-                        Children = {
-                            new AdaptiveText()
-                            {
-                                Text = title,
-                                HintMaxLines = 1
-                            },
-
-                            new AdaptiveText()
-                            {
-                                Text = subtitle
-                            }
-                        }
-                    }
-                },
-                Actions = new ToastActionsCustom()
-                {
-                    Inputs = {
-                         new ToastTextBox("activity")
-                            {
-                                PlaceholderContent = "Activity - Subactivity"
-                            }
-                        },
-                    Buttons = {
-                            new ToastButton("Cancle", "action=cancel2&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            },
-                            new ToastButton("Confirm", "action=dismiss&activityId=" + tag_long)
-                            {
-                                ActivationType = ToastActivationType.Background,
-                            }
-                        }
-                }
-            };
-
-            return content;
         }
     }
 }

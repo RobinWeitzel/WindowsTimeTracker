@@ -1,0 +1,24 @@
+﻿<Window x:Class="TimeTracker.ManualEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTracker"
+        mc:Ignorable="d"
+        Title="ManualEdit" Height="458.762" Width="800">
+    <Grid>
+        <Label Content="Manual Edit" HorizontalAlignment="Left" Margin="31,1,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <Label Content="Edit the last 5 activities" HorizontalAlignment="Left" Margin="31,41,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <DataGrid Name="DataGrid" HorizontalAlignment="Left" Height="293" Margin="31,75,0,0" VerticalAlignment="Top" Width="734" CanUserAddRows="False" ColumnWidth="*" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding id, Mode=TwoWay}" IsReadOnly="True" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding name, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="From"  Width="*" Binding="{Binding from, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="To"  Width="*" Binding="{Binding to, Mode=TwoWay}" IsReadOnly="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="676,382,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
+        <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="31,382,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
+
+    </Grid>
+</Window>

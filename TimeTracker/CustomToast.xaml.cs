@@ -49,33 +49,16 @@ namespace TimeTracker
 
                 id = int.Parse(id_string);
                 activity_active new_activity = db.activity_active.Find(id);
-
-                if (lastActivities)
+            
+                Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC").Select(a => new CustomComboBoxItem()
                 {
-                    Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC").Select(a => new CustomComboBoxItem()
-                    {
-                        Name = a,
-                        Selectable = true
-                    }).ToList();
+                    Name = a,
+                    Selectable = true
+                }).ToList();
 
-                    for(int i = 0; i < Activities.Count(); i++)
-                    {
-                        Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
-                    }
-                }
-                else
+                for(int i = 0; i < Activities.Count(); i++)
                 {
-                    Activities = db.activities.Select(a => a.name).Select(a => new CustomComboBoxItem()
-                    {
-                        Name = a,
-                        Selectable = true
-                    }).ToList();
-                    if (!(Activities.Where(a => a.Name.Equals(new_activity.name)).Count() > 0)) // If a custom activity was entered add this as an option
-                        Activities.Add(new CustomComboBoxItem()
-                        {
-                            Name = new_activity.name,
-                            Selectable = true
-                        });
+                    Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
                 }
 
                 Activities.Insert(0, new CustomComboBoxItem()

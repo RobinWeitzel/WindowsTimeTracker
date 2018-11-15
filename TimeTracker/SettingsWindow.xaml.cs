@@ -29,47 +29,11 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 // Redraw list
-                ActivityList.Items.Clear();
-                foreach(activities item in db.activities.ToList())
-                {
-                    ActivityList.Items.Add(new { Key = item.id, Value = item.name });
-                }
-
                 // Redraw inputs
                 TimeOut.Text = ((db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout) / 1000).ToString();
                 TimeNotUsed.Text = ((db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed) / (1000 * 60)).ToString();
                 TimeRecordsKept.Text = (db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept).ToString();
                 FuzzyMatching.IsChecked = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
-                LastActivities.IsChecked = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
-                UseNativeToast.IsChecked = db.settings.Find("useNativeToast") != null ? db.settings.Find("useNativeToast").value == 1 : Constants.useNativeToast;
-            }
-        }
-
-        private void AddActivity_Click(object sender, RoutedEventArgs e)
-        {
-
-            if(ActivityList.Items.Count >= 4)
-            {
-                // Todo handle error
-            } else
-            {
-                // Key is irrelevant as it is auto generated when the new item is saved in the db
-                ActivityList.Items.Add(new { Key = -1, Value = NewActivity.Text });
-                NewActivity.Clear();
-            }  
-        }
-
-        private void RemoveActivity_Click(object sender, RoutedEventArgs e)
-        {
-            List<object> helper = new List<object>();
-            foreach (object item in ActivityList.SelectedItems)
-            {
-                helper.Add(item);
-            }
-
-            foreach (object item in helper)
-            {
-                ActivityList.Items.Remove(item);
             }
         }
 
@@ -82,24 +46,6 @@ namespace TimeTracker
         {
             using (mainEntities db = new mainEntities())
             {
-                /* Save activities list */
-                List<long> existingKeys = new List<long>();
-
-                // Add new activities
-                foreach(dynamic item in ActivityList.Items)
-                {
-                    existingKeys.Add(item.Key);
-                    if (db.activities.Find(item.Key) == null) // activity does not exist in db
-                    {
-                        activities activitiy = new activities();
-                        activitiy.name = item.Value;
-                        db.activities.Add(activitiy);
-                    }
-                }
-
-                // Delete removed activities
-                db.activities.RemoveRange(db.activities.Where(a => !existingKeys.Contains(a.id)));
-
                 /* Save Timeout */
                 settings timeout = db.settings.Find("timeout");
 
@@ -159,30 +105,6 @@ namespace TimeTracker
                 }
 
                 fuzzyMatching.value = FuzzyMatching.IsChecked == true ? 1 : 0;
-
-                /* Save LastActivities */
-                settings lastActivities = db.settings.Find("lastActivities");
-
-                if (lastActivities == null)
-                {
-                    lastActivities = new settings();
-                    lastActivities.key = "lastActivities";
-                    db.settings.Add(lastActivities);
-                }
-
-                lastActivities.value = LastActivities.IsChecked == true ? 1 : 0;
-
-                /* Save UseNativeToast */
-                settings useNativeToast = db.settings.Find("useNativeToast");
-
-                if (useNativeToast == null)
-                {
-                    useNativeToast = new settings();
-                    useNativeToast.key = "useNativeToast";
-                    db.settings.Add(useNativeToast);
-                }
-
-                useNativeToast.value = UseNativeToast.IsChecked == true ? 1 : 0;
 
                 db.SaveChanges();
             }
