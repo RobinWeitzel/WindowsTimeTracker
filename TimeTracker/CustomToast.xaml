@@ -18,6 +18,9 @@
                         <Setter
                     Property="IsEnabled"
                     Value="{Binding Selectable}" />
+                        <Setter
+                    Property="Visibility"
+                    Value="{Binding Visible}" />
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>

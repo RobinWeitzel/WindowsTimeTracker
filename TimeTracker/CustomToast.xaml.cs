@@ -31,6 +31,7 @@ namespace TimeTracker
         {
             public string Name { get; set; }
             public bool Selectable { get; set; }
+            public string Visible { get; set; }
         }
 
 
@@ -51,11 +52,16 @@ namespace TimeTracker
 
                 if (lastActivities)
                 {
-                    Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").Select(a => new CustomComboBoxItem()
+                    Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC").Select(a => new CustomComboBoxItem()
                     {
                         Name = a,
                         Selectable = true
                     }).ToList();
+
+                    for(int i = 0; i < Activities.Count(); i++)
+                    {
+                        Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
+                    }
                 }
                 else
                 {
