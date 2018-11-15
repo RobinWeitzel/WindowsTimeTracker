@@ -23,7 +23,7 @@ namespace TimeTracker
     {
         List<CustomComboBoxItem> Activities;
         int id;
-        bool cancelClose = false;
+        Stack<bool> cancelClose = new Stack<bool>();
 
         long timeout = 5000;
 
@@ -100,18 +100,17 @@ namespace TimeTracker
         {
             await Task.Delay((int)timeout);
 
-            if(!cancelClose)
+            if(cancelClose.Count() == 0 || cancelClose.Pop() != true)
                 this.Close();
         }
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            cancelClose = true;
+            cancelClose.Push(true);
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            cancelClose = false;
             setupClose();
         }
 
