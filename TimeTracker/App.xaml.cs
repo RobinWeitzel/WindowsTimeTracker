@@ -129,7 +129,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
-            _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => ShowDataWindow();
+            _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Edit last Activities").Click += (s, e) => new ManualEdit().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
@@ -206,7 +206,6 @@ namespace TimeTracker
                 DataWindow.Show();
             }
         }
-
         
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -424,7 +423,7 @@ namespace TimeTracker
         {
             using (mainEntities db = new mainEntities())
             {
-                activity_active old_activity = db.activity_active.OrderByDescending(aa => aa.from).FirstOrDefault();
+                activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
                 activity_active older_activity = db.activity_active.OrderByDescending(aa => aa.from).Skip(1).FirstOrDefault();
                 if (old_activity != null)
                 {
