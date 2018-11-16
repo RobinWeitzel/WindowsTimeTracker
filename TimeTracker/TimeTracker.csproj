@@ -193,6 +193,9 @@
       <DependentUpon>Details.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventLengthConverter.cs" />
+    <Compile Include="HTMLDataWindow.xaml.cs">
+      <DependentUpon>HTMLDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManualEdit.xaml.cs">
       <DependentUpon>ManualEdit.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HTMLDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,6 +303,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Chart.bundle.min.js" />
     <Content Include="DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataModel.Context.cs</LastGenOutput>
@@ -305,6 +313,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>
       <LastGenOutput>DataModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataView.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="MyIcon.ico" />
     <Resource Include="Resources\MyIcon.png" />

@@ -138,3 +138,6 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTra
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.pdb
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualEdit.g.cs
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualEdit.baml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.g.cs
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.baml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html

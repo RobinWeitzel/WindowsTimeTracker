@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <style>
+        body {
+            background-color: #f1f1f1;
+            margin: 0px;
+            padding: 0px;
+            width: 1200px;
+        }
+
+        .pandel-row {
+            margin: 10px;
+            width: 1180px;
+            display: flex;
+        }
+
+            .pandel-row > .panel {
+                margin: 0px;
+            }
+
+            .pandel-row > .panel:not(:last-child) {
+                margin-right: 10px;
+            }
+
+                .pandel-row > .panel:not(:first-child) {
+                    margin-left: 10px;
+                }
+
+            .panel {
+                margin: 10px;
+                padding: 10px;
+                background-color: white;
+                display: inline-block;
+                box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+            }
+
+            .panel > * {
+                margin: 0px;
+            }
+
+        .summary-item {
+            display: inline-block;
+            padding: 12px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+    <div class="panel" style="width: 1160px">
+        <h2>Day Breakdown</h2>
+        <canvas id="day-breakdown" height="50"></canvas>
+        <div id="day-breakdown-summary"></div>
+    </div>
+    <div class="pandel-row">
+        <div class="panel" style="width: 50%;">
+            <h2>Activities Total (last 30 days)</h2>
+            <canvas id="activities"></canvas>
+        </div>
+        <div class="panel" style="width: 50%;">
+            <h2>Apps Today</h2>
+            <canvas id="windows"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script>
+        var backgroundColor = [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+
+        /*var data = [
+            {
+                name: "Activity 1",
+                from: 8.00,
+                to: 9.4
+            },
+            {
+                name: "Activity 2",
+                from: 13.00,
+                to: 14.5
+            },
+            {
+                name: "Activity 1",
+                from: 14.5,
+                to: 16.2
+            },
+        ];
+
+        var data2 = [
+            {
+                name: "Window 1",
+                value: 3
+            },
+            {
+                name: "Window 2",
+                value: 1.5
+            },
+            {
+                name: "Window 3",
+                value: 0.4
+            },
+        ];
+
+        var data3 = [
+            {
+                name: "Activity 1",
+                value: 3
+            },
+            {
+                name: "Activity 2",
+                value: 1.5
+            },
+            {
+                name: "Activity 3",
+                value: 0.4
+            },
+        ];*/
+
+        var data = JSON.parse(window.external.getActivityBreakdown());
+        var data2 = JSON.parse(window.external.getWindows());
+        var data3 = JSON.parse(window.external.getActivities());
+
+        function prepareActivityBreakdown() {
+            var result = [];
+            var colorPosition = [];
+
+            if (data.length === 0) {
+                result.push({
+                    fill: false,
+                    data: [
+                        24
+                    ]
+                });
+
+                return result;
+            }
+
+            result.push({
+                fill: false,
+                data: [
+                    data[0].from
+                ]
+            });
+
+            for (var i = 0; i < data.length; i++) {
+                result.push({
+                    label: data[i].name,
+                    backgroundColor: backgroundColor[colorPosition.indexOf(data[i].name) < 0 ? colorPosition.push(data[i].name) - 1 : colorPosition.indexOf(data[i].name)],
+                    data: [
+                        data[i].to - data[i].from
+                    ]
+                });
+
+                if (i + 1 < data.length) {
+                    result.push({
+                        fill: false,
+                        data: [
+                            data[i + 1].from - data[i].to
+                        ]
+                    });
+                } else {
+                    result.push({
+                        fill: false,
+                        data: [
+                            24 - data[i].to
+                        ]
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        var ctx = document.getElementById("day-breakdown").getContext('2d');
+
+        var stackedBar = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["16.11.18"],
+                datasets: prepareActivityBreakdown()
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        ticks: {
+                            max: 24,
+                            min: 0,
+                            stepSize: 2,
+                            callback: function (value, index, values) {
+                                return value <= 12 ? value + "AM" : (value - 12) + "PM";
+                            }
+                        },
+                        position: "top"
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    mode: 'point',
+                    filter: function (tooltipItem, data) {
+                        var label = data.datasets[tooltipItem.datasetIndex].label;
+
+                        return label !== undefined
+                    },
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label;
+
+                            label += " (" + formatTime(tooltipItem.xLabel) + ")";
+                            return label;
+                        },
+                        title: function (tooltipItem, data) {
+                            return null;
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'point',
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        function formatTime(totlaHours) {
+            var hours = 0;
+            var minutes = 0;
+
+            while (totlaHours >= 1) {
+                hours++;
+                totlaHours--;
+            }
+
+            minutes = Math.round(60 * totlaHours);
+
+            return hours + "h " + minutes + "m";
+        }
+
+        function drawSummary() {
+            var result = {};
+
+            var innerHTML = "<div style='display: inline-block; margin-left: 60px;'>Activity : </div>";
+
+            for (var i = 0; i < data.length; i++) {
+                if (result[data[i].name] === undefined)
+                    result[data[i].name] = data[i].to - data[i].from;
+                else
+                    result[data[i].name] += data[i].to - data[i].from;
+            }
+
+            var counter = 0;
+
+            Object.keys(result).forEach(function (key) {
+                innerHTML += "<div class='summary-item' style='background-color: " + backgroundColor[counter++] + ";'>" + key + " (" + formatTime(result[key]) + ")" + "</div>";
+            });
+
+            document.getElementById("day-breakdown-summary").innerHTML = innerHTML;
+        }
+
+        drawSummary();
+
+        function prepareActivities() {
+            var result = {};
+            var colorPosition = [];
+
+            result["labels"] = [];
+            result["datasets"] = [{
+                data: [],
+                backgroundColor: [],
+                label: "Dataset 1"
+            }];
+
+            for (var i = 0; i < data3.length; i++) {
+                result["labels"].push(data3[i].name);
+                result["datasets"][0]["data"].push(data3[i].value);
+                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data3[i].name) < 0 ? colorPosition.push(data3[i].name) - 1 : colorPosition.indexOf(data3[i].name)]);
+            }
+
+            return result;
+        }
+
+        ctx = document.getElementById("activities").getContext('2d');
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: prepareActivities(),
+            options: {
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+
+                            label += " (" + formatTime(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]) + ")";
+                            return label;
+                        }
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        display: false
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        formatter: function (value, context) {
+                            return formatTime(value);
+                        }
+                    }
+                }
+            }
+        });
+
+
+        function prepareWindows() {
+            var result = {};
+            var colorPosition = [];
+
+            result["labels"] = [];
+            result["datasets"] = [{
+                data: [],
+                backgroundColor: [],
+                label: "Dataset 1"
+            }];
+
+            for (var i = 0; i < data2.length; i++) {
+                result["labels"].push(data2[i].name);
+                result["datasets"][0]["data"].push(data2[i].value);
+                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data2[i].name) < 0 ? colorPosition.push(data2[i].name) - 1 : colorPosition.indexOf(data2[i].name)]);
+            }
+
+            return result;
+        }
+
+
+        ctx = document.getElementById("windows").getContext('2d');
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: prepareWindows(),
+            options: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        generateLabels: function (chart) {
+                            var data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map(function (label, i) {
+                                    var meta = chart.getDatasetMeta(0);
+                                    var ds = data.datasets[0];
+                                    var arc = meta.data[i];
+                                    var custom = arc && arc.custom || {};
+                                    var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                                    var arcOpts = chart.options.elements.arc;
+                                    var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                                    var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                                    var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                                    // We get the value of the current label
+                                    var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                                    return {
+                                        // Instead of `text: label,`
+                                        // We add the value to the string
+                                        text: label + " (" + formatTime(value) + ")",
+                                        fillStyle: fill,
+                                        strokeStyle: stroke,
+                                        lineWidth: bw,
+                                        hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                                        index: i
+                                    };
+                                });
+                            } else {
+                                return [];
+                            }
+                        }
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+
+                            label += " (" + formatTime(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]) + ")";
+                            return label;
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\App.xaml
-71911517447
-2921250124
-26-78751621
+8-1239426341
+4-721174886
+27-1054442722
 102-1345961162
-CustomToast.xaml;DataWindow.xaml;Details.xaml;MainWindow.xaml;ManualEdit.xaml;Overview.xaml;SettingsWindow.xaml;
+CustomToast.xaml;DataWindow.xaml;Details.xaml;HTMLDataWindow.xaml;MainWindow.xaml;ManualEdit.xaml;Overview.xaml;SettingsWindow.xaml;
 
-True
+False
 
