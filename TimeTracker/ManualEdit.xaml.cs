@@ -24,11 +24,16 @@ namespace TimeTracker
         public ManualEdit()
         {
             InitializeComponent();
+            loadData();
 
+        }
+
+        private void loadData()
+        {
             using (mainEntities db = new mainEntities())
             {
-                Activities = db.activity_active.OrderByDescending(aa => aa.from).Skip(1).Take(20).ToList();
-                Activities_Duplicate = db.activity_active.OrderByDescending(aa => aa.from).Skip(1).Take(20).ToList();
+                Activities = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.to).Take(20).ToList();
+                Activities_Duplicate = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.to).Take(20).ToList();
                 DataGrid.ItemsSource = Activities;
             }
         }
@@ -45,11 +50,14 @@ namespace TimeTracker
                 foreach(activity_active activity_duplicate in Activities_Duplicate)
                 {
                     activity_active activity = Activities.Where(aa => aa.id == activity_duplicate.id).FirstOrDefault();
+                    activity_active activity_db = db.activity_active.Find(activity_duplicate.id);
                     if (activity == null)
-                        db.activity_active.Remove(db.activity_active.Find(activity_duplicate.id));
+                    {
+                        if(activity_db != null)
+                            db.activity_active.Remove(db.activity_active.Find(activity_duplicate.id));
+                    }
                     else
                     {
-                        activity_active activity_db = db.activity_active.Find(activity_duplicate.id);
                         if(activity_db != null)
                         {
                             activity_db.name = activity.name;
@@ -57,8 +65,11 @@ namespace TimeTracker
                             activity_db.to = activity.to;
                         }
                     }
+
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+
+                loadData();
             }
         }
     }
