@@ -4,6 +4,8 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+
     <style>
         body {
             background-color: #f1f1f1;
@@ -22,21 +24,21 @@
                 margin: 0px;
             }
 
-            .pandel-row > .panel:not(:last-child) {
-                margin-right: 10px;
-            }
+                .pandel-row > .panel:not(:last-child) {
+                    margin-right: 10px;
+                }
 
                 .pandel-row > .panel:not(:first-child) {
                     margin-left: 10px;
                 }
 
-            .panel {
-                margin: 10px;
-                padding: 10px;
-                background-color: white;
-                display: inline-block;
-                box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-            }
+        .panel {
+            margin: 10px;
+            padding: 10px;
+            background-color: white;
+            display: inline-block;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+        }
 
             .panel > * {
                 margin: 0px;
@@ -49,11 +51,28 @@
             padding-bottom: 7px;
             border-radius: 5px;
             margin-left: 10px;
+            margin-bottom: 5px;
+        }
+
+        i {
+            cursor: pointer;
+            font-size: 26px !important;
+        }
+
+        #day-breakdown-summary {
+            margin-left: 70px;
         }
     </style>
     <title></title>
 </head>
 <body>
+    <div class="panel" style="width: 1160px; display: flex; justify-content: center;">
+        <div style="width: 600px; display: flex; justify-content: space-between; align-items: center;">
+            <i onclick="changeDate(-1)" class="fa fa-chevron-left" aria-hidden="true"></i>
+            <h2 id="date-text" data-value="0">Today</h2>
+            <i onclick="changeDate(1)" class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </div>
     <div class="panel" style="width: 1160px">
         <h2>Day Breakdown</h2>
         <canvas id="day-breakdown" height="50"></canvas>
@@ -61,11 +80,11 @@
     </div>
     <div class="pandel-row">
         <div class="panel" style="width: 50%;">
-            <h2>Activities Total (last 30 days)</h2>
+            <h2>Activities (<span id="week"></span>)</h2>
             <canvas id="activities"></canvas>
         </div>
         <div class="panel" style="width: 50%;">
-            <h2>Apps Today</h2>
+            <h2>Apps (that day)</h2>
             <canvas id="windows"></canvas>
         </div>
     </div>
@@ -73,16 +92,31 @@
     <script src="./Chart.min.js"></script>
     <script src="./chartjs-plugin-datalabels.min.js"></script>
     <script>
-        var backgroundColor = [
+        /*var backgroundColor = [
             'rgba(255,99,132,1)',
             'rgba(54, 162, 235, 1)',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)',
             'rgba(153, 102, 255, 1)',
             'rgba(255, 159, 64, 1)'
+        ];*/
+
+        var backgroundColor = [
+            '#0074D9',
+            '#7FDBFF',
+            '#39CCCC',
+            '#3D9970',
+            '#2ECC40',
+            '#01FF70',
+            '#FFDC00',
+            '#FF851B',
+            '#FF4136',
+            '#85144b',
+            '#F012BE',
+            '#B10DC9',
         ];
 
-        var data = [
+        /*var data = [
             {
                 name: "Activity 1",
                 from: 8.00,
@@ -128,11 +162,74 @@
                 name: "Activity 3",
                 value: 0.4
             },
-        ];
+        ];*/
 
-        /*var data = JSON.parse(window.external.getActivityBreakdown());
-        var data2 = JSON.parse(window.external.getWindows());
-        var data3 = JSON.parse(window.external.getActivities());*/
+        var data = [];
+        var data2 = [];
+        var data3 = [];
+
+        function getMonday(d) {
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff));
+        }
+
+        function getDateString(d) {
+            return d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
+        }
+
+        function update(value) {
+            data = JSON.parse(window.external.getActivityBreakdown(value));
+            data2 = JSON.parse(window.external.getWindows(value));
+            data3 = JSON.parse(window.external.getActivities(value));
+
+            var today = new Date();
+            today.setDate(today.getDate() + value);
+
+            stackedBar.data = {
+                labels: [getDateString(today)],
+                datasets: prepareActivityBreakdown()
+            }
+
+            stackedBar.update();
+            drawSummary();
+
+            myBarChart.data = prepareActivities();
+            myBarChart.update();
+
+            var monday = getMonday(today);
+            var sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            document.getElementById('week').innerHTML = getDateString(monday) + " - " + getDateString(sunday);
+        
+            myDoughnutChart.data = prepareWindows();
+            myDoughnutChart.update();
+        }
+
+        function changeDate(change) {
+            var value = parseInt(document.getElementById('date-text').dataset.value);
+            value += change;
+            document.getElementById('date-text').dataset.value = value;
+
+            switch (value) {
+                case 0:
+                    document.getElementById('date-text').innerHTML = "Today";
+                    break;
+                case 1:
+                    document.getElementById('date-text').innerHTML = "Tomorrow";
+                    break;
+                case -1:
+                    document.getElementById('date-text').innerHTML = "Yesterday";
+                    break;
+                default:
+                    var today = new Date();
+                    today.setDate(today.getDate() + value);
+                    document.getElementById('date-text').innerHTML = today.toDateString();
+            }
+
+            update(value);
+        }
 
         function prepareActivityBreakdown() {
             var result = [];
@@ -190,8 +287,8 @@
         var stackedBar = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
-                labels: ["16.11.18"],
-                datasets: prepareActivityBreakdown()
+                labels: [],
+                datasets: []
             },
             options: {
                 scales: {
@@ -261,7 +358,7 @@
         function drawSummary() {
             var result = {};
 
-            var innerHTML = "<div style='display: inline-block; margin-left: 60px;'>Activity : </div>";
+            var innerHTML = "<div style='display: inline-block;'>Activity : </div>";
 
             for (var i = 0; i < data.length; i++) {
                 if (result[data[i].name] === undefined)
@@ -305,7 +402,7 @@
 
         var myBarChart = new Chart(ctx, {
             type: 'bar',
-            data: prepareActivities(),
+            data: {},
             options: {
                 tooltips: {
                     callbacks: {
@@ -371,7 +468,7 @@
 
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
-            data: prepareWindows(),
+            data: {},
             options: {
                 legend: {
                     position: 'right',
@@ -427,6 +524,8 @@
                 }
             }
         });
+
+        update(0);
     </script>
 </body>
 </html>

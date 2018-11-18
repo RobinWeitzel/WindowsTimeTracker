@@ -13,5 +13,8 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dataview.html")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("font-awesome-4.7.0/css/font-awesome.css")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("font-awesome-4.7.0/css/font-awesome.min.css")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("font-awesome-4.7.0/fonts/fontawesome-webfont.svg")]
 
 

@@ -18,6 +18,15 @@ using System.Windows.Shapes;
 
 namespace TimeTracker
 {
+    public static class DateTimeExtensions
+    {
+        public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek)
+        {
+            int diff = (7 + (dt.DayOfWeek - startOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+    }
+
     /// <summary>
     /// Interaktionslogik für HTMLDataWindow.xaml
     /// </summary>
@@ -29,6 +38,7 @@ namespace TimeTracker
 
             string curDir = AppDomain.CurrentDomain.BaseDirectory;
             this.WebBrowser.Source = new Uri(String.Format("file:///{0}DataView.html", curDir));
+            WebBrowser.ObjectForScripting = new MyScriptingClass();
         }
 
         [ComVisible(true)]
@@ -41,9 +51,9 @@ namespace TimeTracker
                 public double from { get; set; }
                 public double to { get; set; }
             }
-            public string getActivityBreakdown()
+            public string getActivityBreakdown(int value)
             {
-                DateTime day_in_question = DateTime.Today;
+                DateTime day_in_question = DateTime.Today.AddDays(value);
                 DateTime day_in_question_after = day_in_question.AddDays(1);
                 using (mainEntities db = new mainEntities())
                 {
@@ -77,17 +87,19 @@ namespace TimeTracker
                 public double value { get; set; }
             }
 
-            public string getWindows()
+            public string getWindows(int value)
             {
+                DateTime day_in_question = DateTime.Today.AddDays(value);
+                DateTime day_in_question_after = day_in_question.AddDays(1);
                 using (mainEntities db = new mainEntities())
                 {
                     List<Helper> windowHelper = db.window_active
-                            .Where(wa => wa.to >= DateTime.Today || wa.to == null)
+                            .Where(wa => (wa.to == null || wa.to >= day_in_question) && wa.from < day_in_question_after)
                             .Select(wa => new Helper
                             {
                                 name = wa.name,
-                                from = wa.from > DateTime.Today ? wa.from : DateTime.Today,
-                                to = wa.to ?? DateTime.Now
+                                from = wa.from > day_in_question ? wa.from : day_in_question,
+                                to = wa.to ?? day_in_question_after
                             }).ToList();
 
                     foreach (Helper h in windowHelper)
@@ -103,18 +115,20 @@ namespace TimeTracker
                 }
             }
 
-            public string getActivities()
+            public string getActivities(int value)
             {
+                DateTime start_of_week = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
+                DateTime start_next_week = start_of_week.AddDays(7);
                 using (mainEntities db = new mainEntities())
                 {
                     DateTime minDate = DateTime.Now.AddDays(-30);
                     List<Helper> activityHelper = db.activity_active
-                       .Where(wa => wa.to != null && wa.from >= minDate)
-                       .Select(wa => new Helper
+                       .Where(aa => (aa.to == null || aa.to >= start_of_week) && aa.from < start_next_week)
+                       .Select(aa => new Helper
                        {
-                           name = wa.name,
-                           from = wa.from,
-                           to = (DateTime)wa.to
+                           name = aa.name,
+                           from = aa.from > start_of_week ? aa.from : start_of_week,
+                           to = aa.to ?? start_next_week
                        }).ToList();
 
                     foreach (Helper h in activityHelper)
