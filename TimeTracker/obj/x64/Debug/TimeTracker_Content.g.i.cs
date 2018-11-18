@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart.bundle.min.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart.min.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chartjs-plugin-datalabels.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dataview.html")]

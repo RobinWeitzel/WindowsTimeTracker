@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,9 +27,8 @@ namespace TimeTracker
         {
             InitializeComponent();
 
-            string curDir = Directory.GetCurrentDirectory();
-            this.WebBrowser.Source = new Uri(String.Format("file:///{0}/DataView.html", curDir));
-            WebBrowser.ObjectForScripting = new MyScriptingClass();
+            string curDir = AppDomain.CurrentDomain.BaseDirectory;
+            this.WebBrowser.Source = new Uri(String.Format("file:///{0}DataView.html", curDir));
         }
 
         [ComVisible(true)]
@@ -109,7 +109,7 @@ namespace TimeTracker
                 {
                     DateTime minDate = DateTime.Now.AddDays(-30);
                     List<Helper> activityHelper = db.activity_active
-                       .Where(wa => wa.to != null && wa.from <= minDate)
+                       .Where(wa => wa.to != null && wa.from >= minDate)
                        .Select(wa => new Helper
                        {
                            name = wa.name,
@@ -122,7 +122,7 @@ namespace TimeTracker
                         h.time = Math.Max(Math.Round((h.to - h.from).TotalHours, 2), 0);
                     }
 
-                    return customJSONSerializer<Helper2>(activityHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
+                    return customJSONSerializer<Helper2>(activityHelper.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
                     {
                         name = g.Key,
                         value = g.Sum(h => h.time)

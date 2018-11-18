@@ -303,7 +303,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Chart.bundle.min.js" />
+    <Content Include="Chart.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="chartjs-plugin-datalabels.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataModel.Context.cs</LastGenOutput>

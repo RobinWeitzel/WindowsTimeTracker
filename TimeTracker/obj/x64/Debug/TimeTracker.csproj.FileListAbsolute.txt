@@ -141,3 +141,5 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualE
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.g.cs
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.baml
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Chart.min.js
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\chartjs-plugin-datalabels.min.js

@@ -60,6 +60,7 @@
                             <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe" />
                             <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
                             <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
+                            <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
                             <File Id="DEFAULT.DB" Name="default.db" Source="..\default.db" />
                         </Component>
                         <Directory Name="de" Id="deFolder">

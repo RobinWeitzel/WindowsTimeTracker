@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="HTMLDataWindow" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
+        Title="Data - TimeTracker" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <WebBrowser Name="WebBrowser" HorizontalAlignment="Left" Height="800" VerticalAlignment="Top" Width="1200" Margin="0,1,0,0" Grid.ColumnSpan="2"/>
 </Window>

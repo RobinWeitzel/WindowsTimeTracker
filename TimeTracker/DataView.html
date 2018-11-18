@@ -70,8 +70,8 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="./Chart.min.js"></script>
+    <script src="./chartjs-plugin-datalabels.min.js"></script>
     <script>
         var backgroundColor = [
             'rgba(255,99,132,1)',
@@ -82,7 +82,7 @@
             'rgba(255, 159, 64, 1)'
         ];
 
-        /*var data = [
+        var data = [
             {
                 name: "Activity 1",
                 from: 8.00,
@@ -128,11 +128,11 @@
                 name: "Activity 3",
                 value: 0.4
             },
-        ];*/
+        ];
 
-        var data = JSON.parse(window.external.getActivityBreakdown());
+        /*var data = JSON.parse(window.external.getActivityBreakdown());
         var data2 = JSON.parse(window.external.getWindows());
-        var data3 = JSON.parse(window.external.getActivities());
+        var data3 = JSON.parse(window.external.getActivities());*/
 
         function prepareActivityBreakdown() {
             var result = [];
