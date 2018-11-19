@@ -111,6 +111,13 @@ namespace TimeTracker
                 if(!tutorialViewed)
                 {
                     new Tutorial().Show();
+                    settings setting = new settings();
+
+                    setting.key ="tutorialViewed";
+                    setting.value = 1;
+
+                    db.settings.Add(setting);
+                    db.SaveChanges();
                 }
             }
         }
