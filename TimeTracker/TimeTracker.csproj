@@ -387,6 +387,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Bild1.png" />
+    <Resource Include="Resources\Bild2.png" />
+    <Resource Include="Resources\Bild3.png" />
+    <Resource Include="Resources\Bild4.png" />
     <Content Include="Resources\Chart.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

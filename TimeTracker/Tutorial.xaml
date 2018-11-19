@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="Tutorial" Height="450" Width="800">
+        Title="Tutorial - TimeTracker" Height="600" Width="1000">
     <Grid>
-        
+        <Button Content="Next" HorizontalAlignment="Left" Margin="618,515,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click_1"/>
+        <Button Content="Previous" HorizontalAlignment="Left" Margin="326,515,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click"/>
+        <Label Content="Tutorial" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <Image x:Name="Image" HorizontalAlignment="Left" Height="422" Margin="122,75,0,0" VerticalAlignment="Top" Width="760" Stretch="UniformToFill"/>
+
     </Grid>
 </Window>

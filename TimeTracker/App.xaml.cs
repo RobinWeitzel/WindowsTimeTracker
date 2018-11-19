@@ -102,8 +102,17 @@ namespace TimeTracker
             // Set up callback if computers powerstate changes
             SystemEvents.PowerModeChanged += OnPowerChange;
 
-            SystemEvents.SessionSwitch +=
-       new SessionSwitchEventHandler(OnSessionSwitch);
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
+
+            using (mainEntities db = new mainEntities())
+            {
+                bool tutorialViewed = db.settings.Find("tutorialViewed") != null ? db.settings.Find("tutorialViewed").value == 1 : false;
+
+                if(!tutorialViewed)
+                {
+                    new Tutorial().Show();
+                }
+            }
         }
 
         /************* Methods for handeling app running in background ***************/
