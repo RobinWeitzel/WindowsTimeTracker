@@ -54,6 +54,7 @@ namespace TimeTracker
         private static SettingsWindow SettingsWindow;
 
         private static bool paused = false;
+        private static bool disturb = true;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -111,6 +112,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
+            _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Edit last Activities").Click += (s, e) => new ManualEdit().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
@@ -218,6 +220,19 @@ namespace TimeTracker
                 case SessionSwitchReason.SessionLogon:
                     // ToDo: Ask what user did during time away from pc
                     break;
+            }
+        }
+
+        private void doNotDisturb()
+        {
+            if(disturb)
+            {
+                _notifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
+                disturb = false;
+            } else
+            {
+                _notifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
+                disturb = true;
             }
         }
 
@@ -354,7 +369,7 @@ namespace TimeTracker
                     db.SaveChanges();
 
                     // Show notification if app has not been seen in last few minutes
-                    if ((Constants.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Constants.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen)
+                    if ((Constants.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Constants.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen && disturb)
                     {
                         changeActivity(arr.Last());
                     }
