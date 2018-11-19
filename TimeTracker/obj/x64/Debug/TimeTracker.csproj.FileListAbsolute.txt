@@ -134,6 +134,12 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualE
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.g.cs
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.baml
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.g.cs
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.baml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Bild1.png
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Bild2.png
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Bild3.png
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Bild4.png
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Chart.min.js
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\chartjs-plugin-datalabels.min.js
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\font-awesome-4.7.0\css\font-awesome.min.css
@@ -169,5 +175,7 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resourc
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_screen-reader.scss
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_stacked.scss
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_variables.scss
-C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.g.cs
-C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.baml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\TimeTracker.exe.manifest
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\TimeTracker.application
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.exe.manifest
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.application

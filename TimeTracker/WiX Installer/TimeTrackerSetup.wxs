@@ -1,124 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-    <Product Id="AFCAC851-4464-464E-B3B0-0BE72190FBAD" Name="TimeTracker" Language="1033" Version="0.0.0.1" Manufacturer="Robin Weitzel" UpgradeCode="1E716498-9206-451E-B7A3-9DD7BD93A1E3">
-        <Package Description="Test file in a Product" Comments="Simple test" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
-        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.0.0" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
+        <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+        <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
+
+        <!-- The following three sections are from the How To: Add a File to Your Installer topic-->
         <Directory Id="TARGETDIR" Name="SourceDir">
-            <Directory Id="ProgramFilesFolder" Name="PFiles">
-                <Directory Name="TimeTracker" Id="TIMETRACKER">
-                    <Directory Name="TimeTracker 1.0" Id="INSTALLDIR">
-                        <Component Id="TimeTracker" DiskId="1" Guid="BA12DC34-A26B-4A4E-97C5-F15B0549F1FE" KeyPath="yes">
-                            <RegistryKey Id="TimeTrackerInstallDir" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                                <RegistryValue Type="string" Name="InstallDir" Value="[INSTALLDIR]" />
-                                <RegistryValue Type="integer" Name="Flag" Value="0" />
-                            </RegistryKey>
-                            <RegistryKey Id="TimeTrackerAutoStart" Root="HKMU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
-                                <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
-                            </RegistryKey>
-                            <!--<util:XmlFile Id="ModifyConnectionString" Action="setValue" Permanent="yes" ElementPath="/configuration/connectionStrings/add[\[]@name='mainEntities'[\]]" Name="connectionString" File="[#TIMETRACKER.EXE.CONFIG]" Value="metadata=res://*/DataModel.csdl|res://*/DataModel.ssdl|res://*/DataModel.msl;provider=System.Data.SQLite.EF6;provider connection string=&quot;data source=[#DB.DB]&quot;" SelectionLanguage="XSLPattern" Sequence="1" />-->
-                            <RemoveFolder Id="TIMETRACKER" On="uninstall" />
-                            <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\x64\Debug\EntityFramework.dll" />
-                            <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\x64\Debug\EntityFramework.SqlServer.dll" />
-                            <File Id="ENTITYFRAMEWORK.SQLSERVER.XML" Name="EntityFramework.SqlServer.xml" Source="..\bin\x64\Debug\EntityFramework.SqlServer.xml" />
-                            <File Id="ENTITYFRAMEWORK.XML" Name="EntityFramework.xml" Source="..\bin\x64\Debug\EntityFramework.xml" />
-                            <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Debug\LiveCharts.dll" />
-                            <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Debug\LiveCharts.pdb" />
-                            <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Debug\LiveCharts.Wpf.dll" />
-                            <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\x64\Debug\LiveCharts.Wpf.pdb" />
-                            <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\x64\Debug\LiveCharts.Wpf.xml" />
-                            <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\x64\Debug\LiveCharts.xml" />
-                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.dll" />
-                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb" />
-                            <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
-                            <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Debug\Microsoft.Win32.Primitives.dll" />
-                            <File Id="NOTIFICATIONS.WPF.DLL" Name="Notifications.Wpf.dll" Source="..\bin\x64\Debug\Notifications.Wpf.dll" />
-                            <File Id="QUERYSTRING.NETCORE.DLL" Name="QueryString.NETCore.dll" Source="..\bin\x64\Debug\QueryString.NETCore.dll" />
-                            <File Id="QUERYSTRING.NETCORE.PDB" Name="QueryString.NETCore.pdb" Source="..\bin\x64\Debug\QueryString.NETCore.pdb" />
-                            <File Id="QUERYSTRING.NETCORE.XML" Name="QueryString.NETCore.xml" Source="..\bin\x64\Debug\QueryString.NETCore.xml" />
-                            <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Debug\System.AppContext.dll" />
-                            <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Debug\System.Console.dll" />
-                            <File Id="SYSTEM.DATA.SQLITE.DLL" Name="System.Data.SQLite.dll" Source="..\bin\x64\Debug\System.Data.SQLite.dll" />
-                            <File Id="SYSTEM.DATA.SQLITE.DLL.CONFIG" Name="System.Data.SQLite.dll.config" Source="..\bin\x64\Debug\System.Data.SQLite.dll.config" />
-                            <File Id="SYSTEM.DATA.SQLITE.EF6.DLL" Name="System.Data.SQLite.EF6.dll" Source="..\bin\x64\Debug\System.Data.SQLite.EF6.dll" />
-                            <File Id="SYSTEM.DATA.SQLITE.LINQ.DLL" Name="System.Data.SQLite.Linq.dll" Source="..\bin\x64\Debug\System.Data.SQLite.Linq.dll" />
-                            <File Id="SYSTEM.DATA.SQLITE.XML" Name="System.Data.SQLite.xml" Source="..\bin\x64\Debug\System.Data.SQLite.xml" />
-                            <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.dll" />
-                            <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.xml" />
-                            <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Debug\System.Globalization.Calendars.dll" />
-                            <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\x64\Debug\System.IO.Compression.dll" />
-                            <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\x64\Debug\System.IO.Compression.ZipFile.dll" />
-                            <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.dll" />
-                            <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.Primitives.dll" />
-                            <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\x64\Debug\System.Net.Http.dll" />
-                            <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\x64\Debug\System.Net.Sockets.dll" />
-                            <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\x64\Debug\System.Runtime.InteropServices.RuntimeInformation.dll" />
-                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Algorithms.dll" />
-                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Encoding.dll" />
-                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Primitives.dll" />
-                            <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.X509Certificates.dll" />
-                            <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Debug\System.Xml.ReaderWriter.dll" />
-                            <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe" />
-                            <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
-                            <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
-                            <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
-                            <File Id="DEFAULT.DB" Name="default.db" Source="..\default.db" />
-                        </Component>
-                        <Directory Name="de" Id="deFolder">
-                            <Component Id="de" Guid="f60e314f-c408-4b6b-b71c-2c93bf8e3d1c" KeyPath="yes">
-                                <File Id="ENTITYFRAMEWORK.RESOURCES.DLL" Name="EntityFramework.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.resources.dll" />
-                                <File Id="ENTITYFRAMEWORK.SQLSERVER.RESOURCES.DLL" Name="EntityFramework.SqlServer.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.SqlServer.resources.dll" />
-                            </Component>
-                        </Directory>
-                        <Directory Name="x64" Id="x64Folder">
-                            <Component Id="x64" Guid="d0ae0dac-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
-                                <File Id="SQLITE.INTEROP.DLL" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x64\SQLite.Interop.dll" />
-                            </Component>
-                        </Directory>
-                        <Directory Name="x86" Id="x86Folder">
-                            <Component Id="x86" Guid="508341ba-450a-4b33-964c-2c0b212c5fcd" KeyPath="yes">
-                                <File Id="SQLITE.INTEROP.DLL_1" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x86\SQLite.Interop.dll" />
-                            </Component>
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker">
+                    <Directory Name="de" Id="deFolder" />
+                    <Directory Name="x64" Id="x64Folder" />
+                    <Directory Name="x86" Id="x86Folder" />
+                    <Directory Name="Resources" Id="ResourcesFolder">
+                        <Directory Name="font-awesome-4.7.0" Id="fontawesomeFolder">
+                            <Directory Name="css" Id="cssFolder" />
+                            <Directory Name="fonts" Id="fontsFolder" />
+                            <Directory Name="less" Id="lessFolder" />
+                            <Directory Name="scss" Id="scssFolder" />
                         </Directory>
                     </Directory>
                 </Directory>
             </Directory>
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="ProgramMenuDir" Name="TimeTracker">
-                    <Component Id="StartMenuShortcuts" Guid="7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff" KeyPath="yes">
-                        <Shortcut Id="ApplicationStartMenuShortcut" Name="TimeTracker" Description="TimeTracker" Target="[#TIMETRACKER.EXE]" WorkingDirectory="APPLICATIONROOTDIRECTORY">
-                            <!--AUMID-->
-                            <ShortcutProperty Key="System.AppUserModel.ID" Value="Robin.TimeTracker" />
-                            <!--COM CLSID-->
-                            <ShortcutProperty Key="System.AppUserModel.ToastActivatorCLSID" Value="{7dc8e5b7-fcf1-42a0-ab75-85203b4b76ff}" />
-                        </Shortcut>
-                        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
-                        <RegistryValue Root="HKLM" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
-                    </Component>
-                </Directory>
+                <Directory Id="ApplicationProgramsFolder" Name="TimeTracker"/>
             </Directory>
-            <!--<Directory Id="PersonalFolder">
-                <Directory Id="DBFolder" Name="TimeTracker">
-                    <Component Id="DB" Guid="aa23ed2d-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
-                        <File Id="DB.DB" Name="db.db" Source="..\db.db" />
-                        <RemoveFolder Id="DBFolder" On="uninstall" />
-                    </Component>
-                </Directory>
-            </Directory>-->
         </Directory>
-        <Feature Id="DefaultFeature" Title="Main Feature" Level="1" ConfigurableDirectory="INSTALLDIR">
-            <ComponentRef Id="TimeTracker" />
+        <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+            <Component Id="timetracker" Guid="3dc9bb4e-8e96-4210-a515-d41b0cb71a07">
+                <RegistryKey Id="TimeTrackerAutoStart" Root="HKMU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
+                    <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
+                </RegistryKey>
+                <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="both" />
+                <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
+                <File Id="DEFAULT.DB" Name="default.db" Source="..\default.db"  />
+                <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\x64\Debug\EntityFramework.dll" />
+                <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\x64\Debug\EntityFramework.SqlServer.dll" />
+                <File Id="ENTITYFRAMEWORK.SQLSERVER.XML" Name="EntityFramework.SqlServer.xml" Source="..\bin\x64\Debug\EntityFramework.SqlServer.xml" />
+                <File Id="ENTITYFRAMEWORK.XML" Name="EntityFramework.xml" Source="..\bin\x64\Debug\EntityFramework.xml" />
+                <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Debug\LiveCharts.dll" />
+                <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Debug\LiveCharts.pdb" />
+                <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Debug\LiveCharts.Wpf.dll" />
+                <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\x64\Debug\LiveCharts.Wpf.pdb" />
+                <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\x64\Debug\LiveCharts.Wpf.xml" />
+                <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\x64\Debug\LiveCharts.xml" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.dll" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
+                <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Debug\Microsoft.Win32.Primitives.dll" />
+                <File Id="NOTIFICATIONS.WPF.DLL" Name="Notifications.Wpf.dll" Source="..\bin\x64\Debug\Notifications.Wpf.dll" />
+                <File Id="QUERYSTRING.NETCORE.DLL" Name="QueryString.NETCore.dll" Source="..\bin\x64\Debug\QueryString.NETCore.dll" />
+                <File Id="QUERYSTRING.NETCORE.PDB" Name="QueryString.NETCore.pdb" Source="..\bin\x64\Debug\QueryString.NETCore.pdb" />
+                <File Id="QUERYSTRING.NETCORE.XML" Name="QueryString.NETCore.xml" Source="..\bin\x64\Debug\QueryString.NETCore.xml" />
+                <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Debug\System.AppContext.dll" />
+                <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Debug\System.Console.dll" />
+                <File Id="SYSTEM.DATA.SQLITE.DLL" Name="System.Data.SQLite.dll" Source="..\bin\x64\Debug\System.Data.SQLite.dll" />
+                <File Id="SYSTEM.DATA.SQLITE.DLL.CONFIG" Name="System.Data.SQLite.dll.config" Source="..\bin\x64\Debug\System.Data.SQLite.dll.config" />
+                <File Id="SYSTEM.DATA.SQLITE.EF6.DLL" Name="System.Data.SQLite.EF6.dll" Source="..\bin\x64\Debug\System.Data.SQLite.EF6.dll" />
+                <File Id="SYSTEM.DATA.SQLITE.LINQ.DLL" Name="System.Data.SQLite.Linq.dll" Source="..\bin\x64\Debug\System.Data.SQLite.Linq.dll" />
+                <File Id="SYSTEM.DATA.SQLITE.XML" Name="System.Data.SQLite.xml" Source="..\bin\x64\Debug\System.Data.SQLite.xml" />
+                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.xml" />
+                <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Debug\System.Globalization.Calendars.dll" />
+                <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\x64\Debug\System.IO.Compression.dll" />
+                <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\x64\Debug\System.IO.Compression.ZipFile.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.Primitives.dll" />
+                <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\x64\Debug\System.Net.Http.dll" />
+                <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\x64\Debug\System.Net.Sockets.dll" />
+                <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\x64\Debug\System.Runtime.InteropServices.RuntimeInformation.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Algorithms.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Encoding.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Primitives.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.X509Certificates.dll" />
+                <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Debug\System.Xml.ReaderWriter.dll" />
+                <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Debug\TimeTracker.application" />
+                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe">
+                    <Shortcut Id="TIMETRACKER.Shortcut" Directory="ApplicationProgramsFolder" Name="TimeTracker"/> 
+                </File>
+                <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
+                <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Debug\TimeTracker.exe.manifest" />
+                <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="deFolder">
+            <Component Id="de" Guid="540eb55f-20d0-4b38-9414-31699ca4ce8d" KeyPath="yes">
+                <File Id="ENTITYFRAMEWORK.RESOURCES.DLL" Name="EntityFramework.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.resources.dll" />
+                <File Id="ENTITYFRAMEWORK.SQLSERVER.RESOURCES.DLL" Name="EntityFramework.SqlServer.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.SqlServer.resources.dll" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="x64Folder">
+            <Component Id="x64" Guid="d0ae0dac-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
+                <File Id="SQLITE.INTEROP.DLL" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x64\SQLite.Interop.dll" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="x86Folder">
+            <Component Id="x86" Guid="508341ba-450a-4b33-964c-2c0b212c5fcd" KeyPath="yes">
+                <File Id="SQLITE.INTEROP.DLL_1" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x86\SQLite.Interop.dll" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="ResourcesFolder">
+            <Component Id="Resources" Guid="c6b8e640-9fa8-4fb9-8138-ff93adeeaffd" KeyPath="yes">
+                <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Debug\Resources\Bild1.png" />
+                <File Id="BILD2.PNG" Name="Bild2.png" Source="..\bin\x64\Debug\Resources\Bild2.png" />
+                <File Id="BILD3.PNG" Name="Bild3.png" Source="..\bin\x64\Debug\Resources\Bild3.png" />
+                <File Id="BILD4.PNG" Name="Bild4.png" Source="..\bin\x64\Debug\Resources\Bild4.png" />
+                <File Id="CHART.MIN.JS" Name="Chart.min.js" Source="..\bin\x64\Debug\Resources\Chart.min.js" />
+                <File Id="CHARTJS_PLUGIN_DATALABELS.MIN.JS" Name="chartjs-plugin-datalabels.min.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-datalabels.min.js" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="fontawesomeFolder">
+            <Component Id="fontawesome" Guid="aeb0ac59-f987-4c15-9b68-5804fe183a02" KeyPath="yes">
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="cssFolder">
+            <Component Id="css" Guid="f721da46-b608-4f90-a6d0-0ce09cb78169" KeyPath="yes">
+                <File Id="FONT_AWESOME.MIN.CSS" Name="font-awesome.min.css" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\css\font-awesome.min.css" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="fontsFolder">
+            <Component Id="fonts" Guid="6b487efd-8309-4267-b86c-c635d0f89e77" KeyPath="yes">
+                <File Id="FONTAWESOME_WEBFONT.EOT" Name="fontawesome-webfont.eot" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+                <File Id="FONTAWESOME_WEBFONT.SVG" Name="fontawesome-webfont.svg" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+                <File Id="FONTAWESOME_WEBFONT.WOFF" Name="fontawesome-webfont.woff" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+                <File Id="FONTAWESOME_WEBFONT.WOFF2" Name="fontawesome-webfont.woff2" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="lessFolder">
+            <Component Id="less" Guid="cdcfd42d-1246-4046-8759-d51bd8f09b61" KeyPath="yes">
+                <File Id="ANIMATED.LESS" Name="animated.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\animated.less" />
+                <File Id="BORDERED_PULLED.LESS" Name="bordered-pulled.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\bordered-pulled.less" />
+                <File Id="CORE.LESS" Name="core.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\core.less" />
+                <File Id="FIXED_WIDTH.LESS" Name="fixed-width.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\fixed-width.less" />
+                <File Id="FONT_AWESOME.LESS" Name="font-awesome.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\font-awesome.less" />
+                <File Id="ICONS.LESS" Name="icons.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\icons.less" />
+                <File Id="LARGER.LESS" Name="larger.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\larger.less" />
+                <File Id="LIST.LESS" Name="list.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\list.less" />
+                <File Id="MIXINS.LESS" Name="mixins.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\mixins.less" />
+                <File Id="PATH.LESS" Name="path.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\path.less" />
+                <File Id="ROTATED_FLIPPED.LESS" Name="rotated-flipped.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\rotated-flipped.less" />
+                <File Id="SCREEN_READER.LESS" Name="screen-reader.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\screen-reader.less" />
+                <File Id="STACKED.LESS" Name="stacked.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\stacked.less" />
+                <File Id="VARIABLES.LESS" Name="variables.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\variables.less" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="scssFolder">
+            <Component Id="scss" Guid="cbd31c38-5db1-45b5-b0e3-3e8e8e23eccc" KeyPath="yes">
+                <File Id="_ANIMATED.SCSS" Name="_animated.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_animated.scss" />
+                <File Id="_BORDERED_PULLED.SCSS" Name="_bordered-pulled.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+                <File Id="_CORE.SCSS" Name="_core.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_core.scss" />
+                <File Id="_FIXED_WIDTH.SCSS" Name="_fixed-width.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_fixed-width.scss" />
+                <File Id="_ICONS.SCSS" Name="_icons.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_icons.scss" />
+                <File Id="_LARGER.SCSS" Name="_larger.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_larger.scss" />
+                <File Id="_LIST.SCSS" Name="_list.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_list.scss" />
+                <File Id="_MIXINS.SCSS" Name="_mixins.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_mixins.scss" />
+                <File Id="_PATH.SCSS" Name="_path.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_path.scss" />
+                <File Id="_ROTATED_FLIPPED.SCSS" Name="_rotated-flipped.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+                <File Id="_SCREEN_READER.SCSS" Name="_screen-reader.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_screen-reader.scss" />
+                <File Id="_STACKED.SCSS" Name="_stacked.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_stacked.scss" />
+                <File Id="_VARIABLES.SCSS" Name="_variables.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_variables.scss" />
+                <File Id="FONT_AWESOME.SCSS" Name="font-awesome.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\font-awesome.scss" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationPrograms" Guid="00f102a3-ff42-4227-b8eb-2ba678b3924c" KeyPath="yes">
+                <RemoveFolder Id="ApplicationProgramsFolder" On="both" />
+            </Component>
+        </DirectoryRef>
+        
+        <Feature Id="MainApplication" Title="Main Application" Level="1">
+            <ComponentRef Id="timetracker" />
             <ComponentRef Id="de" />
             <ComponentRef Id="x64" />
             <ComponentRef Id="x86" />
-            <!--<ComponentRef Id="DB" />-->
-            <ComponentRef Id="StartMenuShortcuts" />
+            <ComponentRef Id="Resources" />
+            <ComponentRef Id="fontawesome" />
+            <ComponentRef Id="css" />
+            <ComponentRef Id="fonts" />
+            <ComponentRef Id="less" />
+            <ComponentRef Id="scss" />
+            <ComponentRef Id="ApplicationPrograms" />
         </Feature>
-        <Icon Id="StartMenuIcon.exe" SourceFile="..\bin\x64\Debug\TimeTracker.exe" />
-        <Property Id="INSTALLDIR">
-            <RegistrySearch Id="TimeTrackerRegistry" Type="raw" Root="HKLM" Key="Software\TimeTracker\TimeTracker 1.0" Name="InstallDir" />
-        </Property>
-        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-        <UIRef Id="WixUI_InstallDir" />
-        <UI />
+        <!-- Step 2: Add UI to your installer / Step 4: Trigger the custom action -->
+        <UI>
+            <UIRef Id="WixUI_Minimal" />
+            <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+        </UI>
+        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch My Application Name" />
+        <!-- Step 3: Include the custom action -->
+        <Property Id="WixShellExecTarget" Value="[#TIMETRACKER.EXE]" />
+        <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
     </Product>
 </Wix>

@@ -8,6 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild4.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/chart.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/chartjs-plugin-datalabels.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.context.tt")]

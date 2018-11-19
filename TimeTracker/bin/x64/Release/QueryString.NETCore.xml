@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QueryString.NETCore</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.QueryStringDotNET.QueryStringParameter">
+            <summary>
+            A single query string parameter (name and value pair).
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryStringParameter.Name">
+            <summary>
+            The name of the parameter. Cannot be null.
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryStringParameter.Value">
+            <summary>
+            The value of the parameter (or null if there's no value).
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryStringParameter.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new query string parameter with the specified name and optional value.
+            </summary>
+            <param name="name">The name of the parameter. Cannot be null.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="T:Microsoft.QueryStringDotNET.QueryStringSeparator">
+            <summary>
+            Specifies the separator to be used between query string parameters.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Microsoft.QueryStringDotNET.QueryStringSeparator.Ampersand" -->
+        <member name="F:Microsoft.QueryStringDotNET.QueryStringSeparator.Semicolon">
+            <summary>
+            An alternative separator for query string parameters. Generated query string is like "a=1;b=5".
+            </summary>
+        </member>
+        <member name="T:Microsoft.QueryStringDotNET.QueryString">
+            <summary>
+            A portable string serializer/deserializer for .NET.
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.#ctor">
+            <summary>
+            Constructs a new empty query string.
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryString.Item(System.String)">
+            <summary>
+            Gets the first value of the first parameter with the matching name. Throws <see cref="T:System.Collections.Generic.KeyNotFoundException"/> if a parameter with a matching name could not be found. O(n) where n = Count of the current object.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.TryGetValue(System.String,System.String@)">
+            <summary>
+            Gets the first value of the first parameter with the matching name. If no parameter with a matching name exists, returns false.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <param name="value">The parameter's value will be written here once found.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.TryGetValues(System.String,System.String[]@)">
+            <summary>
+            Gets the values of the parameter with the matching name. If no parameter with a matching name exists, sets <paramref name="values"/> to null and returns false.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <param name="values">The parameter's values will be written here once found.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Count">
+            <summary>
+            Returns the count of parameters in the current query string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Add(System.String,System.String)">
+            <summary>
+            Adds a query string parameter to the query string.
+            </summary>
+            <param name="name">The name of the parameter.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Set(System.String,System.String)">
+            <summary>
+            Sets a query string parameter. If there are existing parameters with the same name, they are removed.
+            </summary>
+            <param name="name">The name of the parameter.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Contains(System.String)">
+            <summary>
+            Determines if the query string contains at least one parameter with the specified name.
+            </summary>
+            <param name="name">The parameter name to look for.</param>
+            <returns>True if the query string contains at least one parameter with the specified name, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Contains(System.String,System.String)">
+            <summary>
+            Determines if the query string contains a parameter with the specified name and value.
+            </summary>
+            <param name="name">The parameter name to look for.</param>
+            <param name="value">The value to look for when the name has been matched.</param>
+            <returns>True if the query string contains a parameter with the specified name and value, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Remove(System.String)">
+            <summary>
+            Removes the first parameter with the specified name.
+            </summary>
+            <param name="name">The name of parameter to remove.</param>
+            <returns>True if the parameters were removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.RemoveAll(System.String)">
+            <summary>
+            Removes all parameters with the specified name.
+            </summary>
+            <param name="name">The name of parameters to remove.</param>
+            <returns>True if the parameters were removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Remove(System.String,System.String)">
+            <summary>
+            Removes the first parameter with the specified name and value.
+            </summary>
+            <param name="name">The name of the parameter to remove.</param>
+            <param name="value"></param>
+            <returns>True if parameter was removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.RemoveAll(System.String,System.String)">
+            <summary>
+            Removes all parameters with the specified name and value.
+            </summary>
+            <param name="name">The name of parameters to remove.</param>
+            <param name="value">The value to match when deciding whether to remove.</param>
+            <returns>The count of parameters removed.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Parse(System.String)">
+            <summary>
+            Parses a query string into a <see cref="T:Microsoft.QueryStringDotNET.QueryString"/> object. Keys/values are automatically URL decoded.
+            </summary>
+            <param name="queryString">The query string to deserialize. This should NOT have a leading ? character. Valid input would be something like "a=1&amp;b=5". URL decoding of keys/values is automatically performed. Also supports query strings that are serialized using ; instead of &amp;, like "a=1;b=5"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.ToString">
+            <summary>
+            Serializes the key-value pairs into a query string, using the default &amp; separator. Produces something like "a=1&amp;b=5". URL encoding of keys/values is automatically performed. Null values are not written (only their key is written).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.ToString(Microsoft.QueryStringDotNET.QueryStringSeparator)">
+            <summary>
+            Serializes the key-value pairs into a query string, using the specified separator. URL encoding of keys/values is automatically performed. Null values are not written (only their key is written). If there are no parameters, an empty string will be returned.
+            </summary>
+            <param name="separator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.GetEnumerator">
+            <summary>
+            Gets an enumerator to enumerate the query string parameters. Note that order of the parameters is NOT preserved.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets an enumerator to enumerate the query string parameters.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Equals(Microsoft.QueryStringDotNET.QueryString)">
+            <summary>
+            Determines whether the current query string is equivalent to the provided query string.
+            </summary>
+            <param name="other">The query string to compare to.</param>
+            <returns>Returns true if the query string has the exact same parameters as the current query string (order is irrelevant).</returns>
+        </member>
+    </members>
+</doc>
