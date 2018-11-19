@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
+                bool makeSound = db.settings.Find("makeSound") != null ? db.settings.Find("makeSound").value == 1 : Constants.makeSound;
 
                 id = int.Parse(id_string);
                 activity_active new_activity = db.activity_active.Find(id);
@@ -74,9 +76,13 @@ namespace TimeTracker
                 TextBlock2.Text = window.Trim();
 
                 timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
+
+                if(makeSound)
+                    SystemSounds.Hand.Play();
             }
 
             setupClose();
+
         }
 
         private async void setupClose()
@@ -106,6 +112,8 @@ namespace TimeTracker
                     new_activity.name = ComboBox.Text;
 
                 db.SaveChanges();
+
+                Constants.lastConfirmed = DateTime.Now;
                 this.Close();
             }
         }

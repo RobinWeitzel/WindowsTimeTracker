@@ -52,7 +52,6 @@ namespace TimeTracker
         };
 
         private static SettingsWindow SettingsWindow;
-        private static DataWindow DataWindow;
 
         private static bool paused = false;
 
@@ -79,9 +78,6 @@ namespace TimeTracker
             SettingsWindow = new SettingsWindow();
             SettingsWindow.Closing += SettingsWindow_Closing;
 
-            DataWindow = new DataWindow();
-            DataWindow.Closing += DataWindow_Closing;
-
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => changeActivity(null);
 
@@ -107,20 +103,6 @@ namespace TimeTracker
 
             SystemEvents.SessionSwitch +=
        new SessionSwitchEventHandler(OnSessionSwitch);
-
-            // Delete old records
-            using (mainEntities db = new mainEntities())
-            {
-                long timeRecordsKept = db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept;
-
-                // If timeRecordsKept is 0 records are never deleted
-                if (timeRecordsKept != 0)
-                {
-                    DateTime oldDate = DateTime.Now.Subtract(new TimeSpan((int)timeRecordsKept, 0, 0, 0, 0));
-                    db.window_active.RemoveRange(db.window_active.Where(wa => wa.to != null && wa.to < oldDate));
-                    db.activity_active.RemoveRange(db.activity_active.Where(aa => aa.to != null && aa.to < oldDate));
-                }
-            }
         }
 
         /************* Methods for handeling app running in background ***************/
@@ -189,23 +171,6 @@ namespace TimeTracker
                 SettingsWindow.Show();
             }
         }
-
-        private static void ShowDataWindow()
-        {
-            if (DataWindow.IsVisible)
-            {
-                if (DataWindow.WindowState == WindowState.Minimized)
-                {
-                    DataWindow.WindowState = WindowState.Normal;
-                }
-                DataWindow.Activate();
-            }
-            else
-            {
-                DataWindow.Navigate(new Overview());
-                DataWindow.Show();
-            }
-        }
         
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -222,15 +187,6 @@ namespace TimeTracker
             {
                 e.Cancel = true;
                 SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
-            }
-        }
-
-        private void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            if (!_isExit)
-            {
-                e.Cancel = true;
-                DataWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
 
@@ -360,6 +316,7 @@ namespace TimeTracker
 
                     // Load timeNotUsed from settings
                     long timeNotUsed = db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed; // 5 minutes
+                    long timeout2 = db.settings.Find("timeout2") != null ? db.settings.Find("timeout2").value : Constants.defaultTimeout2; // 5 minutes
                     bool fuzzyMatching = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
                     List<window_active> old_windows = db.window_active.Where(wa => wa.handle == handleLong || (fuzzyMatching && wa.name.Equals(name))).ToList();
 
@@ -397,15 +354,13 @@ namespace TimeTracker
                     db.SaveChanges();
 
                     // Show notification if app has not been seen in last few minutes
-                    if (!hasBeenSeen)
+                    if ((Constants.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Constants.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen)
                     {
                         changeActivity(arr.Last());
                     }
                     // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
                     else if (!db.activity_active.Any(aa => aa.to == null))
                     {
-                        closeOldActivity();
-
                         activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
 
                         activity_active new_activity = new activity_active();
@@ -424,19 +379,19 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
-                activity_active older_activity = db.activity_active.OrderByDescending(aa => aa.from).Skip(1).FirstOrDefault();
+                activity_active older_activity = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.from).FirstOrDefault();
                 if (old_activity != null)
                 {
                     old_activity.to = DateTime.Now;
 
-                    if (older_activity != null && old_activity.name.Equals(older_activity.name) && (old_activity.from - (DateTime)older_activity.to).Seconds <= 1)
+                    if (older_activity != null && old_activity.name.Equals(older_activity.name) && old_activity.from.Subtract((DateTime)older_activity.to).TotalSeconds <= 1)
                     {
                         old_activity.from = older_activity.from;
                         db.activity_active.Remove(older_activity);
                     }
-                }
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -444,8 +399,6 @@ namespace TimeTracker
         {
             using (mainEntities db = new mainEntities())
             {
-                bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
-
                 if (name == null) // If no name is specified check which window is active
                 {
                     window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
@@ -486,10 +439,9 @@ namespace TimeTracker
             using (mainEntities db = new mainEntities())
             {
                 List<window_active> open_windows = db.window_active.Where(wa => wa.to == null).ToList();
-                open_windows.ForEach(aa => aa.to = DateTime.Now);
+                open_windows.ForEach(wa => wa.to = DateTime.Now);
 
-                List<activity_active> open_activities = db.activity_active.Where(aa => aa.to == null).ToList();
-                open_activities.ForEach(aa => aa.to = DateTime.Now);
+                closeOldActivity();
 
                 db.SaveChanges();
             }

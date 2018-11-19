@@ -14,15 +14,17 @@
         <TextBox x:Name="TimeNotUsed" HorizontalAlignment="Left" Height="29" Margin="39,249,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="18"/>
         <Label Content="Trigger delay" HorizontalAlignment="Left" Margin="31,148,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="How much time since the last use of a programm must&#xD;&#xA;have passed before TimeTracker asks again to which &#xD;&#xA;activity the window belongs." HorizontalAlignment="Left" Margin="31,179,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic" Height="65" Width="361"/>
-        <TextBox x:Name="TimeRecordsKept" HorizontalAlignment="Left" Height="29" Margin="39,344,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="18"/>
-        <Label Content="Time records are kept" HorizontalAlignment="Left" Margin="31,279,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="The duration for which TimeTracker keeps records." HorizontalAlignment="Left" Margin="31,310,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
-        <Label Content="day(s)" HorizontalAlignment="Left" Margin="249,343,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
+        <TextBox x:Name="TimeOut2" HorizontalAlignment="Left" Height="29" Margin="39,344,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="18"/>
+        <Label Content="Time until asked for acitvity again" HorizontalAlignment="Left" Margin="31,279,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="The duration in which TimeTracker does not ask for an activity after slececting one." HorizontalAlignment="Left" Margin="31,310,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
+        <Label Content="second(s)" HorizontalAlignment="Left" Margin="249,343,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <Label Content="minutes" HorizontalAlignment="Left" Margin="249,249,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <Label Content="second(s)" HorizontalAlignment="Left" Margin="249,113,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <Label Content="Fuzzy matching" HorizontalAlignment="Left" Margin="31,377,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="FuzzyMatching" Content="Detect programs by name instead of id." HorizontalAlignment="Left" Margin="39,411,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="934,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="39,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
+        <Label Content="Notification sound" HorizontalAlignment="Left" Margin="31,442,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <CheckBox x:Name="MakeSound" Content="Make a sound every time a notifiaction is shown." HorizontalAlignment="Left" Margin="39,476,0,0" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </Window>

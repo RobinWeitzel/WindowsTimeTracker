@@ -32,7 +32,7 @@ namespace TimeTracker
                 // Redraw inputs
                 TimeOut.Text = ((db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout) / 1000).ToString();
                 TimeNotUsed.Text = ((db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed) / (1000 * 60)).ToString();
-                TimeRecordsKept.Text = (db.settings.Find("timeRecordsKept") != null ? db.settings.Find("timeRecordsKept").value : Constants.defaultTimeRecordsKept).ToString();
+                TimeOut2.Text = (db.settings.Find("timeout2") != null ? db.settings.Find("timeout2").value : Constants.defaultTimeout2).ToString();
                 FuzzyMatching.IsChecked = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
             }
         }
@@ -78,20 +78,20 @@ namespace TimeTracker
                     timeNotUsed.value = timeNotUsedResult * 60 * 1000; // Convert to ms 
                 }
 
-                /* Save TimeRecordsKept */
-                settings timeRecordsKept = db.settings.Find("timeRecordsKept");
+                /* Save TimeOut2 */
+                settings timeOut2 = db.settings.Find("timeOut2");
 
-                if (timeRecordsKept == null)
+                if (timeOut2 == null)
                 {
-                    timeRecordsKept = new settings();
-                    timeRecordsKept.key = "timeRecordsKept";
-                    db.settings.Add(timeRecordsKept);
+                    timeOut2 = new settings();
+                    timeOut2.key = "timeOut2";
+                    db.settings.Add(timeOut2);
                 }
 
-                int timeRecordsKeptResult;
-                if (int.TryParse(TimeRecordsKept.Text, out timeRecordsKeptResult))
+                int timeout2Result;
+                if (int.TryParse(TimeOut2.Text, out timeout2Result))
                 {
-                    timeRecordsKept.value = timeRecordsKeptResult; // Keep as days
+                    timeOut2.value = timeout2Result;
                 }
 
                 /* Save FuzzyMatching */
@@ -105,6 +105,18 @@ namespace TimeTracker
                 }
 
                 fuzzyMatching.value = FuzzyMatching.IsChecked == true ? 1 : 0;
+
+                /* Save MakeSound */
+                settings makeSound = db.settings.Find("makeSound");
+
+                if (makeSound == null)
+                {
+                    makeSound = new settings();
+                    makeSound.key = "makeSound";
+                    db.settings.Add(makeSound);
+                }
+
+                makeSound.value = MakeSound.IsChecked == true ? 1 : 0;
 
                 db.SaveChanges();
             }
