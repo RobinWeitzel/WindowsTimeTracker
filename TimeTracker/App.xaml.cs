@@ -29,7 +29,6 @@ namespace TimeTracker
 
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
-        String version = "0.9.0.1";
 
         private string[] blacklist = {
             "TimeTracker",
@@ -145,7 +144,7 @@ namespace TimeTracker
             XmlNode node = root.SelectSingleNode(
      "descendant::f:entry", nsmgr);
 
-            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + version))
+            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Constants.version))
             {
                 new NewVersion().Show();
             }

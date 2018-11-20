@@ -22,9 +22,10 @@
         <Label Content="second(s)" HorizontalAlignment="Left" Margin="249,113,0,0" VerticalAlignment="Top" FontSize="14" FontStyle="Italic"/>
         <Label Content="Fuzzy matching" HorizontalAlignment="Left" Margin="31,377,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="FuzzyMatching" Content="Detect programs by name instead of id." HorizontalAlignment="Left" Margin="39,411,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="934,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
-        <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="39,568,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
+        <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="934,552,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
+        <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="39,552,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
         <Label Content="Notification sound" HorizontalAlignment="Left" Margin="31,442,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="MakeSound" Content="Make a sound every time a notifiaction is shown." HorizontalAlignment="Left" Margin="39,476,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="Version" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Right" VerticalAlignment="Top" Margin="892,589,0,0" Width="148"/>
     </Grid>
 </Window>

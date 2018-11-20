@@ -22,6 +22,8 @@ namespace TimeTracker
         public SettingsWindow()
         {
             InitializeComponent();
+
+            Version.Content = "v" + Constants.version;
         }
 
         public void redrawSettings()
