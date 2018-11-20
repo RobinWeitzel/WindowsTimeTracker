@@ -179,3 +179,5 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\TimeTra
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\TimeTracker.application
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.exe.manifest
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.application
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\NewVersion.g.cs
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\NewVersion.baml

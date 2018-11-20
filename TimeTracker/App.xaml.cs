@@ -8,11 +8,13 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Xml;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -27,6 +29,7 @@ namespace TimeTracker
 
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
+        String version = "0.9.0.0";
 
         private string[] blacklist = {
             "TimeTracker",
@@ -106,6 +109,7 @@ namespace TimeTracker
 
             using (mainEntities db = new mainEntities())
             {
+                // Check if the tutorial shoukd be shown
                 bool tutorialViewed = db.settings.Find("tutorialViewed") != null ? db.settings.Find("tutorialViewed").value == 1 : false;
 
                 if(!tutorialViewed)
@@ -119,6 +123,31 @@ namespace TimeTracker
                     db.settings.Add(setting);
                     db.SaveChanges();
                 }
+
+            }
+
+            // Check for update
+            var m_strFilePath = "https://github.com/RobinWeitzel/WindowsTimeTracker/releases.atom";
+            string xmlStr;
+            using (var wc = new WebClient())
+            {
+                xmlStr = wc.DownloadString(m_strFilePath);
+            }
+            var xmlDoc = new System.Xml.XmlDocument();
+            xmlDoc.LoadXml(xmlStr);
+
+            XmlNode root = xmlDoc.DocumentElement;
+
+            // Add the namespace.  
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+            nsmgr.AddNamespace("f", "http://www.w3.org/2005/Atom");
+
+            XmlNode node = root.SelectSingleNode(
+     "descendant::f:entry", nsmgr);
+
+            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + version))
+            {
+                new NewVersion().Show();
             }
         }
 
