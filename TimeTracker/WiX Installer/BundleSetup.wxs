@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-    <Bundle Name="TimeTrackerBundle" Version="0.8" UpgradeCode="fcef1123-6a65-4143-9c59-60c0a7d733bf">
+    <Bundle Name="TimeTrackerBundle" Version="0.9.0.0" UpgradeCode="fcef1123-6a65-4143-9c59-60c0a7d733bf">
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+
+        <util:RegistrySearch Root="HKLM" Key="SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{02E43EC2-6B1C-45B5-9E48-941C3E1B204A}_is1" Value="ProductAInstalled" Variable="ProductAInstalled" Result="exists" />
+
         <Chain>
             <ExePackage 
             SourceFile="SqliteNet.exe"
             DetectCondition="ExeDetectedVariable"
             Permanent="yes"
             PerMachine="yes"
-            InstallCommand="/VERYSLIENT /SUPPRESSMSGBOXES" />
+            InstallCommand="/VERYSLIENT /SUPPRESSMSGBOXES" 
+            InstallCondition="ProductAInstalled"
+            />
 
             <MsiPackage Id="MainPackage" 
                 SourceFile="TimeTrackerSetup.msi" 
