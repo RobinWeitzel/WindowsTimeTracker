@@ -99,7 +99,7 @@ namespace TimeTracker
                             {
                                 name = wa.name,
                                 from = wa.from > day_in_question ? wa.from : day_in_question,
-                                to = wa.to ?? day_in_question_after
+                                to = wa.to ?? (day_in_question_after > DateTime.Now ? DateTime.Now : day_in_question_after)
                             }).ToList();
 
                     foreach (Helper h in windowHelper)
@@ -128,7 +128,7 @@ namespace TimeTracker
                        {
                            name = aa.name,
                            from = aa.from > start_of_week ? aa.from : start_of_week,
-                           to = aa.to ?? start_next_week
+                           to = aa.to ?? (start_next_week > DateTime.Now ? DateTime.Now : start_next_week)
                        }).ToList();
 
                     foreach (Helper h in activityHelper)
