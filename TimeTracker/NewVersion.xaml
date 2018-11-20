@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Label Grid.ColumnSpan="2" Content="New version available!" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="57" Margin="121,10,0,0" VerticalAlignment="Top" Width="246" FontSize="24"/>
         <Label Grid.ColumnSpan="2" Content="A new version of TimeTracker &#xD;&#xA;  can be downloaded from:" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="57" Margin="16,57,0,0" VerticalAlignment="Top" Width="455" FontSize="16"/>
-        <TextBlock Grid.ColumnSpan="2" Margin="16,114,21,63" FontSize="16">           
+        <TextBlock Grid.ColumnSpan="2" Margin="18,114,19,63" FontSize="16">           
     <Hyperlink NavigateUri="https://github.com/RobinWeitzel/WindowsTimeTracker/releases" RequestNavigate="Hyperlink_RequestNavigate">
         https://github.com/RobinWeitzel/WindowsTimeTracker/releases
     </Hyperlink>
