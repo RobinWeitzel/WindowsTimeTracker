@@ -29,7 +29,7 @@ namespace TimeTracker
 
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
-        String version = "0.9.0.0";
+        String version = "0.9.0.1";
 
         private string[] blacklist = {
             "TimeTracker",
