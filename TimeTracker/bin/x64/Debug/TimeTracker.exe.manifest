@@ -43,6 +43,21 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="CefSharp" version="69.0.0.0" publicKeyToken="40C4B6FC221F4138" language="neutral" processorArchitecture="amd64" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="CefSharp.Core" version="69.0.0.0" publicKeyToken="40C4B6FC221F4138" language="neutral" processorArchitecture="amd64" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="CefSharp.Wpf" version="69.0.0.0" publicKeyToken="40C4B6FC221F4138" language="neutral" processorArchitecture="amd64" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EntityFramework.dll" size="5225168">
       <assemblyIdentity name="EntityFramework" version="6.0.0.0" publicKeyToken="B77A5C561934E089" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -391,14 +406,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="594400">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="592352">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>39qHaBLEyQjO2IYBWWFB68vt1iirR8vWl5VPnqi4eP0=</dsig:DigestValue>
+        <dsig:DigestValue>Eu62p8rPiqlPL3L9wbwH6VtucgjkPepLDdzQajq3uYg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -420,13 +435,13 @@
       <dsig:DigestValue>rzugF/irH9GIxaT3INnRJB2cAwc6GMGI3Ydvt8AyALM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="DataView.html" size="17837">
+  <file name="DataView.html" size="19535">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>jHbrrqv4YVse86h0ba3o677pCvPjCEeHIru9on2JaAE=</dsig:DigestValue>
+      <dsig:DigestValue>TGgwpDjcut9+RWBa03k3D2w8O0WGqSK6WMMYgwCgPAo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MyIcon.ico" size="47372">
@@ -474,13 +489,13 @@
       <dsig:DigestValue>cWmrLoHkXM7GsucPWx7WSND/aE7VdSj9AAwUSN3/s7Y=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Resources\Chart.min.js" size="158741">
+  <file name="Resources\Chart.bundle.min.js" size="210419">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>oSgtFCCmHWRPQ/JmR4OoZ3Xke1Pw4v50uh6pLcu+fIc=</dsig:DigestValue>
+      <dsig:DigestValue>MZo5XY1Ah7Z2Aui4/alkfeiq3CopMdV/bbkc/Sh41+s=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\chartjs-plugin-datalabels.min.js" size="8836">
@@ -490,6 +505,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>SuPHzbJ4RjnP4lvabrH9n9nPJrUZlG4SbCvTGMtpEaU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\chartjs-plugin-zoom.js" size="18768">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>qnxwhZ6LMsGYX9SwvX6Jm8viEx5ouXUrs0LeaT+3Mdo=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\font-awesome-4.7.0\css\font-awesome.css" size="37414">
@@ -517,6 +541,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>rWFXkmwWIrpOHQPUePFUE2hSS/xG9R5C/g2UX37zI+Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\hammer.min.js" size="20765">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ihtY1iTutH6eMHNTGl02TkGi54U8BShzp5kX+X3Qu0Q=</dsig:DigestValue>
     </hash>
   </file>
   <file name="TimeTracker.exe.config" size="2596">

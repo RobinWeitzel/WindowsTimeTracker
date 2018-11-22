@@ -108,7 +108,7 @@ namespace TimeTracker
 
             using (mainEntities db = new mainEntities())
             {
-                // Check if the tutorial shoukd be shown
+                // Check if the tutorial should be shown
                 bool tutorialViewed = db.settings.Find("tutorialViewed") != null ? db.settings.Find("tutorialViewed").value == 1 : false;
 
                 if(!tutorialViewed)

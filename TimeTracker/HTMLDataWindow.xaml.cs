@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,8 +38,11 @@ namespace TimeTracker
             InitializeComponent();
 
             string curDir = AppDomain.CurrentDomain.BaseDirectory;
-            this.WebBrowser.Source = new Uri(String.Format("file:///{0}DataView.html", curDir));
-            WebBrowser.ObjectForScripting = new MyScriptingClass();
+            WebBrowser.Address = String.Format("file:///{0}DataView.html", curDir);
+
+            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            WebBrowser.RegisterJsObject("callbackObj", new MyScriptingClass());
+            //WebBrowser.ObjectForScripting = new MyScriptingClass();
         }
 
         [ComVisible(true)]

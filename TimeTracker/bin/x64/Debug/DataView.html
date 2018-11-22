@@ -89,8 +89,10 @@
         </div>
     </div>
 
-    <script src="./Resources/Chart.min.js"></script>
+    <script src="./Resources/Chart.bundle.min.js"></script>
     <script src="./Resources/chartjs-plugin-datalabels.min.js"></script>
+    <script src="./Resources/hammer.min.js"></script>
+    <script src="./Resources/chartjs-plugin-zoom.js"></script>
     <script>
         /*var backgroundColor = [
             'rgba(255,99,132,1)',
@@ -180,9 +182,9 @@
         }
 
         function update(value) {
-            data = JSON.parse(window.external.getActivityBreakdown(value));
-            data2 = JSON.parse(window.external.getWindows(value));
-            data3 = JSON.parse(window.external.getActivities(value));
+            data = JSON.parse(callbackObj.getActivityBreakdown(value));
+            data2 = JSON.parse(callbackObj.getWindows(value));
+            data3 = JSON.parse(callbackObj.getActivities(value));
 
             var today = new Date();
             today.setDate(today.getDate() + value);
@@ -202,7 +204,7 @@
             var sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
             document.getElementById('week').innerHTML = getDateString(monday) + " - " + getDateString(sunday);
-        
+
             myDoughnutChart.data = prepareWindows();
             myDoughnutChart.update();
         }
@@ -297,9 +299,20 @@
                         ticks: {
                             max: 24,
                             min: 0,
-                            stepSize: 2,
+                            //stepSize: 2,
                             callback: function (value, index, values) {
-                                return value <= 12 ? value + "AM" : (value - 12) + "PM";
+                                //return value <= 12 ? Math.round(value * 100) / 100 + "AM" : ((Math.round((value - 12) * 100) / 100)) + "PM";
+                                var hours = 0;
+                                var minutes = 0;
+
+                                while (value >= 1) {
+                                    hours++;
+                                    value--;
+                                }
+
+                                minutes = Math.round(60 * value);
+
+                                return hours + ":" + ('0' + minutes).slice(-2);
                             }
                         },
                         position: "top"
@@ -332,6 +345,35 @@
                 },
                 hover: {
                     mode: 'point',
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'x', // is panning about the y axis neccessary for bar charts?
+                    rangeMin: {
+                        // Format of min pan range depends on scale type
+                        x: 0,
+                        y: null
+                    },
+                    rangeMax: {
+                        // Format of max pan range depends on scale type
+                        x: 24,
+                        y: null
+                    },
+                },
+                zoom: {
+                    enabled: true,
+                    mode: 'x',
+                    sensitivity: 3,
+                    rangeMin: {
+                        // Format of max zoom range depends on scale type
+                        x: 0,
+                        y: null
+                    },
+                    rangeMax: {
+                        // Format of max zoom range depends on scale type
+                        x: 24,
+                        y: null
+                    }
                 },
                 plugins: {
                     datalabels: {
