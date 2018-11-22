@@ -122,7 +122,6 @@ namespace TimeTracker
                     db.settings.Add(setting);
                     db.SaveChanges();
                 }
-
             }
 
             // Check for update

@@ -37,12 +37,28 @@ namespace TimeTracker
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             position = Math.Max(position - 1, 0);
+
+            Next.Content = "Next";
+            if (position == 0)
+                Previous.IsEnabled = false;
+                
             drawImage();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            if (position == images.Length - 1)
+            {
+                this.Close();
+                return;
+            }
+
             position = Math.Min(position + 1, images.Length - 1);
+
+            Previous.IsEnabled = true;
+            if (position == images.Length - 1)
+                Next.Content = "Close";
+
             drawImage();
         }
     }
