@@ -67,27 +67,6 @@ namespace TimeTracker
                 public double from { get; set; }
                 public double to { get; set; }
             }
-            public string getActivityBreakdown(int value)
-            {
-                DateTime day_in_question = DateTime.Today.AddDays(value);
-                DateTime day_in_question_after = day_in_question.AddDays(1);
-                using (mainEntities db = new mainEntities())
-                {
-                    List<activity_active> today_activities = db.activity_active.Where(aa =>
-                    (aa.to == null || aa.to >= day_in_question) &&
-                    aa.from < day_in_question_after
-                    ).ToList();
-
-                    List<Event> Events = today_activities.Select(ta => new Event
-                    {
-                        from = Math.Round(ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0, 2),
-                        to = Math.Round((ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0) + (ta.to == null || ta.to >= day_in_question_after ? (day_in_question == DateTime.Today ? DateTime.Now : day_in_question_after) : (DateTime)ta.to).Subtract(ta.from >= day_in_question ? ta.from : day_in_question).TotalHours, 2),
-                        name = ta.name
-                    }).ToList();
-
-                    return customJSONSerializer<Event>(Events);
-                }
-            }
 
             public class Helper
             {
@@ -103,40 +82,33 @@ namespace TimeTracker
                 public double value { get; set; }
             }
 
-            public string getWindows(int value)
+            public string getData(int value)
             {
+                string result = "{";
+
                 DateTime day_in_question = DateTime.Today.AddDays(value);
                 DateTime day_in_question_after = day_in_question.AddDays(1);
-                using (mainEntities db = new mainEntities())
-                {
-                    List<Helper> windowHelper = db.window_active
-                            .Where(wa => (wa.to == null || wa.to >= day_in_question) && wa.from < day_in_question_after)
-                            .Select(wa => new Helper
-                            {
-                                name = wa.name,
-                                from = wa.from > day_in_question ? wa.from : day_in_question,
-                                to = wa.to ?? (day_in_question_after > DateTime.Now ? DateTime.Now : day_in_question_after)
-                            }).ToList();
 
-                    foreach (Helper h in windowHelper)
-                    {
-                        h.time = Math.Max(Math.Round((h.to - h.from).TotalHours, 2), 0);
-                    }
-
-                    return customJSONSerializer<Helper2>(windowHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
-                    {
-                        name = g.Key,
-                        value = g.Sum(h => h.time)
-                    }).ToList());
-                }
-            }
-
-            public string getActivities(int value)
-            {
                 DateTime start_of_week = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
                 DateTime start_next_week = start_of_week.AddDays(7);
+
                 using (mainEntities db = new mainEntities())
                 {
+                    List<activity_active> today_activities = db.activity_active.Where(aa =>
+                    (aa.to == null || aa.to >= day_in_question) &&
+                    aa.from < day_in_question_after
+                    ).ToList();
+
+                    List<Event> Events = today_activities.Select(ta => new Event
+                    {
+                        from = Math.Round(ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0, 2),
+                        to = Math.Round((ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0) + (ta.to == null || ta.to >= day_in_question_after ? (day_in_question == DateTime.Today ? DateTime.Now : day_in_question_after) : (DateTime)ta.to).Subtract(ta.from >= day_in_question ? ta.from : day_in_question).TotalHours, 2),
+                        name = ta.name
+                    }).ToList();
+
+                    result += "\"overview\":" + customJSONSerializer<Event>(Events) + ",";
+
+
                     DateTime minDate = DateTime.Now.AddDays(-30);
                     List<Helper> activityHelper = db.activity_active
                        .Where(aa => (aa.to == null || aa.to >= start_of_week) && aa.from < start_next_week)
@@ -152,12 +124,47 @@ namespace TimeTracker
                         h.time = Math.Max(Math.Round((h.to - h.from).TotalHours, 2), 0);
                     }
 
-                    return customJSONSerializer<Helper2>(activityHelper.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
+                    result += "\"activities\":" + customJSONSerializer<Helper2>(activityHelper.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
                     {
                         name = g.Key,
                         value = g.Sum(h => h.time)
-                    }).ToList());
+                    }).ToList()) + ",";
+
+
+                    List<Helper> Helper = today_activities.Select(ta => new Helper
+                    {
+                        from = ta.from > day_in_question ? ta.from : day_in_question,
+                        to = ta.to ?? (day_in_question_after > DateTime.Now ? DateTime.Now : day_in_question_after),
+                        name = ta.name
+                    }).ToList();
+
+                    List<Helper> windowHelper = new List<Helper>();
+
+                    foreach (Helper h in Helper)
+                    {
+                        windowHelper.AddRange(
+                        db.window_active
+                            .Where(wa => (wa.to == null || wa.to <= h.to) && wa.from >= h.from)
+                            .Select(wa => new Helper
+                            {
+                                name = wa.name,
+                                from = wa.from > h.from ? wa.from : h.from,
+                                to = wa.to ?? (h.to > DateTime.Now ? DateTime.Now : h.to)
+                            }));
+                    }
+
+                    foreach (Helper h in windowHelper)
+                    {
+                        h.time = Math.Max(Math.Round((h.to - h.from).TotalHours, 2), 0);
+                    }
+
+                    result += "\"windows\":" + customJSONSerializer<Helper2>(windowHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
+                    {
+                        name = g.Key,
+                        value = g.Sum(h => h.time)
+                    }).ToList()) + "}";
                 }
+                return result;
             }
         }
 

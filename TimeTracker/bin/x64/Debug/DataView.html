@@ -188,21 +188,16 @@
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getActivityBreakdown(value).then(function (result) {
-                data = JSON.parse(result);
+            boundAsync.getData(value).then(function (result) {
+                resultParsed = JSON.parse(result);
+                data = resultParsed.overview;
+                data2 = resultParsed.windows;
+                data3 = resultParsed.activities;
 
                 stackedBar.data = {
                     labels: [getDateString(today)],
                     datasets: prepareActivityBreakdown()
                 };
-
-                stackedBar.update();
-                drawSummary();
-
-            });
-
-            boundAsync.getWindows(value).then(function (result) {
-                data2 = JSON.parse(result);
 
                 var monday = getMonday(today);
                 var sunday = new Date(monday);
@@ -210,14 +205,12 @@
                 document.getElementById('week').innerHTML = getDateString(monday) + " - " + getDateString(sunday);
 
                 myDoughnutChart.data = prepareWindows();
-                myDoughnutChart.update();
-            });
-
-            boundAsync.getActivities(value).then(function (result) {
-                data3 = JSON.parse(result);
-
 
                 myBarChart.data = prepareActivities();
+
+                stackedBar.update();
+                drawSummary();
+                myDoughnutChart.update();
                 myBarChart.update();
             });
         }
