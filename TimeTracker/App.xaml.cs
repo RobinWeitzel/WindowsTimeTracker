@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -312,6 +313,9 @@ namespace TimeTracker
         [DllImport("User32.dll")]
         static extern IntPtr GetParent(IntPtr hwnd);
 
+        [DllImport("kernel32.dll")]
+        static extern int GetProcessId(IntPtr handle);
+
         private string GetActiveWindowTitle(IntPtr handle)
         {
             const int nChars = 256;
@@ -349,6 +353,17 @@ namespace TimeTracker
 
             if (handleLong <= 0)
                 return;
+            /*try Code to access process name and path (currently not used)
+            {
+                Process myProcess = Process.GetProcesses().Single(
+        p => p.Id != 0 && p.MainWindowHandle == handle);
+
+                Console.WriteLine(Path.GetFileName(myProcess.MainModule.FileName));
+                Console.WriteLine(myProcess.MainWindowTitle);
+            } catch (Exception e)
+            {
+                return;
+            }*/
 
             string windowTitle = GetActiveWindowTitle(handle);
             if (windowTitle == null)
