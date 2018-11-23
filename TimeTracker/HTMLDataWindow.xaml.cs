@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,11 +39,22 @@ namespace TimeTracker
             InitializeComponent();
 
             string curDir = AppDomain.CurrentDomain.BaseDirectory;
-            WebBrowser.Address = String.Format("file:///{0}DataView.html", curDir);
 
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-            WebBrowser.RegisterJsObject("callbackObj", new MyScriptingClass());
+            //CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            //WebBrowser.RegisterJsObject("callbackObj", new MyScriptingClass());
             //WebBrowser.ObjectForScripting = new MyScriptingClass();
+
+            if (!Cef.IsInitialized)
+            {
+                CefSettings cefSettings = new CefSettings();
+                cefSettings.BrowserSubprocessPath = String.Format("{0}CefSharp.BrowserSubprocess.exe", curDir); // **Path where the CefSharp.BrowserSubprocess.exe exists**
+                cefSettings.CachePath = "ChromiumBrowserControlCache";
+                cefSettings.IgnoreCertificateErrors = true;
+                Cef.Initialize(cefSettings);
+            }
+
+            WebBrowser.Address = String.Format("file:///{0}DataView.html", curDir);
+            WebBrowser.JavascriptObjectRepository.Register("boundAsync", new MyScriptingClass(), true);
         }
 
         [ComVisible(true)]

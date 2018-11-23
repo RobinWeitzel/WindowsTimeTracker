@@ -181,32 +181,45 @@
             return d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
         }
 
-        function update(value) {
-            data = JSON.parse(callbackObj.getActivityBreakdown(value));
-            data2 = JSON.parse(callbackObj.getWindows(value));
-            data3 = JSON.parse(callbackObj.getActivities(value));
-
+        async function update(value) {
             var today = new Date();
             today.setDate(today.getDate() + value);
 
-            stackedBar.data = {
-                labels: [getDateString(today)],
-                datasets: prepareActivityBreakdown()
-            }
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
 
-            stackedBar.update();
-            drawSummary();
+            boundAsync.getActivityBreakdown(value).then(function (result) {
+                data = JSON.parse(result);
 
-            myBarChart.data = prepareActivities();
-            myBarChart.update();
+                stackedBar.data = {
+                    labels: [getDateString(today)],
+                    datasets: prepareActivityBreakdown()
+                };
 
-            var monday = getMonday(today);
-            var sunday = new Date(monday);
-            sunday.setDate(monday.getDate() + 6);
-            document.getElementById('week').innerHTML = getDateString(monday) + " - " + getDateString(sunday);
+                stackedBar.update();
+                drawSummary();
 
-            myDoughnutChart.data = prepareWindows();
-            myDoughnutChart.update();
+            });
+
+            boundAsync.getWindows(value).then(function (result) {
+                data2 = JSON.parse(result);
+
+                var monday = getMonday(today);
+                var sunday = new Date(monday);
+                sunday.setDate(monday.getDate() + 6);
+                document.getElementById('week').innerHTML = getDateString(monday) + " - " + getDateString(sunday);
+
+                myDoughnutChart.data = prepareWindows();
+                myDoughnutChart.update();
+            });
+
+            boundAsync.getActivities(value).then(function (result) {
+                data3 = JSON.parse(result);
+
+
+                myBarChart.data = prepareActivities();
+                myBarChart.update();
+            });
         }
 
         function changeDate(change) {
@@ -468,7 +481,7 @@
                     padding: {
                         left: 0,
                         right: 0,
-                        top: 25,
+                        top: 0,
                         bottom: 0
                     }
                 },
@@ -535,7 +548,7 @@
                                     return {
                                         // Instead of `text: label,`
                                         // We add the value to the string
-                                        text: label + " (" + formatTime(value) + ")",
+                                        text: (label.length > 30 ? label.substr(0, 30) + "..." : label) + " (" + formatTime(value) + ")",
                                         fillStyle: fill,
                                         strokeStyle: stroke,
                                         lineWidth: bw,
@@ -552,7 +565,7 @@
                 tooltips: {
                     callbacks: {
                         label: function (tooltipItem, data) {
-                            var label = data.labels[tooltipItem.index];
+                            var label = data.labels[tooltipItem.index].length > 30 ? data.labels[tooltipItem.index].substr(0, 30) + "..." : data.labels[tooltipItem.index];
 
                             label += " (" + formatTime(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]) + ")";
                             return label;

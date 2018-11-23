@@ -2,10 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.1.0" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
         <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
-            <MajorUpgrade
-  DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit."/>
+        <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
-
         <!-- The following three sections are from the How To: Add a File to Your Installer topic-->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="ProgramFilesFolder">
@@ -13,6 +11,13 @@
                     <Directory Name="de" Id="deFolder" />
                     <Directory Name="x64" Id="x64Folder" />
                     <Directory Name="x86" Id="x86Folder" />
+                    <Directory Name="swiftshader" Id="swiftshaderFolder" />
+                    <Directory Name="locales" Id="localesFolder" />
+                    <Directory Name="GPUCache" Id="GPUCacheFolder" />
+                    <Directory Name="blob_storage" Id="blob_storageFolder">
+                        <Directory Name="b733fd33-abe7-45c3-b81d-c73b3cec7013" Id="blob_storageInnerFolder" />
+                    </Directory>
+                    <Directory Name="app.publish" Id="apppublishFolder" />
                     <Directory Name="Resources" Id="ResourcesFolder">
                         <Directory Name="font-awesome-4.7.0" Id="fontawesomeFolder">
                             <Directory Name="css" Id="cssFolder" />
@@ -24,7 +29,7 @@
                 </Directory>
             </Directory>
             <Directory Id="ProgramMenuFolder">
-                <Directory Id="ApplicationProgramsFolder" Name="TimeTracker"/>
+                <Directory Id="ApplicationProgramsFolder" Name="TimeTracker" />
             </Directory>
         </Directory>
         <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
@@ -33,12 +38,37 @@
                     <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
                 </RegistryKey>
                 <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="both" />
+                <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Debug\cef.pak" />
+                <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Debug\cef_100_percent.pak" />
+                <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Debug\cef_200_percent.pak" />
+                <File Id="CEF_EXTENSIONS.PAK" Name="cef_extensions.pak" Source="..\bin\x64\Debug\cef_extensions.pak" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.DLL" Name="CefSharp.BrowserSubprocess.Core.dll" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.Core.dll" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.PDB" Name="CefSharp.BrowserSubprocess.Core.pdb" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.Core.pdb" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.EXE" Name="CefSharp.BrowserSubprocess.exe" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.exe" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.PDB" Name="CefSharp.BrowserSubprocess.pdb" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.pdb" />
+                <File Id="CEFSHARP.CORE.DLL" Name="CefSharp.Core.dll" Source="..\bin\x64\Debug\CefSharp.Core.dll" />
+                <File Id="CEFSHARP.CORE.PDB" Name="CefSharp.Core.pdb" Source="..\bin\x64\Debug\CefSharp.Core.pdb" />
+                <File Id="CEFSHARP.CORE.XML" Name="CefSharp.Core.xml" Source="..\bin\x64\Debug\CefSharp.Core.xml" />
+                <File Id="CEFSHARP.DLL" Name="CefSharp.dll" Source="..\bin\x64\Debug\CefSharp.dll" />
+                <File Id="CEFSHARP.PDB" Name="CefSharp.pdb" Source="..\bin\x64\Debug\CefSharp.pdb" />
+                <File Id="CEFSHARP.WPF.DLL" Name="CefSharp.Wpf.dll" Source="..\bin\x64\Debug\CefSharp.Wpf.dll" />
+                <File Id="CEFSHARP.WPF.PDB" Name="CefSharp.Wpf.pdb" Source="..\bin\x64\Debug\CefSharp.Wpf.pdb" />
+                <File Id="CEFSHARP.WPF.XML" Name="CefSharp.Wpf.XML" Source="..\bin\x64\Debug\CefSharp.Wpf.XML" />
+                <File Id="CEFSHARP.XML" Name="CefSharp.XML" Source="..\bin\x64\Debug\CefSharp.XML" />
+                <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Debug\chrome_elf.dll" />
+                <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Debug\d3dcompiler_47.dll" />
                 <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
-                <File Id="DEFAULT.DB" Name="default.db" Source="..\default.db"  />
+                <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Debug\debug.log" />
+                <File Id="DEFAULT.DB" Name="default.db" Source="..\bin\x64\Debug\default.db" />
+                <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Debug\devtools_resources.pak" />
                 <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\x64\Debug\EntityFramework.dll" />
                 <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\x64\Debug\EntityFramework.SqlServer.dll" />
                 <File Id="ENTITYFRAMEWORK.SQLSERVER.XML" Name="EntityFramework.SqlServer.xml" Source="..\bin\x64\Debug\EntityFramework.SqlServer.xml" />
                 <File Id="ENTITYFRAMEWORK.XML" Name="EntityFramework.xml" Source="..\bin\x64\Debug\EntityFramework.xml" />
+                <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Debug\icudtl.dat" />
+                <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Debug\libcef.dll" />
+                <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\bin\x64\Debug\libEGL.dll" />
+                <File Id="LIBGLESV2.DLL" Name="libGLESv2.dll" Source="..\bin\x64\Debug\libGLESv2.dll" />
                 <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Debug\LiveCharts.dll" />
                 <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Debug\LiveCharts.pdb" />
                 <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Debug\LiveCharts.Wpf.dll" />
@@ -49,10 +79,12 @@
                 <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb" />
                 <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
                 <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Debug\Microsoft.Win32.Primitives.dll" />
+                <File Id="NATIVES_BLOB.BIN" Name="natives_blob.bin" Source="..\bin\x64\Debug\natives_blob.bin" />
                 <File Id="NOTIFICATIONS.WPF.DLL" Name="Notifications.Wpf.dll" Source="..\bin\x64\Debug\Notifications.Wpf.dll" />
                 <File Id="QUERYSTRING.NETCORE.DLL" Name="QueryString.NETCore.dll" Source="..\bin\x64\Debug\QueryString.NETCore.dll" />
                 <File Id="QUERYSTRING.NETCORE.PDB" Name="QueryString.NETCore.pdb" Source="..\bin\x64\Debug\QueryString.NETCore.pdb" />
                 <File Id="QUERYSTRING.NETCORE.XML" Name="QueryString.NETCore.xml" Source="..\bin\x64\Debug\QueryString.NETCore.xml" />
+                <File Id="SNAPSHOT_BLOB.BIN" Name="snapshot_blob.bin" Source="..\bin\x64\Debug\snapshot_blob.bin" />
                 <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Debug\System.AppContext.dll" />
                 <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Debug\System.Console.dll" />
                 <File Id="SYSTEM.DATA.SQLITE.DLL" Name="System.Data.SQLite.dll" Source="..\bin\x64\Debug\System.Data.SQLite.dll" />
@@ -77,11 +109,12 @@
                 <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Debug\System.Xml.ReaderWriter.dll" />
                 <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Debug\TimeTracker.application" />
                 <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe">
-                    <Shortcut Id="TIMETRACKER.Shortcut" Directory="ApplicationProgramsFolder" Name="TimeTracker"/> 
+                    <Shortcut Id="TIMETRACKER.Shortcut" Directory="ApplicationProgramsFolder" Name="TimeTracker" />
                 </File>
                 <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
                 <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Debug\TimeTracker.exe.manifest" />
                 <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
+                <File Id="V8_CONTEXT_SNAPSHOT.BIN" Name="v8_context_snapshot.bin" Source="..\bin\x64\Debug\v8_context_snapshot.bin" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="deFolder">
@@ -100,14 +133,101 @@
                 <File Id="SQLITE.INTEROP.DLL_1" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x86\SQLite.Interop.dll" />
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="swiftshaderFolder">
+            <Component Id="swiftshader" Guid="ddd469cc-0203-45ad-ac8e-42fde5d28a58" KeyPath="yes">
+                <File Id="LIBEGL.DLL_1" Name="libEGL.dll" Source="..\bin\x64\Debug\swiftshader\libEGL.dll" />
+                <File Id="LIBGLESV2.DLL_1" Name="libGLESv2.dll" Source="..\bin\x64\Debug\swiftshader\libGLESv2.dll" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="localesFolder">
+            <Component Id="locales" Guid="2ee70755-9a34-4984-b26e-cd3cc88a9fb0" KeyPath="yes">
+                <File Id="AM.PAK" Name="am.pak" Source="..\bin\x64\Debug\locales\am.pak" />
+                <File Id="AR.PAK" Name="ar.pak" Source="..\bin\x64\Debug\locales\ar.pak" />
+                <File Id="BG.PAK" Name="bg.pak" Source="..\bin\x64\Debug\locales\bg.pak" />
+                <File Id="BN.PAK" Name="bn.pak" Source="..\bin\x64\Debug\locales\bn.pak" />
+                <File Id="CA.PAK" Name="ca.pak" Source="..\bin\x64\Debug\locales\ca.pak" />
+                <File Id="CS.PAK" Name="cs.pak" Source="..\bin\x64\Debug\locales\cs.pak" />
+                <File Id="DA.PAK" Name="da.pak" Source="..\bin\x64\Debug\locales\da.pak" />
+                <File Id="DE.PAK" Name="de.pak" Source="..\bin\x64\Debug\locales\de.pak" />
+                <File Id="EL.PAK" Name="el.pak" Source="..\bin\x64\Debug\locales\el.pak" />
+                <File Id="EN_GB.PAK" Name="en-GB.pak" Source="..\bin\x64\Debug\locales\en-GB.pak" />
+                <File Id="EN_US.PAK" Name="en-US.pak" Source="..\bin\x64\Debug\locales\en-US.pak" />
+                <File Id="ES.PAK" Name="es.pak" Source="..\bin\x64\Debug\locales\es.pak" />
+                <File Id="ES_419.PAK" Name="es-419.pak" Source="..\bin\x64\Debug\locales\es-419.pak" />
+                <File Id="ET.PAK" Name="et.pak" Source="..\bin\x64\Debug\locales\et.pak" />
+                <File Id="FA.PAK" Name="fa.pak" Source="..\bin\x64\Debug\locales\fa.pak" />
+                <File Id="FI.PAK" Name="fi.pak" Source="..\bin\x64\Debug\locales\fi.pak" />
+                <File Id="FIL.PAK" Name="fil.pak" Source="..\bin\x64\Debug\locales\fil.pak" />
+                <File Id="FR.PAK" Name="fr.pak" Source="..\bin\x64\Debug\locales\fr.pak" />
+                <File Id="GU.PAK" Name="gu.pak" Source="..\bin\x64\Debug\locales\gu.pak" />
+                <File Id="HE.PAK" Name="he.pak" Source="..\bin\x64\Debug\locales\he.pak" />
+                <File Id="HI.PAK" Name="hi.pak" Source="..\bin\x64\Debug\locales\hi.pak" />
+                <File Id="HR.PAK" Name="hr.pak" Source="..\bin\x64\Debug\locales\hr.pak" />
+                <File Id="HU.PAK" Name="hu.pak" Source="..\bin\x64\Debug\locales\hu.pak" />
+                <File Id="ID.PAK" Name="id.pak" Source="..\bin\x64\Debug\locales\id.pak" />
+                <File Id="IT.PAK" Name="it.pak" Source="..\bin\x64\Debug\locales\it.pak" />
+                <File Id="JA.PAK" Name="ja.pak" Source="..\bin\x64\Debug\locales\ja.pak" />
+                <File Id="KN.PAK" Name="kn.pak" Source="..\bin\x64\Debug\locales\kn.pak" />
+                <File Id="KO.PAK" Name="ko.pak" Source="..\bin\x64\Debug\locales\ko.pak" />
+                <File Id="LT.PAK" Name="lt.pak" Source="..\bin\x64\Debug\locales\lt.pak" />
+                <File Id="LV.PAK" Name="lv.pak" Source="..\bin\x64\Debug\locales\lv.pak" />
+                <File Id="ML.PAK" Name="ml.pak" Source="..\bin\x64\Debug\locales\ml.pak" />
+                <File Id="MR.PAK" Name="mr.pak" Source="..\bin\x64\Debug\locales\mr.pak" />
+                <File Id="MS.PAK" Name="ms.pak" Source="..\bin\x64\Debug\locales\ms.pak" />
+                <File Id="NB.PAK" Name="nb.pak" Source="..\bin\x64\Debug\locales\nb.pak" />
+                <File Id="NL.PAK" Name="nl.pak" Source="..\bin\x64\Debug\locales\nl.pak" />
+                <File Id="PL.PAK" Name="pl.pak" Source="..\bin\x64\Debug\locales\pl.pak" />
+                <File Id="PT_BR.PAK" Name="pt-BR.pak" Source="..\bin\x64\Debug\locales\pt-BR.pak" />
+                <File Id="PT_PT.PAK" Name="pt-PT.pak" Source="..\bin\x64\Debug\locales\pt-PT.pak" />
+                <File Id="RO.PAK" Name="ro.pak" Source="..\bin\x64\Debug\locales\ro.pak" />
+                <File Id="RU.PAK" Name="ru.pak" Source="..\bin\x64\Debug\locales\ru.pak" />
+                <File Id="SK.PAK" Name="sk.pak" Source="..\bin\x64\Debug\locales\sk.pak" />
+                <File Id="SL.PAK" Name="sl.pak" Source="..\bin\x64\Debug\locales\sl.pak" />
+                <File Id="SR.PAK" Name="sr.pak" Source="..\bin\x64\Debug\locales\sr.pak" />
+                <File Id="SV.PAK" Name="sv.pak" Source="..\bin\x64\Debug\locales\sv.pak" />
+                <File Id="SW.PAK" Name="sw.pak" Source="..\bin\x64\Debug\locales\sw.pak" />
+                <File Id="TA.PAK" Name="ta.pak" Source="..\bin\x64\Debug\locales\ta.pak" />
+                <File Id="TE.PAK" Name="te.pak" Source="..\bin\x64\Debug\locales\te.pak" />
+                <File Id="TH.PAK" Name="th.pak" Source="..\bin\x64\Debug\locales\th.pak" />
+                <File Id="TR.PAK" Name="tr.pak" Source="..\bin\x64\Debug\locales\tr.pak" />
+                <File Id="UK.PAK" Name="uk.pak" Source="..\bin\x64\Debug\locales\uk.pak" />
+                <File Id="VI.PAK" Name="vi.pak" Source="..\bin\x64\Debug\locales\vi.pak" />
+                <File Id="ZH_CN.PAK" Name="zh-CN.pak" Source="..\bin\x64\Debug\locales\zh-CN.pak" />
+                <File Id="ZH_TW.PAK" Name="zh-TW.pak" Source="..\bin\x64\Debug\locales\zh-TW.pak" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="GPUCacheFolder">
+            <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba" KeyPath="yes">
+                <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Debug\GPUCache\data_0" />
+                <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Debug\GPUCache\data_1" />
+                <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Debug\GPUCache\data_2" />
+                <File Id="DATA_3" Name="data_3" Source="..\bin\x64\Debug\GPUCache\data_3" />
+                <File Id="INDEX" Name="index" Source="..\bin\x64\Debug\GPUCache\index" />
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="blob_storageFolder">
+            <Component Id="blob_storage" Guid="202e9df0-6081-4a28-9286-8e1b32f6f2be" KeyPath="yes">
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="blob_storageInnerFolder">
+            <Component Id="blob_storageInner" Guid="3d189099-4581-4e3d-9738-f1cd70b7970c" KeyPath="yes">
+            </Component>
+        </DirectoryRef>
+        <DirectoryRef Id="apppublishFolder">
+            <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739" KeyPath="yes">
+                <File Id="TIMETRACKER.EXE_1" Name="TimeTracker.exe" Source="..\bin\x64\Debug\app.publish\TimeTracker.exe" />
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="ResourcesFolder">
             <Component Id="Resources" Guid="c6b8e640-9fa8-4fb9-8138-ff93adeeaffd" KeyPath="yes">
                 <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Debug\Resources\Bild1.png" />
                 <File Id="BILD2.PNG" Name="Bild2.png" Source="..\bin\x64\Debug\Resources\Bild2.png" />
                 <File Id="BILD3.PNG" Name="Bild3.png" Source="..\bin\x64\Debug\Resources\Bild3.png" />
                 <File Id="BILD4.PNG" Name="Bild4.png" Source="..\bin\x64\Debug\Resources\Bild4.png" />
-                <File Id="CHART.MIN.JS" Name="Chart.min.js" Source="..\bin\x64\Debug\Resources\Chart.min.js" />
                 <File Id="CHARTJS_PLUGIN_DATALABELS.MIN.JS" Name="chartjs-plugin-datalabels.min.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-datalabels.min.js" />
+                <File Id="CHARTJS_PLUGIN_ZOOM.JS" Name="chartjs-plugin-zoom.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-zoom.js" />
+                <File Id="HAMMER.MIN.JS" Name="hammer.min.js" Source="..\bin\x64\Debug\Resources\hammer.min.js" />
+                <File Id="CHART.BUNDLE.MIN.JS" Name="Chart.bundle.min.js" Source="..\bin\x64\Debug\Resources\Chart.bundle.min.js" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="fontawesomeFolder">
@@ -168,12 +288,17 @@
                 <RemoveFolder Id="ApplicationProgramsFolder" On="both" />
             </Component>
         </DirectoryRef>
-        
         <Feature Id="MainApplication" Title="Main Application" Level="1">
             <ComponentRef Id="timetracker" />
             <ComponentRef Id="de" />
             <ComponentRef Id="x64" />
             <ComponentRef Id="x86" />
+            <ComponentRef Id="swiftshader" />
+            <ComponentRef Id="locales" />
+            <ComponentRef Id="GPUCache" />
+            <ComponentRef Id="blob_storage" />
+            <ComponentRef Id="blob_storageInner" />
+            <ComponentRef Id="apppublish" />
             <ComponentRef Id="Resources" />
             <ComponentRef Id="fontawesome" />
             <ComponentRef Id="css" />
