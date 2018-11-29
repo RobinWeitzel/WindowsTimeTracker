@@ -36,11 +36,30 @@ namespace TimeTracker
             public string Visible { get; set; }
         }
 
+        public static class ScreenHandler
+        {
+            public static Screen GetCurrentScreen(Window window)
+            {
+                var parentArea = new System.Drawing.Rectangle((int)window.Left, (int)window.Top, (int)window.Width, (int)window.Height);
+                return Screen.FromRectangle(parentArea);
+            }
+
+            public static Screen GetScreen(int requestedScreen)
+            {
+                var screens = Screen.AllScreens;
+                var mainScreen = 0;
+                if (screens.Length > 1 && mainScreen < screens.Length)
+                {
+                    return screens[requestedScreen];
+                }
+                return screens[mainScreen];
+            }
+        }
 
         public CustomToast(string window)
         {
             InitializeComponent();
-
+            var currentScreen = ScreenHandler.GetCurrentScreen(this); // ToDo: fix this
             var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
             this.Left = desktopWorkingArea.Right - this.Width - 15;
             this.Top = desktopWorkingArea.Bottom - this.Height - 12;
