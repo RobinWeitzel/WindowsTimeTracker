@@ -23,8 +23,9 @@ namespace TimeTracker
     public partial class CustomToast : Window
     {
         List<CustomComboBoxItem> Activities;
-        int id;
         Stack<bool> cancelClose = new Stack<bool>();
+        DateTime toDate;
+        string defaultName;
 
         long timeout = 5000;
 
@@ -36,7 +37,7 @@ namespace TimeTracker
         }
 
 
-        public CustomToast(string id_string, string window)
+        public CustomToast(string window)
         {
             InitializeComponent();
 
@@ -44,13 +45,12 @@ namespace TimeTracker
             this.Left = desktopWorkingArea.Right - this.Width - 15;
             this.Top = desktopWorkingArea.Bottom - this.Height - 12;
 
+            toDate = DateTime.Now;
+
             using (mainEntities db = new mainEntities())
             {
                 bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
                 bool makeSound = db.settings.Find("makeSound") != null ? db.settings.Find("makeSound").value == 1 : Constants.makeSound;
-
-                id = int.Parse(id_string);
-                activity_active new_activity = db.activity_active.Find(id);
             
                 Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC").Select(a => new CustomComboBoxItem()
                 {
@@ -71,7 +71,9 @@ namespace TimeTracker
 
                 ComboBox.ItemsSource = Activities;
 
-                ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(new_activity.name)).FirstOrDefault();
+                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
+                defaultName = last_activity != null ? last_activity.name : "";
+                ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(defaultName)).FirstOrDefault();
 
                 TextBlock2.Text = window.Trim();
 
@@ -82,7 +84,6 @@ namespace TimeTracker
             }
 
             setupClose();
-
         }
 
         private async void setupClose()
@@ -90,7 +91,10 @@ namespace TimeTracker
             await Task.Delay((int)timeout);
 
             if(cancelClose.Count() == 0 || cancelClose.Pop() != true)
+            {
+                setNewActivity(defaultName);
                 this.Close();
+            }
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -103,15 +107,25 @@ namespace TimeTracker
             setupClose();
         }
 
-        private void setNewActivity()
+        private void setNewActivity(string name)
         {
             using (mainEntities db = new mainEntities())
             {
-                activity_active new_activity = db.activity_active.Find(id);
-                if(new_activity != null)
-                    new_activity.name = ComboBox.Text;
+                activity_active current_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
+                if (current_activity == null || !ComboBox.Text.Equals(current_activity.name))
+                {
+                    activity_active new_activity = new activity_active();
 
-                db.SaveChanges();
+                    if (current_activity != null)
+                        current_activity.to = toDate;
+
+                    new_activity.from = toDate;
+                    new_activity.name = name;
+
+                    db.activity_active.Add(new_activity);
+
+                    db.SaveChanges();
+                }
 
                 Constants.lastConfirmed = DateTime.Now;
                 this.Close();
@@ -120,19 +134,20 @@ namespace TimeTracker
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            setNewActivity(defaultName);
             this.Close();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity();
+            setNewActivity(ComboBox.Text);
         }
 
         private void ComboBox_OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                setNewActivity();
+                setNewActivity(ComboBox.Text);
             }
         }
     }

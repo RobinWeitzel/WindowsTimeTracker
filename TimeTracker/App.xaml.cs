@@ -182,7 +182,7 @@ namespace TimeTracker
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            saveWindows();
+            saveWindows(true);
         }
 
         private void ShowMainWindow()
@@ -245,7 +245,7 @@ namespace TimeTracker
                     // ToDo: Ask what user did during time away from pc
                     break;
                 case PowerModes.Suspend:
-                    saveWindows();
+                    saveWindows(true);
                     break;
             }
         }
@@ -256,10 +256,10 @@ namespace TimeTracker
             switch (e.Reason)
             {
                 case SessionSwitchReason.SessionLock:
-                    saveWindows();
+                    saveWindows(true);
                     break;
                 case SessionSwitchReason.SessionLogoff:
-                    saveWindows();
+                    saveWindows(true);
                     break;
                 case SessionSwitchReason.SessionLogon:
                     // ToDo: Ask what user did during time away from pc
@@ -288,7 +288,7 @@ namespace TimeTracker
                 paused = false;
             } else
             {
-                saveWindows();
+                saveWindows(true);
                 _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
                 paused = true;
             }
@@ -378,7 +378,7 @@ namespace TimeTracker
                 // Stop if the current activity is blacklisted or a file path
                 if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
                 {
-                    saveWindows();
+                    saveWindows(false);
                     return;
                 }
 
@@ -447,21 +447,15 @@ namespace TimeTracker
             }
         }
 
+
         private void closeOldActivity()
         {
             using (mainEntities db = new mainEntities())
             {
                 activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
-                activity_active older_activity = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.from).FirstOrDefault();
                 if (old_activity != null)
                 {
                     old_activity.to = DateTime.Now;
-
-                    if (older_activity != null && old_activity.name.Equals(older_activity.name) && old_activity.from.Subtract((DateTime)older_activity.to).TotalSeconds <= 1)
-                    {
-                        old_activity.from = older_activity.from;
-                        db.activity_active.Remove(older_activity);
-                    }
 
                     db.SaveChanges();
                 }
@@ -481,32 +475,14 @@ namespace TimeTracker
                         name = "No window active";
                 }
 
-                closeOldActivity();
-
-                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
-
-                activity_active new_activity = new activity_active();
-                new_activity.from = DateTime.Now;
-                new_activity.name = last_activity != null ? last_activity.name : "";
-                db.activity_active.Add(new_activity);
-
-                db.SaveChanges();
-
-                List<string> selectable_activities;
-
-                selectable_activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC LIMIT 5").ToList();
-
-                // Load timeout from settings
-                long timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
-
                 CloseAllToasts();
 
-                CustomToast newToast = new CustomToast(new_activity.id.ToString(), name);
+                CustomToast newToast = new CustomToast(name);
                 newToast.Show();
             }
         }
 
-        private void saveWindows()
+        private void saveWindows(bool saveActivity)
         {
             // Save open activities and windows
             using (mainEntities db = new mainEntities())
@@ -514,7 +490,8 @@ namespace TimeTracker
                 List<window_active> open_windows = db.window_active.Where(wa => wa.to == null).ToList();
                 open_windows.ForEach(wa => wa.to = DateTime.Now);
 
-                closeOldActivity();
+                if(saveActivity)
+                    closeOldActivity();
 
                 db.SaveChanges();
             }
