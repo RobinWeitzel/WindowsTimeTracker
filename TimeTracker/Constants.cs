@@ -18,7 +18,7 @@ namespace TimeTracker
         public static bool useNativeToast = false; 
         public static bool makeSound = false;
 
-        public static string version = "0.9.1.0";
+        public static string version = "0.9.2.0";
         public static Nullable<DateTime> lastConfirmed = null;
     }
 }

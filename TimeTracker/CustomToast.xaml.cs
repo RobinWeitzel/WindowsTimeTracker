@@ -90,7 +90,9 @@ namespace TimeTracker
 
                 ComboBox.ItemsSource = Activities;
 
-                activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
+                activity_active last_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
+                if (last_activity == null)
+                    last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
                 defaultName = last_activity != null ? last_activity.name : "";
                 ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(defaultName)).FirstOrDefault();
 
