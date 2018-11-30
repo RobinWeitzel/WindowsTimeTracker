@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\
 TimeTracker
 none
 false
 DEBUG;TRACE
-C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\App.xaml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\App.xaml
 7-365385716
 121304485923
-20-246855714
-106-1846355324
+19-2094089321
+99-421979203
 CustomToast.xaml;HTMLDataWindow.xaml;MainWindow.xaml;ManualEdit.xaml;NewVersion.xaml;SettingsWindow.xaml;Tutorial.xaml;
 
 False

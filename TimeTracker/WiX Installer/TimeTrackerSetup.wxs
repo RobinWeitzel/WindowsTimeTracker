@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.3.0" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
-        <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+        <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges='limited'/>
         <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
         <!-- The following three sections are from the How To: Add a File to Your Installer topic-->
         <Directory Id="TARGETDIR" Name="SourceDir">
-            <Directory Id="ProgramFilesFolder">
+            <Directory Id="LocalAppDataFolder">
                 <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker">
                     <Directory Name="de" Id="deFolder" />
                     <Directory Name="x64" Id="x64Folder" />
@@ -34,7 +34,7 @@
         </Directory>
         <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
             <Component Id="timetracker" Guid="3dc9bb4e-8e96-4210-a515-d41b0cb71a07">
-                <RegistryKey Id="TimeTrackerAutoStart" Root="HKMU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
+                <RegistryKey Id="TimeTrackerAutoStart" Root="HKCU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
                     <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
                 </RegistryKey>
                 <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="both" />

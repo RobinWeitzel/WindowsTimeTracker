@@ -16,7 +16,6 @@ using System.Windows.Interop;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
-using System.Data.Entity.SqlServer;
 
 namespace TimeTracker
 {
