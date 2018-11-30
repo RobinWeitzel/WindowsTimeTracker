@@ -1,0 +1,10 @@
+TimeTracker/WiX Installer/*.exe
+TimeTracker/WiX Installer/*.msi
+TimeTracker/WiX Installer/*.wixobj
+TimeTracker/WiX Installer/*.wixpdb
+TimeTracker/bin
+TimeTracker/obj
+TimeTracker/publish
+.vs
+packages
+
