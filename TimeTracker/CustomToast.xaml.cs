@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -14,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TimeTracker.Properties;
 
 namespace TimeTracker
 {
@@ -56,7 +59,7 @@ namespace TimeTracker
             }
         }
 
-        public CustomToast(string window)
+        public CustomToast()
         {
             InitializeComponent();
             var currentScreen = ScreenHandler.GetCurrentScreen(this); // ToDo: fix this
@@ -66,18 +69,27 @@ namespace TimeTracker
 
             toDate = DateTime.Now;
 
-            using (mainEntities db = new mainEntities())
+            using (TextReader tr = new StreamReader(Variables.activityPath))
             {
-                bool lastActivities = db.settings.Find("lastActivities") != null ? db.settings.Find("lastActivities").value == 1 : Constants.lastActivities;
-                bool makeSound = db.settings.Find("makeSound") != null ? db.settings.Find("makeSound").value == 1 : Constants.makeSound;
-            
-                Activities = db.Database.SqlQuery<string>("SELECT name FROM activity_active GROUP BY name ORDER BY max([from]) DESC").Select(a => new CustomComboBoxItem()
+                var csv = new CsvReader(tr);
+                var records = csv.GetRecords<Helper.Activity>();
+
+                Activities = records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).Select(rg => new CustomComboBoxItem()
                 {
-                    Name = a,
+                    Name = rg.Key,
                     Selectable = true
                 }).ToList();
 
-                for(int i = 0; i < Activities.Count(); i++)
+                defaultName = Variables.currentActivity != null ? Variables.currentActivity.Name : (Activities.Count() > 0 ? Activities.First().Name : "");
+
+                if (Variables.currentActivity != null && !Activities.Any(a => a.Name.Equals(defaultName)))
+                    Activities.Insert(0, new CustomComboBoxItem()
+                    {
+                        Name = defaultName,
+                        Selectable = true
+                    });
+
+                for (int i = 0; i < Activities.Count(); i++)
                 {
                     Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
                 }
@@ -90,17 +102,13 @@ namespace TimeTracker
 
                 ComboBox.ItemsSource = Activities;
 
-                activity_active last_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
-                if (last_activity == null)
-                    last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
-                defaultName = last_activity != null ? last_activity.name : "";
                 ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(defaultName)).FirstOrDefault();
 
-                TextBlock2.Text = window.Trim();
+                TextBlock2.Text = Variables.currentWindow != null ? Variables.currentWindow.Name.Trim() : "No window active";
 
-                timeout = db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout;
+                timeout = Settings.Default.Timeout;
 
-                if(makeSound)
+                if(Settings.Default.PlayNotificationSound)
                     SystemSounds.Hand.Play();
             }
 
@@ -130,27 +138,19 @@ namespace TimeTracker
 
         private void setNewActivity(string name)
         {
-            using (mainEntities db = new mainEntities())
+            if (Variables.currentActivity == null || !ComboBox.Text.Equals(Variables.currentActivity.Name))
             {
-                activity_active current_activity = db.activity_active.Where(aa => aa.to == null).FirstOrDefault();
-                if (current_activity == null || !ComboBox.Text.Equals(current_activity.name))
-                {
-                    activity_active new_activity = new activity_active();
+                if (Variables.currentActivity != null)
+                    Variables.currentActivity.save(toDate);
 
-                    if (current_activity != null)
-                        current_activity.to = toDate;
+                Variables.currentActivity = new Helper.Activity();
 
-                    new_activity.from = toDate;
-                    new_activity.name = name;
+                Variables.currentActivity.Name = name;
+                Variables.currentActivity.From = toDate;
 
-                    db.activity_active.Add(new_activity);
-
-                    db.SaveChanges();
-                }
-
-                Constants.lastConfirmed = DateTime.Now;
-                this.Close();
+                Variables.lastConfirmed = DateTime.Now;
             }
+            this.Close();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

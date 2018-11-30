@@ -12,3 +12,8 @@
 [1122/221655.112:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
 [1122/221720.383:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
 [1122/221751.431:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
+[1130/171034.001:ERROR:block_files.cc(471)] Failed to open GPUCache\data_3
+[1130/171034.003:ERROR:cache_util_win.cc(19)] Unable to move the cache: 5
+[1130/171034.003:ERROR:cache_util.cc(140)] Unable to move cache folder GPUCache to old_GPUCache_000
+[1130/171034.004:ERROR:disk_cache.cc(168)] Unable to create cache
+[1130/171034.004:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2

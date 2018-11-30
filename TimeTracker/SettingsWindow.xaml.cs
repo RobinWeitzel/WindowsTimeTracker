@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TimeTracker.Properties;
 
 namespace TimeTracker
 {
@@ -23,20 +24,16 @@ namespace TimeTracker
         {
             InitializeComponent();
 
-            Version.Content = "v" + Constants.version;
+            Version.Content = "v" + Variables.version;
         }
 
         public void redrawSettings()
         {
-            using (mainEntities db = new mainEntities())
-            {
-                // Redraw list
-                // Redraw inputs
-                TimeOut.Text = ((db.settings.Find("timeout") != null ? db.settings.Find("timeout").value : Constants.defaultTimeout) / 1000).ToString();
-                TimeNotUsed.Text = ((db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed) / (1000 * 60)).ToString();
-                TimeOut2.Text = (db.settings.Find("timeout2") != null ? db.settings.Find("timeout2").value : Constants.defaultTimeout2).ToString();
-                FuzzyMatching.IsChecked = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
-            }
+            // Redraw inputs
+            TimeOut.Text = Settings.Default.Timeout.ToString();
+            TimeNotUsed.Text = Settings.Default.TimeSinceAppLastUsed.ToString();
+            TimeOut2.Text = Settings.Default.Timeout2.ToString();
+            MakeSound.IsChecked = Settings.Default.PlayNotificationSound;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -46,82 +43,25 @@ namespace TimeTracker
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            using (mainEntities db = new mainEntities())
-            {
-                /* Save Timeout */
-                settings timeout = db.settings.Find("timeout");
-
-                if(timeout == null)
-                {
-                    timeout = new settings();
-                    timeout.key = "timeout";
-                    db.settings.Add(timeout);
-                }
-
                 int timeoutResult;
                 if(int.TryParse(TimeOut.Text, out timeoutResult))
                 {
-                    timeout.value = timeoutResult * 1000; // Convert to ms 
-                }
-
-                /* Save TimeNotUsed */
-                settings timeNotUsed = db.settings.Find("timeNotUsed");
-
-                if (timeNotUsed == null)
-                {
-                    timeNotUsed = new settings();
-                    timeNotUsed.key = "timeNotUsed";
-                    db.settings.Add(timeNotUsed);
+                    Settings.Default.Timeout = timeoutResult * 1000; // Convert to ms 
                 }
 
                 int timeNotUsedResult;
                 if (int.TryParse(TimeNotUsed.Text, out timeNotUsedResult))
                 {
-                    timeNotUsed.value = timeNotUsedResult * 60 * 1000; // Convert to ms 
-                }
-
-                /* Save TimeOut2 */
-                settings timeOut2 = db.settings.Find("timeOut2");
-
-                if (timeOut2 == null)
-                {
-                    timeOut2 = new settings();
-                    timeOut2.key = "timeOut2";
-                    db.settings.Add(timeOut2);
+                    Settings.Default.TimeSinceAppLastUsed = timeNotUsedResult * 60 * 1000; // Convert to ms 
                 }
 
                 int timeout2Result;
                 if (int.TryParse(TimeOut2.Text, out timeout2Result))
                 {
-                    timeOut2.value = timeout2Result;
+                    Settings.Default.Timeout2 = timeout2Result;
                 }
 
-                /* Save FuzzyMatching */
-                settings fuzzyMatching = db.settings.Find("fuzzyMatching");
-
-                if (fuzzyMatching == null)
-                {
-                    fuzzyMatching = new settings();
-                    fuzzyMatching.key = "fuzzyMatching";
-                    db.settings.Add(fuzzyMatching);
-                }
-
-                fuzzyMatching.value = FuzzyMatching.IsChecked == true ? 1 : 0;
-
-                /* Save MakeSound */
-                settings makeSound = db.settings.Find("makeSound");
-
-                if (makeSound == null)
-                {
-                    makeSound = new settings();
-                    makeSound.key = "makeSound";
-                    db.settings.Add(makeSound);
-                }
-
-                makeSound.value = MakeSound.IsChecked == true ? 1 : 0;
-
-                db.SaveChanges();
-            }
+                Settings.Default.PlayNotificationSound = MakeSound.IsChecked == true;
         }
     }
 }

@@ -265,3 +265,5 @@ C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\CefShar
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\CefSharp.Wpf.pdb
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\CefSharp.Wpf.XML
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker.csprojAssemblyReference.cache
+C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\CsvHelper.dll
+C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\CsvHelper.xml

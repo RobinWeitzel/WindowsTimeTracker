@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using CsvHelper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,32 +93,48 @@ namespace TimeTracker
                 DateTime start_of_week = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
                 DateTime start_next_week = start_of_week.AddDays(7);
 
-                using (mainEntities db = new mainEntities())
+                List<TimeTracker.Helper.Activity> today_activities;
+
+                using (TextReader tr = new StreamReader(Variables.activityPath))
                 {
-                    List<activity_active> today_activities = db.activity_active.Where(aa =>
-                    (aa.to == null || aa.to >= day_in_question) &&
-                    aa.from < day_in_question_after
-                    ).ToList();
+                    var csv = new CsvReader(tr);
+                    var records = csv.GetRecords<TimeTracker.Helper.Activity>();
+                    today_activities = records.Where(r => r.To >= day_in_question && r.From < day_in_question_after).ToList();
+
+                    if (Variables.currentActivity != null)
+                        today_activities.Add(Variables.currentActivity);
 
                     List<Event> Events = today_activities.Select(ta => new Event
                     {
-                        from = Math.Round(ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0, 2),
-                        to = Math.Round((ta.from >= day_in_question ? ta.from.Subtract(day_in_question).TotalHours : 0) + (ta.to == null || ta.to >= day_in_question_after ? (day_in_question == DateTime.Today ? DateTime.Now : day_in_question_after) : (DateTime)ta.to).Subtract(ta.from >= day_in_question ? ta.from : day_in_question).TotalHours, 2),
-                        name = ta.name
+                        from = Math.Round(ta.From >= day_in_question ? ta.From.Subtract(day_in_question).TotalHours : 0, 2),
+                        to = Math.Round((ta.From >= day_in_question ? ta.From.Subtract(day_in_question).TotalHours : 0) + (ta.To == null || ta.To >= day_in_question_after ? (day_in_question == DateTime.Today ? DateTime.Now : day_in_question_after) : (DateTime)ta.To).Subtract(ta.From >= day_in_question ? ta.From : day_in_question).TotalHours, 2),
+                        name = ta.Name
                     }).ToList();
 
                     result += "\"overview\":" + customJSONSerializer<Event>(Events) + ",";
+                }
 
+                using (TextReader tr = new StreamReader(Variables.activityPath))
+                {
+                    var csv = new CsvReader(tr);
+                    var records = csv.GetRecords<TimeTracker.Helper.Activity>();
 
                     DateTime minDate = DateTime.Now.AddDays(-30);
-                    List<Helper> activityHelper = db.activity_active
-                       .Where(aa => (aa.to == null || aa.to >= start_of_week) && aa.from < start_next_week)
+                    List<Helper> activityHelper = records
+                       .Where(r => r.To >= start_of_week && r.From < start_next_week)
                        .Select(aa => new Helper
                        {
-                           name = aa.name,
-                           from = aa.from > start_of_week ? aa.from : start_of_week,
-                           to = aa.to ?? (start_next_week > DateTime.Now ? DateTime.Now : start_next_week)
+                           name = aa.Name,
+                           from = aa.From > start_of_week ? aa.From : start_of_week,
+                           to = (DateTime)aa.To
                        }).ToList();
+
+                    if (Variables.currentActivity != null && start_next_week >= DateTime.Today)
+                        activityHelper.Add(new Helper {
+                            name = Variables.currentActivity.Name,
+                            from = Variables.currentActivity.From > start_of_week ? Variables.currentActivity.From : start_of_week,
+                            to = DateTime.Now
+                        });
 
                     foreach (Helper h in activityHelper)
                     {
@@ -129,13 +146,18 @@ namespace TimeTracker
                         name = g.Key,
                         value = g.Sum(h => h.time)
                     }).ToList()) + ",";
+                }
 
+                using (TextReader tr = new StreamReader(Variables.windowPath))
+                {
+                    var csv = new CsvReader(tr);
+                    var records = csv.GetRecords<TimeTracker.Helper.Window>();
 
                     List<Helper> Helper = today_activities.Select(ta => new Helper
                     {
-                        from = ta.from > day_in_question ? ta.from : day_in_question,
-                        to = ta.to ?? (day_in_question_after > DateTime.Now ? DateTime.Now : day_in_question_after),
-                        name = ta.name
+                        from = ta.From > day_in_question ? ta.From : day_in_question,
+                        to = ta.To ?? (day_in_question_after > DateTime.Now ? DateTime.Now : day_in_question_after),
+                        name = ta.Name
                     }).ToList();
 
                     List<Helper> windowHelper = new List<Helper>();
@@ -143,14 +165,21 @@ namespace TimeTracker
                     foreach (Helper h in Helper)
                     {
                         windowHelper.AddRange(
-                        db.window_active
-                            .Where(wa => (wa.to == null || wa.to <= h.to) && wa.from >= h.from)
-                            .Select(wa => new Helper
+                        records
+                            .Where(r => r.To > h.from && r.From < h.to)
+                            .Select(r => new Helper
                             {
-                                name = wa.name,
-                                from = wa.from > h.from ? wa.from : h.from,
-                                to = wa.to ?? (h.to > DateTime.Now ? DateTime.Now : h.to)
+                                name = r.Name,
+                                from = r.From < h.from ? h.from : r.From, // If my window started before the start of the activity only measure from the beginning of the activity
+                                to = (DateTime) (r.To > h.to ? h.to : r.To) // If my window ended after the end of the activity only measure until the end of the activity
                             }));
+
+                        if (Variables.currentWindow != null)
+                            windowHelper.Add(new Helper {
+                                name = Variables.currentWindow.Name,
+                                from = Variables.currentWindow.From < h.from ? h.from : Variables.currentWindow.From, // If my window started before the start of the activity only measure from the beginning of the activity
+                                to = h.to
+                            });
                     }
 
                     foreach (Helper h in windowHelper)

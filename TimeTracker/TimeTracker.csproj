@@ -206,20 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="activities.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="activity_active.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Constants.cs" />
+    <Compile Include="Helper\Activity.cs" />
+    <Compile Include="Variables.cs" />
     <Compile Include="CustomToast.xaml.cs">
       <DependentUpon>CustomToast.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EventLengthConverter.cs" />
     <Compile Include="HTMLDataWindow.xaml.cs">
@@ -231,18 +221,13 @@
     <Compile Include="NewVersion.xaml.cs">
       <DependentUpon>NewVersion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="settings.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>
-    <Compile Include="window_active.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Helper\Window.cs" />
     <Page Include="CustomToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -260,16 +245,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CustomTemplateSelector.cs" />
-    <Compile Include="DataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -309,14 +284,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="DataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataModel.edmx.diagram">
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </None>
-    <None Include="db.db" />
     <None Include="example.wxs" />
     <None Include="Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -447,16 +414,6 @@
     </Content>
     <Content Include="Resources\chartjs-plugin-datalabels.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataModel.edmx</DependentUpon>
-      <LastGenOutput>DataModel.cs</LastGenOutput>
     </Content>
     <Content Include="DataView.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

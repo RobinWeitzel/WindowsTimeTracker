@@ -7,14 +7,14 @@
     <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="TimeTracker.exe.manifest" size="30033">
+    <dependentAssembly dependencyType="install" codebase="TimeTracker.exe.manifest" size="29914">
       <assemblyIdentity name="TimeTracker.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+yD7SvFYEITnCtjp06rrM0KvhUmp1Xu2UogzR7Dj0SQ=</dsig:DigestValue>
+        <dsig:DigestValue>JOwwdV8k+DaYmnnOOhU8dY6dVfgxEVY4Nqq01XG1v9U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

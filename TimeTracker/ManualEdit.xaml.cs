@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +21,8 @@ namespace TimeTracker
     /// </summary>
     public partial class ManualEdit : Window
     {
-        List<activity_active> Activities;
-        List<activity_active> Activities_Duplicate;
+        List<Helper.Activity> Activities;
+        List<Helper.Activity> Activities_Duplicate;
         public ManualEdit()
         {
             InitializeComponent();
@@ -30,10 +32,13 @@ namespace TimeTracker
 
         private void loadData()
         {
-            using (mainEntities db = new mainEntities())
+            using (TextReader tr = new StreamReader(Variables.activityPath))
             {
-                Activities = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.to).Take(20).ToList();
-                Activities_Duplicate = db.activity_active.Where(aa => aa.to != null).OrderByDescending(aa => aa.to).Take(20).ToList();
+                var csv = new CsvReader(tr);
+                var records = csv.GetRecords<Helper.Activity>();
+
+                Activities = records.OrderByDescending(aa => aa.To).Take(20).ToList();
+                Activities_Duplicate = records.OrderByDescending(aa => aa.To).Take(20).ToList();
                 DataGrid.ItemsSource = Activities;
             }
         }
@@ -45,11 +50,12 @@ namespace TimeTracker
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            using (mainEntities db = new mainEntities())
+            /*using (TextWriter tw = new StreamWriter(Variables.activityPath))
             {
-                foreach(activity_active activity_duplicate in Activities_Duplicate)
+                var csv = new CsvWriter(tw);
+                foreach (Helper.Activity activity_duplicate in Activities_Duplicate)
                 {
-                    activity_active activity = Activities.Where(aa => aa.id == activity_duplicate.id).FirstOrDefault();
+                    Helper.Activity activity = Activities.Where(aa => aa.Id == activity_duplicate.id).FirstOrDefault();
                     activity_active activity_db = db.activity_active.Find(activity_duplicate.id);
                     if (activity == null)
                     {
@@ -70,7 +76,7 @@ namespace TimeTracker
                 }
 
                 loadData();
-            }
+            }*/
         }
     }
 }

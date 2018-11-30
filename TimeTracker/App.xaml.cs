@@ -1,4 +1,5 @@
-﻿using Microsoft.QueryStringDotNET;
+﻿using CsvHelper;
+using Microsoft.QueryStringDotNET;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using System;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Xml;
+using TimeTracker.Properties;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -64,12 +66,32 @@ namespace TimeTracker
             // Set connection string
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTracker";
+            Variables.activityPath = path + "\\Activities.csv";
+            Variables.windowPath = path + "\\Windows.csv";
 
-            if(!File.Exists(path))
+            if (!File.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
 
-            if(!File.Exists(path + "\\db.db"))
-                System.IO.File.Copy(System.AppDomain.CurrentDomain.BaseDirectory + "default.db", path + "\\db.db", false);
+
+            if (!File.Exists(Variables.windowPath))
+            {
+                using (TextWriter tw = new StreamWriter(Variables.windowPath))
+                {
+                    var csv = new CsvWriter(tw);
+                    csv.WriteHeader<Helper.Window>();
+                    csv.NextRecord();
+                }
+            }
+
+            if (!File.Exists(Variables.activityPath))
+            {
+                using (TextWriter tw = new StreamWriter(Variables.activityPath))
+                {
+                    var csv = new CsvWriter(tw);
+                    csv.WriteHeader<Helper.Activity>();
+                    csv.NextRecord();
+                }
+            }
 
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
 
@@ -83,7 +105,7 @@ namespace TimeTracker
             SettingsWindow.Closing += SettingsWindow_Closing;
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.DoubleClick += (s, args) => changeActivity(null);
+            _notifyIcon.DoubleClick += (s, args) => changeActivity();
 
             //Icon icon = Icon.FromHandle(((Bitmap)Image.FromFile("Resources/time-tracking-icon-0.png")).GetHicon());
 
@@ -107,24 +129,14 @@ namespace TimeTracker
 
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
 
-            using (mainEntities db = new mainEntities())
+            // Check if the tutorial should be shown
+            if(!Settings.Default.TutorialViewed)
             {
-                // Check if the tutorial should be shown
-                bool tutorialViewed = db.settings.Find("tutorialViewed") != null ? db.settings.Find("tutorialViewed").value == 1 : false;
-
-                if(!tutorialViewed)
-                {
-                    new Tutorial().Show();
-                    settings setting = new settings();
-
-                    setting.key ="tutorialViewed";
-                    setting.value = 1;
-
-                    db.settings.Add(setting);
-                    db.SaveChanges();
-                }
+                new Tutorial().Show();
+                Settings.Default.TutorialViewed = true;
+                Settings.Default.Save();
             }
-
+            
             // Check for update
             var m_strFilePath = "https://github.com/RobinWeitzel/WindowsTimeTracker/releases.atom";
             string xmlStr;
@@ -144,7 +156,7 @@ namespace TimeTracker
             XmlNode node = root.SelectSingleNode(
      "descendant::f:entry", nsmgr);
 
-            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Constants.version))
+            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Variables.version))
             {
                 new NewVersion().Show();
             }
@@ -154,7 +166,7 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity(null);
+            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity();
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
             _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
@@ -182,7 +194,8 @@ namespace TimeTracker
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            saveWindows(true);
+            closeCurrentWindow();
+            closeCurrentActivity();
         }
 
         private void ShowMainWindow()
@@ -245,7 +258,8 @@ namespace TimeTracker
                     // ToDo: Ask what user did during time away from pc
                     break;
                 case PowerModes.Suspend:
-                    saveWindows(true);
+                    closeCurrentWindow();
+                    closeCurrentActivity();
                     break;
             }
         }
@@ -256,10 +270,12 @@ namespace TimeTracker
             switch (e.Reason)
             {
                 case SessionSwitchReason.SessionLock:
-                    saveWindows(true);
+                    closeCurrentWindow();
+                    closeCurrentActivity();
                     break;
                 case SessionSwitchReason.SessionLogoff:
-                    saveWindows(true);
+                    closeCurrentWindow();
+                    closeCurrentActivity();
                     break;
                 case SessionSwitchReason.SessionLogon:
                     // ToDo: Ask what user did during time away from pc
@@ -288,7 +304,8 @@ namespace TimeTracker
                 paused = false;
             } else
             {
-                saveWindows(true);
+                closeCurrentWindow();
+                closeCurrentActivity();
                 _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
                 paused = true;
             }
@@ -378,123 +395,86 @@ namespace TimeTracker
                 // Stop if the current activity is blacklisted or a file path
                 if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
                 {
-                    saveWindows(false);
+                    if(!windowTitle.Equals("NotificationsWindow - TimeTracker"))
+                        closeCurrentWindow();
                     return;
                 }
 
-                using (mainEntities db = new mainEntities())
-                {
                     // Determine if this window has been used in the last 5 minutes
                     bool hasBeenSeen = false;
 
-                    // Load timeNotUsed from settings
-                    long timeNotUsed = db.settings.Find("timeNotUsed") != null ? db.settings.Find("timeNotUsed").value : Constants.defaultTimeNotUsed; // 5 minutes
-                    long timeout2 = db.settings.Find("timeout2") != null ? db.settings.Find("timeout2").value : Constants.defaultTimeout2; // 5 minutes
-                    bool fuzzyMatching = db.settings.Find("fuzzyMatching") != null ? db.settings.Find("fuzzyMatching").value == 1 : Constants.fuzzyMatching;
-                    List<window_active> old_windows = db.window_active.Where(wa => wa.handle == handleLong || (fuzzyMatching && wa.name.Equals(name))).ToList();
+                // Load timeNotUsed from settings
+                long timeNotUsed = Settings.Default.TimeSinceAppLastUsed;
+                long timeout2 = Settings.Default.Timeout2;
 
-                    if (old_windows.Count() > 0)
-                    {
-                        hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.to) ?? DateTime.Now.AddDays(-9999)).TotalMilliseconds || timeNotUsed > DateTime.Now.Subtract(old_windows.Max(wa => wa.from)).TotalMilliseconds;
-                    }
+                DateTime lastSeen;
+                if (Variables.windowsLastSeen.TryGetValue(name, out lastSeen))
+                    hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(lastSeen).TotalMilliseconds;
 
-                    /* Handle active window */
-                    // Set to date for old window if one exists
-                    window_active old_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
+                // If window has not changed do nothing
+                if (Variables.currentWindow != null && Variables.currentWindow.Name.Equals(name))
+                    return;
 
-                    // If window has not changed do nothing
-                    if (old_window != null && (old_window.handle == handleLong || (fuzzyMatching && old_window.name.Equals(name))))
-                        return;
-
-                    if (old_window != null)
-                    {
-                        old_window.to = DateTime.Now;
-                    }
-
-                    window_active new_window = new window_active();
-
-                    new_window.name = arr.Last();
-                    new_window.from = DateTime.Now;
-                    new_window.handle = handleLong;
-
-                    if (arr.Length >= 2)
-                    {
-                        new_window.details = string.Join("- ", arr.Take(arr.Length - 1));
-                    }
-
-                    db.window_active.Add(new_window);
-
-                    db.SaveChanges();
-
-                    // Show notification if app has not been seen in last few minutes
-                    if ((Constants.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Constants.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen && disturb)
-                    {
-                        changeActivity(arr.Last());
-                    }
-                    // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
-                    else if (!db.activity_active.Any(aa => aa.to == null))
-                    {
-                        activity_active last_activity = db.activity_active.OrderByDescending(aa => aa.to).FirstOrDefault();
-
-                        activity_active new_activity = new activity_active();
-                        new_activity.from = DateTime.Now;
-                        new_activity.name = last_activity != null ? last_activity.name : "";
-                        db.activity_active.Add(new_activity);
-
-                        db.SaveChanges();
-                    }
-                }
-            }
-        }
-
-
-        private void closeOldActivity()
-        {
-            using (mainEntities db = new mainEntities())
-            {
-                activity_active old_activity = db.activity_active.Where(aa => aa.to == null).OrderByDescending(aa => aa.from).FirstOrDefault();
-                if (old_activity != null)
+                if(Variables.currentWindow != null)
                 {
-                    old_activity.to = DateTime.Now;
-
-                    db.SaveChanges();
+                    closeCurrentWindow();
                 }
-            }
-        }
 
-        private void changeActivity(string name)
-        {
-            using (mainEntities db = new mainEntities())
-            {
-                if (name == null) // If no name is specified check which window is active
+                Variables.currentWindow = new Helper.Window();
+                Variables.currentWindow.Name = arr.Last();
+                Variables.currentWindow.From = DateTime.Now;
+
+                if (arr.Length >= 2)
                 {
-                    window_active current_window = db.window_active.Where(wa => wa.to == null).OrderByDescending(wa => wa.from).FirstOrDefault();
-                    if (current_window != null)
-                        name = current_window.name;
-                    else
-                        name = "No window active";
+                    Variables.currentWindow.Details = string.Join("- ", arr.Take(arr.Length - 1));
                 }
 
-                CloseAllToasts();
+                // Show notification if app has not been seen in last few minutes
+                if ((Variables.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Variables.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen && disturb)
+                {
+                    changeActivity();
+                }
+                // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
+                else if (Variables.currentActivity == null)
+                {
+                    using (TextReader tr = new StreamReader(Variables.activityPath))
+                    {
+                        var csv = new CsvReader(tr);
+                        var records = csv.GetRecords<Helper.Activity>();
 
-                CustomToast newToast = new CustomToast(name);
-                newToast.Show();
+                        Helper.Activity last_activity = records.LastOrDefault();
+
+                        Variables.currentWindow = new Helper.Window();
+                        Variables.currentWindow.Name = last_activity != null ? last_activity.Name : "";
+                        Variables.currentWindow.From = DateTime.Now;
+                    } 
+                }
             }
         }
 
-        private void saveWindows(bool saveActivity)
+
+        private void closeCurrentActivity()
         {
-            // Save open activities and windows
-            using (mainEntities db = new mainEntities())
+            if (Variables.currentActivity != null)
+                Variables.currentActivity.save();
+            Variables.currentActivity = null;
+        }
+
+        private void closeCurrentWindow()
+        {
+            if (Variables.currentWindow != null)
             {
-                List<window_active> open_windows = db.window_active.Where(wa => wa.to == null).ToList();
-                open_windows.ForEach(wa => wa.to = DateTime.Now);
-
-                if(saveActivity)
-                    closeOldActivity();
-
-                db.SaveChanges();
+                Variables.currentWindow.save();
             }
+            Variables.currentWindow = null;
+        }
+
+        private void changeActivity()
+        {
+            CloseAllToasts();
+
+            CustomToast newToast = new CustomToast();
+            newToast.Show();
         }
     }
 }

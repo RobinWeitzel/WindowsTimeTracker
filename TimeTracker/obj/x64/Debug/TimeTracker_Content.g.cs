@@ -14,8 +14,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild4.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/chart.bundle.min.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/chartjs-plugin-datalabels.min.js")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.context.tt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("datamodel.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dataview.html")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/chartjs-plugin-zoom.js")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/font-awesome-4.7.0/css/font-awesome.css")]
