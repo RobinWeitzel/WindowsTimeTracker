@@ -8,7 +8,7 @@
         Title="ManualEdit" Height="458.762" Width="800">
     <Grid>
         <Label Content="Manual Edit" HorizontalAlignment="Left" Margin="31,1,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
-        <Label Content="Edit the last 20 activities" HorizontalAlignment="Left" Margin="31,41,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Edit the last activities" HorizontalAlignment="Left" Margin="31,41,0,0" VerticalAlignment="Top" FontSize="18"/>
         <DataGrid Name="DataGrid" HorizontalAlignment="Left" Height="293" Margin="31,75,0,0" VerticalAlignment="Top" Width="734" CanUserAddRows="False" ColumnWidth="*" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Id, Mode=TwoWay}" IsReadOnly="True" Visibility="Collapsed"/>

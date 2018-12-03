@@ -442,9 +442,9 @@ namespace TimeTracker
 
                         Helper.Activity last_activity = records.LastOrDefault();
 
-                        Variables.currentWindow = new Helper.Window();
-                        Variables.currentWindow.Name = last_activity != null ? last_activity.Name : "";
-                        Variables.currentWindow.From = DateTime.Now;
+                        Variables.currentActivity = new Helper.Activity();
+                        Variables.currentActivity.Name = last_activity != null ? last_activity.Name : "";
+                        Variables.currentActivity.From = DateTime.Now;
                     } 
                 }
             }
