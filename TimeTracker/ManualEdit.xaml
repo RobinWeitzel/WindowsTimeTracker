@@ -11,10 +11,10 @@
         <Label Content="Edit the last 20 activities" HorizontalAlignment="Left" Margin="31,41,0,0" VerticalAlignment="Top" FontSize="18"/>
         <DataGrid Name="DataGrid" HorizontalAlignment="Left" Height="293" Margin="31,75,0,0" VerticalAlignment="Top" Width="734" CanUserAddRows="False" ColumnWidth="*" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding id, Mode=TwoWay}" IsReadOnly="True" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding name, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn Header="From"  Width="*" Binding="{Binding from, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn Header="To"  Width="*" Binding="{Binding to, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Id, Mode=TwoWay}" IsReadOnly="True" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Name"  Width="*" Binding="{Binding Name, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="From"  Width="*" Binding="{Binding From, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="To"  Width="*" Binding="{Binding To, Mode=TwoWay}" IsReadOnly="False"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="676,382,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>

@@ -295,14 +295,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="579552">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="579040">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3bWIzHR4u5l5ATCIjRbIY6PnLM9E7g8IQPE1qnAkHm0=</dsig:DigestValue>
+        <dsig:DigestValue>OalE4q5EHwEjEDurIeN6A6SXtEKxbSCVI/AkO39Mmjs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

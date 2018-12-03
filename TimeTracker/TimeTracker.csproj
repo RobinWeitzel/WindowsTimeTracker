@@ -190,7 +190,6 @@
     <Compile Include="CustomToast.xaml.cs">
       <DependentUpon>CustomToast.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EventLengthConverter.cs" />
     <Compile Include="HTMLDataWindow.xaml.cs">
       <DependentUpon>HTMLDataWindow.xaml</DependentUpon>
     </Compile>
@@ -262,7 +261,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="example.wxs" />
     <None Include="Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

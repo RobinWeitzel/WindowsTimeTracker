@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.3.0" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
-        <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges='limited'/>
+        <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
         <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
+        <Property Id="ALLUSERS" Secure="yes"/>
         <!-- The following three sections are from the How To: Add a File to Your Installer topic-->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="LocalAppDataFolder">
                 <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker">
-                    <Directory Name="de" Id="deFolder" />
-                    <Directory Name="x64" Id="x64Folder" />
-                    <Directory Name="x86" Id="x86Folder" />
                     <Directory Name="swiftshader" Id="swiftshaderFolder" />
                     <Directory Name="locales" Id="localesFolder" />
                     <Directory Name="GPUCache" Id="GPUCacheFolder" />
-                    <Directory Name="blob_storage" Id="blob_storageFolder">
-                        <Directory Name="b733fd33-abe7-45c3-b81d-c73b3cec7013" Id="blob_storageInnerFolder" />
-                    </Directory>
                     <Directory Name="app.publish" Id="apppublishFolder" />
                     <Directory Name="Resources" Id="ResourcesFolder">
                         <Directory Name="font-awesome-4.7.0" Id="fontawesomeFolder">
@@ -37,7 +32,11 @@
                 <RegistryKey Id="TimeTrackerAutoStart" Root="HKCU" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes" Key="Software\Microsoft\Windows\CurrentVersion\Run">
                     <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
                 </RegistryKey>
-                <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="both" />
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="uninstall" />
+                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe"/>
                 <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Debug\cef.pak" />
                 <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Debug\cef_100_percent.pak" />
                 <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Debug\cef_200_percent.pak" />
@@ -56,15 +55,14 @@
                 <File Id="CEFSHARP.WPF.XML" Name="CefSharp.Wpf.XML" Source="..\bin\x64\Debug\CefSharp.Wpf.XML" />
                 <File Id="CEFSHARP.XML" Name="CefSharp.XML" Source="..\bin\x64\Debug\CefSharp.XML" />
                 <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Debug\chrome_elf.dll" />
+                <File Id="CSVHELPER.DLL" Name="CsvHelper.dll" Source="..\bin\x64\Debug\CsvHelper.dll" />
+                <File Id="CSVHELPER.XML" Name="CsvHelper.xml" Source="..\bin\x64\Debug\CsvHelper.xml" />
                 <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Debug\d3dcompiler_47.dll" />
                 <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
+                <File Id="DB.DB" Name="db.db" Source="..\bin\x64\Debug\db.db" />
                 <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Debug\debug.log" />
                 <File Id="DEFAULT.DB" Name="default.db" Source="..\bin\x64\Debug\default.db" />
                 <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Debug\devtools_resources.pak" />
-                <File Id="ENTITYFRAMEWORK.DLL" Name="EntityFramework.dll" Source="..\bin\x64\Debug\EntityFramework.dll" />
-                <File Id="ENTITYFRAMEWORK.SQLSERVER.DLL" Name="EntityFramework.SqlServer.dll" Source="..\bin\x64\Debug\EntityFramework.SqlServer.dll" />
-                <File Id="ENTITYFRAMEWORK.SQLSERVER.XML" Name="EntityFramework.SqlServer.xml" Source="..\bin\x64\Debug\EntityFramework.SqlServer.xml" />
-                <File Id="ENTITYFRAMEWORK.XML" Name="EntityFramework.xml" Source="..\bin\x64\Debug\EntityFramework.xml" />
                 <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Debug\icudtl.dat" />
                 <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Debug\libcef.dll" />
                 <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\bin\x64\Debug\libEGL.dll" />
@@ -80,18 +78,9 @@
                 <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
                 <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Debug\Microsoft.Win32.Primitives.dll" />
                 <File Id="NATIVES_BLOB.BIN" Name="natives_blob.bin" Source="..\bin\x64\Debug\natives_blob.bin" />
-                <File Id="NOTIFICATIONS.WPF.DLL" Name="Notifications.Wpf.dll" Source="..\bin\x64\Debug\Notifications.Wpf.dll" />
-                <File Id="QUERYSTRING.NETCORE.DLL" Name="QueryString.NETCore.dll" Source="..\bin\x64\Debug\QueryString.NETCore.dll" />
-                <File Id="QUERYSTRING.NETCORE.PDB" Name="QueryString.NETCore.pdb" Source="..\bin\x64\Debug\QueryString.NETCore.pdb" />
-                <File Id="QUERYSTRING.NETCORE.XML" Name="QueryString.NETCore.xml" Source="..\bin\x64\Debug\QueryString.NETCore.xml" />
                 <File Id="SNAPSHOT_BLOB.BIN" Name="snapshot_blob.bin" Source="..\bin\x64\Debug\snapshot_blob.bin" />
                 <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Debug\System.AppContext.dll" />
                 <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Debug\System.Console.dll" />
-                <File Id="SYSTEM.DATA.SQLITE.DLL" Name="System.Data.SQLite.dll" Source="..\bin\x64\Debug\System.Data.SQLite.dll" />
-                <File Id="SYSTEM.DATA.SQLITE.DLL.CONFIG" Name="System.Data.SQLite.dll.config" Source="..\bin\x64\Debug\System.Data.SQLite.dll.config" />
-                <File Id="SYSTEM.DATA.SQLITE.EF6.DLL" Name="System.Data.SQLite.EF6.dll" Source="..\bin\x64\Debug\System.Data.SQLite.EF6.dll" />
-                <File Id="SYSTEM.DATA.SQLITE.LINQ.DLL" Name="System.Data.SQLite.Linq.dll" Source="..\bin\x64\Debug\System.Data.SQLite.Linq.dll" />
-                <File Id="SYSTEM.DATA.SQLITE.XML" Name="System.Data.SQLite.xml" Source="..\bin\x64\Debug\System.Data.SQLite.xml" />
                 <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.dll" />
                 <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.xml" />
                 <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Debug\System.Globalization.Calendars.dll" />
@@ -108,39 +97,28 @@
                 <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.X509Certificates.dll" />
                 <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Debug\System.Xml.ReaderWriter.dll" />
                 <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Debug\TimeTracker.application" />
-                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe">
-                    <Shortcut Id="TIMETRACKER.Shortcut" Directory="ApplicationProgramsFolder" Name="TimeTracker" />
-                </File>
                 <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
                 <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Debug\TimeTracker.exe.manifest" />
                 <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
                 <File Id="V8_CONTEXT_SNAPSHOT.BIN" Name="v8_context_snapshot.bin" Source="..\bin\x64\Debug\v8_context_snapshot.bin" />
             </Component>
         </DirectoryRef>
-        <DirectoryRef Id="deFolder">
-            <Component Id="de" Guid="540eb55f-20d0-4b38-9414-31699ca4ce8d" KeyPath="yes">
-                <File Id="ENTITYFRAMEWORK.RESOURCES.DLL" Name="EntityFramework.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.resources.dll" />
-                <File Id="ENTITYFRAMEWORK.SQLSERVER.RESOURCES.DLL" Name="EntityFramework.SqlServer.resources.dll" Source="..\bin\x64\Debug\de\EntityFramework.SqlServer.resources.dll" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="x64Folder">
-            <Component Id="x64" Guid="d0ae0dac-3a5e-467e-8f37-f097343d889f" KeyPath="yes">
-                <File Id="SQLITE.INTEROP.DLL" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x64\SQLite.Interop.dll" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="x86Folder">
-            <Component Id="x86" Guid="508341ba-450a-4b33-964c-2c0b212c5fcd" KeyPath="yes">
-                <File Id="SQLITE.INTEROP.DLL_1" Name="SQLite.Interop.dll" Source="..\bin\x64\Debug\x86\SQLite.Interop.dll" />
-            </Component>
-        </DirectoryRef>
         <DirectoryRef Id="swiftshaderFolder">
-            <Component Id="swiftshader" Guid="ddd469cc-0203-45ad-ac8e-42fde5d28a58" KeyPath="yes">
+            <Component Id="swiftshader" Guid="ddd469cc-0203-45ad-ac8e-42fde5d28a58">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\swiftshader" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="swiftshaderFolder" On="uninstall" />
                 <File Id="LIBEGL.DLL_1" Name="libEGL.dll" Source="..\bin\x64\Debug\swiftshader\libEGL.dll" />
                 <File Id="LIBGLESV2.DLL_1" Name="libGLESv2.dll" Source="..\bin\x64\Debug\swiftshader\libGLESv2.dll" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="localesFolder">
-            <Component Id="locales" Guid="2ee70755-9a34-4984-b26e-cd3cc88a9fb0" KeyPath="yes">
+            <Component Id="locales" Guid="2ee70755-9a34-4984-b26e-cd3cc88a9fb0">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="localesFolder" On="uninstall" />
                 <File Id="AM.PAK" Name="am.pak" Source="..\bin\x64\Debug\locales\am.pak" />
                 <File Id="AR.PAK" Name="ar.pak" Source="..\bin\x64\Debug\locales\ar.pak" />
                 <File Id="BG.PAK" Name="bg.pak" Source="..\bin\x64\Debug\locales\bg.pak" />
@@ -197,7 +175,11 @@
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="GPUCacheFolder">
-            <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba" KeyPath="yes">
+            <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba">
+            <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="GPUCacheFolder" On="uninstall" />
                 <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Debug\GPUCache\data_0" />
                 <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Debug\GPUCache\data_1" />
                 <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Debug\GPUCache\data_2" />
@@ -205,21 +187,21 @@
                 <File Id="INDEX" Name="index" Source="..\bin\x64\Debug\GPUCache\index" />
             </Component>
         </DirectoryRef>
-        <DirectoryRef Id="blob_storageFolder">
-            <Component Id="blob_storage" Guid="202e9df0-6081-4a28-9286-8e1b32f6f2be" KeyPath="yes">
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="blob_storageInnerFolder">
-            <Component Id="blob_storageInner" Guid="3d189099-4581-4e3d-9738-f1cd70b7970c" KeyPath="yes">
-            </Component>
-        </DirectoryRef>
         <DirectoryRef Id="apppublishFolder">
-            <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739" KeyPath="yes">
+            <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\apppublish" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="apppublishFolder" On="uninstall" />
                 <File Id="TIMETRACKER.EXE_1" Name="TimeTracker.exe" Source="..\bin\x64\Debug\app.publish\TimeTracker.exe" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="ResourcesFolder">
-            <Component Id="Resources" Guid="c6b8e640-9fa8-4fb9-8138-ff93adeeaffd" KeyPath="yes">
+            <Component Id="Resources" Guid="c6b8e640-9fa8-4fb9-8138-ff93adeeaffd">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\Resources" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="ResourcesFolder" On="uninstall" />
                 <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Debug\Resources\Bild1.png" />
                 <File Id="BILD2.PNG" Name="Bild2.png" Source="..\bin\x64\Debug\Resources\Bild2.png" />
                 <File Id="BILD3.PNG" Name="Bild3.png" Source="..\bin\x64\Debug\Resources\Bild3.png" />
@@ -231,16 +213,28 @@
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="fontawesomeFolder">
-            <Component Id="fontawesome" Guid="aeb0ac59-f987-4c15-9b68-5804fe183a02" KeyPath="yes">
+            <Component Id="fontawesome" Guid="aeb0ac59-f987-4c15-9b68-5804fe183a02">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fontawesome" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="fontawesomeFolder" On="uninstall" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="cssFolder">
-            <Component Id="css" Guid="f721da46-b608-4f90-a6d0-0ce09cb78169" KeyPath="yes">
+            <Component Id="css" Guid="f721da46-b608-4f90-a6d0-0ce09cb78169">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="cssFolder" On="uninstall" />
                 <File Id="FONT_AWESOME.MIN.CSS" Name="font-awesome.min.css" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\css\font-awesome.min.css" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="fontsFolder">
-            <Component Id="fonts" Guid="6b487efd-8309-4267-b86c-c635d0f89e77" KeyPath="yes">
+            <Component Id="fonts" Guid="6b487efd-8309-4267-b86c-c635d0f89e77">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fonts" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="fontsFolder" On="uninstall" />
                 <File Id="FONTAWESOME_WEBFONT.EOT" Name="fontawesome-webfont.eot" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
                 <File Id="FONTAWESOME_WEBFONT.SVG" Name="fontawesome-webfont.svg" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
                 <File Id="FONTAWESOME_WEBFONT.WOFF" Name="fontawesome-webfont.woff" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -248,7 +242,11 @@
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="lessFolder">
-            <Component Id="less" Guid="cdcfd42d-1246-4046-8759-d51bd8f09b61" KeyPath="yes">
+            <Component Id="less" Guid="cdcfd42d-1246-4046-8759-d51bd8f09b61">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\less" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="lessFolder" On="uninstall" />
                 <File Id="ANIMATED.LESS" Name="animated.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\animated.less" />
                 <File Id="BORDERED_PULLED.LESS" Name="bordered-pulled.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\bordered-pulled.less" />
                 <File Id="CORE.LESS" Name="core.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\core.less" />
@@ -266,7 +264,11 @@
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="scssFolder">
-            <Component Id="scss" Guid="cbd31c38-5db1-45b5-b0e3-3e8e8e23eccc" KeyPath="yes">
+            <Component Id="scss" Guid="cbd31c38-5db1-45b5-b0e3-3e8e8e23eccc">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\scss" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                </RegistryKey>
+                <RemoveFolder Id="scssFolder" On="uninstall" />
                 <File Id="_ANIMATED.SCSS" Name="_animated.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_animated.scss" />
                 <File Id="_BORDERED_PULLED.SCSS" Name="_bordered-pulled.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
                 <File Id="_CORE.SCSS" Name="_core.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_core.scss" />
@@ -284,20 +286,21 @@
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
-            <Component Id="ApplicationPrograms" Guid="00f102a3-ff42-4227-b8eb-2ba678b3924c" KeyPath="yes">
-                <RemoveFolder Id="ApplicationProgramsFolder" On="both" />
+            <Component Id="ApplicationPrograms" Guid="00f102a3-ff42-4227-b8eb-2ba678b3924c">
+                <Shortcut Id="ApplicationStartMenuShortcut" 
+                     Name="TimeTracker" 
+                   Description="TimeTracker"
+                    Target="[#TIMETRACKER.EXE]"
+                          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\TimeTracker\TimeTracker" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
         </DirectoryRef>
         <Feature Id="MainApplication" Title="Main Application" Level="1">
             <ComponentRef Id="timetracker" />
-            <ComponentRef Id="de" />
-            <ComponentRef Id="x64" />
-            <ComponentRef Id="x86" />
             <ComponentRef Id="swiftshader" />
             <ComponentRef Id="locales" />
             <ComponentRef Id="GPUCache" />
-            <ComponentRef Id="blob_storage" />
-            <ComponentRef Id="blob_storageInner" />
             <ComponentRef Id="apppublish" />
             <ComponentRef Id="Resources" />
             <ComponentRef Id="fontawesome" />
