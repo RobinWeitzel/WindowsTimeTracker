@@ -128,7 +128,7 @@ namespace TimeTracker
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
 
             // Check if the tutorial should be shown
-            if(!Settings.Default.TutorialViewed || true)
+            if(!Settings.Default.TutorialViewed)
             {
                 new Tutorial().Show();
                 Settings.Default.TutorialViewed = true;
