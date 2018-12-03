@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="Tutorial - TimeTracker" Height="600" Width="1000">
     <Grid>
-        <Button x:Name="Next" Content="Next" HorizontalAlignment="Left" Margin="618,515,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click_1"/>
-        <Button x:Name="Previous" IsEnabled="False" Content="Previous" HorizontalAlignment="Left" Margin="326,515,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click"/>
+        <Button x:Name="Next" Content="Next" HorizontalAlignment="Left" Margin="618,516,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click_1"/>
+        <Button x:Name="Previous" IsEnabled="False" Content="Previous" HorizontalAlignment="Left" Margin="326,516,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Click="Button_Click"/>
         <Label Content="Tutorial" HorizontalAlignment="Left" Margin="25,10,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
-        <Image x:Name="Image" HorizontalAlignment="Left" Height="422" Margin="122,75,0,0" VerticalAlignment="Top" Width="760" Stretch="UniformToFill"/>
+        <Image x:Name="Image" HorizontalAlignment="Left" Height="366" Margin="202,49,0,0" VerticalAlignment="Top" Width="620" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Height="69" Margin="122,431,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="760" TextAlignment="Center" FontSize="24"/>
 
     </Grid>
 </Window>

@@ -128,7 +128,7 @@ namespace TimeTracker
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
 
             // Check if the tutorial should be shown
-            if(!Settings.Default.TutorialViewed)
+            if(!Settings.Default.TutorialViewed || true)
             {
                 new Tutorial().Show();
                 Settings.Default.TutorialViewed = true;
@@ -168,7 +168,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
             _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
-            _notifyIcon.ContextMenuStrip.Items.Add("Edit last Activities").Click += (s, e) => new ManualEdit().Show();
+            _notifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }

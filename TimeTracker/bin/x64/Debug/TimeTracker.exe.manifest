@@ -295,14 +295,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="579040">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="580064">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OalE4q5EHwEjEDurIeN6A6SXtEKxbSCVI/AkO39Mmjs=</dsig:DigestValue>
+        <dsig:DigestValue>uI2JdWzwyo8RliA3duZVC392vUI2aRP2QAjcyM5wJbw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -324,31 +324,31 @@
       <dsig:DigestValue>nDLtOlxvJSuJDPUCIONCoKYQ1cicEqvxNttM9fhxmd4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Resources\Bild1.png" size="209578">
+  <file name="Resources\Bild1.png" size="1024228">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>iReoc2qH1vOGYRVCAdfGPaVIjoyqOf64JpctP3JrWAs=</dsig:DigestValue>
+      <dsig:DigestValue>gJ5DZuGq8JMXxBKXr+aemRmPUAIHfE/cVmQ0CvQNzt8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Resources\Bild2.png" size="156508">
+  <file name="Resources\Bild2.png" size="115597">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>0qpIM32Tsyl+DrGM3uA7L0vve3Nx5RiXZV2+x5CTA+c=</dsig:DigestValue>
+      <dsig:DigestValue>xkayLlfT12/l1fuvuZFoax+JqKYMFdcKoFfNWSpZb9c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Resources\Bild3.png" size="158463">
+  <file name="Resources\Bild3.png" size="83591">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Bo4dY0mVY93ui9hFr5ezrtKEpQhZn8MnNg863znb7wc=</dsig:DigestValue>
+      <dsig:DigestValue>G1iFhvohf490PTazrqZ/zY4VruLmOYXLEVZ8xg75nAc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\Bild4.png" size="128201">

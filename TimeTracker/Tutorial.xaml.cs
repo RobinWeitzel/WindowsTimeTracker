@@ -21,6 +21,7 @@ namespace TimeTracker
     {
         public int position = 0;
         public string[] images = {"Bild1.png", "Bild2.png" , "Bild3.png" , "Bild4.png" };
+        public string[] text = { "Welcome to TimeTracker - your personal time keeper!", "Any time you switch to a program you have not used for a while TimeTracker will ask if you are still working on the same activity.", "You can manually change the current activity, access settings and view the recorded data by right-clicking on the icon in the System Tray.", "", "" };
         public Tutorial()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace TimeTracker
             Uri uriSource = new Uri("Resources/" + images[position], UriKind.Relative);
 
             Image.Source = new BitmapImage(uriSource);
+            TextBlock.Text = text[position];
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
