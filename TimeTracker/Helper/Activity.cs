@@ -10,7 +10,6 @@ namespace TimeTracker.Helper
 {
     class Activity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime From { get; set; }
         public DateTime? To { get; set; }
@@ -20,7 +19,6 @@ namespace TimeTracker.Helper
             using (TextWriter tw = new StreamWriter(Variables.activityPath, true))
             {
                 var csv = new CsvWriter(tw);
-                Id = Guid.NewGuid();
                 To = to ?? DateTime.Now;
 
                 csv.WriteRecord(this);

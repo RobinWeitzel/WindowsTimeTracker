@@ -152,6 +152,7 @@ namespace TimeTracker
                 {
                     var csv = new CsvReader(tr);
                     var records = csv.GetRecords<TimeTracker.Helper.Window>();
+                    List<TimeTracker.Helper.Window> list = records.Where(r => r.To >= day_in_question && r.From <= day_in_question_after).ToList();
 
                     List<Helper> Helper = today_activities.Select(ta => new Helper
                     {
@@ -165,12 +166,12 @@ namespace TimeTracker
                     foreach (Helper h in Helper)
                     {
                         windowHelper.AddRange(
-                        records
-                            .Where(r => r.To > h.from && r.From < h.to)
+                        list
+                            .Where(r => r.To >= h.from && r.From <= h.to)
                             .Select(r => new Helper
                             {
                                 name = r.Name,
-                                from = r.From < h.from ? h.from : r.From, // If my window started before the start of the activity only measure from the beginning of the activity
+                                from = r.From > h.from ? r.From : h.from, // If my window started before the start of the activity only measure from the beginning of the activity
                                 to = (DateTime) (r.To > h.to ? h.to : r.To) // If my window ended after the end of the activity only measure until the end of the activity
                             }));
 
@@ -184,13 +185,13 @@ namespace TimeTracker
 
                     foreach (Helper h in windowHelper)
                     {
-                        h.time = Math.Max(Math.Round((h.to - h.from).TotalHours, 2), 0);
+                        h.time = Math.Max((h.to - h.from).TotalHours, 0);
                     }
 
                     result += "\"windows\":" + customJSONSerializer<Helper2>(windowHelper.GroupBy(h => h.name).Where(g => g.Sum(h => h.time) >= 0.1).Select(g => new Helper2
                     {
                         name = g.Key,
-                        value = g.Sum(h => h.time)
+                        value = Math.Round(g.Sum(h => h.time), 2)
                     }).ToList()) + "}";
                 }
                 return result;
