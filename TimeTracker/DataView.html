@@ -207,7 +207,7 @@
                 myDoughnutChart.data = prepareWindows();
 
                 myBarChart.data = prepareActivities();
-
+                myBarChart.options.scales.yAxes[0].ticks.max = data3.reduce((p, c) => p = Math.max(c.value, p), 0) * 1.15;
                 stackedBar.update();
                 drawSummary();
                 myDoughnutChart.update();
@@ -464,7 +464,10 @@
                 },
                 scales: {
                     yAxes: [{
-                        display: false
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }
                     }]
                 },
                 legend: {
