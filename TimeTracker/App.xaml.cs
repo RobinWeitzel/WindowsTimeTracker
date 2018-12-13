@@ -469,10 +469,20 @@ namespace TimeTracker
 
         private void changeActivity()
         {
-            CloseAllToasts();
+            try
+            {
+                CloseAllToasts();
 
-            CustomToast newToast = new CustomToast();
-            newToast.Show();
+                CustomToast newToast = new CustomToast();
+                newToast.Show();
+            }
+            catch (ObjectDisposedException error) {
+                using (EventLog eventLog = new EventLog("TimeTracker.exe"))
+                {
+                    eventLog.Source = "TimeTracker.exe";
+                    eventLog.WriteEntry(error.StackTrace, EventLogEntryType.Warning, 101, 1);
+                }
+            }
         }
     }
 }
