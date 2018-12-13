@@ -7,4 +7,5 @@ TimeTracker/obj
 TimeTracker/publish
 .vs
 packages
+*.zip
 
