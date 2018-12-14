@@ -31,29 +31,6 @@ namespace TimeTracker
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
 
-        private string[] blacklist = {
-            "TimeTracker",
-            "Neue Benachrichtigung",
-            "Explorer",
-            "Cortana",
-            "Akkuinformationen",
-            "Start",
-            "UnlockingWindow",
-            "Cortana",
-            "Akkuinformationen",
-            "Status",
-            "Aktive Anwendungen",
-            "Window Dialog",
-            "Info-Center",
-            "Windows-Standardsperrbildschirm",
-            "Host für die Windows Shell-Oberfläche",
-            "F12PopupWindow",
-            "LockingWindow",
-            "SurfaceDTX",
-            "CTX_RX_SYSTRAY",
-            "[]"
-        };
-
         private static SettingsWindow SettingsWindow;
 
         private static bool paused = false;
@@ -169,7 +146,7 @@ namespace TimeTracker
             _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit().Show();
-            _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => ShowSettingsWindow();
+            _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
 
@@ -209,23 +186,6 @@ namespace TimeTracker
             else
             {
                 MainWindow.Show();
-            }
-        }
-
-        private void ShowSettingsWindow()
-        {
-            if (SettingsWindow.IsVisible)
-            {
-                if (SettingsWindow.WindowState == WindowState.Minimized)
-                {
-                    SettingsWindow.WindowState = WindowState.Normal;
-                }
-                SettingsWindow.Activate();
-            }
-            else
-            {
-                SettingsWindow.redrawSettings();
-                SettingsWindow.Show();
             }
         }
         
@@ -391,7 +351,7 @@ namespace TimeTracker
             {
                 string name = arr.Last();
                 // Stop if the current activity is blacklisted or a file path
-                if (blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
+                if (Settings.Default.Blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
                 {
                     if(!windowTitle.Equals("NotificationsWindow - TimeTracker"))
                         closeCurrentWindow();
@@ -402,7 +362,7 @@ namespace TimeTracker
                     bool hasBeenSeen = false;
 
                 // Load timeNotUsed from settings
-                long timeNotUsed = Settings.Default.TimeSinceAppLastUsed;
+                long timeNotUsed = Settings.Default.TimeSinceAppLastUsed * 60 * 1000;  // Convert to ms 
                 long timeout2 = Settings.Default.Timeout2;
 
                 DateTime lastSeen;

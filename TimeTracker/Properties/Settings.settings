@@ -6,16 +6,39 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TimeSinceAppLastUsed" Type="System.Int64" Scope="User">
-      <Value Profile="(Default)">300000</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="Timeout" Type="System.Int64" Scope="User">
-      <Value Profile="(Default)">10000</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="Timeout2" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="PlayNotificationSound" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Blacklist" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;TimeTracker&lt;/string&gt;
+  &lt;string&gt;Neue Benachrichtigung&lt;/string&gt;
+  &lt;string&gt;Explorer&lt;/string&gt;
+  &lt;string&gt;Cortana&lt;/string&gt;
+  &lt;string&gt;Akkuinformationen&lt;/string&gt;
+  &lt;string&gt;Start&lt;/string&gt;
+  &lt;string&gt;UnlockingWindow&lt;/string&gt;
+  &lt;string&gt;Cortana&lt;/string&gt;
+  &lt;string&gt;Status&lt;/string&gt;
+  &lt;string&gt;Aktive Anwendungen&lt;/string&gt;
+  &lt;string&gt;Window Dialog&lt;/string&gt;
+  &lt;string&gt;Info-Center&lt;/string&gt;
+  &lt;string&gt;Windows-Standardsperrbildschirm&lt;/string&gt;
+  &lt;string&gt;Host für die Windows Shell-Oberfläche&lt;/string&gt;
+  &lt;string&gt;F12PopupWindow&lt;/string&gt;
+  &lt;string&gt;LockingWindow&lt;/string&gt;
+  &lt;string&gt;CTX_RX_SYSTRAY&lt;/string&gt;
+  &lt;string&gt;[]&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -295,14 +295,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="580064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="593376">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>TqrhbPsm3pH1eHWGkjepNkopDl91aF1XmtmIDtGErwM=</dsig:DigestValue>
+        <dsig:DigestValue>HkVAiGvWWKj8+0Lbf7Rx3H5KHdIVq96Qd9ISaMIqRgM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -423,13 +423,13 @@
       <dsig:DigestValue>ihtY1iTutH6eMHNTGl02TkGi54U8BShzp5kX+X3Qu0Q=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="TimeTracker.exe.config" size="2939">
+  <file name="TimeTracker.exe.config" size="4013">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>CQUOsIVxHatqUlkgcHJZaeXgDgGBX6byYuHyu8ExN3Q=</dsig:DigestValue>
+      <dsig:DigestValue>zeotl1QjkBbKjyIvxk7FTjJR/0zt3J9IeQYX1AYXTjM=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

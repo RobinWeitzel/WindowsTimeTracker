@@ -185,7 +185,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Blacklist.xaml.cs">
+      <DependentUpon>Blacklist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\Activity.cs" />
+    <Compile Include="SettingsBlacklist.xaml.cs">
+      <DependentUpon>SettingsBlacklist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsGeneral.xaml.cs">
+      <DependentUpon>SettingsGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsAbout.xaml.cs">
+      <DependentUpon>SettingsAbout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Variables.cs" />
     <Compile Include="CustomToast.xaml.cs">
       <DependentUpon>CustomToast.xaml</DependentUpon>
@@ -206,6 +218,10 @@
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Window.cs" />
+    <Page Include="Blacklist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +247,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewVersion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsBlacklist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsGeneral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsAbout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

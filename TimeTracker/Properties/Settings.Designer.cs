@@ -37,7 +37,7 @@ namespace TimeTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public long TimeSinceAppLastUsed {
             get {
                 return ((long)(this["TimeSinceAppLastUsed"]));
@@ -49,7 +49,7 @@ namespace TimeTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public long Timeout {
             get {
                 return ((long)(this["Timeout"]));
@@ -80,6 +80,38 @@ namespace TimeTracker.Properties {
             }
             set {
                 this["PlayNotificationSound"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>TimeTracker</string>
+  <string>Neue Benachrichtigung</string>
+  <string>Explorer</string>
+  <string>Cortana</string>
+  <string>Akkuinformationen</string>
+  <string>Start</string>
+  <string>UnlockingWindow</string>
+  <string>Cortana</string>
+  <string>Status</string>
+  <string>Aktive Anwendungen</string>
+  <string>Window Dialog</string>
+  <string>Info-Center</string>
+  <string>Windows-Standardsperrbildschirm</string>
+  <string>Host für die Windows Shell-Oberfläche</string>
+  <string>F12PopupWindow</string>
+  <string>LockingWindow</string>
+  <string>CTX_RX_SYSTRAY</string>
+  <string>[]</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Blacklist {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Blacklist"]));
+            }
+            set {
+                this["Blacklist"] = value;
             }
         }
     }

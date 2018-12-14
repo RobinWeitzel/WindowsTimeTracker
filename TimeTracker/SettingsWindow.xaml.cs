@@ -24,44 +24,30 @@ namespace TimeTracker
         {
             InitializeComponent();
 
-            Version.Content = "v" + Variables.version;
+            ContentArea.Content = new SettingsGeneral();
+            ListBox.SelectedIndex = 0;
         }
 
-        public void redrawSettings()
+        private void Navigate(object sender, SelectionChangedEventArgs e)
         {
-            // Redraw inputs
-            TimeOut.Text = Settings.Default.Timeout.ToString();
-            TimeNotUsed.Text = Settings.Default.TimeSinceAppLastUsed.ToString();
-            TimeOut2.Text = Settings.Default.Timeout2.ToString();
-            MakeSound.IsChecked = Settings.Default.PlayNotificationSound;
-        }
+            if (ListBox.SelectedItem == null) // Do not allow deselecting items
+            {
+                ListBox.SelectedItem = e.RemovedItems[0];
+                return;
+            }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-                int timeoutResult;
-                if(int.TryParse(TimeOut.Text, out timeoutResult))
-                {
-                    Settings.Default.Timeout = timeoutResult * 1000; // Convert to ms 
-                }
-
-                int timeNotUsedResult;
-                if (int.TryParse(TimeNotUsed.Text, out timeNotUsedResult))
-                {
-                    Settings.Default.TimeSinceAppLastUsed = timeNotUsedResult * 60 * 1000; // Convert to ms 
-                }
-
-                int timeout2Result;
-                if (int.TryParse(TimeOut2.Text, out timeout2Result))
-                {
-                    Settings.Default.Timeout2 = timeout2Result;
-                }
-
-                Settings.Default.PlayNotificationSound = MakeSound.IsChecked == true;
+            switch((ListBox.SelectedItem as ListBoxItem).Content.ToString())
+            {
+                case "General":
+                    ContentArea.Content = new SettingsGeneral();
+                    break;
+                case "Blacklist Apps":
+                    ContentArea.Content = new SettingsBlacklist();
+                    break;
+                case "About":
+                    ContentArea.Content = new SettingsAbout();
+                    break;
+            }
         }
     }
 }

@@ -106,7 +106,7 @@ namespace TimeTracker
 
                 TextBlock2.Text = Variables.currentWindow != null ? Variables.currentWindow.Name.Trim() : "No window active";
 
-                timeout = Settings.Default.Timeout;
+                timeout = Settings.Default.Timeout * 1000; // Convert to ms
 
                 if(Settings.Default.PlayNotificationSound)
                     SystemSounds.Hand.Play();
