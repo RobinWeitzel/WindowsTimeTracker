@@ -114,5 +114,17 @@ namespace TimeTracker.Properties {
                 this["Blacklist"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OfflineTracking {
+            get {
+                return ((bool)(this["OfflineTracking"]));
+            }
+            set {
+                this["OfflineTracking"] = value;
+            }
+        }
     }
 }

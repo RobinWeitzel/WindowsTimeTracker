@@ -31,8 +31,6 @@ namespace TimeTracker
         private System.Windows.Forms.NotifyIcon _notifyIcon;
         private bool _isExit;
 
-        private static SettingsWindow SettingsWindow;
-
         private static bool paused = false;
         private static bool disturb = true;
 
@@ -75,9 +73,6 @@ namespace TimeTracker
 
             MainWindow = new MainWindow();
             MainWindow.Closing += MainWindow_Closing;
-
-            SettingsWindow = new SettingsWindow();
-            SettingsWindow.Closing += SettingsWindow_Closing;
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => changeActivity();
@@ -154,7 +149,6 @@ namespace TimeTracker
         {
             _isExit = true;
             MainWindow.Close();
-            SettingsWindow.Close();
             _notifyIcon.Dispose();
             _notifyIcon = null;
             this.Shutdown(1);
@@ -198,22 +192,14 @@ namespace TimeTracker
             }
         }
 
-        private void SettingsWindow_Closing(object sender, CancelEventArgs e)
-        {
-            if (!_isExit)
-            {
-                e.Cancel = true;
-                SettingsWindow.Hide(); // A hidden window can be shown again, a closed one not             
-            }
-        }
-
         /*** Methods for handling power state change ***/
         private void OnPowerChange(object s, PowerModeChangedEventArgs e)
         {
             switch (e.Mode)
             {
                 case PowerModes.Resume:
-                    // ToDo: Ask what user did during time away from pc
+                    if(Settings.Default.OfflineTracking)
+                        new ManualTracking().Show();
                     break;
                 case PowerModes.Suspend:
                     closeCurrentWindow();
@@ -236,7 +222,12 @@ namespace TimeTracker
                     closeCurrentActivity();
                     break;
                 case SessionSwitchReason.SessionLogon:
-                    // ToDo: Ask what user did during time away from pc
+                    if (Settings.Default.OfflineTracking)
+                        new ManualTracking().Show();
+                    break;
+                case SessionSwitchReason.SessionUnlock:
+                    if (Settings.Default.OfflineTracking)
+                        new ManualTracking().Show();
                     break;
             }
         }

@@ -23,5 +23,7 @@
         <Label Content="Notification sound" HorizontalAlignment="Left" Margin="31,386,0,0" VerticalAlignment="Top" FontSize="18"/>
         <CheckBox x:Name="MakeSound" Content="Make a sound every time a notifiaction is shown." HorizontalAlignment="Left" Margin="39,420,0,0" VerticalAlignment="Top" FontSize="14" Checked="MakeSound_Checked" Unchecked="MakeSound_Unchecked"/>
         <Label x:Name="Version" Content="" HorizontalAlignment="Left" HorizontalContentAlignment="Right" VerticalAlignment="Top" Margin="892,589,0,0" Width="148"/>
+        <Label Content="Track time away from the computer" HorizontalAlignment="Left" Margin="31,449,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <CheckBox x:Name="OfflineTracking" Content="Upon returning to the computer ask the user what he was doing." HorizontalAlignment="Left" Margin="39,483,0,0" VerticalAlignment="Top" FontSize="14" Checked="OfflineTracking_Checked"  Unchecked="OfflineTracking_Unchecked"/>
     </Grid>
 </UserControl>

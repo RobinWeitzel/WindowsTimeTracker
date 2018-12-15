@@ -260,3 +260,5 @@ C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Setting
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\SettingsGeneral.baml
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\SettingsAbout.g.cs
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\SettingsAbout.baml
+C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualTracking.g.cs
+C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualTracking.baml

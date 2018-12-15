@@ -189,6 +189,9 @@
       <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Activity.cs" />
+    <Compile Include="ManualTracking.xaml.cs">
+      <DependentUpon>ManualTracking.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsBlacklist.xaml.cs">
       <DependentUpon>SettingsBlacklist.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ManualEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManualTracking.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

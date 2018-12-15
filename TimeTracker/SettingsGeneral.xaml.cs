@@ -29,6 +29,7 @@ namespace TimeTracker
             TimeNotUsed.Text = Settings.Default.TimeSinceAppLastUsed.ToString();
             TimeOut2.Text = Settings.Default.Timeout2.ToString();
             MakeSound.IsChecked = Settings.Default.PlayNotificationSound;
+            OfflineTracking.IsChecked = Settings.Default.OfflineTracking;
         }
 
         private void TimeOut_TextChanged(object sender, TextChangedEventArgs e)
@@ -68,5 +69,16 @@ namespace TimeTracker
         {
             Settings.Default.PlayNotificationSound = false;
         }
+
+        private void OfflineTracking_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.OfflineTracking = true;
+        }
+
+        private void OfflineTracking_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.OfflineTracking = false;
+        }
+
     }
 }
