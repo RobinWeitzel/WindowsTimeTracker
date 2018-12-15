@@ -40,6 +40,12 @@ namespace TimeTracker
                     Name = "CsvHelper",
                     Author = "JoshClose",
                     License = "Apache-2.0"
+                },
+                new Library
+                {
+                    Name = "CefSharp",
+                    Author = "CefSharp Community",
+                    License = "BSD"
                 }
             };
 
@@ -61,7 +67,10 @@ namespace TimeTracker
                 switch(library.License)
                 {
                     case "Apache-2.0":
-                        Process.Start("https://www.apache.org/licenses/LICENSE-2.0");
+                        Process.Start("https://opensource.org/licenses/Apache-2.0");
+                        break;
+                    case "BSD":
+                        Process.Start("https://opensource.org/licenses/BSD-3-Clause");
                         break;
                 }
 
