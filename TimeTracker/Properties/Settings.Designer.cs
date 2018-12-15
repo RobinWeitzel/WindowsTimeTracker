@@ -126,5 +126,28 @@ namespace TimeTracker.Properties {
                 this["OfflineTracking"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<System.Windows.Input.Key> Hotkeys {
+            get {
+                return ((global::System.Collections.Generic.List<System.Windows.Input.Key>)(this["Hotkeys"]));
+            }
+            set {
+                this["Hotkeys"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HotkeyDisabled {
+            get {
+                return ((bool)(this["HotkeyDisabled"]));
+            }
+            set {
+                this["HotkeyDisabled"] = value;
+            }
+        }
     }
 }

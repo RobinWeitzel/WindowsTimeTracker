@@ -43,5 +43,11 @@
     <Setting Name="OfflineTracking" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Hotkeys" Type="System.Collections.Generic.List&lt;System.Windows.Input.Key&gt;" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="HotkeyDisabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -10,7 +10,7 @@ namespace TimeTracker
 {
     static class Variables
     {
-        public static string version = "0.9.4.5";
+        public static string version = "0.9.5.0";
         public static string activityPath = "";
         public static string windowPath = "";
         public static IDictionary<string, DateTime> windowsLastSeen = new Dictionary<string, DateTime>();

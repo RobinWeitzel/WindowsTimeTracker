@@ -79,6 +79,7 @@ namespace TimeTracker
         {
             Item item = sender as Item;
             Settings.Default.Blacklist[Items.IndexOf(item)] = item.Name;
+            Settings.Default.Save();
         }
 
         private void CollectionChangedMethod(object sender, NotifyCollectionChangedEventArgs e)
@@ -91,6 +92,7 @@ namespace TimeTracker
                     item.PropertyChanged += Item_PropertyChanged;
                     Settings.Default.Blacklist.Add(item.Name ?? "");
                 }
+                Settings.Default.Save();
             }
             if (e.Action == NotifyCollectionChangedAction.Replace)
             {
@@ -102,6 +104,7 @@ namespace TimeTracker
                 {
                     Settings.Default.Blacklist.Remove(item.Name);
                 }
+                Settings.Default.Save();
             }
             if (e.Action == NotifyCollectionChangedAction.Move)
             {
@@ -113,6 +116,7 @@ namespace TimeTracker
         {
             Items.Clear();
             Settings.Default.Blacklist.Clear();
+            Settings.Default.Save();
 
             string[] blacklist = {
                 "TimeTracker",

@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Xml;
 using TimeTracker.Properties;
 using Windows.Data.Xml.Dom;
@@ -34,6 +36,8 @@ namespace TimeTracker
         private static bool paused = false;
         private static bool disturb = true;
 
+        private KeyboardHook hook; // Global keyboard hook 
+
         protected override void OnStartup(StartupEventArgs e)
         {
             // Set connection string
@@ -44,7 +48,6 @@ namespace TimeTracker
 
             if (!File.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
-
 
             if (!File.Exists(Variables.windowPath))
             {
@@ -77,11 +80,13 @@ namespace TimeTracker
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (s, args) => changeActivity();
 
-            //Icon icon = Icon.FromHandle(((Bitmap)Image.FromFile("Resources/time-tracking-icon-0.png")).GetHicon());
-
             _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
             _notifyIcon.Visible = true;
             CreateContextMenu();
+
+            // Set up global hotkey
+            hook = new KeyboardHook();
+            hook.KeyCombinationPressed += KeyCombinationPressed;
 
             // Set up callback if active window changes
             dele = new WinEventDelegate(WinEventProc);
@@ -151,6 +156,8 @@ namespace TimeTracker
             MainWindow.Close();
             _notifyIcon.Dispose();
             _notifyIcon = null;
+            hook.Dispose();
+            hook = null;
             this.Shutdown(1);
         }
 
@@ -258,6 +265,12 @@ namespace TimeTracker
                 _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
                 paused = true;
             }
+        }
+
+        /*** Method for handling hotkey press ***/
+        void KeyCombinationPressed(object sender, EventArgs e)
+        {
+            changeActivity(true);
         }
 
         /************* Methods for tracking active window ***************/
@@ -418,21 +431,18 @@ namespace TimeTracker
             Variables.currentWindow = null;
         }
 
-        private void changeActivity()
+        private void changeActivity(bool focusToast = false)
         {
             try
             {
                 CloseAllToasts();
 
-                CustomToast newToast = new CustomToast();
+                CustomToast newToast = new CustomToast(focusToast);
                 newToast.Show();
+                if (focusToast)
+                    newToast.Activate();
             }
-            catch (ObjectDisposedException error) {
-                using (EventLog eventLog = new EventLog("TimeTracker.exe"))
-                {
-                    eventLog.Source = "TimeTracker.exe";
-                    eventLog.WriteEntry(error.StackTrace, EventLogEntryType.Warning, 101, 1);
-                }
+            catch (ObjectDisposedException ignore) {
             }
         }
     }

@@ -23,7 +23,7 @@
         <Label Content="License:" HorizontalAlignment="Left" Margin="31,147,0,0" VerticalAlignment="Top" FontSize="20"/>
 
         <TextBlock Margin="115,151,390,416" FontSize="20">           
-            <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">
+            <Hyperlink NavigateUri="https://opensource.org/licenses/Apache-2.0" RequestNavigate="Hyperlink_RequestNavigate">
                 Apache License, Version 2.0
             </Hyperlink>
         </TextBlock>

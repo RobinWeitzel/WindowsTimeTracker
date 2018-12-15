@@ -59,7 +59,7 @@ namespace TimeTracker
             }
         }
 
-        public CustomToast()
+        public CustomToast(bool focusToast)
         {
             InitializeComponent();
             var currentScreen = ScreenHandler.GetCurrentScreen(this); // ToDo: fix this
@@ -112,6 +112,9 @@ namespace TimeTracker
                     SystemSounds.Hand.Play();
             }
 
+            if (focusToast)
+                ComboBox.Focus();
+
             setupClose();
         }
 
@@ -136,7 +139,7 @@ namespace TimeTracker
             setupClose();
         }
 
-        private void setNewActivity(string name)
+        private void setNewActivity(string name, bool confirmClicked = false)
         {
             if (Variables.currentActivity == null || !ComboBox.Text.Equals(Variables.currentActivity.Name))
             {
@@ -148,7 +151,8 @@ namespace TimeTracker
                 Variables.currentActivity.Name = name;
                 Variables.currentActivity.From = toDate;
 
-                Variables.lastConfirmed = DateTime.Now;
+                if(confirmClicked)
+                    Variables.lastConfirmed = DateTime.Now;
             }
             this.Close();
         }
@@ -156,19 +160,21 @@ namespace TimeTracker
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             setNewActivity(defaultName);
-            this.Close();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity(ComboBox.Text);
+            setNewActivity(ComboBox.Text, true);
         }
 
         private void ComboBox_OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                setNewActivity(ComboBox.Text);
+                setNewActivity(ComboBox.Text, true);
+            } else if(e.Key == Key.Escape)
+            {
+                setNewActivity(defaultName);
             }
         }
     }
