@@ -23,6 +23,10 @@ namespace TimeTracker.Helper
 
                 To = DateTime.Now;
                 Variables.windowsLastSeen[Name] = (DateTime) To;
+
+                if (From > To)
+                    return;
+
                 csv.WriteRecord(this);
                 csv.NextRecord();
             }

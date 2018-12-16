@@ -21,6 +21,9 @@ namespace TimeTracker.Helper
                 var csv = new CsvWriter(tw);
                 To = to ?? DateTime.Now;
 
+                if (From > To)
+                    return;
+
                 csv.WriteRecord(this);
                 csv.NextRecord();
             }
