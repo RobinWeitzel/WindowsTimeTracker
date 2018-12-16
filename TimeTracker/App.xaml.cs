@@ -142,7 +142,7 @@ namespace TimeTracker
         {
             _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity();
-            _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause();
+            _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause(null);
             _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
             _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
             _notifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit().Show();
@@ -207,10 +207,10 @@ namespace TimeTracker
                 case PowerModes.Resume:
                     if(Settings.Default.OfflineTracking)
                         new ManualTracking().Show();
+                    pause(false);
                     break;
                 case PowerModes.Suspend:
-                    closeCurrentWindow();
-                    closeCurrentActivity();
+                    pause(true);
                     break;
             }
         }
@@ -221,20 +221,20 @@ namespace TimeTracker
             switch (e.Reason)
             {
                 case SessionSwitchReason.SessionLock:
-                    closeCurrentWindow();
-                    closeCurrentActivity();
+                    pause(true);
                     break;
                 case SessionSwitchReason.SessionLogoff:
-                    closeCurrentWindow();
-                    closeCurrentActivity();
+                    pause(true);
                     break;
                 case SessionSwitchReason.SessionLogon:
                     if (Settings.Default.OfflineTracking)
                         new ManualTracking().Show();
+                    pause(false);
                     break;
                 case SessionSwitchReason.SessionUnlock:
                     if (Settings.Default.OfflineTracking)
                         new ManualTracking().Show();
+                    pause(false);
                     break;
             }
         }
@@ -252,18 +252,37 @@ namespace TimeTracker
             }
         }
 
-        private void pause()
+        private void pause(bool? setPause)
         {
-            if(paused)
+            if(setPause != null)
             {
-                _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
-                paused = false;
-            } else
+                if (setPause == true)
+                {
+                    closeCurrentWindow();
+                    closeCurrentActivity();
+                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
+                    paused = true;
+                }
+                else
+                {
+                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
+                    paused = false;
+                }
+            }
+            else // Toggle pause
             {
-                closeCurrentWindow();
-                closeCurrentActivity();
-                _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
-                paused = true;
+                if (paused)
+                {
+                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
+                    paused = false;
+                }
+                else
+                {
+                    closeCurrentWindow();
+                    closeCurrentActivity();
+                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
+                    paused = true;
+                }
             }
         }
 
@@ -425,9 +444,7 @@ namespace TimeTracker
         private void closeCurrentWindow()
         {
             if (Variables.currentWindow != null)
-            {
                 Variables.currentWindow.save();
-            }
             Variables.currentWindow = null;
         }
 
