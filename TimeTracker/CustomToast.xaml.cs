@@ -125,7 +125,6 @@ namespace TimeTracker
             if(cancelClose.Count() == 0 || cancelClose.Pop() != true)
             {
                 setNewActivity(defaultName);
-                this.Close();
             }
         }
 
@@ -154,7 +153,8 @@ namespace TimeTracker
                 if(confirmClicked)
                     Variables.lastConfirmed = DateTime.Now;
             }
-            this.Close();
+            if(this.IsLoaded) // Can only close if the window still exists
+                this.Close();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
