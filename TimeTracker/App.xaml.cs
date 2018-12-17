@@ -111,29 +111,35 @@ namespace TimeTracker
                 Settings.Default.TutorialViewed = true;
                 Settings.Default.Save();
             }
-            
+
             // Check for update
-            var m_strFilePath = "https://github.com/RobinWeitzel/WindowsTimeTracker/releases.atom";
-            string xmlStr;
-            using (var wc = new WebClient())
+            try
             {
-                xmlStr = wc.DownloadString(m_strFilePath);
-            }
-            var xmlDoc = new System.Xml.XmlDocument();
-            xmlDoc.LoadXml(xmlStr);
+                var m_strFilePath = "https://github.com/RobinWeitzel/WindowsTimeTracker/releases.atom";
+                string xmlStr;
+                using (var wc = new WebClient())
+                {
+                    xmlStr = wc.DownloadString(m_strFilePath);
+                }
+                var xmlDoc = new System.Xml.XmlDocument();
+                xmlDoc.LoadXml(xmlStr);
 
-            XmlNode root = xmlDoc.DocumentElement;
+                XmlNode root = xmlDoc.DocumentElement;
 
-            // Add the namespace.  
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("f", "http://www.w3.org/2005/Atom");
+                // Add the namespace.  
+                XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                nsmgr.AddNamespace("f", "http://www.w3.org/2005/Atom");
 
-            XmlNode node = root.SelectSingleNode(
-     "descendant::f:entry", nsmgr);
+                XmlNode node = root.SelectSingleNode(
+         "descendant::f:entry", nsmgr);
 
-            if(!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Variables.version))
+                if (!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Variables.version))
+                {
+                    new NewVersion().Show();
+                }
+            } catch(WebException ignore)
             {
-                new NewVersion().Show();
+
             }
         }
 
