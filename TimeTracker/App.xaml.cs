@@ -211,11 +211,15 @@ namespace TimeTracker
             switch (e.Mode)
             {
                 case PowerModes.Resume:
-                    if(Settings.Default.OfflineTracking)
+                    if(Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
+                    {
                         new ManualTracking().Show();
+                        Variables.showAwayFromPcDialog = false;
+                    }
                     pause(false);
                     break;
                 case PowerModes.Suspend:
+                    Variables.showAwayFromPcDialog = true;
                     pause(true);
                     break;
             }
@@ -228,18 +232,26 @@ namespace TimeTracker
             {
                 case SessionSwitchReason.SessionLock:
                     pause(true);
+                    Variables.showAwayFromPcDialog = true;
                     break;
                 case SessionSwitchReason.SessionLogoff:
                     pause(true);
+                    Variables.showAwayFromPcDialog = true;
                     break;
                 case SessionSwitchReason.SessionLogon:
-                    if (Settings.Default.OfflineTracking)
+                    if (Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
+                    {
                         new ManualTracking().Show();
+                        Variables.showAwayFromPcDialog = false;
+                    }
                     pause(false);
                     break;
                 case SessionSwitchReason.SessionUnlock:
-                    if (Settings.Default.OfflineTracking)
+                    if (Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
+                    {
                         new ManualTracking().Show();
+                        Variables.showAwayFromPcDialog = false;
+                    }
                     pause(false);
                     break;
             }
