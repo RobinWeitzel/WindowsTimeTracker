@@ -295,24 +295,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="605152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="605664">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cK6RQWKsL1BjKEE7tcJWVy1zlw2H+caMma29ySnV2aE=</dsig:DigestValue>
+        <dsig:DigestValue>NQKRk0MPckvYopivrXA1HB2g14GagMc++o7nGXDDOpU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DataView.html" size="20155">
+  <file name="DataView.html" size="22076">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>2j4HWzPnkyD8thuhlXYCdkcX0HXG0iOm6a1Sy0QXwlU=</dsig:DigestValue>
+      <dsig:DigestValue>M/jfa8AoP1mfLehdCGoGi2FohJtp8dxYsuWXYmUXBsA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MyIcon.ico" size="47372">
@@ -421,6 +421,123 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>ihtY1iTutH6eMHNTGl02TkGi54U8BShzp5kX+X3Qu0Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\LICENSE.txt" size="11560">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Pd+b5cKP4n2tFDpdx27qJSIq0d1ok0oEcGTlbtL6QMU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Black.ttf" size="171480">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>OHLps5dgobWaweGSYz27O1jllbTUI5MKx97VJemuJeA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-BlackItalic.ttf" size="177552">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>AT0ipPsmOK26KFVe4ZNm9FhfbcUzt8My9JMaIxSXyyI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Bold.ttf" size="170760">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>fQuZHuPgvnrwGtfqjNK+6mwAol5nmgImtnN/B5qv/4Y=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-BoldItalic.ttf" size="174952">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>pLysFPQZqX3gkXGYpLxRw+1PxKPbn2ilEC8jZk7gE1Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Italic.ttf" size="173932">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>X86Lb4up9NGfDVNeJB1WorjnK7B+ffcR2WjQku9/n8o=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Light.ttf" size="170420">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ptND1CW8ONuQFS+gYFixxzkeypJk8zTvZcHOF1CFxvY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-LightItalic.ttf" size="176616">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Nkoj4Txkk3w/zqPbd4YouJN5yJOEm7reblv4PF9gXGo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Medium.ttf" size="172064">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8gXMURgh6lYHihBVV/zqYlMSlATUEcmX4YZvvQBqu2g=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-MediumItalic.ttf" size="176864">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8Xfu0Q0kcNE+xo0EkHpYKCnQ7oKB+KAqkG9pVMeBblg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Regular.ttf" size="171676">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>eehRQEZX2sIQaz0irSVtR4JKmldlRY7bcskQKkWBbZU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-Thin.ttf" size="171904">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>PZH3qmnLf3BkA1iVxWasXLmyCEWC01Gvcme7Tg+6YPU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Roboto\Roboto-ThinItalic.ttf" size="176300">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9eiaNEiUpg8PmPHAGCulH1BG4p3eMRiCDTkCVEWuqug=</dsig:DigestValue>
     </hash>
   </file>
   <file name="TimeTracker.exe.config" size="4228">

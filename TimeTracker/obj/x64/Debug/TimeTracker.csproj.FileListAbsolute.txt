@@ -117,7 +117,6 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualE
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualEdit.baml
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.g.cs
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.baml
-C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.g.cs
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.baml
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Bild1.png
@@ -262,3 +261,17 @@ C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Setting
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\SettingsAbout.baml
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualTracking.g.cs
 C:\Users\Robin\Source\Repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualTracking.baml
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Black.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-BlackItalic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Bold.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-BoldItalic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Italic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Light.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-LightItalic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Medium.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-MediumItalic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Regular.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-Thin.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-ThinItalic.ttf
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\LICENSE.txt
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html

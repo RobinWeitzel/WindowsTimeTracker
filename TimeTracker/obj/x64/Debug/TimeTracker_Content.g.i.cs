@@ -8,6 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-black.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-blackitalic.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-bold.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-bolditalic.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-italic.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-light.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-lightitalic.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-medium.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-mediumitalic.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-regular.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-thin.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-thinitalic.ttf")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild1.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild2.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bild3.png")]
@@ -20,5 +32,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/font-awesome-4.7.0/css/font-awesome.min.css")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/font-awesome-4.7.0/fonts/fontawesome-webfont.svg")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/hammer.min.js")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/license.txt")]
 
 

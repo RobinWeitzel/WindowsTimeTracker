@@ -83,7 +83,7 @@ namespace TimeTracker
                 public double value { get; set; }
             }
 
-            public string getData(int value)
+            public string getOverviewData(int value)
             {
                 string result = "{";
 

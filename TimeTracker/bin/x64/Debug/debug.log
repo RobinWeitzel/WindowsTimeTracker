@@ -1,80 +1,26 @@
-[1122/143256.365:INFO:CONSOLE(185)] "Uncaught TypeError: window.external.getActivityBreakdown is not a function", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (185)
-[1122/160150.656:INFO:CONSOLE(185)] "Uncaught ReferenceError: callbackObj is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (185)
-[1122/161447.749:INFO:CONSOLE(174)] "Uncaught SyntaxError: await is only valid in async function", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (174)
-[1122/161450.664:INFO:CONSOLE(71)] "Uncaught ReferenceError: changeDate is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (71)
-[1122/161452.360:INFO:CONSOLE(73)] "Uncaught ReferenceError: changeDate is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (73)
-[1122/161613.696:INFO:CONSOLE(181)] "Uncaught SyntaxError: await is only valid in async function", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (181)
-[1122/161918.714:INFO:CONSOLE(193)] "Uncaught SyntaxError: await is only valid in async function", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (193)
-[1122/161959.342:INFO:CONSOLE(176)] "Uncaught (in promise) SyntaxError: Unexpected token o in JSON at position 1", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (176)
-[1122/162001.110:INFO:CONSOLE(176)] "Uncaught (in promise) SyntaxError: Unexpected token o in JSON at position 1", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (176)
-[1122/162002.384:INFO:CONSOLE(176)] "Uncaught (in promise) SyntaxError: Unexpected token o in JSON at position 1", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (176)
-[1122/221650.339:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
-[1122/221655.112:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
-[1122/221720.383:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
-[1122/221751.431:INFO:CONSOLE(188)] "Uncaught (in promise) ReferenceError: boundAsync is not defined", source: file:///C:/Users/Robin/Source/Repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/DataView.html (188)
-[1130/171034.001:ERROR:block_files.cc(471)] Failed to open GPUCache\data_3
-[1130/171034.003:ERROR:cache_util_win.cc(19)] Unable to move the cache: 5
-[1130/171034.003:ERROR:cache_util.cc(140)] Unable to move cache folder GPUCache to old_GPUCache_000
-[1130/171034.004:ERROR:disk_cache.cc(168)] Unable to create cache
-[1130/171034.004:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
-[1204/170352.152:ERROR:block_files.cc(471)] Failed to open GPUCache\data_0
-[1204/170352.153:ERROR:cache_util_win.cc(19)] Unable to move the cache: 5
-[1204/170352.154:ERROR:cache_util.cc(140)] Unable to move cache folder GPUCache to old_GPUCache_000
-[1204/170352.154:ERROR:disk_cache.cc(168)] Unable to create cache
-[1204/170352.154:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
-[1204/171056.535:ERROR:block_files.cc(471)] Failed to open GPUCache\data_3
-[1204/171056.538:ERROR:cache_util_win.cc(19)] Unable to move the cache: 5
-[1204/171056.538:ERROR:cache_util.cc(140)] Unable to move cache folder GPUCache to old_GPUCache_000
-[1204/171056.538:ERROR:disk_cache.cc(168)] Unable to create cache
-[1204/171056.538:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
-[1204/171546.560:ERROR:block_files.cc(471)] Failed to open GPUCache\data_3
-[1204/171546.562:ERROR:cache_util_win.cc(19)] Unable to move the cache: 5
-[1204/171546.562:ERROR:cache_util.cc(140)] Unable to move cache folder GPUCache to old_GPUCache_000
-[1204/171546.562:ERROR:disk_cache.cc(168)] Unable to create cache
-[1204/171546.562:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
-[1227/094036.810:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094041.818:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094046.827:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094051.830:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094056.838:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094101.845:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094106.850:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094111.853:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094116.858:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094121.865:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094126.874:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094131.880:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094136.888:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094141.895:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094146.899:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094151.908:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094156.916:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094201.923:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094206.930:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094211.934:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094216.943:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094221.951:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094226.954:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094231.960:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094236.970:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094241.972:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094246.983:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094251.991:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094256.994:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094302.002:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094307.008:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094312.018:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094317.024:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094322.032:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094327.042:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094332.053:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094337.061:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094342.068:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094347.077:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094352.080:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094357.090:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094402.095:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094407.104:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094412.114:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094417.116:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
-[1227/094422.119:WARNING:dns_config_service_win.cc(669)] Failed to read DnsConfig.
+[0103/103912.002:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/103954.033:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104050.340:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104124.485:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104143.409:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104205.952:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104239.981:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104258.390:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/104320.807:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/110149.032:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/110150.849:INFO:CONSOLE(189)] "Uncaught TypeError: Cannot read property 'style' of null", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (189)
+[0103/110152.290:INFO:CONSOLE(197)] "Uncaught TypeError: Cannot read property 'style' of null", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (197)
+[0103/110153.785:INFO:CONSOLE(176)] "Uncaught ReferenceError: change is not defined", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (176)
+[0103/110202.507:INFO:CONSOLE(176)] "Uncaught ReferenceError: change is not defined", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (176)
+[0103/110403.312:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/110404.565:INFO:CONSOLE(188)] "Uncaught TypeError: Cannot read property 'style' of null", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (188)
+[0103/110406.107:INFO:CONSOLE(195)] "Uncaught TypeError: Cannot read property 'style' of null", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (195)
+[0103/110407.797:INFO:CONSOLE(176)] "Uncaught ReferenceError: change is not defined", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (176)
+[0103/110741.751:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/110744.748:INFO:CONSOLE(195)] "Uncaught TypeError: Cannot read property 'style' of null", source: file:///C:/Users/Robin/source/repos/WindowsTimeTracker/TimeTracker/bin/x64/Debug/Overview.html (195)
+[0103/111049.220:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/111208.304:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/111344.183:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/111438.490:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/111447.276:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)
+[0103/111635.650:INFO:CONSOLE(0)] "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.", source:  (0)

@@ -484,7 +484,6 @@ namespace TimeTracker
             }
         }
 
-
         private void closeCurrentActivity()
         {
             if (Variables.currentActivity != null)

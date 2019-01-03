@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" href="./Resources/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./Resources/Roboto/Roboto-Regular.ttf">
 
     <style>
         body {
-            background-color: #f1f1f1;
             margin: 0px;
             padding: 0px;
             width: 1200px;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f1f1f1;
         }
 
         .pandel-row {
@@ -62,47 +64,82 @@
         #day-breakdown-summary {
             margin-left: 70px;
         }
+
+        .menu {
+            display: flex;
+            background-color: white;
+        }
+
+        .menu-item {
+            width: calc(100% /3);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+            .menu-item:not(:first-child) {
+                border-left: 1px solid #f1f1f1;
+            }
+
+
+            .menu-item:hover {
+                background-color: rgba(241, 241, 241, 0.5);
+            }
+
+        .active {
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     </style>
     <title></title>
 </head>
 <body>
-    <div class="panel" style="width: 1160px; display: flex; justify-content: center;">
-        <div style="width: 600px; display: flex; justify-content: space-between; align-items: center;">
-            <i onclick="changeDate(-1)" class="fa fa-chevron-left" aria-hidden="true"></i>
-            <h2 id="date-text" data-value="0">Today</h2>
-            <i onclick="changeDate(1)" class="fa fa-chevron-right" aria-hidden="true"></i>
+    <div class="menu">
+        <div class="menu-item active" id="overview-menu" onclick="changeWindow(0);"><h2>Overview</h2></div>
+        <div class="menu-item" id="details-menu" onclick="changeWindow(1);"><h2>Details</h2></div>
+        <div class="menu-item" id="calendar-menu" onclick="changeWindow(2);"><h2>Calendar</h2></div>
+    </div>
+    <div class="container" id="overview">
+        <div class="panel" style="width: 1160px; display: flex; justify-content: center; margin-top: 0px;">
+            <div style="width: 600px; display: flex; justify-content: space-between; align-items: center;">
+                <i onclick="changeDate(-1)" class="fa fa-chevron-left" aria-hidden="true"></i>
+                <h2 id="date-text" data-value="0">Today</h2>
+                <i onclick="changeDate(1)" class="fa fa-chevron-right" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="panel" style="width: 1160px">
+            <h2>Day Breakdown</h2>
+            <canvas id="day-breakdown" height="50"></canvas>
+            <div id="day-breakdown-summary"></div>
+        </div>
+        <div class="pandel-row" style="margin-bottom: 0px;">
+            <div class="panel" style="width: 50%; margin-bottom: 0px;">
+                <h2>Activities (<span id="week"></span>)</h2>
+                <canvas id="activities"></canvas>
+            </div>
+            <div class="panel" style="width: 50%; margin-bottom: 0px;">
+                <h2>Apps (that day)</h2>
+                <canvas id="windows"></canvas>
+            </div>
         </div>
     </div>
-    <div class="panel" style="width: 1160px">
-        <h2>Day Breakdown</h2>
-        <canvas id="day-breakdown" height="50"></canvas>
-        <div id="day-breakdown-summary"></div>
+    <div class="container" id="details" style="display: none;">
+        details
     </div>
-    <div class="pandel-row">
-        <div class="panel" style="width: 50%;">
-            <h2>Activities (<span id="week"></span>)</h2>
-            <canvas id="activities"></canvas>
-        </div>
-        <div class="panel" style="width: 50%;">
-            <h2>Apps (that day)</h2>
-            <canvas id="windows"></canvas>
-        </div>
+    <div class="container" id="calendar" style="display: none;">
+        calendar
     </div>
-
     <script src="./Resources/Chart.bundle.min.js"></script>
     <script src="./Resources/chartjs-plugin-datalabels.min.js"></script>
     <script src="./Resources/hammer.min.js"></script>
     <script src="./Resources/chartjs-plugin-zoom.js"></script>
     <script>
-        /*var backgroundColor = [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ];*/
-
         var backgroundColor = [
             '#0074D9',
             '#7FDBFF',
@@ -117,54 +154,6 @@
             '#F012BE',
             '#B10DC9',
         ];
-
-        /*var data = [
-            {
-                name: "Activity 1",
-                from: 8.00,
-                to: 9.4
-            },
-            {
-                name: "Activity 2",
-                from: 13.00,
-                to: 14.5
-            },
-            {
-                name: "Activity 1",
-                from: 14.5,
-                to: 16.2
-            },
-        ];
-
-        var data2 = [
-            {
-                name: "Window 1",
-                value: 3
-            },
-            {
-                name: "Window 2",
-                value: 1.5
-            },
-            {
-                name: "Window 3",
-                value: 0.4
-            },
-        ];
-
-        var data3 = [
-            {
-                name: "Activity 1",
-                value: 3
-            },
-            {
-                name: "Activity 2",
-                value: 1.5
-            },
-            {
-                name: "Activity 3",
-                value: 0.4
-            },
-        ];*/
 
         var data = [];
         var data2 = [];
@@ -181,6 +170,37 @@
             return d.getDate() + "." + d.getMonth() + "." + d.getFullYear();
         }
 
+        function changeWindow(window) {
+            switch (window) {
+                case 0:
+                    var value = parseInt(document.getElementById('date-text').dataset.value);
+                    update(value);
+                    document.getElementById('details').style.display = 'none';
+                    document.getElementById('calendar').style.display = 'none';
+                    document.getElementById('overview').style.display = 'block';
+
+                    document.querySelector('.active').classList.remove('active');
+                    document.getElementById('overview-menu').classList.add('active');
+                    break;
+                case 1:
+                    document.getElementById('overview').style.display = 'none';
+                    document.getElementById('calendar').style.display = 'none';
+                    document.getElementById('details').style.display = 'block';
+
+                    document.querySelector('.active').classList.remove('active');
+                    document.getElementById('details-menu').classList.add('active');
+                    break;
+                case 2:
+                    document.getElementById('overview').style.display = 'none';
+                    document.getElementById('details').style.display = 'none';
+                    document.getElementById('calendar').style.display = 'block';
+
+                    document.querySelector('.active').classList.remove('active');
+                    document.getElementById('calendar-menu').classList.add('active');
+                    break;
+            }
+        }
+
         async function update(value) {
             var today = new Date();
             today.setDate(today.getDate() + value);
@@ -188,7 +208,7 @@
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getData(value).then(function (result) {
+            boundAsync.getOverviewData(value).then(function (result) {
                 resultParsed = JSON.parse(result);
                 data = resultParsed.overview;
                 data2 = resultParsed.windows;
