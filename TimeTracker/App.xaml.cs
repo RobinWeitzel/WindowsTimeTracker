@@ -465,7 +465,7 @@ namespace TimeTracker
                 if (focusToast)
                     newToast.Activate();
             }
-            catch (ObjectDisposedException ignore) {
+            catch (Exception ignore) {
             }
         }
     }
