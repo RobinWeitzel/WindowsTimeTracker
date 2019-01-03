@@ -216,11 +216,22 @@ namespace TimeTracker
                         new ManualTracking().Show();
                         Variables.showAwayFromPcDialog = false;
                     }
+                    if(hook == null)
+                    {
+                        // Set up global hotkey
+                        hook = new KeyboardHook();
+                        hook.KeyCombinationPressed += KeyCombinationPressed;
+                    }
                     pause(false);
                     break;
                 case PowerModes.Suspend:
                     Variables.showAwayFromPcDialog = true;
                     pause(true);
+                    if (hook != null)
+                    {
+                        hook.Dispose();
+                        hook = null;
+                    }
                     break;
             }
         }
@@ -233,16 +244,32 @@ namespace TimeTracker
                 case SessionSwitchReason.SessionLock:
                     pause(true);
                     Variables.showAwayFromPcDialog = true;
+                    if (hook != null)
+                    {
+                        hook.Dispose();
+                        hook = null;
+                    }
                     break;
                 case SessionSwitchReason.SessionLogoff:
                     pause(true);
                     Variables.showAwayFromPcDialog = true;
+                    if (hook != null)
+                    {
+                        hook.Dispose();
+                        hook = null;
+                    }
                     break;
                 case SessionSwitchReason.SessionLogon:
                     if (Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
                     {
                         new ManualTracking().Show();
                         Variables.showAwayFromPcDialog = false;
+                    }
+                    if (hook == null)
+                    {
+                        // Set up global hotkey
+                        hook = new KeyboardHook();
+                        hook.KeyCombinationPressed += KeyCombinationPressed;
                     }
                     pause(false);
                     break;
@@ -251,6 +278,12 @@ namespace TimeTracker
                     {
                         new ManualTracking().Show();
                         Variables.showAwayFromPcDialog = false;
+                    }
+                    if (hook == null)
+                    {
+                        // Set up global hotkey
+                        hook = new KeyboardHook();
+                        hook.KeyCombinationPressed += KeyCombinationPressed;
                     }
                     pause(false);
                     break;
