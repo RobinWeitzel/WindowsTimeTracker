@@ -109,7 +109,7 @@ namespace TimeTracker
                         from = Math.Round(ta.From >= day_in_question ? ta.From.Subtract(day_in_question).TotalHours : 0, 2),
                         to = Math.Round((ta.From >= day_in_question ? ta.From.Subtract(day_in_question).TotalHours : 0) + (ta.To == null || ta.To >= day_in_question_after ? (day_in_question == DateTime.Today ? DateTime.Now : day_in_question_after) : (DateTime)ta.To).Subtract(ta.From >= day_in_question ? ta.From : day_in_question).TotalHours, 2),
                         name = ta.Name
-                    }).ToList();
+                    }).OrderBy(ta => ta.from).ToList();
 
                     result += "\"overview\":" + customJSONSerializer<Event>(Events) + ",";
                 }
@@ -195,6 +195,21 @@ namespace TimeTracker
                     }).ToList()) + "}";
                 }
                 return result;
+            }
+
+            public string getDetailsData1()
+            {
+                string result = "{";
+
+                using (TextReader tr = new StreamReader(Variables.activityPath))
+                {
+                    var csv = new CsvReader(tr);
+                    IEnumerable<TimeTracker.Helper.Activity> records = csv.GetRecords<TimeTracker.Helper.Activity>();
+                    List<string> list = records.GroupBy(r => r.Name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => "\"" + g.Key + "\"").ToList();
+
+                    result += "\"activities\":[" + string.Join(",", list) + "]}";
+                    return result;
+                }
             }
         }
 

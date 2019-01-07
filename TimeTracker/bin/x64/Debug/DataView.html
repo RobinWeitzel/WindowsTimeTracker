@@ -130,7 +130,11 @@
         </div>
     </div>
     <div class="container" id="details" style="display: none;">
-        details
+        <div class="panel">
+            <select id="activities-select">
+
+            </select>
+        </div>
     </div>
     <div class="container" id="calendar" style="display: none;">
         calendar
@@ -209,7 +213,7 @@
                 await CefSharp.BindObjectAsync("boundAsync");
 
             boundAsync.getOverviewData(value).then(function (result) {
-                resultParsed = JSON.parse(result);
+                var resultParsed = JSON.parse(result);
                 data = resultParsed.overview;
                 data2 = resultParsed.windows;
                 data3 = resultParsed.activities;
@@ -594,7 +598,25 @@
             }
         });
 
+        async function populateSelect() {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.getDetailsData1().then(function (result) {
+                var resultParsed = JSON.parse(result).activities;
+
+                var html = "";
+
+                for (var i = 0; i < resultParsed.length; i++) {
+                    html += "<option>" + resultParsed[i] + "</option>";
+                }
+
+                document.getElementById('activities-select').innerHTML = html;
+            });
+        }
+
         update(0);
+        populateSelect();
     </script>
 </body>
 </html>

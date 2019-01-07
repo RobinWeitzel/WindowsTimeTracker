@@ -295,24 +295,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="605664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="606176">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NQKRk0MPckvYopivrXA1HB2g14GagMc++o7nGXDDOpU=</dsig:DigestValue>
+        <dsig:DigestValue>EweEvsPYAgBP+ee9ITJpSFVLKPF6W/RE5nshX/lhmhc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DataView.html" size="22076">
+  <file name="DataView.html" size="22804">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>M/jfa8AoP1mfLehdCGoGi2FohJtp8dxYsuWXYmUXBsA=</dsig:DigestValue>
+      <dsig:DigestValue>iKCy9sDvMC2EysRU62mH+bhmTfLdp4CeeX0vRGzoD3E=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MyIcon.ico" size="47372">
