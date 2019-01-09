@@ -4,7 +4,7 @@
         <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
         <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
-        <Property Id="ALLUSERS" Secure="yes"/>
+        <Property Id="ALLUSERS" Secure="yes" />
         <!-- The following three sections are from the How To: Add a File to Your Installer topic-->
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="LocalAppDataFolder">
@@ -20,6 +20,7 @@
                             <Directory Name="less" Id="lessFolder" />
                             <Directory Name="scss" Id="scssFolder" />
                         </Directory>
+                        <Directory Name="Roboto" Id="RobotoFolder" />
                     </Directory>
                 </Directory>
             </Directory>
@@ -33,10 +34,10 @@
                     <RegistryValue Type="string" Name="TimeTrackerAutoStart" Value="[#TIMETRACKER.EXE]" />
                 </RegistryKey>
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="uninstall" />
-                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe"/>
+                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe" />
                 <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Debug\cef.pak" />
                 <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Debug\cef_100_percent.pak" />
                 <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Debug\cef_200_percent.pak" />
@@ -59,9 +60,7 @@
                 <File Id="CSVHELPER.XML" Name="CsvHelper.xml" Source="..\bin\x64\Debug\CsvHelper.xml" />
                 <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Debug\d3dcompiler_47.dll" />
                 <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
-                <File Id="DB.DB" Name="db.db" Source="..\bin\x64\Debug\db.db" />
                 <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Debug\debug.log" />
-                <File Id="DEFAULT.DB" Name="default.db" Source="..\bin\x64\Debug\default.db" />
                 <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Debug\devtools_resources.pak" />
                 <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Debug\icudtl.dat" />
                 <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Debug\libcef.dll" />
@@ -106,7 +105,7 @@
         <DirectoryRef Id="swiftshaderFolder">
             <Component Id="swiftshader" Guid="ddd469cc-0203-45ad-ac8e-42fde5d28a58">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\swiftshader" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="swiftshaderFolder" On="uninstall" />
                 <File Id="LIBEGL.DLL_1" Name="libEGL.dll" Source="..\bin\x64\Debug\swiftshader\libEGL.dll" />
@@ -116,7 +115,7 @@
         <DirectoryRef Id="localesFolder">
             <Component Id="locales" Guid="2ee70755-9a34-4984-b26e-cd3cc88a9fb0">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="localesFolder" On="uninstall" />
                 <File Id="AM.PAK" Name="am.pak" Source="..\bin\x64\Debug\locales\am.pak" />
@@ -176,8 +175,8 @@
         </DirectoryRef>
         <DirectoryRef Id="GPUCacheFolder">
             <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba">
-            <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="GPUCacheFolder" On="uninstall" />
                 <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Debug\GPUCache\data_0" />
@@ -190,7 +189,7 @@
         <DirectoryRef Id="apppublishFolder">
             <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\apppublish" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="apppublishFolder" On="uninstall" />
                 <File Id="TIMETRACKER.EXE_1" Name="TimeTracker.exe" Source="..\bin\x64\Debug\app.publish\TimeTracker.exe" />
@@ -199,7 +198,7 @@
         <DirectoryRef Id="ResourcesFolder">
             <Component Id="Resources" Guid="c6b8e640-9fa8-4fb9-8138-ff93adeeaffd">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\Resources" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="ResourcesFolder" On="uninstall" />
                 <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Debug\Resources\Bild1.png" />
@@ -215,15 +214,15 @@
         <DirectoryRef Id="fontawesomeFolder">
             <Component Id="fontawesome" Guid="aeb0ac59-f987-4c15-9b68-5804fe183a02">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fontawesome" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="fontawesomeFolder" On="uninstall" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="cssFolder">
             <Component Id="css" Guid="f721da46-b608-4f90-a6d0-0ce09cb78169">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\css" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="cssFolder" On="uninstall" />
                 <File Id="FONT_AWESOME.MIN.CSS" Name="font-awesome.min.css" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -232,7 +231,7 @@
         <DirectoryRef Id="fontsFolder">
             <Component Id="fonts" Guid="6b487efd-8309-4267-b86c-c635d0f89e77">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fonts" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="fontsFolder" On="uninstall" />
                 <File Id="FONTAWESOME_WEBFONT.EOT" Name="fontawesome-webfont.eot" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
@@ -244,7 +243,7 @@
         <DirectoryRef Id="lessFolder">
             <Component Id="less" Guid="cdcfd42d-1246-4046-8759-d51bd8f09b61">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\less" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="lessFolder" On="uninstall" />
                 <File Id="ANIMATED.LESS" Name="animated.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\animated.less" />
@@ -266,7 +265,7 @@
         <DirectoryRef Id="scssFolder">
             <Component Id="scss" Guid="cbd31c38-5db1-45b5-b0e3-3e8e8e23eccc">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\scss" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes"/>
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="scssFolder" On="uninstall" />
                 <File Id="_ANIMATED.SCSS" Name="_animated.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_animated.scss" />
@@ -285,15 +284,32 @@
                 <File Id="FONT_AWESOME.SCSS" Name="font-awesome.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\font-awesome.scss" />
             </Component>
         </DirectoryRef>
+        <DirectoryRef Id="RobotoFolder">
+            <Component Id="Roboto" Guid="afcc24c9-408f-45aa-96ac-759c9011d13e">
+                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\Roboto" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
+                </RegistryKey>
+                <RemoveFolder Id="RobotoFolder" On="uninstall" />
+                <File Id="LICENSE.TXT" Name="LICENSE.txt" Source="..\bin\x64\Debug\Resources\Roboto\LICENSE.txt" />
+                <File Id="ROBOTO_BLACK.TTF" Name="Roboto-Black.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Black.ttf" />
+                <File Id="ROBOTO_BLACKITALIC.TTF" Name="Roboto-BlackItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-BlackItalic.ttf" />
+                <File Id="ROBOTO_BOLD.TTF" Name="Roboto-Bold.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Bold.ttf" />
+                <File Id="ROBOTO_BOLDITALIC.TTF" Name="Roboto-BoldItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-BoldItalic.ttf" />
+                <File Id="ROBOTO_ITALIC.TTF" Name="Roboto-Italic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Italic.ttf" />
+                <File Id="ROBOTO_LIGHT.TTF" Name="Roboto-Light.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Light.ttf" />
+                <File Id="ROBOTO_LIGHTITALIC.TTF" Name="Roboto-LightItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-LightItalic.ttf" />
+                <File Id="ROBOTO_MEDIUM.TTF" Name="Roboto-Medium.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Medium.ttf" />
+                <File Id="ROBOTO_MEDIUMITALIC.TTF" Name="Roboto-MediumItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-MediumItalic.ttf" />
+                <File Id="ROBOTO_REGULAR.TTF" Name="Roboto-Regular.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Regular.ttf" />
+                <File Id="ROBOTO_THIN.TTF" Name="Roboto-Thin.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Thin.ttf" />
+                <File Id="ROBOTO_THINITALIC.TTF" Name="Roboto-ThinItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-ThinItalic.ttf" />
+            </Component>
+        </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
             <Component Id="ApplicationPrograms" Guid="00f102a3-ff42-4227-b8eb-2ba678b3924c">
-                <Shortcut Id="ApplicationStartMenuShortcut" 
-                     Name="TimeTracker" 
-                   Description="TimeTracker"
-                    Target="[#TIMETRACKER.EXE]"
-                          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
-                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-                <RegistryValue Root="HKCU" Key="Software\TimeTracker\TimeTracker" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+                <Shortcut Id="ApplicationStartMenuShortcut" Name="TimeTracker" Description="TimeTracker" Target="[#TIMETRACKER.EXE]" WorkingDirectory="APPLICATIONROOTDIRECTORY" />
+                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+                <RegistryValue Root="HKCU" Key="Software\TimeTracker\TimeTracker" Name="installed" Type="integer" Value="1" KeyPath="yes" />
             </Component>
         </DirectoryRef>
         <Feature Id="MainApplication" Title="Main Application" Level="1">
@@ -308,6 +324,7 @@
             <ComponentRef Id="fonts" />
             <ComponentRef Id="less" />
             <ComponentRef Id="scss" />
+            <ComponentRef Id="Roboto" />
             <ComponentRef Id="ApplicationPrograms" />
         </Feature>
         <!-- Step 2: Add UI to your installer / Step 4: Trigger the custom action -->
