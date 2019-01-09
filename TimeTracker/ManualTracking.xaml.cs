@@ -35,24 +35,12 @@ namespace TimeTracker
             public string Visible { get; set; }
         }
 
-        public ManualTracking()
+        public ManualTracking(DateTime lastLocked)
         {
             InitializeComponent();
 
+            fromDate = lastLocked;
             toDate = DateTime.Now;
-
-            using (TextReader tr = new StreamReader(Variables.activityPath))
-            {
-                var csv = new CsvReader(tr);
-                var records = csv.GetRecords<Helper.Activity>();
-
-                Helper.Activity latest = records.OrderByDescending(r => r.To).FirstOrDefault();
-
-                if (latest != null)
-                    fromDate = (DateTime)latest.To;
-                else
-                    fromDate = DateTime.Now;
-            }
 
             Label.Content = "What were you doing since " + fromDate.ToShortTimeString() + "?";
             TimeElapsed.Content = (toDate - fromDate).ToString().Substring(0, 8);

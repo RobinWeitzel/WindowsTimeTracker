@@ -21,7 +21,7 @@ namespace TimeTracker.Helper
                 var csv = new CsvWriter(tw);
                 To = to ?? DateTime.Now;
 
-                if (From > To)
+                if (From > To || ((DateTime) To).Subtract(From).TotalSeconds < 30)
                     return;
 
                 csv.WriteRecord(this);

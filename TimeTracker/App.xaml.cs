@@ -211,12 +211,8 @@ namespace TimeTracker
             switch (e.Mode)
             {
                 case PowerModes.Resume:
-                    if(Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
-                    {
-                        new ManualTracking().Show();
-                        Variables.showAwayFromPcDialog = false;
-                    }
-                    if(hook == null)
+                    showAwayFromPcWindow();
+                    if (hook == null)
                     {
                         // Set up global hotkey
                         hook = new KeyboardHook();
@@ -225,7 +221,7 @@ namespace TimeTracker
                     pause(false);
                     break;
                 case PowerModes.Suspend:
-                    Variables.showAwayFromPcDialog = true;
+                    Variables.lastLocked = DateTime.Now;
                     pause(true);
                     if (hook != null)
                     {
@@ -243,7 +239,7 @@ namespace TimeTracker
             {
                 case SessionSwitchReason.SessionLock:
                     pause(true);
-                    Variables.showAwayFromPcDialog = true;
+                    Variables.lastLocked = DateTime.Now;
                     if (hook != null)
                     {
                         hook.Dispose();
@@ -252,7 +248,7 @@ namespace TimeTracker
                     break;
                 case SessionSwitchReason.SessionLogoff:
                     pause(true);
-                    Variables.showAwayFromPcDialog = true;
+                    Variables.lastLocked = DateTime.Now;
                     if (hook != null)
                     {
                         hook.Dispose();
@@ -260,11 +256,7 @@ namespace TimeTracker
                     }
                     break;
                 case SessionSwitchReason.SessionLogon:
-                    if (Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
-                    {
-                        new ManualTracking().Show();
-                        Variables.showAwayFromPcDialog = false;
-                    }
+                    showAwayFromPcWindow();
                     if (hook == null)
                     {
                         // Set up global hotkey
@@ -274,11 +266,7 @@ namespace TimeTracker
                     pause(false);
                     break;
                 case SessionSwitchReason.SessionUnlock:
-                    if (Settings.Default.OfflineTracking && Variables.showAwayFromPcDialog)
-                    {
-                        new ManualTracking().Show();
-                        Variables.showAwayFromPcDialog = false;
-                    }
+                    showAwayFromPcWindow();
                     if (hook == null)
                     {
                         // Set up global hotkey
@@ -287,6 +275,15 @@ namespace TimeTracker
                     }
                     pause(false);
                     break;
+            }
+        }
+
+        private void showAwayFromPcWindow()
+        {
+            if (Settings.Default.OfflineTracking && Variables.lastLocked != null)
+            {
+                new ManualTracking((DateTime) Variables.lastLocked).Show();
+                Variables.lastLocked = null;
             }
         }
 

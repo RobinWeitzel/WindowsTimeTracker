@@ -17,6 +17,6 @@ namespace TimeTracker
         public static Nullable<DateTime> lastConfirmed = null;
         public static Window currentWindow = null;
         public static Activity currentActivity = null;
-        public static bool showAwayFromPcDialog = false;
+        public static DateTime? lastLocked = null;
     }
 }
