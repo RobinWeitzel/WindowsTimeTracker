@@ -9,6 +9,11 @@
     <Grid>
         <Label Content="About" HorizontalAlignment="Left" Margin="31,1,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <Label Content="TimeTracker" HorizontalAlignment="Left" Margin="31,68,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock Margin="146,73,496,490" FontSize="20">           
+            <Hyperlink NavigateUri="https://github.com/RobinWeitzel/WindowsTimeTracker" RequestNavigate="Hyperlink_RequestNavigate">
+                (Github)
+            </Hyperlink>
+        </TextBlock>
         <Label Name="Version" Content="Version" HorizontalAlignment="Left" Margin="31,120,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Label Content="Libraries used in this project:" HorizontalAlignment="Left" Margin="31,189,0,0" VerticalAlignment="Top" FontSize="20"/>
         <ListView Name="Libraries" HorizontalAlignment="Left" Height="314" Margin="31,226,0,0" VerticalAlignment="Top" Width="712" SelectionMode="Single" SelectionChanged="Libraries_SelectionChanged">
@@ -29,5 +34,6 @@
         </TextBlock>
         <Label Content="Author: Robin Weitzel" HorizontalAlignment="Left" Margin="31,93,0,0" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.513,0.989"/>
         <Label Content="Thanks to all the amazing people creating open source libraries making projects like this possible!" HorizontalAlignment="Left" Margin="31,545,0,0" VerticalAlignment="Top" FontSize="16"/>
+
     </Grid>
 </UserControl>
