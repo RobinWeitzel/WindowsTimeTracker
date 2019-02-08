@@ -167,11 +167,17 @@ namespace TimeTracker
             this.Shutdown(1);
         }
 
-        private void CloseAllToasts()
+        private bool CloseAllToasts()
         {
+            bool toastAlreadySelected = false;
             for (int intCounter = App.Current.Windows.Count - 1; intCounter > 0; intCounter--)
-                if(App.Current.Windows[intCounter].GetType().Name.Equals("CustomToast"))
-                    App.Current.Windows[intCounter].Close();
+                if (App.Current.Windows[intCounter].GetType().Name.Equals("CustomToast"))
+                    if (App.Current.Windows[intCounter].IsActive)
+                        toastAlreadySelected = true;
+                    else
+                        App.Current.Windows[intCounter].Close();
+
+            return toastAlreadySelected;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
@@ -499,12 +505,13 @@ namespace TimeTracker
         {
             try
             {
-                CloseAllToasts();
-
-                CustomToast newToast = new CustomToast(focusToast);
-                newToast.Show();
-                if (focusToast)
-                    newToast.Activate();
+                if(!CloseAllToasts())
+                {
+                    CustomToast newToast = new CustomToast(focusToast);
+                    newToast.Show();
+                    if (focusToast)
+                        newToast.Activate();
+                }
             }
             catch (Exception ignore) {
             }
