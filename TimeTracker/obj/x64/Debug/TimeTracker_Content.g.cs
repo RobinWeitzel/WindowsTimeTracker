@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/bootstrap.min.css")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-black.ttf")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-blackitalic.ttf")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/roboto/roboto-bold.ttf")]

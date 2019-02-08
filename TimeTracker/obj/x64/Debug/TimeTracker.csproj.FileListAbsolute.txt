@@ -275,3 +275,4 @@ C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resourc
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\Roboto-ThinItalic.ttf
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\Roboto\LICENSE.txt
 C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\DataView.html
+C:\Users\Robin\source\repos\WindowsTimeTracker\TimeTracker\bin\x64\Debug\Resources\bootstrap.min.css

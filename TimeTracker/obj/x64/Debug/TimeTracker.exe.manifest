@@ -295,24 +295,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="606176">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimeTracker.exe" size="605664">
       <assemblyIdentity name="TimeTracker" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+HxU731/WWdAtAwjIHBp3EhJkjKwNs2tH0QqP12gtpU=</dsig:DigestValue>
+        <dsig:DigestValue>R3hn3JSmYKgw/Ekp1n98ompGd8mBMPBXwv3LvU7+bTg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DataView.html" size="22804">
+  <file name="DataView.html" size="23732">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>iKCy9sDvMC2EysRU62mH+bhmTfLdp4CeeX0vRGzoD3E=</dsig:DigestValue>
+      <dsig:DigestValue>K+D+uiR6OHcShPrpfZyrU3nqqMXPwOMRzkUEqN58dq0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MyIcon.ico" size="47372">
@@ -358,6 +358,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>cWmrLoHkXM7GsucPWx7WSND/aE7VdSj9AAwUSN3/s7Y=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\bootstrap.min.css" size="153182">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>azvvU9xKluwHFJ0Cpgtf0CYzK7zgtOznnzxV4924X1w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\Chart.bundle.min.js" size="210419">
