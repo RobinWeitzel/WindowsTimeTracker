@@ -3,6 +3,7 @@ using CefSharp.Wpf;
 using CsvHelper;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -53,7 +54,7 @@ namespace TimeTracker
                 cefSettings.IgnoreCertificateErrors = true;
                 Cef.Initialize(cefSettings);
             }
-
+            
             WebBrowser.Address = String.Format("file:///{0}DataView.html", curDir);
             WebBrowser.JavascriptObjectRepository.Register("boundAsync", new MyScriptingClass(), true);
         }
@@ -81,6 +82,12 @@ namespace TimeTracker
             {
                 public string name { get; set; }
                 public double value { get; set; }
+            }
+
+            public class Helper3
+            {
+                public string date { get; set; }
+                public double timeSpent { get; set; }
             }
 
             public string getOverviewData(int value)
@@ -197,21 +204,113 @@ namespace TimeTracker
                 return result;
             }
 
-            //public string getDetailsData1(string name, DateTime start, DateTime end)
-            //{
-            //    string result = "{";
+            private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+            {
+                for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                    yield return day;
+            }
 
-            //    using (TextReader tr = new StreamReader(Variables.activityPath))
-            //    {
-            //        var csv = new CsvReader(tr);
-            //        IEnumerable<TimeTracker.Helper.Activity> records = csv.GetRecords<TimeTracker.Helper.Activity>();
-            //        List<TimeTracker.Helper.Activity> list = records.Where(r => r.Name.StartsWith(name) && r.To >= start && )
-            //        List<string> list = records.GroupBy(r => r.Name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => "\"" + g.Key + "\"").ToList();
+            public string getDetailsData1(string name, string startString, string endString)
+            {
+                string result = "{";
+                DateTime start = DateTime.Parse(startString, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                DateTime end = DateTime.Parse(endString, null, System.Globalization.DateTimeStyles.RoundtripKind);
 
-            //        result += "\"activities\":[" + string.Join(",", list) + "]}";
-            //        return result;
-            //    }
-            //}
+                using (TextReader tr = new StreamReader(Variables.activityPath))
+                {
+                    var csv = new CsvReader(tr);
+                    IEnumerable<TimeTracker.Helper.Activity> records = csv.GetRecords<TimeTracker.Helper.Activity>();
+                    List<TimeTracker.Helper.Activity> allActivities = records.Where(r => r.To >= start && r.From <= end).ToList();
+
+                    List<Helper> list = new List<Helper>();
+
+                    foreach(var day in EachDay(start, end))
+                    {
+                        foreach(TimeTracker.Helper.Activity r in allActivities.Where(r => r.To >= day && r.From < day.AddDays(1))) {
+                            list.Add(new Helper
+                            {
+                                name = r.Name,
+                                from = r.From > day ? r.From : day, // If my window started before the start of the activity only measure from the beginning of the activity
+                                to = (DateTime)(r.To > day.AddDays(1) ? day.AddDays(1) : r.To) // If my window ended after the end of the activity only measure until the end of the activity
+                            });
+                        }
+                    }
+
+                    foreach (Helper h in list)
+                    {
+                        h.time = Math.Max((h.to - h.from).TotalHours, 0);
+                    }
+ 
+                    List<Helper> filteredList = list.Where(h => h.name.Contains(name)).ToList();
+                    List<Helper2> filteredNameGroupedList;
+                    if (filteredList.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Count() == 1) // all activities belong to the same group
+                    {
+                        filteredNameGroupedList = filteredList.GroupBy(h => h.name).Select(g => new Helper2
+                        {
+                            name = g.Key,
+                            value = g.Sum(h => h.time)
+                        }).ToList();
+                    } else
+                    {
+                        filteredNameGroupedList = filteredList.GroupBy(h => h.name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => new Helper2
+                        {
+                            name = g.Key,
+                            value = g.Sum(h => h.time)
+                        }).ToList();
+                    }
+                    
+                    List<Helper3> filteredDayGroupedList = filteredList.GroupBy(h => h.from.ToString("dd'.'MM'.'yyyy", CultureInfo.InvariantCulture)).Select(g => new Helper3
+                    {
+                        date = g.Key,
+                        timeSpent = g.Sum(h => h.time)
+                    }).ToList();
+
+                    //double absoluteAveragePerDay = list.GroupBy(h => h.from.DayOfYear).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / (end - start).TotalDays;
+                    //double filteredAbsoluteAveragePerDay = filteredList.GroupBy(h => h.from.DayOfYear).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / (end - start).TotalDays;
+                    //double relativeAveragePerDay = absoluteAveragePerDay == 0 ? 0 : filteredAbsoluteAveragePerDay / absoluteAveragePerDay;
+
+                    //double absoluteAveragePerWeek = list.GroupBy(h => Math.Ceiling(h.from.DayOfYear / 7.0)).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / Math.Ceiling((end - start).TotalDays / 7);
+                    //double filteredAbsoluteAveragePerWeek = filteredList.GroupBy(h => Math.Ceiling(h.from.DayOfYear / 7.0)).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / Math.Ceiling((end - start).TotalDays / 7);
+                    //double relativeAveragePerWeek = absoluteAveragePerWeek == 0 ? 0 : filteredAbsoluteAveragePerWeek / absoluteAveragePerWeek;
+
+                    //double absoluteAveragePerMonth = list.GroupBy(h => h.from.Month).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / (end.Month - start.Month + 1);
+                    //double filteredAbsoluteAveragePerMonth = filteredList.GroupBy(h => h.from.Month).Aggregate(0.0, (acc, g) => acc + g.Sum(h => h.time)) / (end.Month - start.Month + 1);
+                    //double relativeAveragePerMonth = absoluteAveragePerMonth == 0 ? 0 : filteredAbsoluteAveragePerMonth / absoluteAveragePerMonth;
+
+                    double absoluteAverageTotal = list.Sum(h => h.time);
+                    double filteredAbsoluteAverageTotal = filteredList.Sum(h => h.time);
+                    double relativeAverageTotal = absoluteAverageTotal == 0 ? 0 : filteredAbsoluteAverageTotal / absoluteAverageTotal;
+
+                    double absoluteAveragePerDay = absoluteAverageTotal / (end - start).TotalDays;
+                    double filteredAbsoluteAveragePerDay = filteredAbsoluteAverageTotal / (end - start).TotalDays;
+                    double relativeAveragePerDay = absoluteAveragePerDay == 0 ? 0 : filteredAbsoluteAveragePerDay / absoluteAveragePerDay;
+
+                    double absoluteAveragePerWeek = absoluteAverageTotal / Math.Ceiling((end - start).TotalDays / 7);
+                    double filteredAbsoluteAveragePerWeek = filteredAbsoluteAverageTotal / Math.Ceiling((end - start).TotalDays / 7);
+                    double relativeAveragePerWeek = absoluteAveragePerWeek == 0 ? 0 : filteredAbsoluteAveragePerWeek / absoluteAveragePerWeek;
+
+                    double absoluteAveragePerMonth = absoluteAverageTotal / ((end.Year - start.Year) * 12 + end.Month - start.Month + 1);
+                    double filteredAbsoluteAveragePerMonth = filteredAbsoluteAverageTotal / ((end.Year - start.Year) * 12 + end.Month - start.Month + 1);
+                    double relativeAveragePerMonth = absoluteAveragePerMonth == 0 ? 0 : filteredAbsoluteAveragePerMonth / absoluteAveragePerMonth;
+
+                    result += "\"filteredAbsoluteAveragePerDay\":" + filteredAbsoluteAveragePerDay.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+                    result += "\"relativeAveragePerDay\":" + relativeAveragePerDay.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+
+                    result += "\"filteredAbsoluteAveragePerWeek\":" + filteredAbsoluteAveragePerWeek.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+                    result += "\"relativeAveragePerWeek\":" + relativeAveragePerWeek.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+
+                    result += "\"filteredAbsoluteAveragePerMonth\":" + filteredAbsoluteAveragePerMonth.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+                    result += "\"relativeAveragePerMonth\":" + relativeAveragePerMonth.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+
+                    result += "\"filteredAbsoluteAverageTotal\":" + filteredAbsoluteAverageTotal.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+                    result += "\"relativeAverageTotal\":" + relativeAverageTotal.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + ",";
+
+                    result += "\"filteredDayGroupedList\":" + customJSONSerializer<Helper3>(filteredDayGroupedList) + ",";
+
+                    result += "\"filteredNameGroupedList\":" + customJSONSerializer<Helper2>(filteredNameGroupedList) + "}";
+                    return result;
+                }
+            }
         }
 
         public static bool IsNumericType(object o)

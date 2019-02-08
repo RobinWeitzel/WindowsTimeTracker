@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" href="./Resources/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./Resources/Roboto/Roboto-Regular.ttf">
     <link rel="stylesheet" href="./Resources/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./Resources/daterangepicker.css" />
+
 
     <style>
         body {
@@ -64,8 +65,6 @@
 
         #day-breakdown-summary {
             margin-left: 70px;
-            max-height: 90px;
-            overflow-y: auto;
         }
 
         .menu {
@@ -91,22 +90,173 @@
                 background-color: rgba(241, 241, 241, 0.5);
             }
 
-        .active {
-            background-color: #f1f1f1;
-        }
+            .menu-item.active {
+                background-color: #f1f1f1;
+            }
 
         .custom-container {
             padding-top: 10px;
             padding-bottom: 10px;
+        }
+
+        select {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        circle {
+            fill: white;
+            stroke: black;
+            stroke-width: 2;
+            stroke-dasharray: 250;
+            stroke-dashoffset: 100%;
+            animation: rotate 5s linear infinite;
+        }
+
+        svg {
+            height: 220px;
+            width: 260px;
+            cursor: default;
+        }
+
+        #details-calendar svg {
+            height: 40px;
+            width: 40px;
+            cursor: default;
+        }
+
+        line {
+            stroke: gray;
+            stroke-width: 1;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .horizontal-text {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        #details-calendar {
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
+            height: 320px;
+            margin-top: 10px;
+        }
+
+        .custom-month {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        #details-calendar .custom-month {
+            display: none;
+        }
+
+            #details-calendar .custom-month.active {
+                display: flex;
+            }
+
+        .monthHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .custom-month:first-child .fa-chevron-left, .custom-month:last-child .fa-chevron-right {
+            color: white;
+            cursor: default;
+        }
+
+        .custom-month tr {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .custom-month th {
+            width: 44px;
+            text-align: center;
+        }
+
+        .custom-month td {
+            height: 44px;
+            width: 44px;
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .custom-tooltip {
+            position: relative;
+        }
+
+            .custom-tooltip .custom-tooltiptext {
+                visibility: hidden;
+                width: 80px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 115%;
+                left: 50%;
+                margin-left: -40px;
+            }
+
+                .custom-tooltip .custom-tooltiptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: black transparent transparent transparent;
+                }
+
+            .custom-tooltip:hover .custom-tooltiptext {
+                visibility: visible;
+            }
+
+        .time-spent-box {
+            text-align: center;
+        }
+
+            .time-spent-box svg {
+                height: 120px;
+                width: 240px;
+                cursor: default;
+            }
+
+        #time-total svg {
+            width: 300px;
+            height: 140px;
         }
     </style>
     <title></title>
 </head>
 <body>
     <div class="menu">
-        <div class="menu-item active" id="overview-menu" onclick="changeWindow(0);"><h3>Overview</h3></div>
-        <div class="menu-item" id="details-menu" onclick="changeWindow(1);"><h3>Reports</h3></div>
-        <div class="menu-item" id="calendar-menu" onclick="changeWindow(2);"><h3>Calendar</h3></div>
+        <div class="menu-item active" id="overview-menu" onclick="changeWindow(0);">
+            <h3>Overview</h3>
+        </div>
+        <div class="menu-item" id="details-menu" onclick="changeWindow(1);">
+            <h3>Reports</h3>
+        </div>
+        <div class="menu-item" id="calendar-menu" onclick="changeWindow(2);">
+            <h3>Calendar</h3>
+        </div>
     </div>
     <div class="custom-container" id="overview">
         <div class="custom-panel" style="width: 1180px; display: flex; justify-content: center; margin-top: 0px;">
@@ -133,27 +283,67 @@
         </div>
     </div>
     <div class="custom-container" id="details" style="display: none;">
-        <div class="custom-panel" style="width: 1180px; display: flex; justify-content: center; margin-top: 0px;">
-            <h3>
-                <select id="time-select">
-                    <option>This weeks</option>
-                    <option>Last weeks</option>
-                    <option>This months</option>
-                    <option>Last weeks</option>
-                </select>
-                <span> report for </span>
-                <select id="activities-select"></select>
-            </h3>
+        <div class="custom-panel" style="width: 1180px; margin-top: 0px;">
+            <h3>Activities</h3>
+            <div style="display: flex;">
+                <input placeholder="Activity Name" id="activity-filter" type="text" class="form-control" style="width: 300px; margin-right: 25px;" />
 
+                <div class="input-group" style="width: 350px;">
+                    <input placeholder="Date Range" id="date-filter" name="datefilter" type="text" class="form-control" />
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">Date Range</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-row">
+            <div class="custom-panel" style="width: 430px; height: 200px; margin-bottom: 0px;">
+                <h3 style="margin-bottom: 10px;">Total Time Spent</h3>
+                <div id="time-total" class="time-spent-box">
+                </div>
+            </div>
+            <div class="custom-panel" style="width: 250px; height: 200px; margin-bottom: 0px;">
+                <h3 style="margin-bottom: 10px;">Time per Month</h3>
+                <div id="time-per-month" class="time-spent-box">
+                </div>   
+            </div>
+            <div class="custom-panel" style="width: 250px; height: 200px; margin-bottom: 0px;">
+                <h3 style="margin-bottom: 10px;">Total per Week</h3>
+                <div id="time-per-week" class="time-spent-box">
+                </div>
+            </div>
+            <div class="custom-panel" style="width: 250px; height: 200px; margin-bottom: 0px;">
+                <h3 style="margin-bottom: 10px;">Total per Day</h3>
+                <div id="time-per-day" class="time-spent-box">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-row" style="margin-top:20px;">
+            <div class="custom-panel" style="width: 651px; margin-bottom: 0px;">
+                <h3>Total per Activity</h3>
+                <canvas id="report-total-time"></canvas>
+            </div>
+            <div class="custom-panel" style="width: 529px; margin-bottom: 0px; padding-right: 0px;">
+                <h3>Time per Day</h3>
+                <div id="details-calendar">
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="custom-container" id="calendar" style="display: none;">
-        calendar
+        Coming in future version.
     </div>
     <script src="./Resources/Chart.bundle.min.js"></script>
     <script src="./Resources/chartjs-plugin-datalabels.min.js"></script>
     <script src="./Resources/hammer.min.js"></script>
     <script src="./Resources/chartjs-plugin-zoom.js"></script>
+    <script type="text/javascript" src="./Resources/jquery.min.js"></script>
+    <script type="text/javascript" src="./Resources/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.1/moment-range.js"></script>
+    <script type="text/javascript" src="./Resources/daterangepicker.js"></script>
     <script>
         var backgroundColor = [
             '#0074D9',
@@ -181,6 +371,20 @@
             return new Date(d.setDate(diff));
         }
 
+        function formatTime(totlaHours) {
+            var hours = 0;
+            var minutes = 0;
+
+            while (totlaHours >= 1) {
+                hours++;
+                totlaHours--;
+            }
+
+            minutes = Math.round(60 * totlaHours);
+
+            return hours + "h " + minutes + "m";
+        }
+
         function getDateString(d) {
             return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
         }
@@ -204,6 +408,7 @@
 
                     document.querySelector('.active').classList.remove('active');
                     document.getElementById('details-menu').classList.add('active');
+                    update2($('#date-filter').data('daterangepicker').startDate, $('#date-filter').data('daterangepicker').endDate);
                     break;
                 case 2:
                     document.getElementById('overview').style.display = 'none';
@@ -247,6 +452,50 @@
                 drawSummary();
                 myDoughnutChart.update();
                 myBarChart.update();
+            });
+        }
+
+        async function update2(start, end) {
+            var name = $('#activity-filter').val();
+            var startString = start.toISOString();
+            var endString = end.toISOString();
+
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.getDetailsData1(name, startString, endString).then(function (result) {
+                var resultParsed = JSON.parse(result);
+
+                $('#time-total').empty();
+                document.getElementById('time-total').appendChild(createSVG2(resultParsed.relativeAverageTotal, formatTime(resultParsed.filteredAbsoluteAverageTotal), true));
+
+                $('#time-per-month').empty();
+                document.getElementById('time-per-month').appendChild(createSVG2(resultParsed.relativeAveragePerMonth, formatTime(resultParsed.filteredAbsoluteAveragePerMonth)));
+
+                $('#time-per-week').empty();
+                document.getElementById('time-per-week').appendChild(createSVG2(resultParsed.relativeAveragePerWeek, formatTime(resultParsed.filteredAbsoluteAveragePerWeek)));
+
+                $('#time-per-day').empty();
+                document.getElementById('time-per-day').appendChild(createSVG2(resultParsed.relativeAveragePerDay, formatTime(resultParsed.filteredAbsoluteAveragePerDay)));
+
+                myBarChart2.data = prepareActivities2(resultParsed.filteredNameGroupedList);
+                if (resultParsed.filteredNameGroupedList.length > 5)
+                    myBarChart2.options.scales.xAxes[0].display = false;
+                else
+                    myBarChart2.options.scales.xAxes[0].display = true;
+                myBarChart2.options.scales.yAxes[0].ticks.max = resultParsed.filteredNameGroupedList.reduce((p, c) => p = Math.max(c.value, p), 0) * 1.15;
+                myBarChart2.update();
+
+                var div = document.getElementById('details-calendar');
+                while (div.firstChild) {
+                    div.removeChild(div.firstChild);
+                }
+
+                const range = moment.range(start, end);
+
+                for (let month of range.by('months')) {
+                    document.getElementById('details-calendar').appendChild(createMonth(month, resultParsed.filteredDayGroupedList, month.isSame(start)));
+                }
             });
         }
 
@@ -427,20 +676,6 @@
             }
         });
 
-        function formatTime(totlaHours) {
-            var hours = 0;
-            var minutes = 0;
-
-            while (totlaHours >= 1) {
-                hours++;
-                totlaHours--;
-            }
-
-            minutes = Math.round(60 * totlaHours);
-
-            return hours + "h " + minutes + "m";
-        }
-
         function drawSummary() {
             var result = {};
 
@@ -462,8 +697,6 @@
             document.getElementById("day-breakdown-summary").innerHTML = innerHTML;
         }
 
-        drawSummary();
-
         function prepareActivities() {
             var result = {};
             var colorPosition = [];
@@ -479,6 +712,26 @@
                 result["labels"].push(data3[i].name);
                 result["datasets"][0]["data"].push(data3[i].value);
                 result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data3[i].name) < 0 ? colorPosition.push(data3[i].name) - 1 : colorPosition.indexOf(data3[i].name)]);
+            }
+
+            return result;
+        }
+
+        function prepareActivities2(data) {
+            var result = {};
+            var colorPosition = [];
+
+            result["labels"] = [];
+            result["datasets"] = [{
+                data: [],
+                backgroundColor: [],
+                label: "Dataset 1"
+            }];
+
+            for (var i = 0; i < data.length; i++) {
+                result["labels"].push(data[i].name);
+                result["datasets"][0]["data"].push(data[i].value);
+                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data[i].name) < 0 ? colorPosition.push(data[i].name) - 1 : colorPosition.indexOf(data[i].name)]);
             }
 
             return result;
@@ -634,6 +887,473 @@
                 document.getElementById('activities-select').innerHTML = html;
             });
         }
+
+        window['moment-range'].extendMoment(moment);
+        $(function () {
+            $('#date-filter').daterangepicker({
+                locale: {
+                    "format": "DD.MM.YYYY",
+                    "separator": " - "
+                },
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, datepicked);
+        });
+
+        $('#activity-filter').on('input', e => {
+            update2($('#date-filter').data('daterangepicker').startDate, $('#date-filter').data('daterangepicker').endDate);
+        });
+
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        function createArc(x, y, radius, startAngle, endAngle) {
+
+            var start = polarToCartesian(x, y, radius, endAngle);
+            var end = polarToCartesian(x, y, radius, startAngle);
+
+            var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+            var d = [
+                "M", start.x, start.y,
+                "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+            ].join(" ");
+
+            var arc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+            arc.setAttributeNS(null, 'fill', 'none');
+            arc.setAttributeNS(null, 'stroke', '#446688');
+            arc.setAttributeNS(null, 'stroke-width', '5');
+            arc.setAttributeNS(null, 'd', d);
+
+            return arc;
+        }
+
+        function createText(content) {
+            var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+            if (content.length === 1) {
+                text.setAttributeNS(null, 'x', '16');
+            } else {
+                text.setAttributeNS(null, 'x', '12');
+            }
+
+            text.setAttributeNS(null, 'y', '26');
+            text.appendChild(document.createTextNode(content));
+
+            return text;
+        }
+
+        function createSVG(date, degrees) {
+            var day = date.date();
+
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+            var radius = 15;
+
+            while (degrees > 1) {
+                svg.appendChild(createArc(20, 20, radius, 0, 359));
+                degrees--;
+                radius -= 6;
+            }
+
+            svg.appendChild(createArc(20, 20, radius, 0, degrees * 359));
+            svg.appendChild(createText(day.toString()));
+
+            return svg;
+        }
+
+        function createDay(date, timeSpent) {
+            var degrees = timeSpent / 12;
+
+            return createSVG(date, degrees);
+        }
+
+        function createTableHeader() {
+            var head = document.createElement('thead');
+            var tr = document.createElement('tr');
+
+            var th = document.createElement('th');
+            th.appendChild(document.createTextNode('M'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('T'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('W'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('T'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('F'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('S'));
+            tr.appendChild(th);
+
+            th = document.createElement('th');
+            th.appendChild(document.createTextNode('S'));
+            tr.appendChild(th);
+
+            head.appendChild(tr);
+
+            return head;
+        }
+
+        function prevMonth() {
+            var current = document.querySelector('.custom-month.active');
+            var prev = current.previousSibling;
+
+            if (!prev)
+                return;
+
+            current.classList.remove('active');
+            prev.classList.add('active');
+        }
+
+        function nextMonth() {
+            var current = document.querySelector('.custom-month.active');
+            var next = current.nextSibling;
+
+            if (!next)
+                return;
+
+            current.classList.remove('active');
+            next.classList.add('active');
+        }
+
+        function createMonth(monthDate, data, header) {
+            var month = document.createElement('div');
+            month.classList.add('custom-month');
+
+            if (header)
+                month.classList.add('active');
+
+            var monthHeader = document.createElement('div');
+            monthHeader.classList.add('monthHeader');
+
+            var left = document.createElement('i');
+            left.classList.add('fa');
+            left.classList.add('fa-chevron-left');
+
+            left.addEventListener('click', function (e) {
+                prevMonth();
+            });
+
+            var monthName = document.createElement('div');
+            monthName.appendChild(document.createTextNode(monthDate.format('MMMM')));
+
+            var right = document.createElement('i');
+            right.classList.add('fa');
+            right.classList.add('fa-chevron-right');
+
+            right.addEventListener('click', function (e) {
+                nextMonth();
+            });
+
+            monthHeader.appendChild(left);
+            monthHeader.appendChild(monthName);
+            monthHeader.appendChild(right);
+
+            var table = document.createElement('table');
+            table.appendChild(createTableHeader());
+
+            var tableBody = document.createElement('tbody');
+
+            var counter = 0;
+            var counter2 = 0;
+            var firstDay = moment(monthDate).startOf('month');
+            var lastDay = moment(monthDate).endOf('month');
+
+            var startDay = firstDay.day();
+            var daysInMonth = monthDate.daysInMonth();
+            var weeks = Math.ceil((startDay + daysInMonth) / 7);
+
+            var range = moment.range(firstDay, lastDay);
+
+            var days = Array.from(range.by('days'));
+
+            var tr = document.createElement('tr');
+            tableBody.appendChild(tr);
+
+            for (var i = 0; i < firstDay.day(); i++) {
+                var td = document.createElement('td');
+                tr.appendChild(td);
+            }
+
+            for (let day of days) {
+                if (tr.childElementCount === 7) {
+                    tr = document.createElement('tr');
+                    tableBody.appendChild(tr);
+                }
+
+                var td = document.createElement('td');
+
+                if (tr.childElementCount === day.day()) {
+                    var timeSpent = 0;
+
+                    while (counter < data.length && moment(data[counter].date, 'DD.MM.YYYY').isBefore(day)) {
+                        counter++;
+                    }
+
+                    if (counter < data.length && moment(data[counter].date, "DD.MM.YYYY").isSame(day)) {
+                        timeSpent = data[counter].timeSpent;
+
+                        var span = document.createElement('span');
+                        span.appendChild(document.createTextNode(day.format("DD.MM.YY")));
+                        span.appendChild(document.createElement('br'));
+                        span.appendChild(document.createTextNode(formatTime(timeSpent)));
+                        span.classList.add('custom-tooltiptext');
+
+                        td.classList.add('custom-tooltip');
+                        td.appendChild(span);
+
+                        counter++;
+                    }
+
+                    td.appendChild(createDay(day, timeSpent));
+
+                    if (day.day() >= 6) {
+                        td.classList.add('holiday');
+                    }
+                }
+
+                tr.appendChild(td);
+            }
+
+            table.appendChild(tableBody);
+            month.appendChild(monthHeader);
+            month.appendChild(table);
+
+            return month;
+        }
+
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        function datepicked(start, end, label) {
+            update2(start, end);
+        }
+
+        function createLine() {
+            var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
+            line.setAttributeNS(null, 'x1', '200');
+            line.setAttributeNS(null, 'y1', '40');
+            line.setAttributeNS(null, 'x2', '60');
+            line.setAttributeNS(null, 'y2', '180');
+
+            return line;
+        }
+
+        function createText2(svg, content, pos) {
+            var label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+            if (pos === 1) {
+                label.setAttributeNS(null, 'x', '10');
+                label.setAttributeNS(null, 'y', '50');
+                label.appendChild(document.createTextNode("absolute"));
+                label.style.fill = "red";
+                label.style.fontSize = "15pt";
+
+
+                text.setAttributeNS(null, 'x', '10');
+                text.setAttributeNS(null, 'y', '90');
+                text.style.fontSize = "25pt";
+                text.style.fill = "red";
+                text.appendChild(document.createTextNode(content));
+            } else {
+                label.setAttributeNS(null, 'x', '140');
+                label.setAttributeNS(null, 'y', '180');
+                label.appendChild(document.createTextNode("relative"));
+                label.style.fill = "green";
+                label.style.fontSize = "15pt";
+
+
+                text.setAttributeNS(null, 'x', '140');
+                text.setAttributeNS(null, 'y', '155');
+                text.style.fontSize = "25pt";
+                text.style.fill = "green";
+                text.appendChild(document.createTextNode(content));
+            }
+
+            svg.appendChild(label);
+            svg.appendChild(text);
+        }
+
+        function timeSpentText(containerName) {
+
+            var container = document.getElementById(containerName);
+
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+            svg.appendChild(createLine());
+
+            createText2(svg, "14h 35m", 1);
+            createText2(svg, "45%", 2);
+
+            container.appendChild(svg);
+        }
+
+        function createArc2(x, y, radius, startAngle, endAngle, color) {
+
+            var start = polarToCartesian(x, y, radius, endAngle);
+            var end = polarToCartesian(x, y, radius, startAngle);
+
+            var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+            var d = [
+                "M", start.x, start.y,
+                "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+            ].join(" ");
+
+            var arc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+            arc.setAttributeNS(null, 'fill', 'none');
+            arc.setAttributeNS(null, 'stroke', color);
+            arc.setAttributeNS(null, 'stroke-width', '15');
+            arc.setAttributeNS(null, 'd', d);
+
+            return arc;
+        }
+
+        function createSVG2(percentage, content, showPercentage) {
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+
+            var degrees = percentage / 2 * 360;
+
+            var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+            if (showPercentage) {
+                var radius = 110;
+                svg.appendChild(createArc2(145, 120, radius, 270, degrees - 90, '#446688'));
+                svg.appendChild(createArc2(145, 120, radius, 270 + degrees, 90, 'lightgray'));
+
+                switch (content.length) {
+                    case 5:
+                        text.setAttributeNS(null, 'x', '95');
+                        break;
+                    case 6:
+                        text.setAttributeNS(null, 'x', '85');
+                        break;
+                    default:
+                        text.setAttributeNS(null, 'x', '70');
+                        break;
+                }
+            } else {
+                var radius = 100;
+                svg.appendChild(createArc2(115, 120, radius, 270, degrees - 90, '#446688'));
+                svg.appendChild(createArc2(115, 120, radius, 270 + degrees, 90, 'lightgray'));
+
+                switch (content.length) {
+                    case 5:
+                        text.setAttributeNS(null, 'x', '65');
+                        break;
+                    case 6:
+                        text.setAttributeNS(null, 'x', '55');
+                        break;
+                    default:
+                        text.setAttributeNS(null, 'x', '40');
+                        break;
+                }
+            }
+
+            text.setAttributeNS(null, 'y', '110');
+
+            text.style.fontSize = "28pt";
+
+            text.appendChild(document.createTextNode(content));
+
+            svg.appendChild(text);
+
+            if (showPercentage) {
+                var text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text2.setAttributeNS(null, 'x', '5');
+                text2.setAttributeNS(null, 'y', '120');
+                text2.appendChild(document.createTextNode("0%"));
+                text2.style.fontSize = "10pt";
+                svg.appendChild(text2);
+
+                var text3 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text3.setAttributeNS(null, 'x', '265');
+                text3.setAttributeNS(null, 'y', '120');
+                text3.appendChild(document.createTextNode("100%"));
+                text3.style.fontSize = "10pt";
+                svg.appendChild(text3);
+            }
+
+
+            return svg;
+        }
+
+        ctx = document.getElementById("report-total-time").getContext('2d');
+
+        var myBarChart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {},
+            options: {
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index];
+
+                            label += " (" + formatTime(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]) + ")";
+                            return label;
+                        }
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        formatter: function (value, context) {
+                            return formatTime(value);
+                        }
+                    }
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        });
 
         update(0);
         populateSelect();
