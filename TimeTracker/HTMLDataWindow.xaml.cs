@@ -197,20 +197,21 @@ namespace TimeTracker
                 return result;
             }
 
-            public string getDetailsData1()
-            {
-                string result = "{";
+            //public string getDetailsData1(string name, DateTime start, DateTime end)
+            //{
+            //    string result = "{";
 
-                using (TextReader tr = new StreamReader(Variables.activityPath))
-                {
-                    var csv = new CsvReader(tr);
-                    IEnumerable<TimeTracker.Helper.Activity> records = csv.GetRecords<TimeTracker.Helper.Activity>();
-                    List<string> list = records.GroupBy(r => r.Name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => "\"" + g.Key + "\"").ToList();
+            //    using (TextReader tr = new StreamReader(Variables.activityPath))
+            //    {
+            //        var csv = new CsvReader(tr);
+            //        IEnumerable<TimeTracker.Helper.Activity> records = csv.GetRecords<TimeTracker.Helper.Activity>();
+            //        List<TimeTracker.Helper.Activity> list = records.Where(r => r.Name.StartsWith(name) && r.To >= start && )
+            //        List<string> list = records.GroupBy(r => r.Name.Split(new string[] { " - " }, StringSplitOptions.None).First()).Select(g => "\"" + g.Key + "\"").ToList();
 
-                    result += "\"activities\":[" + string.Join(",", list) + "]}";
-                    return result;
-                }
-            }
+            //        result += "\"activities\":[" + string.Join(",", list) + "]}";
+            //        return result;
+            //    }
+            //}
         }
 
         public static bool IsNumericType(object o)

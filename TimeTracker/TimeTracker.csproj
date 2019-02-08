@@ -300,6 +300,9 @@
     <None Include="Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Resources\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Roboto\Roboto-Black.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

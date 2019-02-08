@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="Data - TimeTracker" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <Grid>
-        <cefSharp:ChromiumWebBrowser Height="815" Width="1200" x:Name="WebBrowser" Grid.Row="0" />
+        <cefSharp:ChromiumWebBrowser Height="840" Width="1200" x:Name="WebBrowser" Grid.Row="0" />
     </Grid>
 </Window>
