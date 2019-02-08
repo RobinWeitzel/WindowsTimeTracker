@@ -124,7 +124,7 @@ namespace TimeTracker
 
             if(cancelClose.Count() == 0 || cancelClose.Pop() != true)
             {
-                setNewActivity(defaultName);
+                setNewActivity(ComboBox.Text);
             }
         }
 
