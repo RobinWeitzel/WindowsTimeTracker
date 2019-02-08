@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.5" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
+    <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.6" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
         <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
         <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
@@ -209,6 +209,11 @@
                 <File Id="CHARTJS_PLUGIN_ZOOM.JS" Name="chartjs-plugin-zoom.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-zoom.js" />
                 <File Id="HAMMER.MIN.JS" Name="hammer.min.js" Source="..\bin\x64\Debug\Resources\hammer.min.js" />
                 <File Id="CHART.BUNDLE.MIN.JS" Name="Chart.bundle.min.js" Source="..\bin\x64\Debug\Resources\Chart.bundle.min.js" />
+                <File Id="BOOTSTRAP.MIN.CSS" Name="bootstrap.min.css" Source="..\bin\x64\Debug\Resources\bootstrap.min.css" />
+                <File Id="DATERANGEPICKER.CSS" Name="daterangepicker.css" Source="..\bin\x64\Debug\Resources\daterangepicker.css" />
+                <File Id="DATERANGEPICKER.JS" Name="daterangepicker.js" Source="..\bin\x64\Debug\Resources\daterangepicker.js" />
+                <File Id="JQUERY.MIN.JS" Name="jquery.min.js" Source="..\bin\x64\Debug\Resources\jquery.min.js" />
+                <File Id="MOMENT.MIN.JS" Name="moment.min.js" Source="..\bin\x64\Debug\Resources\moment.min.js" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="fontawesomeFolder">
