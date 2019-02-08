@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="ManualTracking" Height="356.122" Width="800">
-    <Grid>
+        Title="ManualTracking" SizeToContent="WidthAndHeight">
+    <Grid Margin="0,0,20,20">
         <Label Content="Welcome back!" HorizontalAlignment="Left" Margin="31,17,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <Label Name="Label" Content="What were you doing away from the computer?" HorizontalAlignment="Left" Margin="132,82,0,0" VerticalAlignment="Top" FontSize="18" Width="532"/>
         <Label Content="Hint: You can permanently disable offline time tracking in the settings." HorizontalAlignment="Left" Margin="132,278,0,0" VerticalAlignment="Top"/>
