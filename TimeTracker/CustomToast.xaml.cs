@@ -26,6 +26,7 @@ namespace TimeTracker
     public partial class CustomToast : Window
     {
         List<CustomComboBoxItem> Activities;
+        List<string> ListOfButtons { get; set; }
         Stack<bool> cancelClose = new Stack<bool>();
         DateTime toDate;
         string defaultName;
@@ -68,6 +69,11 @@ namespace TimeTracker
             this.Top = desktopWorkingArea.Bottom - this.Height - 12;
 
             toDate = DateTime.Now;
+
+            ListOfButtons = new List<string>();
+            ListOfButtons.Add("One");
+            ListOfButtons.Add("Two");
+            ListOfButtons.Add("Three");
 
             using (TextReader tr = new StreamReader(Variables.activityPath))
             {
@@ -157,6 +163,11 @@ namespace TimeTracker
                 this.Close();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            setNewActivity(defaultName);
+        }
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             setNewActivity(defaultName);
@@ -177,5 +188,10 @@ namespace TimeTracker
                 setNewActivity(defaultName);
             }
         }
+
+        //private void PauseButton_Click(object sender, RoutedEventArgs e)
+        //{
+            
+        //}
     }
 }

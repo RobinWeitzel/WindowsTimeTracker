@@ -28,8 +28,11 @@
             </ComboBox>
             <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,48,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
             <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="10,15,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="CloseButton2" IsTabStop="False" Content="Cancel" Click="CloseButton_Click" Margin="10,138,252,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
-            <Button x:Name="ConfirmButton2" IsTabStop="False" Content="Confirm" Click="ConfirmButton_Click" Margin="252,138,10,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20"/>
+            <Button x:Name="CloseButton2" IsTabStop="False" Content="Cancel" Click="CloseButton_Click" Margin="10,138,274,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" Padding="0, 0, 0, 0"/>
+            <!--<TextBlock x:Name="TextBlock3" HorizontalAlignment="Left" Margin="81,139,0,0" TextWrapping="Wrap" Text="or" VerticalAlignment="Top" Height="28" Width="25" FontSize="20"/>
+            <Button x:Name="PauseButton" IsTabStop="False" Click="PauseButton_Click" Content="Pause" Margin="106,138,180,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" RenderTransformOrigin="0.189,0.458" Padding="0, 0, 0, 0">
+            </Button>-->
+            <Button x:Name="ConfirmButton2" IsTabStop="False" Content="Confirm" Click="ConfirmButton_Click" Margin="252,138,10,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" Padding="0, 0, 0, 0"/>
             <Button Name="CloseButton" IsTabStop="False" Content="x" Click="CloseButton_Click" Margin="320,0,0,151" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
         </Grid>
     </Border>
