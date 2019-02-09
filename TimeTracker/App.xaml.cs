@@ -505,7 +505,8 @@ namespace TimeTracker
         {
             try
             {
-                if(!CloseAllToasts())
+                pause(false);
+                if (!CloseAllToasts())
                 {
                     CustomToast newToast = new CustomToast(focusToast);
                     newToast.Show();
