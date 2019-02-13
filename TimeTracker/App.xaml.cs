@@ -100,12 +100,11 @@ namespace TimeTracker
                 WINEVENT_OUTOFCONTEXT);
 
             // Set up callback if computers powerstate changes
-            SystemEvents.PowerModeChanged += OnPowerChange;
 
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
 
             // Check if the tutorial should be shown
-            if(!Settings.Default.TutorialViewed)
+            if (!Settings.Default.TutorialViewed)
             {
                 new Tutorial().Show();
                 Settings.Default.TutorialViewed = true;
@@ -137,7 +136,8 @@ namespace TimeTracker
                 {
                     new NewVersion().Show();
                 }
-            } catch(WebException ignore)
+            }
+            catch (WebException ignore)
             {
 
             }
@@ -201,40 +201,13 @@ namespace TimeTracker
                 MainWindow.Show();
             }
         }
-        
+
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (!_isExit)
             {
                 e.Cancel = true;
                 MainWindow.Hide(); // A hidden window can be shown again, a closed one not             
-            }
-        }
-
-        /*** Methods for handling power state change ***/
-        private void OnPowerChange(object s, PowerModeChangedEventArgs e)
-        {
-            switch (e.Mode)
-            {
-                case PowerModes.Resume:
-                    showAwayFromPcWindow();
-                    if (hook == null)
-                    {
-                        // Set up global hotkey
-                        hook = new KeyboardHook();
-                        hook.KeyCombinationPressed += KeyCombinationPressed;
-                    }
-                    pause(false);
-                    break;
-                case PowerModes.Suspend:
-                    Variables.lastLocked = DateTime.Now;
-                    pause(true);
-                    if (hook != null)
-                    {
-                        hook.Dispose();
-                        hook = null;
-                    }
-                    break;
             }
         }
 
@@ -288,18 +261,19 @@ namespace TimeTracker
         {
             if (Settings.Default.OfflineTracking && Variables.lastLocked != null)
             {
-                new ManualTracking((DateTime) Variables.lastLocked).Show();
+                new ManualTracking((DateTime)Variables.lastLocked).Show();
                 Variables.lastLocked = null;
             }
         }
 
         private void doNotDisturb()
         {
-            if(disturb)
+            if (disturb)
             {
                 _notifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
                 disturb = false;
-            } else
+            }
+            else
             {
                 _notifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
                 disturb = true;
@@ -308,7 +282,7 @@ namespace TimeTracker
 
         private void pause(bool? setPause)
         {
-            if(setPause != null)
+            if (setPause != null)
             {
                 if (setPause == true)
                 {
@@ -430,13 +404,13 @@ namespace TimeTracker
                 // Stop if the current activity is blacklisted or a file path
                 if (Settings.Default.Blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
                 {
-                    if(!windowTitle.Equals("NotificationsWindow - TimeTracker"))
+                    if (!windowTitle.Equals("NotificationsWindow - TimeTracker"))
                         closeCurrentWindow();
                     return;
                 }
 
-                    // Determine if this window has been used in the last 5 minutes
-                    bool hasBeenSeen = false;
+                // Determine if this window has been used in the last 5 minutes
+                bool hasBeenSeen = false;
 
                 // Load timeNotUsed from settings
                 long timeNotUsed = Settings.Default.TimeSinceAppLastUsed * 60 * 1000;  // Convert to ms 
@@ -450,7 +424,7 @@ namespace TimeTracker
                 if (Variables.currentWindow != null && Variables.currentWindow.Name.Equals(name))
                     return;
 
-                if(Variables.currentWindow != null)
+                if (Variables.currentWindow != null)
                 {
                     closeCurrentWindow();
                 }
@@ -482,7 +456,7 @@ namespace TimeTracker
                         Variables.currentActivity = new Helper.Activity();
                         Variables.currentActivity.Name = last_activity != null ? last_activity.Name : "";
                         Variables.currentActivity.From = DateTime.Now;
-                    } 
+                    }
                 }
             }
         }
@@ -514,7 +488,8 @@ namespace TimeTracker
                         newToast.Activate();
                 }
             }
-            catch (Exception ignore) {
+            catch (Exception ignore)
+            {
             }
         }
     }
