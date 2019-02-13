@@ -457,8 +457,10 @@
 
         async function update2(start, end) {
             var name = $('#activity-filter').val();
-            var startString = start.toISOString();
-            var endString = end.toISOString();
+            var localFormat = 'YYYY-MM-DD HH:mm';
+
+            var startString = start.format(localFormat);
+            var endString = end.format(localFormat);
 
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");

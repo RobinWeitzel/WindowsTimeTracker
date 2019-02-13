@@ -213,8 +213,8 @@ namespace TimeTracker
             public string getDetailsData1(string name, string startString, string endString)
             {
                 string result = "{";
-                DateTime start = DateTime.Parse(startString, null, System.Globalization.DateTimeStyles.RoundtripKind);
-                DateTime end = DateTime.Parse(endString, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                DateTime start = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                DateTime end = DateTime.ParseExact(endString, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
 
                 using (TextReader tr = new StreamReader(Variables.activityPath))
                 {
