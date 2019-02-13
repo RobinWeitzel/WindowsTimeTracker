@@ -108,7 +108,7 @@ namespace TimeTracker
                     var records = csv.GetRecords<TimeTracker.Helper.Activity>();
                     today_activities = records.Where(r => r.To >= day_in_question && r.From < day_in_question_after).ToList();
 
-                    if (Variables.currentActivity != null && day_in_question_after > DateTime.Now)
+                    if (Variables.currentActivity != null && (day_in_question_after > DateTime.Now && day_in_question < DateTime.Now))
                         today_activities.Add(Variables.currentActivity);
 
                     List<Event> Events = today_activities.Select(ta => new Event
