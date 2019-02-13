@@ -345,20 +345,45 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.1/moment-range.js"></script>
     <script type="text/javascript" src="./Resources/daterangepicker.js"></script>
     <script>
-        var backgroundColor = [
-            '#0074D9',
-            '#7FDBFF',
-            '#39CCCC',
-            '#3D9970',
-            '#2ECC40',
-            '#01FF70',
-            '#FFDC00',
-            '#FF851B',
-            '#FF4136',
-            '#85144b',
-            '#F012BE',
-            '#B10DC9',
-        ];
+        var backgroundColor = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5'];
+
+        var asignedColors = {};
+        var colorPos = 0;
+
+        function getColor(text) {
+            /*if (asignedColors[text] === undefined) {
+                asignedColors[text] = backgroundColor[colorPos++];
+                if (colorPos === backgroundColor.length) {
+                    colorPos = 0;
+                }
+            }
+
+            return asignedColors[text];*/
+
+            return stringToColour(text);
+        }
+
+        function getTextColor(text) {
+            var bg = stringToColour(text);
+            if ((parseInt(bg.substr(1, 2), 16) * 0.299 + parseInt(bg.substr(3, 2), 16) * 0.587 + parseInt(bg.substr(5, 2), 16) * 0.114) > 120) {
+                return "#000000";
+            } else {
+                return "#ffffff";
+            }
+        }
+
+        var stringToColour = function (str) {
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            var colour = '#';
+            for (var i = 0; i < 3; i++) {
+                var value = (hash >> (i * 8)) & 0xFF;
+                colour += ('00' + value.toString(16)).substr(-2);
+            }
+            return colour;
+        }
 
         var data = [];
         var data2 = [];
@@ -550,7 +575,7 @@
             for (var i = 0; i < data.length; i++) {
                 result.push({
                     label: data[i].name,
-                    backgroundColor: backgroundColor[colorPosition.indexOf(data[i].name) < 0 ? colorPosition.push(data[i].name) - 1 : colorPosition.indexOf(data[i].name)],
+                    backgroundColor: getColor(data[i].name),
                     data: [
                         data[i].to - data[i].from
                     ]
@@ -690,10 +715,8 @@
                     result[data[i].name] += data[i].to - data[i].from;
             }
 
-            var counter = 0;
-
             Object.keys(result).forEach(function (key) {
-                innerHTML += "<div class='summary-item' style='background-color: " + backgroundColor[counter++] + ";'>" + key + " (" + formatTime(result[key]) + ")" + "</div>";
+                innerHTML += "<div class='summary-item' style='background-color: " + getColor(key) + "; color: " + getTextColor(key) + "'>" + key + " (" + formatTime(result[key]) + ")" + "</div>";
             });
 
             document.getElementById("day-breakdown-summary").innerHTML = innerHTML;
@@ -713,7 +736,7 @@
             for (var i = 0; i < data3.length; i++) {
                 result["labels"].push(data3[i].name);
                 result["datasets"][0]["data"].push(data3[i].value);
-                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data3[i].name) < 0 ? colorPosition.push(data3[i].name) - 1 : colorPosition.indexOf(data3[i].name)]);
+                result["datasets"][0]["backgroundColor"].push(getColor(data3[i].name));
             }
 
             return result;
@@ -733,7 +756,7 @@
             for (var i = 0; i < data.length; i++) {
                 result["labels"].push(data[i].name);
                 result["datasets"][0]["data"].push(data[i].value);
-                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data[i].name) < 0 ? colorPosition.push(data[i].name) - 1 : colorPosition.indexOf(data[i].name)]);
+                result["datasets"][0]["backgroundColor"].push(getColor(data[i].name));
             }
 
             return result;
@@ -803,7 +826,7 @@
             for (var i = 0; i < data2.length; i++) {
                 result["labels"].push(data2[i].name);
                 result["datasets"][0]["data"].push(data2[i].value);
-                result["datasets"][0]["backgroundColor"].push(backgroundColor[colorPosition.indexOf(data2[i].name) < 0 ? colorPosition.push(data2[i].name) - 1 : colorPosition.indexOf(data2[i].name)]);
+                result["datasets"][0]["backgroundColor"].push(getColor(data2[i].name));
             }
 
             return result;
