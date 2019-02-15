@@ -16,6 +16,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using System.Xml;
 using TimeTracker.Properties;
 using Windows.Data.Xml.Dom;
@@ -141,6 +142,40 @@ namespace TimeTracker
             {
 
             }
+        }
+
+        private void handleError()
+        {
+            MessageBoxResult result = MessageBox.Show("Malformed CSV files. Files is being repaired after which the TimeTracker will restart.");
+
+            List<Helper.Activity> good;
+            // Read in CSV wiht activities
+            using (var reader = new StreamReader(Variables.activityPath))
+            using (var csv = new CsvReader(reader))
+            {
+                good = new List<Helper.Activity>();
+
+                while (csv.Read())
+                {
+                    try
+                    {
+                        var record = csv.GetRecord<Helper.Activity>();
+                        good.Add(record);
+                    } catch (Exception ignore)
+                    {
+
+                    }
+                }
+            }
+
+            using (TextWriter tw = new StreamWriter(Variables.activityPath))
+            {
+                var csv = new CsvWriter(tw);
+                csv.WriteRecords(good);
+            }
+
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
 
         /************* Methods for handeling app running in background ***************/
@@ -446,16 +481,22 @@ namespace TimeTracker
                 // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
                 else if (Variables.currentActivity == null)
                 {
-                    using (TextReader tr = new StreamReader(Variables.activityPath))
+                    try
                     {
-                        var csv = new CsvReader(tr);
-                        var records = csv.GetRecords<Helper.Activity>();
+                        using (TextReader tr = new StreamReader(Variables.activityPath))
+                        {
+                            var csv = new CsvReader(tr);
+                            var records = csv.GetRecords<Helper.Activity>();
 
-                        Helper.Activity last_activity = records.LastOrDefault();
+                            Helper.Activity last_activity = records.LastOrDefault();
 
-                        Variables.currentActivity = new Helper.Activity();
-                        Variables.currentActivity.Name = last_activity != null ? last_activity.Name : "";
-                        Variables.currentActivity.From = DateTime.Now;
+                            Variables.currentActivity = new Helper.Activity();
+                            Variables.currentActivity.Name = last_activity != null ? last_activity.Name : "";
+                            Variables.currentActivity.From = DateTime.Now;
+                        }
+                    } catch (CsvHelper.MissingFieldException e)
+                    {
+                        handleError();
                     }
                 }
             }
@@ -487,10 +528,12 @@ namespace TimeTracker
                     if (focusToast)
                         newToast.Activate();
                 }
-            }
-            catch (Exception ignore)
+            } catch (Exception ex)
             {
+                if(ex is CsvHelper.MissingFieldException)
+                    handleError();
             }
+
         }
     }
 }
