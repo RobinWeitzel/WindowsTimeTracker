@@ -31,7 +31,7 @@ namespace TimeTracker
         public SettingsAbout()
         {
             InitializeComponent();
-            Version.Content = "Version: " + Variables.version;
+            Version.Content = "Version: " + AppStateTracker.Version;
 
             List<Library> libraries = new List<Library>
             {

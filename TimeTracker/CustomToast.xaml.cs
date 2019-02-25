@@ -13,9 +13,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+using TimeTracker.Helper;
 using TimeTracker.Properties;
 
 namespace TimeTracker
@@ -23,175 +22,132 @@ namespace TimeTracker
     /// <summary>
     /// Interaktionslogik für CustomToast.xaml
     /// </summary>
-    public partial class CustomToast : Window
+    public partial class CustomToast : System.Windows.Window
     {
-        List<CustomComboBoxItem> Activities;
-        List<string> ListOfButtons { get; set; }
-        Stack<bool> cancelClose = new Stack<bool>();
-        DateTime toDate;
-        string defaultName;
+        private List<CustomComboBoxItem> Activities;
+        private Stack<bool> CancelClose = new Stack<bool>();
+        private DateTime ToDate;
+        private string DefaultName;
+        private long Timeout;
 
-        long timeout = 5000;
+        private StorageHandler StorageHandler;
+        private AppStateTracker AppStateTracker;
 
-        class CustomComboBoxItem
-        {
-            public string Name { get; set; }
-            public bool Selectable { get; set; }
-            public string Visible { get; set; }
-        }
-
-        public static class ScreenHandler
-        {
-            public static Screen GetCurrentScreen(Window window)
-            {
-                var parentArea = new System.Drawing.Rectangle((int)window.Left, (int)window.Top, (int)window.Width, (int)window.Height);
-                return Screen.FromRectangle(parentArea);
-            }
-
-            public static Screen GetScreen(int requestedScreen)
-            {
-                var screens = Screen.AllScreens;
-                var mainScreen = 0;
-                if (screens.Length > 1 && mainScreen < screens.Length)
-                {
-                    return screens[requestedScreen];
-                }
-                return screens[mainScreen];
-            }
-        }
-
-        public CustomToast(bool focusToast)
+        public CustomToast(StorageHandler storageHandler, AppStateTracker appStateTracker, bool focusToast)
         {
             InitializeComponent();
-            var currentScreen = ScreenHandler.GetCurrentScreen(this); // ToDo: fix this
-            var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
-            this.Left = desktopWorkingArea.Right - this.Width - 15;
-            this.Top = desktopWorkingArea.Bottom - this.Height - 12;
 
-            toDate = DateTime.Now;
+            StorageHandler = storageHandler;
+            AppStateTracker = appStateTracker;
+            ToDate = DateTime.Now;
 
-            ListOfButtons = new List<string>();
-            ListOfButtons.Add("One");
-            ListOfButtons.Add("Two");
-            ListOfButtons.Add("Three");
+            // Move toast to the bottom right
+            Rect DesktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = DesktopWorkingArea.Right - this.Width - 15;
+            this.Top = DesktopWorkingArea.Bottom - this.Height - 12;
 
-            using (TextReader tr = new StreamReader(Variables.activityPath))
+            Activities = StorageHandler.GetLastActivitiesGrouped().Select(rg => new CustomComboBoxItem()
             {
-                var csv = new CsvReader(tr);
-                var records = csv.GetRecords<Helper.Activity>();
+                Name = rg.Key,
+                Selectable = true
+            }).ToList();
 
-                Activities = records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).Select(rg => new CustomComboBoxItem()
-                {
-                    Name = rg.Key,
-                    Selectable = true
-                }).ToList();
+            DefaultName = AppStateTracker.CurrentActivity?.Name ?? Activities.FirstOrDefault()?.Name ?? "";
 
-                defaultName = Variables.currentActivity != null ? Variables.currentActivity.Name : (Activities.Count() > 0 ? Activities.First().Name : "");
-
-                if (Variables.currentActivity != null && !Activities.Any(a => a.Name.Equals(defaultName)))
-                    Activities.Insert(0, new CustomComboBoxItem()
-                    {
-                        Name = defaultName,
-                        Selectable = true
-                    });
-
-                for (int i = 0; i < Activities.Count(); i++)
-                {
-                    Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
-                }
-
+            if (AppStateTracker.CurrentActivity != null && !Activities.Any(a => a.Name.Equals(DefaultName)))
                 Activities.Insert(0, new CustomComboBoxItem()
                 {
-                    Name = "Activity - Subactivity",
-                    Selectable = false
+                    Name = DefaultName,
+                    Selectable = true
                 });
 
-                ComboBox.ItemsSource = Activities;
-
-                ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(defaultName)).FirstOrDefault();
-
-                TextBlock2.Text = Variables.currentWindow != null ? Variables.currentWindow.Name.Trim() : "No window active";
-
-                timeout = Settings.Default.Timeout * 1000; // Convert to ms
-
-                if(Settings.Default.PlayNotificationSound)
-                    SystemSounds.Hand.Play();
+            for (int i = 0; i < Activities.Count(); i++)
+            {
+                Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
             }
+
+            Activities.Insert(0, new CustomComboBoxItem()
+            {
+                Name = "Activity - Subactivity",
+                Selectable = false
+            });
+
+            ComboBox.ItemsSource = Activities;
+            ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(DefaultName)).FirstOrDefault();
+            TextBlock2.Text = AppStateTracker.CurrentWindow?.Name.Trim() ?? "No window active";
+
+            Timeout = Settings.Default.Timeout * 1000; // Convert to ms
+
+            if (Settings.Default.PlayNotificationSound)
+                SystemSounds.Hand.Play();
 
             if (focusToast)
                 ComboBox.Focus();
 
-            setupClose();
+            SetupClose();
         }
 
-        private async void setupClose()
+        private async void SetupClose()
         {
-            await Task.Delay((int)timeout);
+            await Task.Delay((int)Timeout);
 
-            if(cancelClose.Count() == 0 || cancelClose.Pop() != true)
+            if (CancelClose.Count() == 0 || CancelClose.Pop() != true)
             {
-                setNewActivity(ComboBox.Text);
+                SetNewActivity(ComboBox.Text);
             }
         }
 
+        private void SetNewActivity(string name = null, bool confirmClicked = false)
+        {
+            if (AppStateTracker.CurrentActivity == null || !ComboBox.Text.Equals(AppStateTracker.CurrentActivity.Name))
+            {
+                AppStateTracker.SaveCurrentActivity();
+                AppStateTracker.CreateCurrentActivity(name ?? DefaultName, ToDate);
+
+                if (confirmClicked)
+                    AppStateTracker.LastConfirmed = DateTime.Now;
+            }
+            if (this.IsLoaded) // Can only close if the window still exists
+                this.Close();
+        }
+
+        /* Window events */
+
         private void Window_Activated(object sender, EventArgs e)
         {
-            cancelClose.Push(true);
+            CancelClose.Push(true);
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            setupClose();
-        }
-
-        private void setNewActivity(string name, bool confirmClicked = false)
-        {
-            if (Variables.currentActivity == null || !ComboBox.Text.Equals(Variables.currentActivity.Name))
-            {
-                if (Variables.currentActivity != null)
-                    Variables.currentActivity.save(toDate);
-
-                Variables.currentActivity = new Helper.Activity();
-
-                Variables.currentActivity.Name = name;
-                Variables.currentActivity.From = toDate;
-
-                if(confirmClicked)
-                    Variables.lastConfirmed = DateTime.Now;
-            }
-            if(this.IsLoaded) // Can only close if the window still exists
-                this.Close();
+            SetupClose();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity(defaultName);
+            SetNewActivity();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity(defaultName);
+            SetNewActivity();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity(ComboBox.Text, true);
+            SetNewActivity(ComboBox.Text, true);
         }
 
         private void ComboBox_OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                setNewActivity(ComboBox.Text, true);
-            } else if(e.Key == Key.Escape)
+                SetNewActivity(ComboBox.Text, true);
+            }
+            else if (e.Key == Key.Escape)
             {
-                setNewActivity(defaultName);
+                SetNewActivity();
             }
         }
-
-        //private void PauseButton_Click(object sender, RoutedEventArgs e)
-        //{
-            
-        //}
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TimeTracker.Helper;
 using TimeTracker.Properties;
 
 namespace TimeTracker
@@ -21,98 +22,85 @@ namespace TimeTracker
     /// <summary>
     /// Interaktionslogik für ManualTracking.xaml
     /// </summary>
-    public partial class ManualTracking : Window
+    public partial class ManualTracking : System.Windows.Window
     {
-        List<CustomComboBoxItem> Activities;
-        DateTime fromDate;
-        DateTime toDate;
-        string defaultName;
+        private List<CustomComboBoxItem> Activities;
+        private DateTime FromDate;
+        private DateTime ToDate;
+        private string DefaultName;
 
-        class CustomComboBoxItem
-        {
-            public string Name { get; set; }
-            public bool Selectable { get; set; }
-            public string Visible { get; set; }
-        }
+        private StorageHandler StorageHandler;
+        private AppStateTracker AppStateTracker;
 
-        public ManualTracking(DateTime lastLocked)
+        public ManualTracking(StorageHandler storageHandler, AppStateTracker appStateTracker, DateTime lastLocked)
         {
             InitializeComponent();
 
-            fromDate = lastLocked;
-            toDate = DateTime.Now;
+            FromDate = lastLocked;
+            ToDate = DateTime.Now;
 
-            Label.Content = "What were you doing since " + fromDate.ToShortTimeString() + "?";
-            TimeElapsed.Content = (toDate - fromDate).ToString().Substring(0, 8);
+            StorageHandler = storageHandler;
+            AppStateTracker = appStateTracker;
 
-            using (TextReader tr = new StreamReader(Variables.activityPath))
+            Label.Content = "What were you doing since " + FromDate.ToShortTimeString() + "?";
+            TimeElapsed.Content = (ToDate - FromDate).ToString().Substring(0, 8);
+
+            Activities = StorageHandler.GetLastActivitiesGrouped().Select(rg => new CustomComboBoxItem()
             {
-                var csv = new CsvReader(tr);
-                var records = csv.GetRecords<Helper.Activity>();
+                Name = rg.Key,
+                Selectable = true
+            }).ToList();
 
-                Activities = records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).Select(rg => new CustomComboBoxItem()
-                {
-                    Name = rg.Key,
-                    Selectable = true
-                }).ToList();
+            DefaultName = AppStateTracker.CurrentActivity?.Name ?? Activities.FirstOrDefault()?.Name ?? "";
 
-                defaultName = Variables.currentActivity != null ? Variables.currentActivity.Name : (Activities.Count() > 0 ? Activities.First().Name : "");
-
-                if (Variables.currentActivity != null && !Activities.Any(a => a.Name.Equals(defaultName)))
-                    Activities.Insert(0, new CustomComboBoxItem()
-                    {
-                        Name = defaultName,
-                        Selectable = true
-                    });
-
-                for (int i = 0; i < Activities.Count(); i++)
-                {
-                    Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
-                }
-
+            if (AppStateTracker.CurrentActivity != null && !Activities.Any(a => a.Name.Equals(DefaultName)))
                 Activities.Insert(0, new CustomComboBoxItem()
                 {
-                    Name = "Activity - Subactivity",
-                    Selectable = false
+                    Name = DefaultName,
+                    Selectable = true
                 });
 
-                ComboBox.ItemsSource = Activities;
-
-                ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(defaultName)).FirstOrDefault();
-
-                if (Settings.Default.PlayNotificationSound)
-                    SystemSounds.Hand.Play();
+            for (int i = 0; i < Activities.Count(); i++)
+            {
+                Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
             }
+
+            Activities.Insert(0, new CustomComboBoxItem()
+            {
+                Name = "Activity - Subactivity",
+                Selectable = false
+            });
+
+            ComboBox.ItemsSource = Activities;
+            ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(DefaultName)).FirstOrDefault();
         }
 
-        private void setNewActivity(string name)
+        private void SetNewActivity(string name)
         {
-            Helper.Activity activity = new Helper.Activity();
-            activity.Name = name;
-            activity.From = fromDate;
-            activity.To = toDate;
-
-            activity.save();
-
-            this.Close();
+            
+            AppStateTracker.CreateCurrentActivity(name, FromDate);
+            AppStateTracker.SaveCurrentActivity(ToDate);
+            Close();
         }
+
+        /* Window events */
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            setNewActivity(ComboBox.Text);
+            SetNewActivity(ComboBox.Text);
         }
 
         private void ComboBox_OnKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                setNewActivity(ComboBox.Text);
+                SetNewActivity(ComboBox.Text);
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

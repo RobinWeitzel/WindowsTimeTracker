@@ -21,39 +21,34 @@ namespace TimeTracker
     /// </summary>
     public partial class ManualEdit : Window
     {
-        List<Helper.Activity> Activities;
-        public ManualEdit()
+        private List<Helper.Activity> Activities;
+
+        private StorageHandler StorageHandler;
+
+        public ManualEdit(StorageHandler storageHandler)
         {
             InitializeComponent();
-            loadData();
-
+            StorageHandler = storageHandler;
+            LoadData();
         }
 
-        private void loadData()
+        private void LoadData()
         {
-            using (TextReader tr = new StreamReader(Variables.activityPath))
-            {
-                var csv = new CsvReader(tr);
-                var records = csv.GetRecords<Helper.Activity>();
-
-                Activities = records.OrderByDescending(aa => aa.To).ToList();
-                DataGrid.ItemsSource = Activities;
-            }
+            Activities = StorageHandler.GetLastActivities();
+            DataGrid.ItemsSource = Activities;
         }
+
+        /* Window events */
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            using (TextWriter tw = new StreamWriter(Variables.activityPath))
-            {
-                var csv = new CsvWriter(tw);
-                csv.WriteRecords(Activities);
-            }
-            loadData();
+            StorageHandler.WriteActivities(Activities);
+            LoadData();
         }
     }
 }

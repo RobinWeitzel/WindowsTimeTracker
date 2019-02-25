@@ -1,17 +1,15 @@
-﻿using CsvHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TimeTracker.Helper
 {
-    public class Activity
+    public class CustomComboBoxItem
     {
         public string Name { get; set; }
-        public DateTime From { get; set; }
-        public DateTime? To { get; set; }
+        public bool Selectable { get; set; }
+        public string Visible { get; set; }
     }
 }

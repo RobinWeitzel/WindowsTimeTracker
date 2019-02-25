@@ -29,81 +29,96 @@ namespace TimeTracker
     /// </summary>
     public partial class App : Application
     {
-        WinEventDelegate dele = null;
+        private System.Windows.Forms.NotifyIcon NotifyIcon;
+        private bool IsExit;
 
-        private System.Windows.Forms.NotifyIcon _notifyIcon;
-        private bool _isExit;
-
-        private static bool paused = false;
-        private static bool disturb = true;
-
-        private KeyboardHook hook; // Global keyboard hook 
+        private StorageHandler StorageHandler;
+        private AppStateTracker AppStateTracker;
+        private ProgramSwitchListener ProgramSwitchListener;
+        private MachineStateListener MachineStateListener;
+        private HotkeyListener HotkeyListener;
+        private ASDL ASDL;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Set connection string
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTracker";
-            Variables.activityPath = path + "\\Activities.csv";
-            Variables.windowPath = path + "\\Windows.csv";
-
-            if (!File.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-
-            if (!File.Exists(Variables.windowPath))
-            {
-                using (TextWriter tw = new StreamWriter(Variables.windowPath))
-                {
-                    var csv = new CsvWriter(tw);
-                    csv.WriteHeader<Helper.Window>();
-                    csv.NextRecord();
-                }
-            }
-
-            if (!File.Exists(Variables.activityPath))
-            {
-                using (TextWriter tw = new StreamWriter(Variables.activityPath))
-                {
-                    var csv = new CsvWriter(tw);
-                    csv.WriteHeader<Helper.Activity>();
-                    csv.NextRecord();
-                }
-            }
-
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-
             // Set up app to run in the background
             base.OnStartup(e);
 
             MainWindow = new MainWindow();
             MainWindow.Closing += MainWindow_Closing;
 
-            _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.DoubleClick += (s, args) => changeActivity();
+            NotifyIcon = new System.Windows.Forms.NotifyIcon();
 
-            _notifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
-            _notifyIcon.Visible = true;
+            NotifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
+            NotifyIcon.Visible = true;
             CreateContextMenu();
 
-            // Set up global hotkey
-            hook = new KeyboardHook();
-            hook.KeyCombinationPressed += KeyCombinationPressed;
+            StorageHandler = new StorageHandler();
+            AppStateTracker = new AppStateTracker(StorageHandler);
+            ProgramSwitchListener = new ProgramSwitchListener();
+            MachineStateListener = new MachineStateListener();
+            HotkeyListener = new HotkeyListener();
+            ASDL = new ASDL(AppStateTracker, ProgramSwitchListener, MachineStateListener, HotkeyListener);
 
-            // Set up callback if active window changes
-            dele = new WinEventDelegate(WinEventProc);
-            IntPtr m_hhook = SetWinEventHook(
-                EVENT_SYSTEM_FOREGROUND,
-                EVENT_SYSTEM_FOREGROUND,
-                IntPtr.Zero,
-                dele,
-                0,
-                0,
-                WINEVENT_OUTOFCONTEXT);
+            NotifyIcon.DoubleClick += (s, args) => ASDL.ChangeActivity();
+            MachineStateListener.StateChanged += ListenerEvent;
 
-            // Set up callback if computers powerstate changes
+            AppStateTracker.ChangeContextMenu += (s, args) => NotifyIcon.ContextMenuStrip.Items[1].Text = ((bool)args.Value) ? "Unpause" : "Pause";
+            ASDL.ShowActivityDialog += CreateActivityDialog;
+            ASDL.ShowAwayFromPCDialog += CreateAwayFromPCDialog;
 
-            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitch);
+            ShowTutorialIfNeeded();
 
+            CheckForUpdates();
+        }
+
+        private void ListenerEvent(object sender, CustomEventArgs e)
+        {
+            if ((bool)e.Value)
+            {
+                HotkeyListener?.Dispose();
+                HotkeyListener = new HotkeyListener();
+
+                ASDL.ReattachHotkeyListener(HotkeyListener);
+            }
+        }
+
+            /*private void handleError()
+            {
+                MessageBoxResult result = MessageBox.Show("Malformed CSV files. Files is being repaired after which the TimeTracker will restart.");
+
+                List<Helper.Activity> good;
+                // Read in CSV wiht activities
+                using (var reader = new StreamReader(Variables.activityPath))
+                using (var csv = new CsvReader(reader))
+                {
+                    good = new List<Helper.Activity>();
+
+                    while (csv.Read())
+                    {
+                        try
+                        {
+                            var record = csv.GetRecord<Helper.Activity>();
+                            good.Add(record);
+                        } catch (Exception ignore)
+                        {
+
+                        }
+                    }
+                }
+
+                using (TextWriter tw = new StreamWriter(Variables.activityPath))
+                {
+                    var csv = new CsvWriter(tw);
+                    csv.WriteRecords(good);
+                }
+
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            }*/
+
+            private void ShowTutorialIfNeeded()
+        {
             // Check if the tutorial should be shown
             if (!Settings.Default.TutorialViewed)
             {
@@ -111,8 +126,10 @@ namespace TimeTracker
                 Settings.Default.TutorialViewed = true;
                 Settings.Default.Save();
             }
+        }
 
-            // Check for update
+        private void CheckForUpdates()
+        {
             try
             {
                 var m_strFilePath = "https://github.com/RobinWeitzel/WindowsTimeTracker/releases.atom";
@@ -133,7 +150,7 @@ namespace TimeTracker
                 XmlNode node = root.SelectSingleNode(
          "descendant::f:entry", nsmgr);
 
-                if (!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + Variables.version))
+                if (!node.FirstChild.InnerXml.Equals("tag:github.com,2008:Repository/145717546/" + AppStateTracker.Version))
                 {
                     new NewVersion().Show();
                 }
@@ -144,81 +161,58 @@ namespace TimeTracker
             }
         }
 
-        private void handleError()
-        {
-            MessageBoxResult result = MessageBox.Show("Malformed CSV files. Files is being repaired after which the TimeTracker will restart.");
-
-            List<Helper.Activity> good;
-            // Read in CSV wiht activities
-            using (var reader = new StreamReader(Variables.activityPath))
-            using (var csv = new CsvReader(reader))
-            {
-                good = new List<Helper.Activity>();
-
-                while (csv.Read())
-                {
-                    try
-                    {
-                        var record = csv.GetRecord<Helper.Activity>();
-                        good.Add(record);
-                    } catch (Exception ignore)
-                    {
-
-                    }
-                }
-            }
-
-            using (TextWriter tw = new StreamWriter(Variables.activityPath))
-            {
-                var csv = new CsvWriter(tw);
-                csv.WriteRecords(good);
-            }
-
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
-        }
-
         /************* Methods for handeling app running in background ***************/
         private void CreateContextMenu()
         {
-            _notifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => changeActivity();
-            _notifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => pause(null);
-            _notifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => doNotDisturb();
-            _notifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
-            _notifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit().Show();
-            _notifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
-            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
+            NotifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            NotifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => ASDL.ChangeActivity();
+            NotifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => AppStateTracker.Pause(null);
+            NotifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => DoNotDisturb();
+            //NotifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow().Show();
+            NotifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit(StorageHandler).Show();
+            NotifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
+            NotifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
 
         private void ExitApplication()
         {
-            _isExit = true;
+            IsExit = true;
             MainWindow.Close();
-            _notifyIcon.Dispose();
-            _notifyIcon = null;
-            hook.Dispose();
-            hook = null;
+            NotifyIcon.Dispose();
+            NotifyIcon = null;
+            HotkeyListener.Dispose();
+            HotkeyListener = null;
             this.Shutdown(1);
+        }
+
+        private void CreateActivityDialog(object sender, CustomEventArgs e)
+        {
+            if (!CloseAllToasts())
+            {
+                CustomToast newToast = new CustomToast(StorageHandler, AppStateTracker, (bool)e.Value);
+                newToast.Show();
+                if ((bool)e.Value)
+                    newToast.Activate();
+            }
         }
 
         private bool CloseAllToasts()
         {
-            bool toastAlreadySelected = false;
+            bool ToastAlreadySelected = false;
             for (int intCounter = App.Current.Windows.Count - 1; intCounter > 0; intCounter--)
                 if (App.Current.Windows[intCounter].GetType().Name.Equals("CustomToast"))
                     if (App.Current.Windows[intCounter].IsActive)
-                        toastAlreadySelected = true;
+                        ToastAlreadySelected = true;
                     else
                         App.Current.Windows[intCounter].Close();
 
-            return toastAlreadySelected;
+            return ToastAlreadySelected;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            closeCurrentWindow();
-            closeCurrentActivity();
+            AppStateTracker.SaveCurrentWindow();
+            AppStateTracker.SaveCurrentActivity();
         }
 
         private void ShowMainWindow()
@@ -239,301 +233,30 @@ namespace TimeTracker
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (!_isExit)
+            if (!IsExit)
             {
                 e.Cancel = true;
                 MainWindow.Hide(); // A hidden window can be shown again, a closed one not             
             }
         }
 
-        /*** Method for handling session change ***/
-        private void OnSessionSwitch(object s, SessionSwitchEventArgs e)
+        private void CreateAwayFromPCDialog(object sender, CustomEventArgs e)
         {
-            switch (e.Reason)
-            {
-                case SessionSwitchReason.SessionLock:
-                    pause(true);
-                    Variables.lastLocked = DateTime.Now;
-                    if (hook != null)
-                    {
-                        hook.Dispose();
-                        hook = null;
-                    }
-                    break;
-                case SessionSwitchReason.SessionLogoff:
-                    pause(true);
-                    Variables.lastLocked = DateTime.Now;
-                    if (hook != null)
-                    {
-                        hook.Dispose();
-                        hook = null;
-                    }
-                    break;
-                case SessionSwitchReason.SessionLogon:
-                    showAwayFromPcWindow();
-                    if (hook == null)
-                    {
-                        // Set up global hotkey
-                        hook = new KeyboardHook();
-                        hook.KeyCombinationPressed += KeyCombinationPressed;
-                    }
-                    pause(false);
-                    break;
-                case SessionSwitchReason.SessionUnlock:
-                    showAwayFromPcWindow();
-                    if (hook == null)
-                    {
-                        // Set up global hotkey
-                        hook = new KeyboardHook();
-                        hook.KeyCombinationPressed += KeyCombinationPressed;
-                    }
-                    pause(false);
-                    break;
-            }
+            new ManualTracking(StorageHandler, AppStateTracker, (DateTime)e.Value).Show();
         }
 
-        private void showAwayFromPcWindow()
+        private void DoNotDisturb()
         {
-            if (Settings.Default.OfflineTracking && Variables.lastLocked != null)
+            if (AppStateTracker.Disturb)
             {
-                new ManualTracking((DateTime)Variables.lastLocked).Show();
-                Variables.lastLocked = null;
-            }
-        }
-
-        private void doNotDisturb()
-        {
-            if (disturb)
-            {
-                _notifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
-                disturb = false;
+                NotifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
+                AppStateTracker.Disturb = false;
             }
             else
             {
-                _notifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
-                disturb = true;
+                NotifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
+                AppStateTracker.Disturb = true;
             }
-        }
-
-        private void pause(bool? setPause)
-        {
-            if (setPause != null)
-            {
-                if (setPause == true)
-                {
-                    closeCurrentWindow();
-                    closeCurrentActivity();
-                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
-                    paused = true;
-                }
-                else
-                {
-                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
-                    paused = false;
-                }
-            }
-            else // Toggle pause
-            {
-                if (paused)
-                {
-                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Pause";
-                    paused = false;
-                }
-                else
-                {
-                    closeCurrentWindow();
-                    closeCurrentActivity();
-                    _notifyIcon.ContextMenuStrip.Items[1].Text = "Unpause";
-                    paused = true;
-                }
-            }
-        }
-
-        /*** Method for handling hotkey press ***/
-        void KeyCombinationPressed(object sender, EventArgs e)
-        {
-            changeActivity(true);
-        }
-
-        /************* Methods for tracking active window ***************/
-
-        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
-
-        private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-
-        [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern long GetWindowText(IntPtr hwnd, StringBuilder lpString, long cch);
-
-        [DllImport("User32.dll")]
-        static extern IntPtr GetParent(IntPtr hwnd);
-
-        [DllImport("kernel32.dll")]
-        static extern int GetProcessId(IntPtr handle);
-
-        private string GetActiveWindowTitle(IntPtr handle)
-        {
-            const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
-            if (handle.ToInt64() == 0)
-                handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, Buff, nChars) > 0)
-            {
-                return Buff.ToString();
-            }
-            return null;
-        }
-
-        public void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
-        {
-            if (paused)
-                return;
-
-            IntPtr handle;
-            long handleLong;
-
-            // Check if parent exists, if it does use it (meaning the active window is only a sub window)
-            IntPtr newParent = GetParent(hwnd);
-            IntPtr oldParent = hwnd;
-            while (newParent.ToInt64() > 0)
-            {
-                oldParent = newParent;
-                newParent = GetParent(oldParent);
-            }
-
-            handle = oldParent;
-
-            handleLong = hwnd.ToInt64();
-
-            if (handleLong <= 0)
-                return;
-            /*try Code to access process name and path (currently not used)
-            {
-                Process myProcess = Process.GetProcesses().Single(
-        p => p.Id != 0 && p.MainWindowHandle == handle);
-
-                Console.WriteLine(Path.GetFileName(myProcess.MainModule.FileName));
-                Console.WriteLine(myProcess.MainWindowTitle);
-            } catch (Exception e)
-            {
-                return;
-            }*/
-
-            string windowTitle = GetActiveWindowTitle(handle);
-            if (windowTitle == null)
-            {
-                return;
-            }
-
-            string[] arr = windowTitle.Split(new string[] { "- " }, StringSplitOptions.None);
-            if (arr.Length >= 1)
-            {
-                string name = arr.Last();
-                // Stop if the current activity is blacklisted or a file path
-                if (Settings.Default.Blacklist.Contains(arr.Last()) || arr.Last().Contains("\\"))
-                {
-                    if (!windowTitle.Equals("NotificationsWindow - TimeTracker"))
-                        closeCurrentWindow();
-                    return;
-                }
-
-                // Determine if this window has been used in the last 5 minutes
-                bool hasBeenSeen = false;
-
-                // Load timeNotUsed from settings
-                long timeNotUsed = Settings.Default.TimeSinceAppLastUsed * 60 * 1000;  // Convert to ms 
-                long timeout2 = Settings.Default.Timeout2;
-
-                DateTime lastSeen;
-                if (Variables.windowsLastSeen.TryGetValue(name, out lastSeen))
-                    hasBeenSeen = timeNotUsed > DateTime.Now.Subtract(lastSeen).TotalMilliseconds;
-
-                // If window has not changed do nothing
-                if (Variables.currentWindow != null && Variables.currentWindow.Name.Equals(name))
-                    return;
-
-                if (Variables.currentWindow != null)
-                {
-                    closeCurrentWindow();
-                }
-
-                Variables.currentWindow = new Helper.Window();
-                Variables.currentWindow.Name = arr.Last();
-                Variables.currentWindow.From = DateTime.Now;
-
-                if (arr.Length >= 2)
-                {
-                    Variables.currentWindow.Details = string.Join("- ", arr.Take(arr.Length - 1));
-                }
-
-                // Show notification if app has not been seen in last few minutes
-                if ((Variables.lastConfirmed == null || DateTime.Now.Subtract((DateTime)Variables.lastConfirmed).TotalSeconds > timeout2) && !hasBeenSeen && disturb)
-                {
-                    changeActivity();
-                }
-                // Handle case that window has been seen shortly before but still no activity is running. In this case just start up another activity of the same kind
-                else if (Variables.currentActivity == null)
-                {
-                    try
-                    {
-                        using (TextReader tr = new StreamReader(Variables.activityPath))
-                        {
-                            var csv = new CsvReader(tr);
-                            var records = csv.GetRecords<Helper.Activity>();
-
-                            Helper.Activity last_activity = records.LastOrDefault();
-
-                            Variables.currentActivity = new Helper.Activity();
-                            Variables.currentActivity.Name = last_activity != null ? last_activity.Name : "";
-                            Variables.currentActivity.From = DateTime.Now;
-                        }
-                    } catch (CsvHelper.MissingFieldException e)
-                    {
-                        handleError();
-                    }
-                }
-            }
-        }
-
-        private void closeCurrentActivity()
-        {
-            if (Variables.currentActivity != null)
-                Variables.currentActivity.save();
-            Variables.currentActivity = null;
-        }
-
-        private void closeCurrentWindow()
-        {
-            if (Variables.currentWindow != null)
-                Variables.currentWindow.save();
-            Variables.currentWindow = null;
-        }
-
-        private void changeActivity(bool focusToast = false)
-        {
-            try
-            {
-                pause(false);
-                if (!CloseAllToasts())
-                {
-                    CustomToast newToast = new CustomToast(focusToast);
-                    newToast.Show();
-                    if (focusToast)
-                        newToast.Activate();
-                }
-            } catch (Exception ex)
-            {
-                if(ex is CsvHelper.MissingFieldException)
-                    handleError();
-            }
-
         }
     }
 }

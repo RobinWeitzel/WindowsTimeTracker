@@ -185,14 +185,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\CustomComboBoxItem.cs" />
+    <Compile Include="Helper\ScreenHandler.cs" />
+    <Compile Include="Logic\AppStateTracker.cs" />
+    <Compile Include="Logic\ASDL.cs" />
     <Compile Include="Blacklist.xaml.cs">
       <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CustomEventArgs.cs" />
     <Compile Include="Helper\Activity.cs" />
-    <Compile Include="KeyboardHook.cs" />
+    <Compile Include="Logic\Listeners\HotkeyListener.cs" />
+    <Compile Include="Logic\Listeners\MachineStateListener.cs" />
     <Compile Include="ManualTracking.xaml.cs">
       <DependentUpon>ManualTracking.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Listeners\ProgramSwitchListener.cs" />
     <Compile Include="SettingsBlacklist.xaml.cs">
       <DependentUpon>SettingsBlacklist.xaml</DependentUpon>
     </Compile>
@@ -202,12 +209,9 @@
     <Compile Include="SettingsAbout.xaml.cs">
       <DependentUpon>SettingsAbout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Variables.cs" />
+    <Compile Include="Logic\StorageHandler.cs" />
     <Compile Include="CustomToast.xaml.cs">
       <DependentUpon>CustomToast.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HTMLDataWindow.xaml.cs">
-      <DependentUpon>HTMLDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManualEdit.xaml.cs">
       <DependentUpon>ManualEdit.xaml</DependentUpon>
@@ -227,10 +231,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomToast.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HTMLDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
