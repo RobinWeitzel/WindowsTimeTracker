@@ -77,40 +77,6 @@ namespace TimeTracker
             CheckForUpdates();
         }
 
-        /*private void handleError()
-        {
-            MessageBoxResult result = MessageBox.Show("Malformed CSV files. Files is being repaired after which the TimeTracker will restart.");
-
-            List<Helper.Activity> good;
-            // Read in CSV wiht activities
-            using (var reader = new StreamReader(Variables.activityPath))
-            using (var csv = new CsvReader(reader))
-            {
-                good = new List<Helper.Activity>();
-
-                while (csv.Read())
-                {
-                    try
-                    {
-                        var record = csv.GetRecord<Helper.Activity>();
-                        good.Add(record);
-                    } catch (Exception ignore)
-                    {
-
-                    }
-                }
-            }
-
-            using (TextWriter tw = new StreamWriter(Variables.activityPath))
-            {
-                var csv = new CsvWriter(tw);
-                csv.WriteRecords(good);
-            }
-
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
-        }*/
-
         /// <summary>
         /// Show the tutorail if it has never been shown before.
         /// </summary>
@@ -248,12 +214,18 @@ namespace TimeTracker
         /// <param name="e">The event</param>
         private void CreateActivityDialog(object sender, CustomEventArgs e)
         {
-            if (!CloseAllToasts()) // If the users is currently not interacting with a dialog.
+            try
             {
-                ActivityDialog newToast = new ActivityDialog(StorageHandler, AppStateTracker, (bool)e.Value);
-                newToast.Show();
-                if ((bool)e.Value)
-                    newToast.Activate();
+                if (!CloseAllToasts()) // If the users is currently not interacting with a dialog.
+                {
+                    ActivityDialog newToast = new ActivityDialog(StorageHandler, AppStateTracker, (bool)e.Value);
+                    newToast.Show();
+                    if ((bool)e.Value)
+                        newToast.Activate();
+                }
+            } catch (Exception ignore)
+            {
+
             }
         }
 
