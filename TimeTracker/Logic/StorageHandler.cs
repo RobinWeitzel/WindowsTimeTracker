@@ -29,27 +29,25 @@ namespace TimeTracker
             ActivityPath = path + "\\Activities.csv";
 
             CreateFilesIfNoneExist(path);
-
-            // AppDomain.CurrentDomain.SetData("DataDirectory", path); ToDo: Unclear for what this is needed
         }
 
         /// <summary>
         /// Create the TimeTracke directory in which the csv-files are kept if it does not yet exist.
-        /// Also create the csv-files with headers if they do not yet exist.
+        /// Also creates the csv-files with headers if they do not yet exist.
         /// </summary>
         /// <param name="path"></param>
         private void CreateFilesIfNoneExist(string path)
         {
             if (!File.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
 
             if (!File.Exists(WindowPath))
             {
                 using (TextWriter tw = new StreamWriter(WindowPath))
                 {
-                    var csv = new CsvWriter(tw);
-                    csv.WriteHeader<Window>();
-                    csv.NextRecord();
+                    CsvWriter Csv = new CsvWriter(tw);
+                    Csv.WriteHeader<Window>();
+                    Csv.NextRecord();
                 }
             }
 
@@ -57,9 +55,9 @@ namespace TimeTracker
             {
                 using (TextWriter tw = new StreamWriter(ActivityPath))
                 {
-                    var csv = new CsvWriter(tw);
-                    csv.WriteHeader<Activity>();
-                    csv.NextRecord();
+                    CsvWriter Csv = new CsvWriter(tw);
+                    Csv.WriteHeader<Activity>();
+                    Csv.NextRecord();
                 }
             }
         }
@@ -79,6 +77,10 @@ namespace TimeTracker
             }
         }
 
+        /// <summary>
+        /// Get all activites ordered by their To-date
+        /// </summary>
+        /// <returns>List of ordered activities</returns>
         public List<Activity> GetLastActivities()
         {
             using (TextReader tr = new StreamReader(ActivityPath))
@@ -90,6 +92,10 @@ namespace TimeTracker
             }
         }
 
+        /// <summary>
+        /// Get all activities grouped by their name and ordered by their latest To-date
+        /// </summary>
+        /// <returns>List of ordered groups of activities</returns>
         public List<IGrouping<string, Activity>> GetLastActivitiesGrouped()
         {
             using (TextReader tr = new StreamReader(ActivityPath))
@@ -98,6 +104,38 @@ namespace TimeTracker
                 IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
 
                 return Records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of activies fitting the provided filter expression.
+        /// </summary>
+        /// <param name="filter">The filter for the activities</param>
+        /// <returns></returns>
+        public List<Activity> GetActivitiesByLambda(Func<Activity, bool> filter)
+        {
+            using (TextReader tr = new StreamReader(ActivityPath))
+            {
+                CsvReader Csv = new CsvReader(tr);
+                IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+
+                return Records.Where(filter).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of windows fitting the provided filter expression.
+        /// </summary>
+        /// <param name="filter">The filter for the windows</param>
+        /// <returns></returns>
+        public List<Window> GetWindowsByLambda(Func<Window, bool> filter)
+        {
+            using (TextReader tr = new StreamReader(WindowPath))
+            {
+                CsvReader Csv = new CsvReader(tr);
+                IEnumerable<Window> Records = Csv.GetRecords<Window>();
+
+                return Records.Where(filter).ToList();
             }
         }
 
@@ -116,12 +154,17 @@ namespace TimeTracker
             }
         }
 
+        /// <summary>
+        /// Writes multiple acitivites to the csv file overwriting the old data.
+        /// </summary>
+        /// <param name="activities">List of activies that should be written to the csv file.</param>
         public void WriteActivities(List<Activity> activities)
         {
             using (TextWriter tw = new StreamWriter(ActivityPath))
             {
                 CsvWriter Csv = new CsvWriter(tw);
                 Csv.WriteRecords(activities);
+                Csv.NextRecord();
             }
         }
 

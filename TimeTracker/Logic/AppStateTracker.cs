@@ -12,16 +12,21 @@ namespace TimeTracker
     /// </summary>
     public class AppStateTracker
     {
+        /* Delegates */
         public delegate void CustomEventDelegate(object sender, CustomEventArgs args);
+
+        /* Events */
         public event CustomEventDelegate ChangeContextMenu;
 
+        /* Constants */
         public const string Version = "0.9.6.0";
+
+        /* Variables */
         public IDictionary<string, DateTime> WindowsLastSeen { get; set; }
         public Nullable<DateTime> LastConfirmed { get; set; }
         public Window CurrentWindow { get; set; }
         public Activity CurrentActivity { get; set; }
         public DateTime? LastLocked { get; set; }
-
         public bool Paused { get; set; }
         public bool Disturb { get; set; }
 
@@ -45,9 +50,15 @@ namespace TimeTracker
             StorageHandler = storageHandler;
         }
 
+        /// <summary>
+        /// Toogles/set the pause status.
+        /// If no parameter is provided, the status is toggled.
+        /// If a bool-parameter is provided, the status is set to that parameter.
+        /// </summary>
+        /// <param name="setPause">True, if the tracking should be pause; otherwise False.</param>
         public void Pause(bool? setPause)
         {
-            if (setPause != null)
+            if (setPause != null) // Set pause
             {
                 if (setPause == true)
                 {

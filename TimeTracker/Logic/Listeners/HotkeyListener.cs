@@ -15,6 +15,11 @@ namespace TimeTracker
     /// </summary>
     public class HotkeyListener : IDisposable
     {
+        /* Delegates */
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        public delegate void CustomEventDelegate(object sender, CustomEventArgs args);
+
+        /* DLL imports */
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
@@ -28,6 +33,10 @@ namespace TimeTracker
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
+        /* Events */
+        public event CustomEventDelegate KeyCombinationPressed;
+
+        /* Constants */
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -36,27 +45,34 @@ namespace TimeTracker
         private const UInt32 SWP_NOMOVE = 0x0002;
         private const UInt32 SWP_SHOWWINDOW = 0x0040;
 
-        private LowLevelKeyboardProc keyboardProc;
-        private IntPtr hookId = IntPtr.Zero;
+        /* Variables */
+        private LowLevelKeyboardProc KeyboardProc;
+        private IntPtr HookId = IntPtr.Zero;
+        private HashSet<Key> PressedKeys = new HashSet<Key>();
 
-        private HashSet<Key> pressedKeys = new HashSet<Key>();
-
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-        public delegate void CustomEventDelegate(object sender, CustomEventArgs args);
-
-        public event CustomEventDelegate KeyCombinationPressed;
-
+        /// <summary>
+        /// Hotkey listener.
+        /// Triggers the KeyCombinationPressed event any time the correct combiniation is pressed.
+        /// The required combination is defined in the settings.
+        /// </summary>
         public HotkeyListener()
         {
-            keyboardProc = HookCallback;
-            hookId = SetHook(keyboardProc);
+            KeyboardProc = HookCallback;
+            HookId = SetHook(KeyboardProc);
         }
 
+        /// <summary>
+        /// Disposes of the hook.
+        /// </summary>
         public void Dispose()
         {
-            UnhookWindowsHookEx(hookId);
+            UnhookWindowsHookEx(HookId);
         }
 
+        /// <summary>
+        /// Called when the combination is pressed
+        /// </summary>
+        /// <param name="e">The key event</param>
         public void OnKeyCombinationPressed(EventArgs e)
         {
             KeyCombinationPressed?.Invoke(this, new CustomEventArgs());
@@ -89,22 +105,23 @@ namespace TimeTracker
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                var keyPressed = KeyInterop.KeyFromVirtualKey(vkCode);
-                pressedKeys.Add(keyPressed);
-                if (!Settings.Default.HotkeyDisabled && Settings.Default.Hotkeys != null && Settings.Default.Hotkeys.SequenceEqual(pressedKeys))
+                int VKCode = Marshal.ReadInt32(lParam);
+                Key KeyPressed = KeyInterop.KeyFromVirtualKey(VKCode);
+                PressedKeys.Add(KeyPressed);
+
+                if (!Settings.Default.HotkeyDisabled && Settings.Default.Hotkeys != null && Settings.Default.Hotkeys.SequenceEqual(PressedKeys))
                 {
                     OnKeyCombinationPressed(new EventArgs());
                 }
             }
             else if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                var keyReleased = KeyInterop.KeyFromVirtualKey(vkCode);
-                pressedKeys.Remove(keyReleased);
+                int VKCode = Marshal.ReadInt32(lParam);
+                var KeyReleased = KeyInterop.KeyFromVirtualKey(VKCode);
+                PressedKeys.Remove(KeyReleased);
             }
 
-            return CallNextHookEx(hookId, nCode, wParam, lParam);
+            return CallNextHookEx(HookId, nCode, wParam, lParam);
         }
     }
 }

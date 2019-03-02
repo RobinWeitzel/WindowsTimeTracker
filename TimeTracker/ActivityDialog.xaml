@@ -1,11 +1,11 @@
-﻿<Window x:Class="TimeTracker.CustomToast"
+﻿<Window x:Class="TimeTracker.ActivityDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="NotificationsWindow - TimeTracker" Height="180" Width="350" Topmost="True" 
+        Title="Activity Dialog - TimeTracker" Height="180" Width="350" Topmost="True" 
         WindowStartupLocation="Manual" WindowStyle="None" WindowState="Normal" ResizeMode="NoResize" 
         Background="#147ec9" Foreground="AntiqueWhite" ShowInTaskbar="False" ShowActivated="False" 
         Activated="Window_Activated" Deactivated="Window_Deactivated">

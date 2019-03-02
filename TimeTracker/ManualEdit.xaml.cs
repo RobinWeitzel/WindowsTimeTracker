@@ -25,6 +25,10 @@ namespace TimeTracker
 
         private StorageHandler StorageHandler;
 
+        /// <summary>
+        /// Allows the user to manually change the activies and their time slots
+        /// </summary>
+        /// <param name="storageHandler">Used to read and write from/to the csv files</param>
         public ManualEdit(StorageHandler storageHandler)
         {
             InitializeComponent();
@@ -32,6 +36,9 @@ namespace TimeTracker
             LoadData();
         }
 
+        /// <summary>
+        /// Loads all activites from the csv file and show them in the table
+        /// </summary>
         private void LoadData()
         {
             Activities = StorageHandler.GetLastActivities();

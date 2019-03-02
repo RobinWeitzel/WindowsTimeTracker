@@ -19,6 +19,5 @@
         </DataGrid>
         <Button x:Name="Save" Content="Save" HorizontalAlignment="Left" Height="30" Margin="676,382,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Save_Click" FontSize="18"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Height="30" Margin="31,382,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.428,-0.229" Click="Close_Click" FontSize="18"/>
-
     </Grid>
 </Window>

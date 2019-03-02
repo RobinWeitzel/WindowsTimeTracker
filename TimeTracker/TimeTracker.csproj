@@ -186,7 +186,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\CustomComboBoxItem.cs" />
-    <Compile Include="Helper\ScreenHandler.cs" />
+    <Compile Include="Helper\DateTimeExtensions.cs" />
+    <Compile Include="Helper\Event.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\Helper2.cs" />
+    <Compile Include="Helper\Helper3.cs" />
+    <Compile Include="Helper\Library.cs" />
+    <Compile Include="Helper\MyScriptingClass.cs" />
+    <Compile Include="HTMLDataWindow.xaml.cs">
+      <DependentUpon>HTMLDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logic\AppStateTracker.cs" />
     <Compile Include="Logic\ASDL.cs" />
     <Compile Include="Blacklist.xaml.cs">
@@ -196,8 +205,8 @@
     <Compile Include="Helper\Activity.cs" />
     <Compile Include="Logic\Listeners\HotkeyListener.cs" />
     <Compile Include="Logic\Listeners\MachineStateListener.cs" />
-    <Compile Include="ManualTracking.xaml.cs">
-      <DependentUpon>ManualTracking.xaml</DependentUpon>
+    <Compile Include="AwayFromPCDialog.xaml.cs">
+      <DependentUpon>AwayFromPCDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\Listeners\ProgramSwitchListener.cs" />
     <Compile Include="SettingsBlacklist.xaml.cs">
@@ -210,8 +219,8 @@
       <DependentUpon>SettingsAbout.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\StorageHandler.cs" />
-    <Compile Include="CustomToast.xaml.cs">
-      <DependentUpon>CustomToast.xaml</DependentUpon>
+    <Compile Include="ActivityDialog.xaml.cs">
+      <DependentUpon>ActivityDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManualEdit.xaml.cs">
       <DependentUpon>ManualEdit.xaml</DependentUpon>
@@ -230,9 +239,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomToast.xaml">
+    <Page Include="ActivityDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HTMLDataWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -250,7 +263,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ManualTracking.xaml">
+    <Page Include="AwayFromPCDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,7 +21,7 @@ namespace TimeTracker
     /// </summary>
     public partial class SettingsGeneral : UserControl
     {
-        private HashSet<Key> hotkeys = new HashSet<Key>();
+        private HashSet<Key> Hotkeys = new HashSet<Key>();
 
         public SettingsGeneral()
         {
@@ -40,20 +40,20 @@ namespace TimeTracker
 
         private void TimeOut_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int timeoutResult;
-            if (int.TryParse(TimeOut.Text, out timeoutResult))
+            int TimeoutResult;
+            if (int.TryParse(TimeOut.Text, out TimeoutResult))
             {
-                Settings.Default.Timeout = timeoutResult;
+                Settings.Default.Timeout = TimeoutResult;
                 Settings.Default.Save();
             }
         }
 
         private void TimeNotUsed_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int timeNotUsedResult;
-            if (int.TryParse(TimeNotUsed.Text, out timeNotUsedResult))
+            int TimeNotUsedResult;
+            if (int.TryParse(TimeNotUsed.Text, out TimeNotUsedResult))
             {
-                Settings.Default.TimeSinceAppLastUsed = timeNotUsedResult;
+                Settings.Default.TimeSinceAppLastUsed = TimeNotUsedResult;
                 Settings.Default.Save();
             }
         }
@@ -61,10 +61,10 @@ namespace TimeTracker
         private void TimeOut2_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            int timeout2Result;
-            if (int.TryParse(TimeOut2.Text, out timeout2Result))
+            int Timeout2Result;
+            if (int.TryParse(TimeOut2.Text, out Timeout2Result))
             {
-                Settings.Default.Timeout2 = timeout2Result;
+                Settings.Default.Timeout2 = Timeout2Result;
                 Settings.Default.Save();
             }
         }
@@ -95,19 +95,19 @@ namespace TimeTracker
 
         private void Hotkey_KeyDown(object sender, KeyEventArgs e)
         {
-            hotkeys.Add(e.Key);
+            Hotkeys.Add(e.Key);
 
-            Hotkey.Text = String.Join(" + ", hotkeys);
+            Hotkey.Text = String.Join(" + ", Hotkeys);
             Hotkey.CaretIndex = Hotkey.Text.Length;
             e.Handled = true;
         }
 
         private void Hotkey_KeyUp(object sender, KeyEventArgs e)
         {
-            if (hotkeys.Count() > 0)
+            if (Hotkeys.Count() > 0)
             {
-                Settings.Default.Hotkeys = hotkeys.ToList();
-                hotkeys.Clear();
+                Settings.Default.Hotkeys = Hotkeys.ToList();
+                Hotkeys.Clear();
 
                 Settings.Default.Save();
             }
@@ -117,9 +117,9 @@ namespace TimeTracker
 
         private void Hotkey_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (hotkeys.Count() > 0)
+            if (Hotkeys.Count() > 0)
             {
-                Hotkey.Text = String.Join(" + ", hotkeys);
+                Hotkey.Text = String.Join(" + ", Hotkeys);
                 Hotkey.CaretIndex = Hotkey.Text.Length;
             }
         }

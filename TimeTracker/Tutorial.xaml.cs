@@ -19,49 +19,49 @@ namespace TimeTracker
     /// </summary>
     public partial class Tutorial : Window
     {
-        public int position = 0;
-        public string[] images = {"Bild1.png", "Bild2.png" , "Bild3.png" , "Bild4.png" };
-        public string[] text = { "Welcome to TimeTracker - your personal time keeper!", "Any time you switch to a program you have not used for a while TimeTracker will ask if you are still working on the same activity.", "You can manually change the current activity, access settings and view the recorded data by right-clicking on the icon in the System Tray.", "", "" };
+        public int Position = 0;
+        public string[] Images = {"Bild1.png", "Bild2.png" , "Bild3.png" , "Bild4.png" };
+        public string[] Text = { "Welcome to TimeTracker - your personal time keeper!", "Any time you switch to a program you have not used for a while TimeTracker will ask if you are still working on the same activity.", "You can manually change the current activity, access settings and view the recorded data by right-clicking on the icon in the System Tray.", "", "" };
         public Tutorial()
         {
             InitializeComponent();
-            drawImage();
+            DrawImage();
         }
 
-        private void drawImage()
+        private void DrawImage()
         {
-            Uri uriSource = new Uri("Resources/" + images[position], UriKind.Relative);
+            Uri uriSource = new Uri("Resources/" + Images[Position], UriKind.Relative);
 
             Image.Source = new BitmapImage(uriSource);
-            TextBlock.Text = text[position];
+            TextBlock.Text = Text[Position];
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            position = Math.Max(position - 1, 0);
+            Position = Math.Max(Position - 1, 0);
 
             Next.Content = "Next";
-            if (position == 0)
+            if (Position == 0)
                 Previous.IsEnabled = false;
                 
-            drawImage();
+            DrawImage();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (position == images.Length - 1)
+            if (Position == Images.Length - 1)
             {
                 this.Close();
                 return;
             }
 
-            position = Math.Min(position + 1, images.Length - 1);
+            Position = Math.Min(Position + 1, Images.Length - 1);
 
             Previous.IsEnabled = true;
-            if (position == images.Length - 1)
+            if (Position == Images.Length - 1)
                 Next.Content = "Close";
 
-            drawImage();
+            DrawImage();
         }
     }
 }

@@ -7,15 +7,7 @@ namespace TimeTracker
     /// </summary>
     public class CustomEventArgs : EventArgs
     {
-        private readonly object value;
-
-        /// <summary>
-        /// Gets the value that was passed along
-        /// </summary>
-        public object Value
-        {
-            get { return this.value; }
-        }
+        public object Value { get; }
 
         /// <summary>
         /// Used if no value needs to be sent along.
@@ -31,7 +23,7 @@ namespace TimeTracker
         /// <param name="value">Can be any value that should be passed along with the event</param>
         public CustomEventArgs(object value)
         {
-            this.value = value;
+            Value = value;
         }
     }
 }

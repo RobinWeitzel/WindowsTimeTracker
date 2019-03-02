@@ -26,10 +26,11 @@ namespace TimeTracker
     {
         public class Item : INotifyPropertyChanged
         {
-            private string name;
-            // Declare the event
+            /* Events */
             public event PropertyChangedEventHandler PropertyChanged;
 
+            /* Variables */
+            private string name;    
             public string Name
             {
                 get
@@ -52,8 +53,8 @@ namespace TimeTracker
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             }
         }
-
         public ObservableCollection<Item> Items;
+
         public SettingsBlacklist()
         {
             InitializeComponent();

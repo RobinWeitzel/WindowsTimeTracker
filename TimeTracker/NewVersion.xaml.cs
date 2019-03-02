@@ -26,6 +26,11 @@ namespace TimeTracker
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Opens a browser window poiting to the provided link
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event (contains the url to which the browser should point)</param>
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));

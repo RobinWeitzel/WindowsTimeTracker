@@ -1,11 +1,11 @@
-﻿<Window x:Class="TimeTracker.ManualTracking"
+﻿<Window x:Class="TimeTracker.AwayFromPCDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="ManualTracking" SizeToContent="WidthAndHeight">
+        Title="Away from computer dialog - TimeTracker" SizeToContent="WidthAndHeight">
     <Grid Margin="0,0,20,20">
         <Label Content="Welcome back!" HorizontalAlignment="Left" Margin="31,17,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <Label Name="Label" Content="What were you doing away from the computer?" HorizontalAlignment="Left" Margin="132,82,0,0" VerticalAlignment="Top" FontSize="18" Width="532"/>

@@ -20,20 +20,26 @@ using TimeTracker.Properties;
 namespace TimeTracker
 {
     /// <summary>
-    /// Interaktionslogik für CustomToast.xaml
+    /// Interaktionslogik für ActivityDialog.xaml
     /// </summary>
-    public partial class CustomToast : System.Windows.Window
+    public partial class ActivityDialog : System.Windows.Window
     {
+        /* Variables */
         private List<CustomComboBoxItem> Activities;
         private Stack<bool> CancelClose = new Stack<bool>();
         private DateTime ToDate;
         private string DefaultName;
         private long Timeout;
-
         private StorageHandler StorageHandler;
         private AppStateTracker AppStateTracker;
 
-        public CustomToast(StorageHandler storageHandler, AppStateTracker appStateTracker, bool focusToast)
+        /// <summary>
+        /// The activity dialog shown in the bottom right corner asking the users if he is still working on the same acitivity.
+        /// </summary>
+        /// <param name="storageHandler">Handles reading and writing from/to the csv files</param>
+        /// <param name="appStateTracker">Tracks the state of the app</param>
+        /// <param name="focusToast">True, if the dialog should be focused, otherwise False</param>
+        public ActivityDialog(StorageHandler storageHandler, AppStateTracker appStateTracker, bool focusToast)
         {
             InitializeComponent();
 
@@ -42,10 +48,11 @@ namespace TimeTracker
             ToDate = DateTime.Now;
 
             // Move toast to the bottom right
-            Rect DesktopWorkingArea = System.Windows.SystemParameters.WorkArea;
-            this.Left = DesktopWorkingArea.Right - this.Width - 15;
-            this.Top = DesktopWorkingArea.Bottom - this.Height - 12;
+            Rect DesktopWorkingArea = SystemParameters.WorkArea;
+            Left = DesktopWorkingArea.Right - Width - 15;
+            Top = DesktopWorkingArea.Bottom - Height - 12;
 
+            // Load the last acitvities so that they can be displayed in the dropdown menu
             Activities = StorageHandler.GetLastActivitiesGrouped().Select(rg => new CustomComboBoxItem()
             {
                 Name = rg.Key,
@@ -61,11 +68,14 @@ namespace TimeTracker
                     Selectable = true
                 });
 
+            // Make only the first 5 options visible. The other should still be loaded so that autocomplete works
             for (int i = 0; i < Activities.Count(); i++)
             {
-                Activities[i].Visible = i < 5 ? "Visible" : "Collapsed"; // Make only the first 5 options visible
+                Activities[i].Visible = i < 5 ? "Visible" : "Collapsed";
             }
 
+            // Inserst a unselectable template at the top of the list.
+            // This should serve as an example on how to input activities.
             Activities.Insert(0, new CustomComboBoxItem()
             {
                 Name = "Activity - Subactivity",
@@ -87,16 +97,27 @@ namespace TimeTracker
             SetupClose();
         }
 
+        /// <summary>
+        /// Makes sure the dialog is closed after the appropriate time, if it has not been selected by the user.
+        /// As long as it is selected, the dialog will never close (so the user can take as much time as he needs to input th activity).
+        /// </summary>
         private async void SetupClose()
         {
             await Task.Delay((int)Timeout);
 
-            if (CancelClose.Count() == 0 || CancelClose.Pop() != true)
+            // Checks if the dialog should truely be closed.
+            if (CancelClose.Count() == 0 || CancelClose.Pop() != true) 
             {
                 SetNewActivity(ComboBox.Text);
             }
         }
 
+        /// <summary>
+        ///  Changes the current activity and saves the old one.
+        ///  Closes the dialog afterwards.
+        /// </summary>
+        /// <param name="name">The name if the new activity. Leave it empty if the name of the last activity should be used.</param>
+        /// <param name="confirmClicked">True, if the confirm button was clicked.</param>
         private void SetNewActivity(string name = null, bool confirmClicked = false)
         {
             if (AppStateTracker.CurrentActivity == null || !ComboBox.Text.Equals(AppStateTracker.CurrentActivity.Name))
