@@ -90,52 +90,29 @@ namespace TimeTracker
         }
 
         /// <summary>
-        /// Gets the records from the activites csv file
+        /// Gets the most recent activity from the csv-file or null, if none exists.
         /// </summary>
-        /// <returns></returns>
-        private IEnumerable<Activity> GetActivityRecords()
+        /// <returns>Null or the most recent activity</returns>
+        public Activity GetLastActivity()
         {
             try
             {
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
-                    return Csv.GetRecords<Activity>();
+                    IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+                    return Records.OrderBy(r => r.To).LastOrDefault();
                 }
             }
-            catch (CsvHelper.MissingFieldException ex)
+            catch (Exception ex)
             {
-                RestoreActivitiesCsv();
-                return GetActivityRecords();
-            } 
-        }
-
-        /// <summary>
-        /// Gets the records from the windows csv file
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerable<Window> GetWindowRecords()
-        {
-            try { 
-                using (TextReader tr = new StreamReader(WindowPath))
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
                 {
-                    CsvReader Csv = new CsvReader(tr);
-                    return Csv.GetRecords<Window>();
+                    RestoreActivitiesCsv();
+                    return GetLastActivity();
                 }
-            } catch (CsvHelper.MissingFieldException ex)
-            {
-                RestoreWindowsCsv();
-                return GetWindowRecords();
+                return null;
             }
-        }
-
-        /// <summary>
-        /// Gets the most recent activity from the csv-file or null, if none exists.
-        /// </summary>
-        /// <returns>Null or the most recent activity</returns>
-        public Activity GetLastActivity()
-        {
-            return GetActivityRecords().OrderBy(r => r.To).LastOrDefault();
         }
 
         /// <summary>
@@ -144,7 +121,24 @@ namespace TimeTracker
         /// <returns>List of ordered activities</returns>
         public List<Activity> GetLastActivities()
         {
-            return GetActivityRecords().OrderByDescending(aa => aa.To).ToList();
+            try
+            {
+                using (TextReader tr = new StreamReader(ActivityPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+                    return Records.OrderByDescending(aa => aa.To).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    return GetLastActivities();
+                }
+                return new List<Activity>();
+            }
         }
 
         /// <summary>
@@ -153,7 +147,24 @@ namespace TimeTracker
         /// <returns>List of ordered groups of activities</returns>
         public List<IGrouping<string, Activity>> GetLastActivitiesGrouped()
         {
-            return GetActivityRecords().GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
+            try
+            {
+                using (TextReader tr = new StreamReader(ActivityPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+                    return Records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    return GetLastActivitiesGrouped();
+                }
+                return new List<IGrouping<string, Activity>>();
+            }
         }
 
         /// <summary>
@@ -163,7 +174,24 @@ namespace TimeTracker
         /// <returns></returns>
         public List<Activity> GetActivitiesByLambda(Func<Activity, bool> filter)
         {
-            return GetActivityRecords().Where(filter).ToList();
+            try
+            {
+                using (TextReader tr = new StreamReader(ActivityPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+                    return Records.Where(filter).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    return GetActivitiesByLambda(filter);
+                }
+                return new List<Activity>();
+            }
         }
 
         /// <summary>
@@ -173,7 +201,24 @@ namespace TimeTracker
         /// <returns></returns>
         public List<Window> GetWindowsByLambda(Func<Window, bool> filter)
         {
-            return GetWindowRecords().Where(filter).ToList();
+            try
+            {
+                using (TextReader tr = new StreamReader(WindowPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Window> Records = Csv.GetRecords<Window>();
+                    return Records.Where(filter).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreWindowsCsv();
+                    return GetWindowsByLambda(filter);
+                }
+                return new List<Window>();
+            }
         }
 
         /// <summary>
@@ -222,10 +267,14 @@ namespace TimeTracker
                     Csv.WriteRecord(activity);
                     Csv.NextRecord();
                 }
-            } catch (CsvHelper.MissingFieldException ex)
+            }
+            catch (Exception ex)
             {
-                RestoreActivitiesCsv();
-                WriteActivity(activity);
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    WriteActivity(activity);
+                }
             }
         }
 
@@ -243,10 +292,14 @@ namespace TimeTracker
                     Csv.WriteRecords(activities);
                     Csv.NextRecord();
                 }
-            } catch (CsvHelper.MissingFieldException ex)
+            }
+            catch (Exception ex)
             {
-                RestoreActivitiesCsv();
-                WriteActivities(activities);
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    WriteActivities(activities);
+                }
             }
         }
 
@@ -265,10 +318,14 @@ namespace TimeTracker
                     Csv.WriteRecord(window);
                     Csv.NextRecord();
                 }
-            } catch (CsvHelper.MissingFieldException ex)
+            }
+            catch (Exception ex)
             {
-                RestoreWindowsCsv();
-                WriteWindow(window);
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreWindowsCsv();
+                    WriteWindow(window);
+                }
             }
         }
 
@@ -287,10 +344,14 @@ namespace TimeTracker
                     Csv.WriteRecords(windows);
                     Csv.NextRecord();
                 }
-            } catch (CsvHelper.MissingFieldException ex)
+            }
+            catch (Exception ex)
             {
-                RestoreWindowsCsv();
-                WriteWindows(windows);
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreWindowsCsv();
+                    WriteWindows(windows);
+                }
             }
         }
     }
