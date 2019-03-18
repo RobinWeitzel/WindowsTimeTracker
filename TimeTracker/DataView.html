@@ -357,14 +357,14 @@
                     colorPos = 0;
                 }
             }
+            */
+            return asignedColors[text];
 
-            return asignedColors[text];*/
-
-            return stringToColour(text);
+            //return stringToColour(text);
         }
 
         function getTextColor(text) {
-            var bg = stringToColour(text);
+            var bg = getColor(text);
             if ((parseInt(bg.substr(1, 2), 16) * 0.299 + parseInt(bg.substr(3, 2), 16) * 0.587 + parseInt(bg.substr(5, 2), 16) * 0.114) > 120) {
                 return "#000000";
             } else {
@@ -458,6 +458,7 @@
                 data = resultParsed.overview;
                 data2 = resultParsed.windows;
                 data3 = resultParsed.activities;
+                asignedColors = resultParsed.colors;
 
                 stackedBar.data = {
                     labels: [getDateString(today)],
@@ -492,6 +493,7 @@
 
             boundAsync.getDetailsData1(name, startString, endString).then(function (result) {
                 var resultParsed = JSON.parse(result);
+                asignedColors = resultParsed.colors;
 
                 $('#time-total').empty();
                 document.getElementById('time-total').appendChild(createSVG2(resultParsed.relativeAverageTotal, formatTime(resultParsed.filteredAbsoluteAverageTotal), true));

@@ -185,14 +185,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helper\CustomComboBoxItem.cs" />
-    <Compile Include="Helper\DateTimeExtensions.cs" />
-    <Compile Include="Helper\Event.cs" />
-    <Compile Include="Helper\Helper.cs" />
-    <Compile Include="Helper\Helper2.cs" />
-    <Compile Include="Helper\Helper3.cs" />
-    <Compile Include="Helper\Library.cs" />
-    <Compile Include="Helper\MyScriptingClass.cs" />
+    <Compile Include="Helper\GUI\Color.cs" />
+    <Compile Include="Helper\GUI\ColorHandler.cs" />
+    <Compile Include="Helper\GUI\CustomComboBoxItem.cs" />
+    <Compile Include="Helper\GUI\DateTimeExtensions.cs" />
+    <Compile Include="Helper\GUI\Event.cs" />
+    <Compile Include="Helper\GUI\Helper.cs" />
+    <Compile Include="Helper\GUI\Helper2.cs" />
+    <Compile Include="Helper\GUI\Helper3.cs" />
+    <Compile Include="Helper\GUI\Library.cs" />
+    <Compile Include="Helper\GUI\MyScriptingClass.cs" />
     <Compile Include="HTMLDataWindow.xaml.cs">
       <DependentUpon>HTMLDataWindow.xaml</DependentUpon>
     </Compile>
@@ -202,7 +204,7 @@
       <DependentUpon>Blacklist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\CustomEventArgs.cs" />
-    <Compile Include="Helper\Activity.cs" />
+    <Compile Include="Helper\Storage\Activity.cs" />
     <Compile Include="Logic\Listeners\HotkeyListener.cs" />
     <Compile Include="Logic\Listeners\MachineStateListener.cs" />
     <Compile Include="AwayFromPCDialog.xaml.cs">
@@ -234,7 +236,7 @@
     <Compile Include="Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\Window.cs" />
+    <Compile Include="Helper\Storage\Window.cs" />
     <Page Include="Blacklist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

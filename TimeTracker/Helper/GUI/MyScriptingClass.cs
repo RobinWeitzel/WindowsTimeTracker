@@ -31,6 +31,19 @@ namespace TimeTracker.Helper
             DateTime StartOfWeek = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
             DateTime StartOfNextWeek = StartOfWeek.AddDays(7);
 
+            /////// Compute colors //////
+            Dictionary<string, string> Colors = new ColorHandler().getColorDictionary(StorageHandler.GetLastActivitiesGrouped().Select(g => g.Key).ToList());
+            new ColorHandler().getColorDictionary(StorageHandler.GetLastestWindowsGrouped().Select(g => g.Key).ToList(), false).ToList()
+                .ForEach(g => {
+                    if (!Colors.ContainsKey(g.Key))
+                        Colors.Add(g.Key, g.Value);
+                });
+
+            string ColorsString = Colors.Aggregate("", (acc, kv) => acc += "\"" + kv.Key + "\":\"" + kv.Value + "\",");
+            ColorsString = ColorsString.Remove(ColorsString.Length - 1); // Remove the last comma
+
+            Result += "\"colors\": {" + ColorsString + "},";
+
 
             /////// Load the data for the timeline //////
             List<Activity> TodayActivities = StorageHandler.GetActivitiesByLambda(r => r.To >= DayInQuestion && r.From < DayInQuestionAfter);
@@ -149,6 +162,15 @@ namespace TimeTracker.Helper
             string Result = "{";
             DateTime Start = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
             DateTime End = DateTime.ParseExact(endString, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+
+            /////// Compute colors //////
+            Dictionary<string, string> Colors = new ColorHandler().getColorDictionary(StorageHandler.GetEarliestActivitiesGrouped().Select(g => g.Key).ToList());
+
+            string ColorsString = Colors.Aggregate("", (acc, kv) => acc += "\"" + kv.Key + "\":\"" + kv.Value + "\",");
+            ColorsString = ColorsString.Remove(ColorsString.Length - 1); // Remove the last comma
+
+            Result += "\"colors\": {" + ColorsString + "},";
+
 
             List<Activity> allActivities = StorageHandler.GetActivitiesByLambda(r => r.To >= Start && r.From <= End);
             List<Helper> Helpers = new List<Helper>();
