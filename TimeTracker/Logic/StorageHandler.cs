@@ -168,6 +168,32 @@ namespace TimeTracker
         }
 
         /// <summary>
+        /// Get all activities grouped by their name and ordered by their earliest To-date
+        /// </summary>
+        /// <returns>List of ordered groups of activities</returns>
+        public List<IGrouping<string, Activity>> GetEarliestActivitiesGrouped()
+        {
+            try
+            {
+                using (TextReader tr = new StreamReader(ActivityPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
+                    return Records.GroupBy(r => r.Name).OrderBy(rg => rg.Min(r => r.From)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    return GetEarliestActivitiesGrouped();
+                }
+                return new List<IGrouping<string, Activity>>();
+            }
+        }
+
+        /// <summary>
         /// Returns a list of activies fitting the provided filter expression.
         /// </summary>
         /// <param name="filter">The filter for the activities</param>
@@ -191,6 +217,32 @@ namespace TimeTracker
                     return GetActivitiesByLambda(filter);
                 }
                 return new List<Activity>();
+            }
+        }
+
+        /// <summary>
+        /// Get all windows grouped by their name and ordered by their earliest To-date
+        /// </summary>
+        /// <returns>List of ordered groups of activities</returns>
+        public List<IGrouping<string, Window>> GetLastestWindowsGrouped()
+        {
+            try
+            {
+                using (TextReader tr = new StreamReader(WindowPath))
+                {
+                    CsvReader Csv = new CsvReader(tr);
+                    IEnumerable<Window> Records = Csv.GetRecords<Window>();
+                    return Records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is CsvHelper.MissingFieldException || ex is CsvHelperException)
+                {
+                    RestoreActivitiesCsv();
+                    return GetLastestWindowsGrouped();
+                }
+                return new List<IGrouping<string, Window>>();
             }
         }
 
