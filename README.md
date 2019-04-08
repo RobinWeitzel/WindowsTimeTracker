@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">A small program to keep track of what you worked on.</h4>
+<h4 align="center">An offline program to keep track of what you worked on.</h4>
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
