@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  <img src="  https://user-images.githubusercontent.com/29231070/60397936-f9ad0480-9b52-11e9-8aa8-e3bfe97b6185.png" alt="Markdownify" width="200"></img>
+    <img src="https://raw.githubusercontent.com/RobinWeitzel/WindowsTimeTracker/master/TimeTracker/Resources/Bild1.png" alt="Markdownify" width="200"></img>
   <br>
   TimeTracker
   <br>
