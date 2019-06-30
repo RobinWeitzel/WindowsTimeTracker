@@ -20,7 +20,7 @@
 
 ## Key Features
 
-* Smart + manuall activity tracking
+* Smart + manual activity tracking
 * No input needed 99% of the time
 * Different visualizations and analytics
 * Offline & Open source -> Your data is secure on your own machine
