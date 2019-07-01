@@ -53,7 +53,7 @@ namespace TimeTracker
 
             // Sets up the taskbar icon and the menu that show if you left-click on it
             NotifyIcon = new System.Windows.Forms.NotifyIcon();
-            NotifyIcon.Icon = TimeTracker.Properties.Resources.MyIcon;
+            NotifyIcon.Icon = TimeTracker.Properties.Resources.icon;
             NotifyIcon.Visible = true;
             CreateContextMenu();
 
