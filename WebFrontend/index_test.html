@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Email Archive</title>
+    <script src="main.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/frappe-charts@1.1.0/dist/frappe-charts.min.iife.js"></script>-->
+    <script src="https://unpkg.com/frappe-charts@1.1.0/dist/frappe-charts.min.iife.js"></script>
+</head>
+
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+
+    .no-legend .heatmap-legend-unit {
+        display: none;
+    }
+    .no-legend .chart-legend .subdomain-name {
+        display: none;
+    }
+
+    /* This is just so it doesn't look like shit*/
+    #emails_on_that_day {
+        font-family: 'Helvetica';
+        padding: 20px;
+        font-size: 14px;
+    }
+
+</style>
+
+<body onload="start()">
+    
+    <div id="chart_multi_inbox_incoming_amounts"></div>
+
+    <div id="chart_single_inbox_activity"></div>
+    <div id="emails_on_that_day"></div>
+
+    <div id="chart_single_inbox_activity_heatmap_single"></div>
+    <div id="chart_single_inbox_activity_heatmap_1"></div>
+    <div id="chart_single_inbox_activity_heatmap_2"></div>
+    <div id="chart_single_inbox_activity_heatmap_3"></div>
+</body>
+
+</html>
