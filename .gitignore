@@ -8,4 +8,4 @@ TimeTracker/publish/
 .vs/
 packages/
 *.zip
-
+.DS_Store
