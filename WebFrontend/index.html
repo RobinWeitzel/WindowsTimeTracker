@@ -60,13 +60,14 @@
 
 	/* For fontawesome - take original color */
 	.fas {
-		color: inherit;
+		color: none;
+		/* color: inherit */
 	}
 
 	/* Site stuff components (Important, thats why its here) :)*/
 	#menu {
 		flex: 0 200px;
-		background-color: var(--toolbar_background);
+		background-color: var(--menu_background);
 		height: 100vh;
 		z-index: 2;
 		overflow: hidden;
@@ -80,7 +81,8 @@
 		padding: 20px;
 		background-color: var(--content_background);
 		display: none;
-		overflow: scroll;
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 	.show_view {
 		display: inline;
@@ -233,6 +235,13 @@
 			TristanMenzinger
 		</button>
 		<br><br>
+		<div class="subheader">Data Protection</div>
+		<div class="text">
+			We made this app so you can track yourself, for yourself. <br>
+			All data is stored locally, there is zero traffic to any servers. We encourage you to have a look at the Project
+			on GitHub and have a look for yourself. <br> Since we won't ever interrupt you for feedback and don't track usage statistics by default, we rely on you to send us feedback.
+		</div>
+		<br><br>
 		<div class="subheader">Feedback or suggestion?</div>
 		<div class="text">Write an&nbsp;</div>
 		<button class="standard_button">
@@ -339,7 +348,7 @@
 		<div class="text">s = Seconds, m = Minutes, h = Hours</div>
 		<br><br>
 		<div>
-			<div class="subheader">Telementry</div>
+			<div class="subheader">Telemetry</div>
 				<div class="setting" status="true">
 					<i class="setting_no fas fa-toggle-off"></i>
 					<i class="setting_yes fas fa-toggle-on"></i>
@@ -348,7 +357,7 @@
 				<div class="text">
 					We do not send any activity data or personal information. 
 					Upon installation, a unique ID is generated that is sent 
-					along with the number of app uses per day.
+					along with the number of app uses.
 				</div>
 				<br>
 			</div>
@@ -410,11 +419,11 @@
 			<div id="tags_suggestion_buttons_container">
 				<button id="button_tags_select_all" class="standard_button mini">
 					<i class="fas fa-circle"></i>
-					Select all
+					Select
 				</button>
 				<button id="button_tags_unselect_all" class="standard_button mini">
 					<i class="far fa-circle"></i>
-					Unselect all
+					Unselect
 				</button>
 			</div>
 		</div>
@@ -436,7 +445,7 @@
 					<button id="button_to_today" class="standard_button mini">
 						<!-- <i class="fas fa-crosshairs"></i> -->
 						<i class="fas fa-calendar-day"></i>
-						To today
+						Today
 					</button>
 				</div>
 				<!-- Because the datepicker needs an element to cling onto -->
@@ -457,11 +466,11 @@
 			<div class="day_placeholder"></div>
 		</div>
 		<div id="element_daily" class="chart">
-			<div class="title">THIS DAY</div>
+			<div class="chart_title">This day</div>
 			<div id="test_chart_daily">HI</div>
 		</div>
 		<div id="element_weekly" class="chart">
-			<div class="title">THAT WEEK</div>
+			<div class="chart_title">That week</div>
 			<div class="view_container">
 				<div id="sunburst_plot">Test</div>
 				<div id="sunburst_breakdown">Test</div>

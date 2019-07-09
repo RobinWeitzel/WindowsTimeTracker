@@ -1,19 +1,21 @@
 #setting_ignore_app_container {
 	max-height: calc(100vh - 300px);
 	min-height: 100px;
-	overflow: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
 	width: 100%;
 	margin-top: 10px;
 }
 
 .setting_ignore_app > .setting_entry {
-	width: calc(100% - 30px);
+	width: calc(100% - 50px);
 	border-width: 1px;
 	margin-right: 0px;
 }
 
 .setting_ignore_app > .standard_button {
 	border: none;
+	margin-left: 10px;
 	width: 30px;
 	height: 26px;
 	padding: 0px;

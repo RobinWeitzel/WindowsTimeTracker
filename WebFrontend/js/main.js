@@ -542,6 +542,14 @@ init = () => {
 		},
 		{
 			name: "Over3",
+			children: [
+				{
+					name: "Under 1x",
+				},
+				{
+					name: "Under 1y",
+				},
+			]
 		},
 		{
 			name: "Over1",
@@ -575,7 +583,7 @@ init = () => {
 		tag_options: tag_options
 	});
 
-	VIEW_REPORT.select_view();
+	VIEW_ABOUT.select_view();
 }
 
 class TagSelector {
@@ -794,9 +802,11 @@ class Tag2 {
 		this.div.onmouseenter = (e) => {
 			// console.log("enter", tag_option.name);
 			if(this.handler.hovering && this.handler.mode_add) {
-				this.select();
+				if(this.children.length === 0)
+					this.select();
 			}else if(this.handler.hovering && !this.handler.mode_add) {
-				this.unselect();
+				if(this.children.length === 0)
+					this.unselect();
 			}
 		}
 		this.showing = true;
@@ -852,7 +862,8 @@ class Tag2 {
 			for(let child of this.children) {
 				child.select()
 			}
-			this.div.classList.add("selected")
+			if(this.children.length === 0)
+				this.div.classList.add("selected")
 			this.is_selected = true;
 					          
 	          if(this.children.length === 0)

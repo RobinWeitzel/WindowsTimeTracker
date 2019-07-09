@@ -104,7 +104,7 @@
 	line-height: normal;
 	letter-spacing: 3px;
 	font-size: 12px;
-	color: var(--menu_icon_description);
+	color: var(--menu_icon_description_text);
 }
 
 .menu_item.menu_button {

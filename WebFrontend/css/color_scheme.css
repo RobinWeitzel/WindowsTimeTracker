@@ -1,120 +1,147 @@
 html[dark_mode = "true"] {
-	--default_text_color: white;
-	--toolbar_background: rgb(26, 26, 26);
-	--content_background: rgb(60, 60, 60);
-	--shadow_color: black;
-
 	--highlight_color: rgb(38, 139, 210);
 	--highlight_color_light: rgb(79, 155, 209);
 	--highlight_color_dark: rgb(31, 100, 150);
 
-	/*Day picker*/
-	--default_border: rgb(80, 80, 80);
-	--hover_border: rgb(150, 150, 150);
-	--selected_border: white;
-	--active_border: lightblue;
+	--color_very_dark: rgb(20, 20, 20);
+	--color_dark: rgb(50, 50, 50);
+	--color_ldark: rgb(80, 80, 80);
+	--color_med: rgb(100, 100, 100);
+	--color_llight: rgb(120, 120, 120);
+	--color_light: rgb(160, 160, 160);
+	--color_very_light: rgb(200, 200, 200);
 
-	/*Button*/
-	--button_hover_background: rgb(40, 40, 40);
-	--button_click_background: rgb(0, 0, 0);
-	--button_border: white;
+	--default_text_color: white;
+	--content_background: rgb(40, 40, 40);
+	--menu_background: var(--color_dark);
 
-	/* Menu Item */
-	--menu_item_background_b: rgb(26,26,26);
-	--menu_item_background_a: rgb(31,31,31);
-	--menu_item_background_hover: rgb(50,50,50);
-	--menu_item_background_active: rgb(70,70,70);
-	--menu_icon_description: var(--default_border);
+	--default_border: var(--color_ldark);
+	--default_hover_border: var(--color_light);
+	--default_selected_border: white;
 
-	--daypicker_move_icon_default: rgb(120,120,120);
-	--daypicker_move_icon_hover: white;
+	--button_background: var(--color_ldark);
+	--button_hover_background: var(--color_med);
+
+	--input_border: var(--color_ldark);
+	--input_hover_border: var(--color_med);
+
+	--menu_item_background_b: var(--menu_background);
+	--menu_item_background_a: var(--menu_background);
+	--menu_item_background_hover: var(--color_ldark);
+	--menu_item_background_active: var(--color_med);
+	--menu_icon_description_text: var(--color_med);
+	
+	--setting_no: var(--color_med);
+	--setting_hover: var(--color_light);
+	--setting_yes: var(--color_very_light);
+	--settings_slider_bar: var(--color_ldark);
+	--settings_slider_thumb: var(--color_very_light);
+
+	--daypicker_move_icon_default: var(--color_ldark);
+	--daypicker_move_icon_hover: var(--color_light);
 	--daypicker_move_icon_active: lightblue;
 
-	/* Settings */
-	--setting_no: rgb(150, 150, 150);
-	--setting_yes: rgb(200,200,200);
-	--setting_hover: rgb(255, 255, 255);
+	--daypicker_selected_days_background: rgba(38, 139, 210, 0.5);
+	--daypicker_day_hover: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='rgba(38, 139, 210, 0.5)' cx='16' cy='16' r='16'/%3E%3C/svg%3E");
+	
+	--daypicker_buttons: var(--button_background);
+	--daypicker_buttons_hover: var(--button_hover_background);
 
-	--settings_slider_bar: var(--daypicker_move_icon_default);
-	--settings_slider_thumb: var(--setting_yes);
+	--daypicker_tooltip_background: var(--color_ldark);
+	--daypicker_tooltip_text: var(--default_text_color);
+	--daypicker_background: var(--color_dark);
 
-	/* Edit Data*/
-	--table_header: rgb(40,40,40);
+	--tag_text: var(--default_text_color);
+	--tag_border: var(--color_very_light);
+	--tag_close_hover: rgb(150, 150, 150);
+
+	--disabled_font: var(--color_med);
+
+	--selector_tag_l0: var(--color_dark);
+	--selector_tag_l1: var(--color_dark);
+
+	/* --table_header: rgb(40,40,40);
 	--table_header_selected: rgb(80,80,80);
 	--table_first_row: var(--table_header);
 	--table_first_row_selected: var(--table_header_selected);
 	--table_content: var(--content_background);
 	--table_caret_color: rgb(240,240,240);
-	--table_highlight_selected: black;
-
-	/* Report */
-	--tag_border: rgb(200, 200, 200);
-	--tag_close_hover: rgb(150, 150, 150);
-
-	--disabled_font: rgb(140, 140, 140);
-	--input_border: rgb(150, 150, 150);
-	--selector_tag_l0: rgb(40,40,40);
-	--selector_tag_l1: rgb(40,40,40);
-
-	/* Daypicker */
-	--daypicker_selected_days_background: rgba(38, 139, 210, 0.5);
-	--daypicker_day_hover: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='rgba(38, 139, 210, 0.5)' cx='16' cy='16' r='16'/%3E%3C/svg%3E");
-	
-	--daypicker_buttons: rgb(80,80,80);
-	--daypicker_buttons_hover: rgb(100,100,100);
-
-	--daypicker_tooltip_background: rgb(80,80,80);
-	--daypicker_tooltip_text: rgb(150,150,150);
-	--daypicker_background: rgb(40,40,40);
-
+	--table_highlight_selected: black; */
 }
 
 html[dark_mode = "false"] {
+
+	--highlight_color: rgb(105, 183, 240);
+	--highlight_color_light: rgba(105, 183, 240, 0.5);
+	--highlight_color_dark: rgba(105, 183, 240, 0.75);
+
+	--color_very_dark: rgb(20, 20, 20);
+	--color_dark: rgb(50, 50, 50);
+	--color_ldark: rgb(80, 80, 80);
+	--color_med: rgb(100, 100, 100);
+	--color_llight: rgb(120, 120, 120);
+	--color_light: rgb(150, 150, 150);
+	--color_very_light: rgb(200, 200, 200);
+	--color_vvery_light: rgb(220, 220, 220);
+	--color_vvvery_light: rgb(240, 240, 240);
+
 	--default_text_color: black;
-	--toolbar_background: rgb(240, 240, 240);
-	--content_background: white;
-	--shadow_color: black;
+	--default_box_shadow: rgba(0, 0, 0, 0.25);
 
-	--default_border: rgb(200, 200, 200);
-	--hover_border: rgb(170, 170, 170);
-	--selected_border: black;
-	--active_border: lightblue;
+	--content_background: var(--color_vvvery_light);
+	--menu_background: rgb(230, 230, 230);
 
-	--button_hover_background: rgb(190,190,190);
-	--button_click_background: rgb(225,225,225);
-	--button_border: black;
+	--default_border: var(--color_llight);
+	--default_hover_border: var(--color_vvery_light);
+	--default_selected_border: black;
 
-	--menu_item_background_b: rgb(231, 234, 237);
-	--menu_item_background_a: rgb(225,225,225);
-	--menu_item_background_hover: rgb(210,210,210);
-	--menu_item_background_active: rgb(190,190,190);
-	--menu_icon_button: rgb(50, 50, 50);
-	--menu_icon_description: rgb(200, 200, 200);
+	--button_background: var(--color_vvery_light);
+	--button_hover_background: var(--color_very_light);
 
-	--daypicker_move_icon_default: var(--default_border);
-	--daypicker_move_icon_hover: black;
+	--input_border: var(--color_very_light);
+	--input_hover_border: var(--color_llight);
+
+	--menu_item_background_b: var(--menu_background);
+	--menu_item_background_a: var(--menu_background);
+	--menu_item_background_hover: var(--color_vvery_light);
+	--menu_item_background_active: var(--color_very_light);
+	--menu_icon_description_text: var(--color_med);
+	
+	--setting_no: var(--color_light);
+	--setting_hover: var(--color_med);
+	--setting_yes: var(--color_dark);
+	--settings_slider_bar: var(--color_ldark);
+	--settings_slider_thumb: var(--color_very_light);
+
+	--daypicker_move_icon_default: var(--color_ldark);
+	--daypicker_move_icon_hover: var(--color_light);
 	--daypicker_move_icon_active: lightblue;
 
-	--setting_no: rgb(150, 150, 150);
-	--setting_yes: rgb(0,0,0);
-	--setting_hover: rgb(200, 200, 200);
-
-	--settings_slider_bar: var(--daypicker_move_icon_default);
-	--settings_slider_thumb: var(--setting_yes);
-
-	/* Rest of table settings needs no override imho */
-	--table_caret_color: rgb(0,0,0);
-
-	--tag_border: var(--button_border);
-	--tag_close_hover: var(--hover_border);
-
-	--daypicker_selected_days_background: rgba(38, 139, 210, 0.5);
-	--daypicker_day_hover: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='rgba(38, 139, 210, 0.5)' cx='16' cy='16' r='16'/%3E%3C/svg%3E");
+	--daypicker_selected_days_background: rgba(105, 183, 240, 0.5);
+	--daypicker_day_hover: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle fill='rgba(105, 183, 240, 0.5)' cx='16' cy='16' r='16'/%3E%3C/svg%3E");
 	
-	--daypicker_buttons: rgb(240,240,240);
-	--daypicker_buttons_hover: rgb(200,200,200);
-	
-	--daypicker_tooltip_background: white;
-	--daypicker_tooltip_text: rgb(40,40,40);	
-	--daypicker_background: white;
+	--daypicker_buttons: var(--button_background);
+	--daypicker_buttons_hover: var(--button_hover_background);
+
+	--daypicker_tooltip_background: var(--button_background);
+	--daypicker_tooltip_text: var(--default_text_color);
+	--daypicker_background: var(--color_vvvery_light);
+
+	--tag_text: var(--default_text_color);
+	--tag_border: var(--color_med);
+	--tag_close_hover: var(--color_med);
+
+	--disabled_font: var(--color_med);
+
+	--selector_top_border: var(--color_very_light);
+	--selector_tag_l0: var(--daypicker_background);
+	--selector_tag_l1: var(--daypicker_background);
+
+	/* --table_header: rgb(40,40,40);
+	--table_header_selected: rgb(80,80,80);
+	--table_first_row: var(--table_header);
+	--table_first_row_selected: var(--table_header_selected);
+	--table_content: var(--content_background);
+	--table_caret_color: rgb(240,240,240);
+	--table_highlight_selected: black; */
 }

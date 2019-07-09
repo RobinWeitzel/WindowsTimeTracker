@@ -12,9 +12,9 @@
 .day_picker_navigator:hover {
 	color: var(--daypicker_move_icon_hover);
 }
-.day_picker_navigator:active {
+/* .day_picker_navigator:active {
 	color: var(--daypicker_move_icon_active)
-}
+} */
 
 #day_picker > .day {
 	display: inline-block;
@@ -45,14 +45,14 @@
 	font-size: 10px;
 }
 #day_picker > .day:hover {
-	border-bottom-color: var(--hover_border)
+	border-bottom-color: var(--default_hover_border);
 }
 #day_picker > .day.selected {
-	border-bottom-color: var(--selected_border)
+	border-bottom-color: var(--default_selected_border);
 }
-#day_picker > .day:active {
-	border-bottom-color: var(--active_border) !important;
-}
+/* #day_picker > .day:active {
+	border-bottom-color: var(--highlight_color_light) !important;
+} */
 
 #day_picker {
 	vertical-align: top;
@@ -88,22 +88,28 @@
 	padding: 20px;
 }
 
+.chart_title {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
 /* Placeholders */
 #test_chart_daily {
 	height: 100px;
 	max-height: 400px;
 	width: 100%;
-	background-color: rgb(34, 32, 32);
+	background-color: rgb(16, 192, 16, 0.3);
 }
 
 #sunburst_plot {
 	flex: 60% 0;
 	height: 300px;
-	background-color: red;
+	background-color: rgba(255, 0, 0, 0.3);
 }
 
 #sunburst_breakdown {
 	flex: 1 0;
 	height: 300px;
-	background-color: blue;
+	background-color: rgba(0, 0, 255, 0.3);
 }

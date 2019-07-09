@@ -24,6 +24,7 @@
 .text {
 	display: inline-block;
 	font-size: 14px;
+	line-height: 18px;
 }
 
 .subheader {
@@ -34,9 +35,10 @@
 
 /* General Button */
 .standard_button {
-	background-color: var(--content_background);
+	background-color: var(--button_background);
 	border-radius: 10px;
-	border-color: var(--button_border);
+	/* border-color: var(--button_border); */
+	border-width: 0px;
 	padding: 5px;
 	padding-left: 20px;
 	padding-right: 20px;

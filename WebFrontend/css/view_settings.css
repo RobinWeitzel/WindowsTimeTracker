@@ -46,7 +46,7 @@
 	width: 75px;
 }
 .setting_entry:hover {
-	border-color: var(--hover_border);
+	border-color: var(--input_hover_border); 
 }
 .setting_entry ~ .setting_text {
 	vertical-align: middle;
