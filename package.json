@@ -1,0 +1,22 @@
+{
+  "name": "timetracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "inline-script.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobinWeitzel/WindowsTimeTracker.git"
+  },
+  "author": "Robin Weitzel",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/RobinWeitzel/WindowsTimeTracker/issues"
+  },
+  "homepage": "https://github.com/RobinWeitzel/WindowsTimeTracker#readme",
+  "devDependencies": {
+    "request": "^2.88.0"
+  }
+}
