@@ -66,7 +66,7 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
     // Output file
     fs.mkdirSync('dist');
-    fs.writeFile("dist/test.html", html, function (err) {
+    fs.writeFile("dist/index.html", html, function (err) {
         if (err) {
             return console.log(err);
         }
