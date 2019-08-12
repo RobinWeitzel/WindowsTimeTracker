@@ -19,8 +19,6 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Xml;
 using TimeTracker.Properties;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 
 namespace TimeTracker
 {

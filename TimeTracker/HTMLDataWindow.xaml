@@ -6,8 +6,8 @@
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="Data - TimeTracker" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
+        Title="Data - TimeTracker" Width="1000" Height="600">
     <Grid>
-        <cefSharp:ChromiumWebBrowser Height="840" Width="1200" x:Name="WebBrowser" Grid.Row="0" />
+        <cefSharp:ChromiumWebBrowser Height="auto" Width="auto" x:Name="WebBrowser" Grid.Row="0" />
     </Grid>
 </Window>
