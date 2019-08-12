@@ -1,0 +1,130 @@
+#title_container {
+	margin: 15px;
+	/* height: 60px; */
+	font-size: 25px;
+	font-weight: 600;
+	text-align: center;
+}
+
+#title_image {
+	margin-top: 15px;
+	width: 50px;
+}
+
+#menu.hide #title_image {
+	width: 25px;
+}
+
+#menu.hide #title_text { 
+	visibility: hidden;
+}
+
+/* Menu item */
+.menu_item:hover:enabled {
+	background-color: rgb(61, 61, 61);
+}
+.menu_item:focus {
+	background-color: rgb(61, 61, 61);
+}
+
+/* Default Item functionality and style */
+
+/* Menu Item */
+.menu_item {
+	width: 200px;
+	border: none;
+	margin-bottom: 0px;
+	/* letter-spacing: 0.5px; */
+	text-align: left;
+	padding-left: 18px;
+	height: 40px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#menu.hide .menu_item { 
+	width: 1000px;
+	padding-left: 18px;
+	overflow: hidden;
+}
+
+.menu_icon {
+	width: 20px;
+	text-align: center;
+}
+
+#menu.hide .menu_icon {
+	width: 20px;
+	margin-right: 15px;
+	font-size: 18px;
+}
+
+#menu.hide .menu_item.description {
+	/* visibility: hidden; */
+	display: none;
+}
+
+#expand_menu {
+	font-size: 18px;
+	background-color: inherit;
+	color: var(--daypicker_move_icon_default)
+}
+#expand_menu:focus {
+	outline: 0;
+}
+
+#menu_unexpand {
+	text-align: right;
+	width: 100%;
+}
+
+#menu_expand {
+	display: none;
+}
+
+#menu.hide #menu_expand {
+	display: inline;
+}
+
+#menu.hide #menu_unexpand {
+	display: none;
+}
+
+#expand_menu:hover {
+	color: var(--daypicker_move_icon_hover)
+}
+
+.menu_item.description {
+	width: 200px;
+	height: 25px;
+	cursor: auto;
+	margin-top: 20px;
+	/* margin-bottom: 10px; */
+	line-height: normal;
+	letter-spacing: 3px;
+	font-size: 12px;
+	color: var(--menu_icon_description_text);
+}
+
+.menu_item.menu_button {
+	color: var(--menu_icon_button);
+}
+
+.menu_item.menu_button:hover:enabled {
+	background-color: var(--menu_item_background_hover);
+}
+.menu_item.menu_button:focus {
+	background-color: var(--menu_item_background_active) !important;
+	outline: 0;
+}
+.menu_item.menu_button.selected {
+	background-color: var(--menu_item_background_active) !important;
+}
+
+.menu_item.menu_button.typea {
+	background-color: var(--menu_item_background_a);
+}
+.menu_item.menu_button.typeb {
+	background-color: var(--menu_item_background_b);
+}

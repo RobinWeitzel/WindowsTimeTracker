@@ -1,0 +1,128 @@
+/* Day Picker */
+.day_picker_navigator {
+	vertical-align: top;
+	display: inline-block;
+	text-align: center;
+	height: 50px;
+	width: 50px;
+	line-height: 50px;
+	color: var(--daypicker_move_icon_default);
+	cursor: pointer;
+}
+.day_picker_navigator:hover {
+	color: var(--daypicker_move_icon_hover);
+}
+/* .day_picker_navigator:active {
+	color: var(--daypicker_move_icon_active)
+} */
+
+#day_picker > .day {
+	display: inline-block;
+
+	width: 15%;
+	min-width: 50px;
+	max-width: 120px;
+
+	height: 50px;
+	line-height: 40px;
+	font-size: 20px;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.25s ease-in-out;
+
+	margin-left: 3px;
+	margin-right: 3px;
+
+	border-bottom: 2px solid var(--default_border);
+}
+
+#day_picker > .day > .number {
+	height: 20px;
+}
+#day_picker > .day > .month {
+	height: 30px;
+	margin-top: -5px;
+	font-size: 10px;
+}
+#day_picker > .day:hover {
+	border-bottom-color: var(--default_hover_border);
+}
+#day_picker > .day.selected {
+	border-bottom-color: var(--default_selected_border);
+}
+/* #day_picker > .day:active {
+	border-bottom-color: var(--highlight_color_light) !important;
+} */
+
+#day_picker {
+	vertical-align: top;
+	width: calc(100%);
+	max-width: 600px;
+	height: 50px;
+	text-align: center;
+	overflow: hidden;
+	user-select: none;
+}
+
+/* #day_picker:first-child {
+	display: none !important;
+} */
+
+/* Components */
+#day_picker_container {
+	width: 100%;
+	padding: 20px;
+	justify-content: center;
+	display: flex;
+}
+
+#element_weekly {
+	width: 100%;
+	height: auto;
+	padding: 20px;
+}
+
+#element_daily {
+	width: 100%;
+	height: auto;
+	padding: 20px;
+}
+
+.chart_title {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+/* Placeholders */
+#chart_daily {
+	width: 100%;
+}
+
+#chart_weekly_1 {
+	flex: 60% 0;
+	height: 400px;
+	margin-right: 20px;
+}
+
+#chart_weekly_2 {
+	flex: 1 0;
+	height: 400px;
+	margin-left: 20px;
+}
+
+#element_daily {
+	margin-bottom: 10px;
+}
+
+#element_daily, #element_weekly {
+/* #chart_weekly_1, #chart_weekly_2, #chart_daily { */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	border-radius: 4px;
+	/* background-color: var(--color_vvvvery_light); */
+}
+
+.chart_title {
+	font-size: 21px;
+}

@@ -1,0 +1,32 @@
+/* Table */
+.spacer {
+	display: inline-block;
+	width: 20px;
+	text-align: center;
+	
+}
+.jexcel > thead > tr > td {
+	background-color: var(--table_header);
+}
+.jexcel > tbody > tr > td:first-child {
+	background-color: var(--table_first_row);
+}
+.jexcel {
+	background-color: var(--table_content);
+}
+.jexcel > thead > tr > td.selected {
+	background-color: var(--table_header_selected);
+}
+.jexcel > tbody > tr.selected > td:first-child {
+	background-color: var(--table_header_selected);
+}
+.jexcel_corner {
+	background-color: var(--table_caret_color);
+	border: 1px solid var(--table_caret_color);
+}
+.jexcel .highlight-selected {
+	background-color: var(--table_highlight_selected);
+}
+.jexcel .highlight {
+	background-color: var(--table_highlight_selected);
+}

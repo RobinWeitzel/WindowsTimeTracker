@@ -1,0 +1,212 @@
+/* Report */
+.searchbar {
+	box-shadow: none;
+	width: 300px;
+	padding: 5px;
+	padding-left: 15px;
+	font-size: 14px;
+	/* border-radius: 20px; */
+	background-color: var(--content_background);
+	color: var(--default_text_color);
+	border-color: var(--input_border);
+	border-style: solid;
+	border-width: 1px;
+}
+.searchbar:hover {
+	border-color: var(--hover_border);
+}
+.searchbar:focus {
+	outline: none;
+}
+input::-webkit-calendar-picker-indicator {
+	background-color: var(--content_background);
+}
+
+/* Doesnt seem possible to style this
+ https://stackoverflow.com/questions/10062414/is-it-possible-to-style-the-drop-down-suggestions-when-using-html5-datalist/20763771
+*/
+/* datalist {
+	background-color: red !important;
+	color: red !important;
+} */
+
+
+#tags_bar {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.tag {
+	cursor: pointer;
+	color: var(--tag_text);
+	border: 1px solid var(--tag_border);
+	border-radius: 5px;
+	width: auto;
+	padding: 3px;
+	margin: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline-block;
+	user-select: none;
+}
+.tag:first-child {
+	margin-left: 0px;
+	background-color: red;
+}
+.tag.hide {
+	display: none;
+}
+.tag > i {
+	color: var(--tag_text);
+	font-size: 12px;
+	margin-left: 5px;
+}
+.tag:hover > i {
+	color: var(--tag_close_hover);
+}
+
+/* Datepicker */
+#datepicker {
+	display: inline-block;
+	width: 300px;
+	padding: 5px;
+	padding-left: 15px;
+	font-size: 14px;
+	/* border-radius: 20px; */
+	background-color: var(--content_background);
+	border-color: var(--input_border);
+	border-style: solid;
+	border-width: 1px;
+}
+#datepicker:hover {
+	border-color: var(--hover_border);
+}
+#datepicker:focus {
+	outline: none;
+	border-color: var(--hover_border);
+}
+
+/* color overrides for datepicker */
+.lightpick {
+	background-color: var(--daypicker_background);
+	color: var(--default_text_color);
+	box-shadow: 0 1px 3px var(--default_box_shadow)
+}
+
+.lightpick__months, .lightpick__month {
+	background-color: var(--daypicker_background);
+}
+
+.lightpick__day, .lightpick__select {
+	cursor: pointer;
+	font-size: 12px;
+}
+
+.lightpick__day:not(.is-disabled):hover {
+	background-size: contain;
+	background-image: var(--daypicker_day_hover);
+}
+
+.lightpick__tooltip {
+	background-color: var(--daypicker_tooltip_background);
+	color: var(--daypicker_tooltip_text);
+}
+
+.lightpick__previous-action, .lightpick__next-action {
+	background-color: var(--daypicker_buttons);
+	cursor: pointer;
+}
+
+.lightpick__previous-action:hover, .lightpick__next-action:hover {
+	background-color: var(--daypicker_buttons_hover);
+}
+
+.lightpick__day.is-in-range {
+	background-color: var(--daypicker_selected_days_background);
+}
+
+.lightpick__tooltip::after {
+	border-top: 4px solid var(--daypicker_tooltip_background);
+}
+
+.lightpick__day.is-end-date.is-in-range, .lightpick__day.is-start-date.is-in-range.is-flipped, 
+.lightpick__day.is-start-date.is-in-range, .lightpick__day.is-end-date.is-in-range.is-flipped {
+	background-color: var(--highlight_color);
+}
+
+/* -------- */
+
+#tags_suggestion_container {
+	position: absolute;
+	top: 92px;
+	width: 300px;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px var(--default_box_shadow)
+}
+#tags_suggestion_container.hide {
+	display: none;
+}
+#tags_suggestion_buttons_container {
+	height: 40px;
+	padding: 7px;
+	background-color: var(--selector_tag_l0);
+	text-align: center;
+}
+#tags_suggestion_buttons_container .standard_button {
+	background-color: var(--daypicker_buttons);
+}
+#tags_suggestion_buttons_container .standard_button:hover {
+	background-color: var(--daypicker_buttons_hover);
+}
+
+.tag_suggestion {
+	width: 100%;
+	height: 30px;
+	line-height: 20px;
+	overflow: hidden;
+	vertical-align: middle;
+	padding: 5px;
+	padding-left: 10px;
+	cursor: pointer;
+	user-select: none;
+	font-size: 12px;
+}
+.tag_suggestion.hide {
+	display: none;
+}
+.tag_suggestion.unselectable {
+	color: var(--disabled_font);
+}
+
+
+.tag_suggestion:not(:first-child) {
+	border-top: 1px solid var(--selector_top_border);
+}
+
+.tag_suggestion.l0 {
+	margin-left: 0px;
+	background-color: var(--selector_tag_l0);
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color: var(--disabled_font);
+}
+
+.tag_suggestion.l1 {
+	padding-left: 40px;
+	background-color: var(--selector_tag_l1);
+	border-top: 1px solid var(--content_background);
+}
+
+.tag_suggestion.selected {
+	background-color: var(--highlight_color_light);
+}
+
+.tag_suggestion.l1:hover:not(.selected) {
+	background-color: var(--highlight_color_dark);
+}
+
+.tag_suggestion.l1:hover.selected {
+	background-color: var(--highlight_color_dark);
+}
