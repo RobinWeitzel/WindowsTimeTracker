@@ -100,6 +100,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
                     return Records.OrderBy(r => r.To).LastOrDefault();
                 }
@@ -126,6 +127,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
                     return Records.OrderByDescending(aa => aa.To).ToList();
                 }
@@ -152,6 +154,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
                     return Records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
                 }
@@ -178,6 +181,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
                     return Records.GroupBy(r => r.Name).OrderBy(rg => rg.Min(r => r.From)).ToList();
                 }
@@ -205,6 +209,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(ActivityPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Activity> Records = Csv.GetRecords<Activity>();
                     return Records.Where(filter).ToList();
                 }
@@ -231,6 +236,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(WindowPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Window> Records = Csv.GetRecords<Window>();
                     return Records.GroupBy(r => r.Name).OrderByDescending(rg => rg.Max(r => r.From)).ToList();
                 }
@@ -258,6 +264,7 @@ namespace TimeTracker
                 using (TextReader tr = new StreamReader(WindowPath))
                 {
                     CsvReader Csv = new CsvReader(tr);
+                    Csv.Configuration.Delimiter = ",";
                     IEnumerable<Window> Records = Csv.GetRecords<Window>();
                     return Records.Where(filter).ToList();
                 }
