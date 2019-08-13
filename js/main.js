@@ -44,7 +44,7 @@ class View {
 		this.button = document.getElementById(this.button_id);
 	}
 
-	select_view = () => {
+	select_view() {
 		if (this === current_view)
 			return;
 
@@ -56,11 +56,11 @@ class View {
 	}
 
 	/* Show and hide content panel*/
-	show = () => {
+	show() {
 		this.view.classList.add("show_view")
 		this.button.classList.add("selected");
 	}
-	hide = () => {
+	hide() {
 		this.view.classList.remove("show_view")
 		this.button.classList.remove("selected");
 	}
@@ -112,7 +112,7 @@ class DayPickerDay {
 		}
 	}
 
-	set_selected = () => {
+	set_selected() {
 		this.div.classList.add("selected");
 		this.div.onclick = (e) => {
 
@@ -129,7 +129,7 @@ class DayPickerDay {
 		}
 	}
 
-	set_unselected = () => {
+	set_unselected() {
 		this.div.classList.remove("selected");
 	}
 }
@@ -139,6 +139,7 @@ class DayPicker {
 
 		//General
 		this.date = options.date;
+		this.dayChart = options.dayChart;
 
 		//Element ids
 		//Navigation & Co
@@ -188,7 +189,7 @@ class DayPicker {
 		this.set_center_date(this.date)
 	}
 
-	_add_button_listeners = () => {
+	_add_button_listeners() {
 		this.button_to_today.onclick = () => {
 			this.set_center_date(new Date())
 		}
@@ -206,7 +207,7 @@ class DayPicker {
 		}
 	}
 
-	_add_date_components = () => {
+	_add_date_components() {
 		this.day_picker_dates = [];
 		let tmp_date = new Date(this.date)
 		tmp_date.setDate(this.date.getDate() - 2);
@@ -218,31 +219,34 @@ class DayPicker {
 		}
 	}
 
-	_remove_all = () => {
+	_remove_all() {
 		while (this.div_days_container.firstChild) {
 			this.div_days_container.firstChild.remove();
 		}
 	}
 
-	open = () => {
+	open() {
 		document.getElementById("day_picker_dummy_container").style.display = "inline";
 		this.datepicker_open = true;
 		document.body.addEventListener("click", this.close)
 	}
 
-	close = () => {
+	close() {
 		document.body.removeEventListener("click", this.close)
 		document.getElementById("day_picker_dummy_container").style.display = "none";
 		this.datepicker_open = false;
 	}
 
-	get_center_div = () => {
+	get_center_div() {
 		return this.day_picker_dates[parseInt(Math.floor(this.day_picker_dates / 2))]
 	}
 
-	set_center_date = (date) => {
+	set_center_date(date) {
 
 		this.date = date;
+		getDayData(date.toJSON()).then(timelines => {
+			this.dayChart.setData({ timelines: timelines });
+		});
 		this._remove_all();
 		this._add_date_components();
 
@@ -252,18 +256,18 @@ class DayPicker {
 		this.close();
 	}
 
-	shift_days = (amount_of_days) => {
+	shift_days(amount_of_days) {
 		this.date_picker.setDate(this.date.add_days(amount_of_days));
 	}
 
-	shift_months = (amount_of_months) => {
+	shift_months(amount_of_months) {
 		this.date_picker.setDate(this.date.add_months(amount_of_months));
 	}
 
 }
 
 let day_picker;
-date_to_day_of_year = (date) => {
+const date_to_day_of_year = (date) => {
 	var start = new Date(date.getFullYear(), 0, 0);
 	var diff = (date - start) + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
 	var day = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -313,10 +317,10 @@ class TagBar {
 		this._set_datalist_options(this.options);
 	}
 
-	_add_input_listeners = () => {
+	_add_input_listeners() {
 		let last_non_matching = null;
 		this.div_input.onkeyup = (e) => {
-			/* this works because when appending from the datalist via enter, no key is 
+			/* this works because when appending from the datalist via enter, no key is
 			pressed even tho the keyup is triggered - dont ask me why */
 			if (e.keyCode === undefined) {
 				this.div_input.value = last_non_matching;
@@ -332,13 +336,13 @@ class TagBar {
 		}
 	}
 
-	_make_datalist = () => {
+	_make_datalist() {
 		this.datalist = document.createElement("datalist")
 		this.datalist.id = this.tag_container_id + "_datalist";
 		this.div.appendChild(this.datalist)
 	}
 
-	_set_datalist_options = (options) => {
+	_set_datalist_options(options) {
 		while (this.datalist.firstChild) {
 			this.datalist.removeChild(this.datalist.firstChild);
 		}
@@ -349,12 +353,12 @@ class TagBar {
 		}
 	}
 
-	add_option = (option) => {
+	add_option(option) {
 		this.options.push(option);
 		this.update_options();
 	}
 
-	remove_option = (option) => {
+	remove_option(option) {
 		this.unselect_tag(option)
 		let index = this.selected.indexOf(tag);
 
@@ -366,13 +370,13 @@ class TagBar {
 		this.update_options();
 	}
 
-	update_options = () => {
+	update_options() {
 		let selected_options = this.selected.map(tag => tag.tag_name);
 		let left_options = this.options.filter((el) => !selected_options.includes(el));
 		this._set_datalist_options(left_options);
 	}
 
-	select_tag = (tag_name) => {
+	select_tag(tag_name) {
 
 		if (!this.options.includes(tag_name)) {
 			console.error(`Trying to add tag "${tag_name}", not in options.`);
@@ -390,7 +394,7 @@ class TagBar {
 		this.update_options();
 	}
 
-	unselect_tag = (tag_name) => {
+	unselect_tag(tag_name) {
 		let tag = this.selected.filter(tag => tag.tag_name === tag_name);
 		if (tag.length === 0)
 			return;
@@ -409,7 +413,7 @@ class Tag {
 		this.parent = parent;
 		this.create_dom();
 	}
-	create_dom = () => {
+	create_dom() {
 		this.div = document.createElement("div");
 		this.div.className = "tag";
 		this.div.textContent = this.tag_name;
@@ -435,48 +439,14 @@ let test = (options) => {
 
 // -----------------------------------------------------------------
 
-const getDayData = async () => {
-	return new Promise((resolve, reject) => {
-		resolve([
-			{
-				label: "WORK",
-				colors: ["#7cd6fd", "#5e64ff"],
-				values: [{
-					start: 8 * 60,
-					length: 120,
-					title: "Project 1"
-				},
-				{
-					start: 11 * 60,
-					length: 45,
-					title: "Project 2"
-				},
-				{
-					start: 13 * 60,
-					length: 120,
-					title: "Project 1"
-				}]
-			},
-			{
-				label: "STUDY",
-				colors: ["#98d85b"],
-				values: [{
-					start: 10 * 60,
-					length: 60,
-					title: "Topic 1"
-				},
-				{
-					start: 15 * 60,
-					length: 90,
-					title: "Topic 1"
-				},
-				{
-					start: 16 * 60 + 45,
-					length: 90,
-					title: "Topic 1"
-				}]
-			}
-		]);
+const getDayData = async (date) => {
+	return new Promise(async (resolve, reject) => {
+		if (typeof boundAsync === "undefined")
+			await CefSharp.BindObjectAsync("boundAsync");
+
+		boundAsync.getDayData(date).then(result => {
+			resolve(JSON.parse(result));
+		});
 	});
 }
 
@@ -523,6 +493,27 @@ const getWeekDataSum = async () => {
 
 init = () => {
 
+	const chart1 = new TimeCharts.Timeline("#chart_daily", {
+		scale: {
+			from: 0 * 60,
+			to: 24 * 60,
+			intervalStart: 0
+		},
+		data: {
+			timelines: [],
+		},
+		legend: true,
+		padding: {
+			top: 20,
+			right: 20,
+			bottom: 20,
+			left: 20
+		},
+		legendDistance: 15,
+		distance: 20,
+		adjustSize: true
+	});
+
 	day_picker = new DayPicker({
 		date: new Date(),
 		days_container_id: "day_picker",
@@ -532,7 +523,8 @@ init = () => {
 		button_forward_months_id: "month_forward",
 		datepicker_container_id: "day_picker_dummy_container",
 		// datepicker_clingy_field_id: "day_picker_dummy_field",
-		button_to_today_id: "button_to_today"
+		button_to_today_id: "button_to_today",
+		dayChart: chart1
 	});
 	VIEW_DAILY = new View({
 		view_id: "view_daily",
@@ -540,54 +532,31 @@ init = () => {
 		components: { day_picker: day_picker }
 	});
 
-	getDayData().then(timelines => {
-		const chart1 = new TimeCharts.Timeline("#chart_daily", {
-			scale: {
-				from: 7 * 60,
-				to: 19 * 60,
-				intervalStart: 0
-			},
-			data: {
-				timelines: timelines,
-			},
-			legend: true,
+	getWeekDataBreakdown().then(data => {
+		const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
+			data: data,
 			padding: {
 				top: 20,
 				right: 20,
 				bottom: 20,
 				left: 20
 			},
-			legendDistance: 15,
-			distance: 20,
-			adjustSize: true
+			distance: 20
 		});
 	});
 
-	getWeekDataBreakdown().then(data => {
-		const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
-			data: data,
-			padding: {
-			  top: 20,
-			  right: 20,
-			  bottom: 20,
-			  left: 20
-			},
-			distance: 20
-		  });
-	});
-	
 	getWeekDataSum().then(data => {
 		const chart3 = new TimeCharts.Barchart("#chart_weekly_2", {
 			data: data,
 			orientation: "horizontal",
 			padding: {
-			  top: 20,
-			  right: 20,
-			  bottom: 20,
-			  left: 20
+				top: 20,
+				right: 20,
+				bottom: 20,
+				left: 20
 			},
 			distance: 20
-		  });
+		});
 	});
 
 	edit_data_excel = jexcel(document.getElementById('edit_data_table'), {
@@ -772,7 +741,7 @@ class TagSelector {
 		this._add_listeners()
 	}
 
-	_add_listeners = () => {
+	_add_listeners() {
 		//Upon clicking the input box, open the selector
 		this.input.onclick = (e) => {
 			e.stopPropagation();
@@ -805,7 +774,7 @@ class TagSelector {
 		}
 	}
 
-	select_all_visibile = () => {
+	select_all_visibile() {
 		this.children.map(child => {
 			if (child.showing) {
 				child.select();
@@ -813,23 +782,23 @@ class TagSelector {
 		});
 	}
 
-	filter = (query) => {
+	filter(query) {
 		this.children.map(child => child.filter(query));
 	}
 
-	open = () => {
+	open() {
 		this.container.style.display = "inherit";
 		this.showing = true;
 		document.body.addEventListener("click", this.close)
 	}
 
-	close = () => {
+	close() {
 		this.container.style.display = "none";
 		this.showing = false;
 		document.body.removeEventListener("click", this.close)
 	}
 
-	createGuiElement = (tag_option) => {
+	createGuiElement(tag_option) {
 		let div_tag = document.createElement("div");
 		div_tag.textContent = tag_option.name;
 		div_tag.classList.add("tag_suggestion")
@@ -872,7 +841,7 @@ class TagX {
 		this.parent = parent;
 		this.create_dom();
 	}
-	create_dom = () => {
+	create_dom() {
 		this.div = document.createElement("div");
 		this.div.className = "tag";
 		this.div.textContent = this.tag_name;
@@ -917,7 +886,7 @@ class Tag2 {
 		this._add_listeners();
 	}
 
-	_add_listeners = () => {
+	_add_listeners() {
 		this.div.onmousedown = (e) => {
 			// console.log("down", this.tag_name);
 
@@ -952,16 +921,16 @@ class Tag2 {
 		}
 	}
 
-	_set_unselectable = () => {
+	_set_unselectable() {
 		this.div.classList.add("unselectable");
 		this.selectable = false;
 	}
-	_set_selectable = () => {
+	_set_selectable() {
 		this.div.classList.remove("unselectable");
 		this.selectable = true;
 	}
 
-	filter = (query) => {
+	filter(query) {
 		if (this.tag_name.includes(query)) {
 			this.show();
 			this._set_selectable();
@@ -982,18 +951,18 @@ class Tag2 {
 		}
 	}
 
-	show = () => {
+	show() {
 		this.showing = true;
 		this.div.classList.remove("hide")
 	}
 
-	hide = () => {
+	hide() {
 		this.showing = false;
 		this.div.classList.add("hide")
 	}
 
 	//Selects & permutates to children
-	select = () => {
+	select() {
 		if (this.selectable) {
 			for (let child of this.children) {
 				child.select()
@@ -1008,13 +977,13 @@ class Tag2 {
 	}
 
 	// Unselects only iteself
-	unselect_excl = () => {
+	unselect_excl() {
 		this.is_selected = false;
 		this.div.classList.remove("selected")
 	}
 
 	// Unselects & permutates to children
-	unselect = () => {
+	unselect() {
 		for (let child of this.children) {
 			child.unselect()
 		}
@@ -1048,18 +1017,18 @@ class IgnoreApps {
 		}
 	}
 
-	tolist = () => {
+	tolist() {
 		this.elements.map(element => element.get_text());
 	}
 
-	create = (text = "") => {
+	create(text = "") {
 		let ignore_app_element = new IgnoreAppElement(text, this);
 		this.div_container.appendChild(ignore_app_element.div);
 		this.elements.push(ignore_app_element);
 		this.div_container.scrollTop = this.div_container.scrollHeight;
 	}
 
-	remove = (ignore_app_element) => {
+	remove(ignore_app_element) {
 		this.div_container.removeChild(ignore_app_element.div);
 		this.elements.splice(this.elements.indexOf(ignore_app_element), 1);
 	}
@@ -1092,7 +1061,7 @@ class IgnoreAppElement {
 		}
 	}
 
-	get_text = () => {
+	get_text() {
 		return this.div_entry.value;
 	}
 }
