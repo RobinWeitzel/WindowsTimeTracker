@@ -25,7 +25,11 @@ namespace TimeTracker
                 CefSettings.SetOffScreenRenderingBestPerformanceArgs();
                 Cef.Initialize(CefSettings);
             }
-            
+
+            WebBrowser.FrameLoadEnd += (a, b) =>
+            {
+                WebBrowser.ShowDevTools();
+            };
             WebBrowser.Address = String.Format("file:///{0}index.html", CurrentDirectory);
             WebBrowser.JavascriptObjectRepository.Register("boundAsync", new MyScriptingClass(storageHandler, appStateTracker), true);
         }

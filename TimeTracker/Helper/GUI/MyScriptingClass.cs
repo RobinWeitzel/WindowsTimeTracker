@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TimeTracker.Helper.Models;
 
 namespace TimeTracker.Helper
 {
@@ -19,6 +21,39 @@ namespace TimeTracker.Helper
         {
             StorageHandler = storageHandler;
             AppStateTracker = appStateTracker;
+        }
+
+        public string GetDayData(string date)
+        {
+            DateTime DayInQuestion = DateTime.Parse(date).Date;
+            DateTime DayInQuestionAfter = DayInQuestion.AddDays(1);
+
+            /////// Load the data for the timeline //////
+            List<Activity> TodayActivities = StorageHandler.GetActivitiesByLambda(r => r.To >= DayInQuestion && r.From < DayInQuestionAfter);
+
+            // Check if the current activity should also be shown in the graph.
+            if (AppStateTracker.CurrentActivity != null && (DayInQuestionAfter > DateTime.Now && DayInQuestion < DateTime.Now))
+                TodayActivities.Add(AppStateTracker.CurrentActivity);
+
+            List<Timeline> Timelines = TodayActivities
+                .GroupBy(a => a.Name.Split(new string[] { " - " }, StringSplitOptions.None).First())
+                .Select(g => new Timeline
+                {
+                    Label = g.Key,
+                    Values = g.Select(a => new TimelineValue
+                    {
+                        Start = Math.Round(a.From >= DayInQuestion ? a.From.Subtract(DayInQuestion).TotalMinutes : 0),
+                        Length = Math.Round((a.To == null || a.To >= DayInQuestionAfter ? (DayInQuestion == DateTime.Today ? DateTime.Now : DayInQuestionAfter) : (DateTime)a.To).Subtract(a.From >= DayInQuestion ? a.From : DayInQuestion).TotalMinutes),
+                        Title = a.Name.Split(new string[] { " - " }, StringSplitOptions.None).Last()
+                    }).OrderBy(tv => tv.Start).ToList()
+                })
+                .OrderBy(t => t.Label)
+                .ToList();
+
+            string json = JsonConvert.SerializeObject(Timelines);
+
+            // Add the data as a JSON string to the result
+            return json;
         }
 
         public string GetOverviewData(int value)
@@ -266,12 +301,27 @@ namespace TimeTracker.Helper
 
                 foreach (PropertyInfo Property in Properties)
                 {
-                    string value;
+                    string value = "";
 
                     if (Property.PropertyType.Name.Equals("String"))
+                    {
                         value = "\"" + Property.GetValue(obj, null) + "\"";
+                    }
+                    else if (Property.PropertyType.Name.StartsWith("List"))
+                    {
+                        Type t = obj.GetType();
+                        if (t.Name == "Timeline")
+                        {
+                            List<Timeline> list = obj as List<Timeline>;
+                            value = CustomJSONSerializer(list);
+                        }
+                        else if (t.Name == "TimelineValue")
+                            value = CustomJSONSerializer(Property.GetValue(obj, null) as List<TimelineValue>);
+                    }
                     else
+                    {
                         value = ((double)Property.GetValue(obj, null)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+                    }
 
                     Helper2 += "\"" + Char.ToLower(Property.Name[0]) + Property.Name.Substring(1) + "\":" + value + ",";
                 }
