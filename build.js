@@ -21,6 +21,10 @@ const getLocal = async path => {
     });
 }
 
+const escapeRegExp = string => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 const myArgs = process.argv.slice(2);
 
 fs.readFile('index.html', 'utf8', async (err, html) => {
@@ -40,7 +44,13 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             content = await getLocal(href);
         }
 
-        html = html.replace(new RegExp(match), `<style>\n${content}\n</style>`);
+        const start = html.search(new RegExp(escapeRegExp(match)));
+
+        const replacement = `<style>\n${content}\n</style>`;
+
+        html = html.substr(0, start) + replacement + html.substr(start + match.length);
+
+        //html = html.replace(new RegExp(match), `<style>\n${content}\n</style>`);
     }
 
     // Scripts
@@ -55,7 +65,7 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             content = await getLocal(href);
         }
 
-        const start = html.search(new RegExp(match));
+        const start = html.search(new RegExp(escapeRegExp(match)));
 
         const replacement = `<script>\n${content}\n</script>`;
 
@@ -65,7 +75,8 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     }
 
     // Output file
-    fs.mkdirSync('dist');
+    if(!fs.existsSync('dist'))
+        fs.mkdirSync('dist');
     fs.writeFile("dist/index.html", html, function (err) {
         if (err) {
             return console.log(err);
