@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace TimeTracker.Helper.Models
 {
-    class Timeline
+    class Dataset
     {
-        [JsonProperty(PropertyName = "label")]
-        public string Label { get; set; }
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
 
         [JsonProperty(PropertyName = "values")]
-        public List<TimelineValue> Values { get; set; }
+        public List<double> Values { get; set; }
     }
 }

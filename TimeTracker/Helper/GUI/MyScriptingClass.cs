@@ -56,6 +56,102 @@ namespace TimeTracker.Helper
             return json;
         }
 
+        public string GetWeekBreakdownData(string date, int daysBack)
+        {
+            DateTime EndPeriod = DateTime.Parse(date).Date;
+            DateTime StartPeriod = EndPeriod.AddDays(-daysBack);
+
+            List<(string, Dictionary<string, double>)> Days = new List<(string, Dictionary<string, double>)>();
+
+            foreach(DateTime Day in EachDay(StartPeriod, EndPeriod))
+            {
+                DateTime Start = Day;
+                DateTime End = Day.AddDays(1);
+
+                List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= Start && r.From < End).Select(aa => new Helper
+                {
+                    Name = aa.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
+                    From = aa.From > Start ? aa.From : Start,
+                    To = (DateTime)aa.To > End ? End : (DateTime)aa.To
+                }).ToList();
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && End >= DateTime.Today)
+                    ActivityHelper.Add(new Helper
+                    {
+                        Name = AppStateTracker.CurrentActivity.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
+                        From = AppStateTracker.CurrentActivity.From > Start ? AppStateTracker.CurrentActivity.From : Start,
+                        To = DateTime.Now
+                    });
+
+                // Compute time between Start and finish of the activity rounding to hours
+                foreach (Helper h in ActivityHelper)
+                {
+                    h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+                }
+
+                Dictionary<string, double> ActivityDict = new Dictionary<string, double>();
+
+                ActivityHelper
+                    .GroupBy(ah => ah.Name)
+                    .ToList()
+                    .ForEach(g => {
+                        ActivityDict.Add(g.Key, g.Sum(h => h.Time));
+                    });
+
+                Days.Add((Day.DayOfWeek.ToString().Substring(0, 2), ActivityDict));
+            }
+
+            // Scale time to 1
+            double Max = Days.Max(d => d.Item2.Sum(g => g.Value));
+            for(int i = 0; i < Days.Count(); i++)
+            {
+                var d = Days[i];
+                Dictionary<string, double> AdjustedDict = new Dictionary<string, double>();
+                foreach (KeyValuePair<string, double> entry in d.Item2)
+                {
+                    AdjustedDict.Add(entry.Key, entry.Value / Max);
+                }
+                Days[i] = (d.Item1, AdjustedDict);
+            };
+
+            // Extract titles
+            List<string> Titles = new List<string>();
+            Days.ForEach(d =>
+            {
+                foreach (KeyValuePair<string, double> entry in d.Item2)
+                {
+                if (!Titles.Contains(entry.Key))
+                    {
+                        Titles.Add(entry.Key);
+                    }
+                }
+            });
+            Titles = Titles.OrderBy(l => l).ToList();
+
+            // construct data
+            List<Dataset> Datasets = new List<Dataset>();
+            Titles.ForEach(t =>
+            {
+                Datasets.Add(new Dataset
+                {
+                    Title = t,
+                    Values = Days.Select(d => d.Item2.ContainsKey(t) ? d.Item2[t] : 0).ToList()
+                });
+            });
+
+            Bardata Bardata = new Bardata
+            {
+                Labels = Days.Select(d => d.Item1).ToList(),
+                Datasets = Datasets
+            };
+
+            string json = JsonConvert.SerializeObject(Bardata);
+
+            // Add the data as a JSON string to the result
+            return json;
+        }
+
         public string GetOverviewData(int value)
         {
             string Result = "{";
