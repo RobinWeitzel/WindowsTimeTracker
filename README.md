@@ -16,7 +16,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/RobinWeitzel/WindowsTimeTracker/master/TimeTracker/Resources/Bild2.png)
+![screenshot](https://raw.githubusercontent.com/RobinWeitzel/WindowsTimeTracker/master/TimeTracker/Resources/Bild_Daily_View.png)
 
 ## Key Features
 
