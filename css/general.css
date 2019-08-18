@@ -36,7 +36,8 @@
 /* General Button */
 .standard_button {
 	background-color: var(--button_background);
-	border-radius: 10px;
+     /* border-radius: 10px; */
+     border-radius: 15px;
 	/* border-color: var(--button_border); */
 	border-width: 0px;
 	padding: 5px;
@@ -70,14 +71,9 @@
 	float: right;
 } */
 
-/* Charts*/
-.chart {
-		
-}
 /* Chart titles */
 .chart > .title {
-	font-size: 15px;
-	letter-spacing: 2px;
-	margin-top: 10px;
+     font-size: 18px;
+     font-weight: 600;
 	margin-bottom: 10px;
 }

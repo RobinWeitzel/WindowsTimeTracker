@@ -42,8 +42,9 @@
 	background-color: var(--content_background);
 	margin-right: 12px;
 	border: 1px solid var(--input_border);
-	margin-top: 5px;
-	width: 75px;
+     margin-top: 5px;
+     width: 75px;
+     color: inherit;
 }
 .setting_entry:hover {
 	border-color: var(--input_hover_border); 
@@ -56,7 +57,6 @@
 .setting_slider {
 	width: 300px;
 	display: inline-block;
-
 	margin-top: 10px;
 	-webkit-appearance: none;
 	height: 7.5px;

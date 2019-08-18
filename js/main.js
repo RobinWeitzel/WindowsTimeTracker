@@ -612,7 +612,8 @@ init = () => {
 		field: document.getElementById('datepicker'),
 		singleDate: false,
 		numberOfMonths: 2,
-	});
+     });
+     console.log(date_picker);
 	VIEW_REPORT = new View({
 		view_id: "view_report",
 		button_id: "button_view_report",
