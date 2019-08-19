@@ -1,0 +1,55 @@
+/* color overrides for datepicker */
+.lightpick {
+	background-color: var(--daypicker_background);
+	color: var(--default_text_color);
+}
+
+.lightpick--inlined {
+	box-shadow: none;
+}
+
+.lightpick__months, .lightpick__month {
+	background-color: var(--daypicker_background);
+}
+
+.lightpick__day, .lightpick__select {
+	cursor: pointer;
+	font-size: 12px;
+}
+
+.lightpick__day:not(.is-disabled):hover {
+	background-size: contain;
+	background-image: var(--daypicker_day_hover);
+}
+
+.lightpick__tooltip {
+	background-color: var(--daypicker_tooltip_background);
+	color: var(--daypicker_tooltip_text);
+}
+
+.lightpick__previous-action, .lightpick__next-action {
+	background-color: var(--daypicker_buttons);
+	color: inherit;
+	cursor: pointer;
+}
+
+.lightpick__previous-action:hover, .lightpick__next-action:hover {
+	background-color: var(--daypicker_buttons_hover);
+}
+
+.lightpick__day.is-in-range {
+	background-color: var(--daypicker_selected_days_background);
+}
+
+.lightpick__tooltip::after {
+	border-top: 4px solid var(--daypicker_tooltip_background);
+}
+
+.lightpick__day.is-end-date.is-in-range, .lightpick__day.is-start-date.is-in-range.is-flipped, 
+.lightpick__day.is-start-date.is-in-range, .lightpick__day.is-end-date.is-in-range.is-flipped {
+	background-color: var(--highlight_color);
+}
+
+.lightpick__month-title > .lightpick__select {
+	color: inherit;
+}

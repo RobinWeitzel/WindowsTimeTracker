@@ -38,6 +38,7 @@
 	<link rel="stylesheet" type="text/css" href="css/view_report.css">
 	<link rel="stylesheet" type="text/css" href="css/view_settings.css">
 	<link rel="stylesheet" type="text/css" href="css/view_edit_data.css">
+	<link rel="stylesheet" type="text/css" href="css/overrides_lightpick.css">
 
 	<!-- Main Javascript  -->
 	<script src="js/main.js"></script>
@@ -57,7 +58,8 @@
 		margin: 0px;
 		display: flex;
 		height: 100%;
-		font-family: Helvetica;
+		font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
+		color: var(--default_text_color);
 	}
 
 	/* For fontawesome - take original color */
@@ -73,6 +75,7 @@
 		height: 100vh;
 		z-index: 2;
 		overflow: hidden;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 	}
 	#menu.hide {
 		flex: 0 53px;
@@ -80,32 +83,20 @@
 	.content {
 		height: 100vh;
 		flex: 1 0;
+		box-sizing: border-box;
 		padding: 20px;
 		background-color: var(--content_background);
 		display: none;
 		overflow-x: hidden;
-		overflow-y: auto;
+		overflow-y: hidden;
 	}
 	.show_view {
 		display: inline;
 	}
 
-	#day_picker_dummy_container {
-		position: absolute;
-		top: 100px;
-	}
-
-	#day_picker_addition {
-		width: 296px;
-		background-color: var(--daypicker_background);
-		border-radius: 5px;
-		padding: 10px;
-		margin-bottom: -5px;
-	}
-
 	/* -------------------------------------------------- */
 
-	@media only screen and (max-height: 650px) {
+	@media only screen and (max-height: 450px) {
 		#title_image {
 			margin-top: 0px;
 			width: 40px;
@@ -241,7 +232,7 @@
 		<div class="text">
 			We made this app so you can track yourself, for yourself. <br>
 			All data is stored locally, there is zero traffic to any servers. We encourage you to have a look at the Project
-			on GitHub and have a look for yourself. <br> Since we won't ever interrupt you for feedback and don't track usage statistics by default, we rely on you to send us feedback.
+			on GitHub and have a see for yourself. <br> Since we won't ever interrupt you for feedback and don't track usage statistics by default, we rely on you to send us feedback.
 		</div>
 		<br><br>
 		<div class="subheader">Feedback or suggestion?</div>
@@ -252,9 +243,10 @@
 		</button>
 		<br><br>
 		<div class="subheader">Want to have a look?</div>
+		<div class="text">Visit the project on&nbsp;</div>
 		<button class="standard_button" onclick="open_link('https://github.com/RobinWeitzel/WindowsTimeTracker')">
 			<i class="fab fa-github"></i>
-			Visit the project on GitHub
+			GitHub
 		</button>
 		<br><br>
 		<div class="subheader">Dependencies</div>
@@ -451,7 +443,7 @@
 					</button>
 				</div>
 				<!-- Because the datepicker needs an element to cling onto -->
-				<div id="day_picker_dummy_field"></div>
+				<div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
 			</div>
 			<div id="day_picker">
 				<!-- <div class="day">
@@ -468,11 +460,11 @@
 			<div class="day_placeholder"></div>
 		</div>
 		<div id="element_daily" class="chart">
-			<div class="chart_title">This day</div>
+			<div class="title">This day</div>
 			<div id="chart_daily">HI</div>
 		</div>
 		<div id="element_weekly" class="chart">
-			<div class="chart_title">That week</div>
+			<div class="title">This week</div>
 			<div class="view_container">
 				<div id="chart_weekly_1"></div>
 				<div id="chart_weekly_2"></div>
