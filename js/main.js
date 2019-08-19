@@ -498,14 +498,16 @@ init = () => {
 		data: {
 			timelines: [],
 		},
-		legend: true,
+		legend: {
+			visible: true,
+			distance: 15
+		},
 		padding: {
 			top: 20,
 			right: 20,
 			bottom: 20,
 			left: 20
 		},
-		legendDistance: 15,
 		distance: 20,
 		adjustSize: true
 	});
