@@ -140,6 +140,7 @@ class DayPicker {
 		//General
 		this.date = options.date;
 		this.dayChart = options.dayChart;
+		this.weekChart1 = options.weekChart1;
 
 		//Element ids
 		//Navigation & Co
@@ -247,6 +248,11 @@ class DayPicker {
 		getDayData(date.toJSON()).then(timelines => {
 			this.dayChart.setData({ timelines: timelines });
 		});
+
+		getWeekDataBreakdown(date.toJSON(), 10).then(data => {
+			this.weekChart1.setData(data);
+		});
+
 		this._remove_all();
 		this._add_date_components();
 
@@ -450,22 +456,13 @@ const getDayData = async (date) => {
 	});
 }
 
-const getWeekDataBreakdown = async () => {
-	return new Promise((resolve, reject) => {
-		resolve({
-			labels: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su", "Mo", "Tu", "We"],
-			datasets: [
-				{
-					values: [0.25, 0.5, 0.25, 0.5, 0.25, 0.5, 0.25, 0.5, 0.25, 0.5],
-					title: "test"
-				},
-				{
-					values: [0.5, 0.2, 0.5, 0.2, 0.5, 0.2, 0.5, 0.2, 0.5, 0.2]
-				},
-				{
-					values: [0.25, 0.1, 0.25, 0.1, 0.25, 0.1, 0.25, 0.1, 0.25, 0.1]
-				},
-			],
+const getWeekDataBreakdown = async (date, day) => {
+	return new Promise(async (resolve, reject) => {
+		if (typeof boundAsync === "undefined")
+			await CefSharp.BindObjectAsync("boundAsync");
+
+		boundAsync.getWeekBreakdownData(date, day).then(result => {
+			resolve(JSON.parse(result));
 		});
 	});
 }
@@ -492,7 +489,6 @@ const getWeekDataSum = async () => {
 
 
 init = () => {
-
 	const chart1 = new TimeCharts.Timeline("#chart_daily", {
 		scale: {
 			from: 0 * 60,
@@ -514,6 +510,17 @@ init = () => {
 		adjustSize: true
 	});
 
+	const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
+		data: data,
+		padding: {
+			top: 20,
+			right: 20,
+			bottom: 20,
+			left: 20
+		},
+		distance: 20
+	});
+
 	day_picker = new DayPicker({
 		date: new Date(),
 		days_container_id: "day_picker",
@@ -524,25 +531,13 @@ init = () => {
 		datepicker_container_id: "day_picker_dummy_container",
 		// datepicker_clingy_field_id: "day_picker_dummy_field",
 		button_to_today_id: "button_to_today",
-		dayChart: chart1
+		dayChart: chart1,
+		weekChart1: chart2
 	});
 	VIEW_DAILY = new View({
 		view_id: "view_daily",
 		button_id: "button_view_daily",
 		components: { day_picker: day_picker }
-	});
-
-	getWeekDataBreakdown().then(data => {
-		const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
-			data: data,
-			padding: {
-				top: 20,
-				right: 20,
-				bottom: 20,
-				left: 20
-			},
-			distance: 20
-		});
 	});
 
 	getWeekDataSum().then(data => {
