@@ -9,6 +9,6 @@ namespace TimeTracker.Helper
     public class Helper2
     {
         public string Name { get; set; }
-        public double Value { get; set; }
+        public List<Helper> Values { get; set; }
     }
 }

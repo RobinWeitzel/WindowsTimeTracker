@@ -12,7 +12,7 @@ namespace TimeTracker.Helper.Models
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "values")]
-        public List<double> Values { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public double Value { get; set; }
     }
 }

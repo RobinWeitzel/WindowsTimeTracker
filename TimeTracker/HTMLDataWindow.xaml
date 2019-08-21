@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
         Title="Data - TimeTracker" Width="1000" Height="1000">
     <Grid>
-        <cefSharp:ChromiumWebBrowser Height="auto" Width="auto" x:Name="WebBrowser" Grid.Row="0" />
+        <WindowsFormsHost x:Name="WindowsFormsHost" Height="Auto" Width="Auto">
+        </WindowsFormsHost>
     </Grid>
 </Window>

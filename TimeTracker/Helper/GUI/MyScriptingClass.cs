@@ -63,7 +63,7 @@ namespace TimeTracker.Helper
 
             List<(string, Dictionary<string, double>)> Days = new List<(string, Dictionary<string, double>)>();
 
-            foreach(DateTime Day in EachDay(StartPeriod, EndPeriod))
+            foreach (DateTime Day in EachDay(StartPeriod, EndPeriod))
             {
                 DateTime Start = Day;
                 DateTime End = Day.AddDays(1);
@@ -95,56 +95,24 @@ namespace TimeTracker.Helper
                 ActivityHelper
                     .GroupBy(ah => ah.Name)
                     .ToList()
-                    .ForEach(g => {
+                    .ForEach(g =>
+                    {
                         ActivityDict.Add(g.Key, g.Sum(h => h.Time));
                     });
 
                 Days.Add((Day.DayOfWeek.ToString().Substring(0, 2), ActivityDict));
             }
 
-            // Scale time to 1
-            double Max = Days.Max(d => d.Item2.Sum(g => g.Value));
-            for(int i = 0; i < Days.Count(); i++)
-            {
-                var d = Days[i];
-                Dictionary<string, double> AdjustedDict = new Dictionary<string, double>();
-                foreach (KeyValuePair<string, double> entry in d.Item2)
-                {
-                    AdjustedDict.Add(entry.Key, entry.Value / Max);
-                }
-                Days[i] = (d.Item1, AdjustedDict);
-            };
-
-            // Extract titles
-            List<string> Titles = new List<string>();
-            Days.ForEach(d =>
-            {
-                foreach (KeyValuePair<string, double> entry in d.Item2)
-                {
-                if (!Titles.Contains(entry.Key))
-                    {
-                        Titles.Add(entry.Key);
-                    }
-                }
-            });
-            Titles = Titles.OrderBy(l => l).ToList();
-
             // construct data
-            List<Dataset> Datasets = new List<Dataset>();
-            Titles.ForEach(t =>
+            List<Bardata> Bardata = Days.Select(d => new Bardata
             {
-                Datasets.Add(new Dataset
+                Label = d.Item1,
+                Datasets = d.Item2.Select(h => new Dataset
                 {
-                    Title = t,
-                    Values = Days.Select(d => d.Item2.ContainsKey(t) ? d.Item2[t] : 0).ToList()
-                });
-            });
-
-            Bardata Bardata = new Bardata
-            {
-                Labels = Days.Select(d => d.Item1).ToList(),
-                Datasets = Datasets
-            };
+                    Title = h.Key,
+                    Value = h.Value
+                }).OrderBy(dd => dd.Title).ToList()
+            }).OrderBy(d => d.Label).ToList();
 
             string json = JsonConvert.SerializeObject(Bardata);
 
@@ -152,7 +120,60 @@ namespace TimeTracker.Helper
             return json;
         }
 
-        public string GetOverviewData(int value)
+        public string GetWeekSumData(string date, int daysBack)
+        {
+            DateTime EndPeriod = DateTime.Parse(date).Date;
+            DateTime StartPeriod = EndPeriod.AddDays(-daysBack);
+
+            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From < EndPeriod).Select(aa => new Helper
+            {
+                Name = aa.Name,
+                From = aa.From > StartPeriod ? aa.From : StartPeriod,
+                To = (DateTime)aa.To > EndPeriod ? EndPeriod : (DateTime)aa.To
+            }).ToList();
+
+            // Check if the current activity should also be shown in the graph.
+            if (AppStateTracker.CurrentActivity != null && EndPeriod >= DateTime.Today)
+                ActivityHelper.Add(new Helper
+                {
+                    Name = AppStateTracker.CurrentActivity.Name,
+                    From = AppStateTracker.CurrentActivity.From > StartPeriod ? AppStateTracker.CurrentActivity.From : StartPeriod,
+                    To = DateTime.Now
+                });
+
+            // Compute time between Start and finish of the activity rounding to hours
+            foreach (Helper h in ActivityHelper)
+            {
+                h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+            }
+
+            Dictionary<string, Dictionary<string, double>> Grouping = ActivityHelper
+                .GroupBy(ah => ah.Name.Split(new string[] { " - " }, StringSplitOptions.None).First())
+                .ToDictionary(g => g.Key, g => g
+                    .GroupBy(a => a.Name.Split(new string[] { " - " }, StringSplitOptions.None).Last())
+                    .ToDictionary(gg => gg.Key, gg => gg.Sum(h => h.Time))
+                );
+
+            // Extract labels and titles
+            List<Bardata> Bardata = Grouping
+                .OrderBy(g => g.Key)
+                .Select(g => new Bardata
+                {
+                    Label = g.Key,
+                    Datasets = g.Value.Select(d => new Dataset
+                    {
+                        Title = d.Key,
+                        Value = d.Value
+                    }).OrderBy(d => d.Title).ToList()
+                }).OrderBy(d => d.Label).ToList();
+
+            string json = JsonConvert.SerializeObject(Bardata);
+
+            // Add the data as a JSON string to the result
+            return json;
+        }
+
+        /*public string GetOverviewData(int value)
         {
             string Result = "{";
 
@@ -280,7 +301,7 @@ namespace TimeTracker.Helper
             }).ToList()) + "}";
 
             return Result;
-        }
+        }*/
 
         private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
@@ -288,7 +309,7 @@ namespace TimeTracker.Helper
                 yield return day;
         }
 
-        public string GetDetailsData1(string name, string startString, string endString)
+        /*public string GetDetailsData1(string name, string startString, string endString)
         {
             string Result = "{";
             DateTime Start = DateTime.ParseExact(startString, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
@@ -382,55 +403,7 @@ namespace TimeTracker.Helper
             Result += "\"filteredNameGroupedList\":" + CustomJSONSerializer(FilteredNameGroupedHelpers) + "}";
             return Result;
 
-        }
-
-        public static string CustomJSONSerializer<T>(List<T> objs)
-        {
-            List<string> Helper = new List<string>();
-
-            foreach (T obj in objs)
-            {
-                Type Type = obj.GetType();
-                PropertyInfo[] Properties = Type.GetProperties();
-
-                string Helper2 = "{";
-
-                foreach (PropertyInfo Property in Properties)
-                {
-                    string value = "";
-
-                    if (Property.PropertyType.Name.Equals("String"))
-                    {
-                        value = "\"" + Property.GetValue(obj, null) + "\"";
-                    }
-                    else if (Property.PropertyType.Name.StartsWith("List"))
-                    {
-                        Type t = obj.GetType();
-                        if (t.Name == "Timeline")
-                        {
-                            List<Timeline> list = obj as List<Timeline>;
-                            value = CustomJSONSerializer(list);
-                        }
-                        else if (t.Name == "TimelineValue")
-                            value = CustomJSONSerializer(Property.GetValue(obj, null) as List<TimelineValue>);
-                    }
-                    else
-                    {
-                        value = ((double)Property.GetValue(obj, null)).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
-                    }
-
-                    Helper2 += "\"" + Char.ToLower(Property.Name[0]) + Property.Name.Substring(1) + "\":" + value + ",";
-                }
-
-                Helper2 = Helper2.Remove(Helper2.Length - 1);
-
-                Helper2 += "}";
-
-                Helper.Add(Helper2);
-            }
-
-            return "[" + String.Join(", ", Helper.ToArray()) + "]";
-        }
+        }*/
     }
 
 }

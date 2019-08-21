@@ -9,8 +9,8 @@ namespace TimeTracker.Helper.Models
 {
     class Bardata
     {
-        [JsonProperty(PropertyName = "labels")]
-        public List<string> Labels { get; set; }
+        [JsonProperty(PropertyName = "label")]
+        public string Label { get; set; }
 
         [JsonProperty(PropertyName = "datasets")]
         public List<Dataset> Datasets { get; set; }
