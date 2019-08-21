@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RobinWeitzel/WindowsTimeTracker#readme",
   "devDependencies": {
+    "html-minifier": "^4.0.0",
     "request": "^2.88.0"
   }
 }

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const request = require('request');
+const minify = require('html-minifier').minify;
 
 const get = async url => {
     return new Promise((resolve, reject) => {
@@ -73,6 +74,17 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
         //html = html.replace(new RegExp(match), `<script>\n${content}\n</script>`);
     }
+
+    // Minify
+    /*html = minify(html, {
+        minifyCSS: true,
+        minifyJS: true,
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
+        html5: true,
+        removeComments: true,
+
+    });*/
 
     // Output file
     if(!fs.existsSync('dist'))

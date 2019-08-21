@@ -141,6 +141,7 @@ class DayPicker {
 		this.date = options.date;
 		this.dayChart = options.dayChart;
 		this.weekChart1 = options.weekChart1;
+		this.weekChart2 = options.weekChart2;
 
 		//Element ids
 		//Navigation & Co
@@ -245,12 +246,19 @@ class DayPicker {
 	set_center_date(date) {
 
 		this.date = date;
+		this.dayChart.setData({ timelines: [] });
 		getDayData(date.toJSON()).then(timelines => {
 			this.dayChart.setData({ timelines: timelines });
 		});
 
-		getWeekDataBreakdown(date.toJSON(), 10).then(data => {
+		this.weekChart1.setData([]);
+		getWeekDataBreakdown(date.toJSON(), 7).then(data => {
 			this.weekChart1.setData(data);
+		});
+
+		this.weekChart2.setData([]);
+		getWeekDataSum(date.toJSON(), 7).then(data => {
+			this.weekChart2.setData(data);
 		});
 
 		this._remove_all();
@@ -467,26 +475,21 @@ const getWeekDataBreakdown = async (date, day) => {
 	});
 }
 
-const getWeekDataSum = async () => {
-	return new Promise((resolve, reject) => {
-		resolve({
-			labels: ["Work", "Study"],
-			datasets: [
-				{
-					values: [0.25, 0.5],
-					title: "test"
-				},
-				{
-					values: [0.5, 0.2]
-				},
-				{
-					values: [0.25, 0.1]
-				},
-			],
+const getWeekDataSum = async (date, day) => {
+	return new Promise(async (resolve, reject) => {
+		if (typeof boundAsync === "undefined")
+			await CefSharp.BindObjectAsync("boundAsync");
+
+		boundAsync.getWeekSumData(date, day).then(result => {
+			console.log(JSON.parse(result));
+			resolve(JSON.parse(result));
 		});
 	});
 }
 
+const toTime = value => {
+	return Math.round(value * 100) / 100 + "h";
+}
 
 init = () => {
 	const chart1 = new TimeCharts.Timeline("#chart_daily", {
@@ -509,18 +512,36 @@ init = () => {
 			left: 20
 		},
 		distance: 20,
-		adjustSize: true
+		adjustSize: true,
 	});
 
 	const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
-		data: data,
+		data: [],
 		padding: {
 			top: 20,
 			right: 20,
 			bottom: 20,
 			left: 20
 		},
-		distance: 20
+		distance: 20,
+		hover: {
+			callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+		}
+	});
+
+	const chart3 = new TimeCharts.Barchart("#chart_weekly_2", {
+		data: [],
+		orientation: "horizontal",
+		padding: {
+			top: 20,
+			right: 20,
+			bottom: 20,
+			left: 20
+		},
+		distance: 20,
+		hover: {
+			callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+		}
 	});
 
 	day_picker = new DayPicker({
@@ -534,7 +555,8 @@ init = () => {
 		// datepicker_clingy_field_id: "day_picker_dummy_field",
 		button_to_today_id: "button_to_today",
 		dayChart: chart1,
-		weekChart1: chart2
+		weekChart1: chart2,
+		weekChart2: chart3
 	});
 	VIEW_DAILY = new View({
 		view_id: "view_daily",
@@ -542,32 +564,13 @@ init = () => {
 		components: { day_picker: day_picker }
 	});
 
-	getWeekDataSum().then(data => {
-		const chart3 = new TimeCharts.Barchart("#chart_weekly_2", {
-			data: data,
-			orientation: "horizontal",
-			padding: {
-				top: 20,
-				right: 20,
-				bottom: 20,
-				left: 20
-			},
-			distance: 20
-		});
-	});
-
-	edit_data_excel = jexcel(document.getElementById('edit_data_table'), {
-		data: data,
-		colWidths: [300, 100, 100, 50, 50, 100, 100]
-	});
 	VIEW_EDIT_DATA = new View({
 		view_id: "view_edit_data",
 		button_id: "button_view_edit_data",
 		components: {
-			edit_data_excel: edit_data_excel
+
 		}
 	});
-
 
 	// let tag_selector = new TagBar({
 	// 	options: ["Wish You Were Here", "Welcome to the Machine", "Have a Cigar", "Shine On You Crazy Diamond", "Another Brick in the Wall"],
