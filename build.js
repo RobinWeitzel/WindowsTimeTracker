@@ -71,7 +71,7 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
     // Scripts
     console.log("LOADING SCRIPTS:");
-    console.log(styles.length + " scripts found.");
+    console.log(scripts.length + " scripts found.");
     for (let i = 0; i < scripts.length; i++) {
         try{
             const match = scripts[i];
