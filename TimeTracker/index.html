@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html dark_mode="false">
-	
-<head>
-	<meta charset="UTF-8">
-	<title>Timetracker</title>
+<html lang="en" dark_mode="false">
 
-	<!-- Roboto font -->
-	<style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TimeTracker</title>
+
+    <!-- Roboto font -->
+    <style>
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -16,8 +18,8 @@
 
 </style>
 
-	<!-- Icons -->
-	<script>
+    <!-- Icons -->
+    <script>
 /*!
  * Font Awesome Free 5.0.13 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -894,6 +896,7 @@
     "asterisk": [512, 512, [], "f069", "M478.21 334.093L336 256l142.21-78.093c11.795-6.477 15.961-21.384 9.232-33.037l-19.48-33.741c-6.728-11.653-21.72-15.499-33.227-8.523L296 186.718l3.475-162.204C299.763 11.061 288.937 0 275.48 0h-38.96c-13.456 0-24.283 11.061-23.994 24.514L216 186.718 77.265 102.607c-11.506-6.976-26.499-3.13-33.227 8.523l-19.48 33.741c-6.728 11.653-2.562 26.56 9.233 33.037L176 256 33.79 334.093c-11.795 6.477-15.961 21.384-9.232 33.037l19.48 33.741c6.728 11.653 21.721 15.499 33.227 8.523L216 325.282l-3.475 162.204C212.237 500.939 223.064 512 236.52 512h38.961c13.456 0 24.283-11.061 23.995-24.514L296 325.282l138.735 84.111c11.506 6.976 26.499 3.13 33.227-8.523l19.48-33.741c6.728-11.653 2.563-26.559-9.232-33.036z"],
     "at": [512, 512, [], "f1fa", "M256 8C118.941 8 8 118.919 8 256c0 137.059 110.919 248 248 248 48.154 0 95.342-14.14 135.408-40.223 12.005-7.815 14.625-24.288 5.552-35.372l-10.177-12.433c-7.671-9.371-21.179-11.667-31.373-5.129C325.92 429.757 291.314 440 256 440c-101.458 0-184-82.542-184-184S154.542 72 256 72c100.139 0 184 57.619 184 160 0 38.786-21.093 79.742-58.17 83.693-17.349-.454-16.91-12.857-13.476-30.024l23.433-121.11C394.653 149.75 383.308 136 368.225 136h-44.981a13.518 13.518 0 0 0-13.432 11.993l-.01.092c-14.697-17.901-40.448-21.775-59.971-21.775-74.58 0-137.831 62.234-137.831 151.46 0 65.303 36.785 105.87 96 105.87 26.984 0 57.369-15.637 74.991-38.333 9.522 34.104 40.613 34.103 70.71 34.103C462.609 379.41 504 307.798 504 232 504 95.653 394.023 8 256 8zm-21.68 304.43c-22.249 0-36.07-15.623-36.07-40.771 0-44.993 30.779-72.729 58.63-72.729 22.292 0 35.601 15.241 35.601 40.77 0 45.061-33.875 72.73-58.161 72.73z"],
     "audio-description": [512, 512, [], "f29e", "M162.925 238.709l8.822 30.655h-25.606l9.041-30.652c1.277-4.421 2.651-9.994 3.872-15.245 1.22 5.251 2.594 10.823 3.871 15.242zm166.474-32.099h-14.523v98.781h14.523c29.776 0 46.175-17.678 46.175-49.776 0-32.239-17.49-49.005-46.175-49.005zM512 112v288c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48zM245.459 336.139l-57.097-168A12.001 12.001 0 0 0 177 160h-35.894a12.001 12.001 0 0 0-11.362 8.139l-57.097 168C70.003 343.922 75.789 352 84.009 352h29.133a12 12 0 0 0 11.535-8.693l8.574-29.906h51.367l8.793 29.977A12 12 0 0 0 204.926 352h29.172c8.22 0 14.006-8.078 11.361-15.861zm184.701-80.525c0-58.977-37.919-95.614-98.96-95.614h-57.366c-6.627 0-12 5.373-12 12v168c0 6.627 5.373 12 12 12H331.2c61.041 0 98.96-36.933 98.96-96.386z"],
+    "backspace": [640, 512, [], "f55a", "M576 64H205.26A63.97 63.97 0 0 0 160 82.75L9.37 233.37c-12.5 12.5-12.5 32.76 0 45.25L160 429.25c12 12 28.28 18.75 45.25 18.75H576c35.35 0 64-28.65 64-64V128c0-35.35-28.65-64-64-64zm-84.69 254.06c6.25 6.25 6.25 16.38 0 22.63l-22.62 22.62c-6.25 6.25-16.38 6.25-22.63 0L384 301.25l-62.06 62.06c-6.25 6.25-16.38 6.25-22.63 0l-22.62-22.62c-6.25-6.25-6.25-16.38 0-22.63L338.75 256l-62.06-62.06c-6.25-6.25-6.25-16.38 0-22.63l22.62-22.62c6.25-6.25 16.38-6.25 22.63 0L384 210.75l62.06-62.06c6.25-6.25 16.38-6.25 22.63 0l22.62 22.62c6.25 6.25 6.25 16.38 0 22.63L429.25 256l62.06 62.06z"],
     "backward": [512, 512, [], "f04a", "M11.5 280.6l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2zm256 0l192 160c20.6 17.2 52.5 2.8 52.5-24.6V96c0-27.4-31.9-41.8-52.5-24.6l-192 160c-15.3 12.8-15.3 36.4 0 49.2z"],
     "balance-scale": [640, 512, [], "f24e", "M256 336h-.02c0-16.18 1.34-8.73-85.05-181.51-17.65-35.29-68.19-35.36-85.87 0C-2.06 328.75.02 320.33.02 336H0c0 44.18 57.31 80 128 80s128-35.82 128-80zM128 176l72 144H56l72-144zm511.98 160c0-16.18 1.34-8.73-85.05-181.51-17.65-35.29-68.19-35.36-85.87 0-87.12 174.26-85.04 165.84-85.04 181.51H384c0 44.18 57.31 80 128 80s128-35.82 128-80h-.02zM440 320l72-144 72 144H440zm88 128H352V153.25c23.51-10.29 41.16-31.48 46.39-57.25H528c8.84 0 16-7.16 16-16V48c0-8.84-7.16-16-16-16H383.64C369.04 12.68 346.09 0 320 0s-49.04 12.68-63.64 32H112c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h129.61c5.23 25.76 22.87 46.96 46.39 57.25V448H112c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"],
     "ban": [512, 512, [], "f05e", "M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"],
@@ -3293,11 +3296,9 @@
   }());
   
 </script>
-	
-	<!-- Dependency for Tables -->
 
-	<!-- Lightpick date picker -->
-	<script>
+    <!-- Lightpick date picker -->
+    <script>
 //! moment.js
 
 ;(function (global, factory) {
@@ -7806,7 +7807,7 @@
 })));
 
 </script>
-	<script>
+    <script>
 /**
 * @author: Rinat G. http://coding.kz
 * @copyright: Copyright (c) 2019 Rinat G.
@@ -9114,7 +9115,7 @@
 }));
 
 </script>
-	<style>
+    <style>
 .lightpick {
     position: absolute;
     z-index: 99999;
@@ -9410,8 +9411,8 @@
 }
 </style>
 
-	<!-- Timecharts -->
-	<script>
+    <!-- Timecharts -->
+    <script>
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -9564,7 +9565,7 @@ eval("var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Barchart\", function() { return Barchart; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Timeline\", function() { return Timeline; });\n/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ \"./src/index.css\");\n/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_0__);\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance\"); }\n\nfunction _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === \"[object Arguments]\") return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance\"); }\n\nfunction _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\n\n/**\r\n * A module to visualize time-related data.\r\n * @module TimeCharts\r\n */\n///// PRIVATE HELPERS /////\n\n/**\r\n * Sets multiple attributes for a dom element.\r\n * @private\r\n * @param {Object} obj - the dom element\r\n * @param {Object} params - the attributes to be set\r\n */\n\nfunction setAttributes(obj, params) {\n  for (var _i = 0, _Object$entries = Object.entries(params); _i < _Object$entries.length; _i++) {\n    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),\n        key = _Object$entries$_i[0],\n        value = _Object$entries$_i[1];\n\n    if (key === \"class\") {\n      var _obj$classList;\n\n      (_obj$classList = obj.classList).add.apply(_obj$classList, _toConsumableArray(value));\n    } else {\n      obj.setAttribute(key, value);\n    }\n  }\n}\n/**\r\n * Removes all child elements from a DOM element.\r\n * @private\r\n * @param {Object} obj - the dom element\r\n */\n\n\nfunction clear(obj) {\n  while (obj.firstChild) {\n    obj.removeChild(obj.firstChild);\n  }\n}\n/**\r\n * Merges an object into another one.\r\n * @private\r\n * @param {Object} obj - the object into which to merge \r\n * @param {Object} merger - the object to merge \r\n * @param {boolean} [overwrite = false] - whether to overwrite the original value of it exists\r\n */\n\n\nfunction mergeObjects(obj, merger, overwrite) {\n  overwrite = overwrite === true; // defaults to false\n\n  for (var _i2 = 0, _Object$keys = Object.keys(merger); _i2 < _Object$keys.length; _i2++) {\n    var key = _Object$keys[_i2];\n\n    if (!(key in obj)) {\n      obj[key] = merger[key];\n    } else if (_typeof(merger[key]) === \"object\") {\n      mergeObjects(obj[key], merger[key], overwrite);\n    } else if (overwrite) {\n      obj[key] = merger[key];\n    }\n  }\n}\n/**\r\n * Generates coordinates for arcs based on the center position, the radius and the angle\r\n * @param {number} centerX - the x-coordinate of the center\r\n * @param {number} centerY - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} angleInDegrees - the angle\r\n */\n\n\nfunction polarToCartesian(centerX, centerY, radiusX, radiusY, angleInDegrees) {\n  var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;\n  return {\n    x: centerX + radiusX * Math.cos(angleInRadians),\n    y: centerY + radiusY * Math.sin(angleInRadians)\n  };\n}\n/**\r\n * Creates the svg path string for an arc\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} startAngle - the angle at which the arc starts\r\n * @param {number} endAngle - the angle at which the arc ends\r\n * @param {number} outerArc - the flag for the outer arc\r\n */\n\n\nfunction describeArc(x, y, radiusX, radiusY, startAngle, endAngle, outerArc) {\n  var start = polarToCartesian(x, y, radiusX, radiusY, endAngle);\n  var end = polarToCartesian(x, y, radiusX, radiusY, startAngle);\n  var largeArcFlag = endAngle - startAngle <= 180 ? \"0\" : \"1\";\n  var d = [\"M\", start.x, start.y, \"A\", radiusX, radiusY, 0, largeArcFlag, outerArc, end.x, end.y].join(\" \");\n  return [d, start, end];\n}\n/**\r\n * Creates the svg path string for the top circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the arc (not the height of the bar i.e. must be <= radiusY - heightOld)\r\n * @param {number} heightOld - the old height (where the arc should start)\r\n */\n\n\nfunction createTopArc(x, y, radiusX, radiusY, heightDelta, heightOld) {\n  // Calculate degrees\n  var alphaOld = Math.asin((radiusY - heightOld) / radiusY) / Math.PI * 180;\n  var alphaNew = Math.asin((radiusY - (heightOld + heightDelta)) / radiusY) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, alphaOld, alphaNew, 1);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 360 - alphaOld, 360 - alphaNew, 0);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the right circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the arc (not the height of the bar i.e. must be <= radiusX - widthOld)\r\n * @param {number} widthOld - the old width (where the arc should start)\r\n */\n\n\nfunction createRightArc(x, y, radiusX, radiusY, widthDelta, widthOld) {\n  // Calculate degrees\n  var alphaOld = Math.asin((radiusX - widthOld) / radiusX) / Math.PI * 180;\n  var alphaNew = Math.asin((radiusX - (widthOld + widthDelta)) / radiusX) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 90 + alphaOld, 90 + alphaNew, 1);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 90 + 360 - alphaOld, 90 + 360 - alphaNew, 0);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the bottom circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the arc (not the height of the bar i.e. must be <= radiusY - heightOld)\r\n * @param {number} heightOld - the old height (where the arc should start)\r\n */\n\n\nfunction createBottomArc(x, y, radiusX, radiusY, heightDelta, heightOld) {\n  // Calculate degrees\n  var alphaOld = Math.acos((radiusY - heightOld) / radiusY) / Math.PI * 180;\n  var alphaNew = Math.acos((radiusY - (heightOld + heightDelta)) / radiusY) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 180 + alphaOld, 180 + alphaNew, 0);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 180 - alphaOld, 180 - alphaNew, 1);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the left circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the arc (not the height of the bar i.e. must be <= radiusX - widthOld)\r\n * @param {number} widthOld - the old width (where the arc should start)\r\n */\n\n\nfunction createLeftArc(x, y, radiusX, radiusY, widthDelta, widthOld) {\n  // Calculate degrees\n  var alphaOld = Math.acos((radiusX - widthOld) / radiusX) / Math.PI * 180;\n  var alphaNew = Math.acos((radiusX - (widthOld + widthDelta)) / radiusX) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 90 + 180 + alphaOld, 90 + 180 + alphaNew, 0);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 90 + 180 + 360 - alphaOld, 90 + 180 + 360 - alphaNew, 1);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for a vertical bar\r\n * @param {number} x - x-coordinate of the left side of the bar\r\n * @param {number} y - y-coordinate of the bottom side of the bar\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the bar-portion\r\n * @param {number} heightOld - the height where the bar-portion should start\r\n * @param {number} heightMax - the full height of the bar chart\r\n */\n\n\nfunction createVerticalBar(x, y, radiusX, radiusY, heightDelta, heightOld, heightMax) {\n  var bottomArcHeight = 0;\n  var bottomArc = \"\";\n\n  if (heightOld < radiusY) {\n    // Bar starts in the bottom circle\n    bottomArcHeight = Math.min(heightDelta, radiusY - heightOld);\n    bottomArc = createBottomArc(x + radiusX, y - radiusY, radiusX, radiusY, bottomArcHeight, heightOld);\n  }\n\n  var topArcHeight = 0;\n  var topArc = \"\";\n\n  if (heightOld + heightDelta > heightMax - radiusY) {\n    // Bar ends in the top circle\n    topArcHeight = Math.min(heightDelta, heightOld + heightDelta - (heightMax - radiusY));\n    topArc = createTopArc(x + radiusX, y - heightMax + radiusY, radiusX, radiusY, topArcHeight, Math.max(0, heightOld - (heightMax - radiusY)));\n  }\n\n  var middleHeight = heightDelta - bottomArcHeight - topArcHeight;\n  var middle = \"\";\n\n  if (middleHeight > 0) {\n    middle = [\"M\", x, y - heightOld - bottomArcHeight, \"v\", -middleHeight, \"h\", radiusX * 2, \"v\", middleHeight, \"h\", -radiusX * 2].join(\" \");\n  }\n\n  var d = [bottomArc, middle, topArc].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for a horizontal bar\r\n * @param {number} x - x-coordinate of the left side of the bar\r\n * @param {number} y - y-coordinate of the top side of the bar\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the bar-portion\r\n * @param {number} widthOld - the width where the bar-portion should start\r\n * @param {number} widthMax - the full width of the bar chart\r\n */\n\n\nfunction createHorizontalBar(x, y, radiusX, radiusY, widthDelta, widthOld, widthMax) {\n  var leftArcWidth = 0;\n  var leftArc = \"\";\n\n  if (widthOld < radiusX) {\n    // Bar starts in the left circle\n    leftArcWidth = Math.min(widthDelta, radiusX - widthOld);\n    leftArc = createLeftArc(x + radiusX, y + radiusY, radiusX, radiusY, leftArcWidth, widthOld);\n  }\n\n  var rightArcWidth = 0;\n  var rightArc = \"\";\n\n  if (widthOld + widthDelta > widthMax - radiusX) {\n    // Bar ends in the top circle\n    rightArcWidth = Math.min(widthDelta, widthOld + widthDelta - (widthMax - radiusX));\n    rightArc = createRightArc(x + widthMax - radiusX, y + radiusY, radiusX, radiusY, rightArcWidth, Math.max(0, widthOld - (widthMax - radiusX)));\n  }\n\n  var middleWidth = widthDelta - leftArcWidth - rightArcWidth;\n  var middle = \"\";\n\n  if (middleWidth > 0) {\n    middle = [\"M\", x + widthOld + leftArcWidth, y, \"h\", middleWidth, \"v\", radiusY * 2, \"h\", -middleWidth, \"v\", -radiusY * 2].join(\" \");\n  }\n\n  var d = [leftArc, middle, rightArc].join(\" \");\n  return d;\n}\n\nvar Draw =\n/*#__PURE__*/\nfunction () {\n  function Draw() {\n    _classCallCheck(this, Draw);\n  }\n\n  _createClass(Draw, null, [{\n    key: \"svg\",\n\n    /**\r\n     * Creates an svg object.\r\n     * @private\r\n     * @param {number|string} width - width of the svg\r\n     * @param {number|string} height - height of the svg\r\n     * @param {number} vbWidth - width of the viewbox\r\n     * @param {number} vbHeight - height of the viewbox\r\n     * @param {Object} [options] - additional attributes for the svg\r\n     * @returns {Object} - svg object\r\n     */\n    value: function svg(width, height, vbWidth, vbHeight, options) {\n      var svg = document.createElementNS(\"http://www.w3.org/2000/svg\", \"svg\");\n      setAttributes(svg, {\n        width: width,\n        height: height,\n        viewBox: \"0 0 \" + vbWidth + \" \" + vbHeight,\n        preserveAspectRatio: \"none\"\n      });\n      setAttributes(svg, options || {});\n      return svg;\n    }\n    /**\r\n     * Draws an svg rectangle.\r\n     * @private\r\n     * @param {number} x - x-coordinate\r\n     * @param {number} y - y-coordinate\r\n     * @param {number} width - width of the rectangle\r\n     * @param {number} height - height of the rectangle\r\n     * @param {string} color - the fill color of the rectangle\r\n     * @param {Object} [options] additional attributes for the rectangle\r\n     * @returns {Object} - svg rectangle\r\n     */\n\n  }, {\n    key: \"rect\",\n    value: function rect(x, y, width, height, color, options) {\n      var rect = document.createElementNS(\"http://www.w3.org/2000/svg\", \"rect\");\n      setAttributes(rect, {\n        width: width,\n        height: height,\n        x: x,\n        y: y,\n        fill: color\n      });\n      setAttributes(rect, options || {});\n      return rect;\n    }\n    /**\r\n     * Draws an svg line.\r\n     * @private\r\n     * @param {number} x1 - x-coordinate where the line begins\r\n     * @param {number} y1 - y-coordinate where the line begins\r\n     * @param {number} x2 - x-coordinate where the line ends\r\n     * @param {number} y2 - y-coordinate where the line begins\r\n     * @param {string} color - color of the line\r\n     * @param {number} width - width of the line\r\n     * @param {Object} [options] - additional attributes for the line\r\n     * @returns {Object} - svg line\r\n     */\n\n  }, {\n    key: \"line\",\n    value: function line(x1, y1, x2, y2, color, width, options) {\n      var line = document.createElementNS(\"http://www.w3.org/2000/svg\", \"line\");\n      setAttributes(line, {\n        x1: x1,\n        y1: y1,\n        x2: x2,\n        y2: y2,\n        stroke: color,\n        \"stroke-width\": width\n      });\n      setAttributes(line, options || {});\n      return line;\n    }\n    /**\r\n     * Draws an svg path.\r\n     * @private\r\n     * @param {string} shape - the shape of the path \r\n     * @param {string} color - the color of the path\r\n     * @param {Object} [options] - additional attributes for the path\r\n     * @returns {Object} - svg path\r\n     */\n\n  }, {\n    key: \"path\",\n    value: function path(shape, color, options) {\n      var path = document.createElementNS(\"http://www.w3.org/2000/svg\", \"path\");\n      setAttributes(path, {\n        d: shape,\n        fill: color\n      });\n      setAttributes(path, options || {});\n      return path;\n    }\n    /**\r\n     * Draws an svg text.\r\n     * @private\r\n     * @param {number} x - x-coordinate of the top right left corner of the text\r\n     * @param {number} y - y-coordinate of the top right left corner of the text\r\n     * @param {string} content - the text that is displayed\r\n     * @param {string} color - the text color\r\n     * @param {string} [font = 'Roboto'] - the font name\r\n     * @param {Object} [options] - additional attributes for the text\r\n     * @returns {Object} - svg text\r\n     */\n\n  }, {\n    key: \"text\",\n    value: function text(x, y, content, color, font, options) {\n      color = color || \"black\";\n      font = font || 'Roboto';\n      var text = document.createElementNS(\"http://www.w3.org/2000/svg\", \"text\");\n      setAttributes(text, {\n        x: x,\n        y: y,\n        \"font-size\": \"14px\",\n        fill: color,\n        stroke: \"none\",\n        \"font-family\": font,\n        \"text-anchor\": \"middle\",\n        \"class\": [\"static\"]\n      });\n      setAttributes(text, options || {});\n      text.appendChild(document.createTextNode(content));\n      return text;\n    }\n    /**\r\n     * Creates an svg group.\r\n     * @private\r\n     * @returns {Object} - svg group\r\n     */\n\n  }, {\n    key: \"group\",\n    value: function group() {\n      return document.createElementNS(\"http://www.w3.org/2000/svg\", \"g\");\n    }\n  }]);\n\n  return Draw;\n}(); ///// PUBLIC FUNCTIONS /////\n\n/**\r\n * Creates a bar chart\r\n * @class\r\n */\n\n\nvar Barchart =\n/*#__PURE__*/\nfunction () {\n  /**\r\n   * Constructs a bar chart\r\n   * @constructor\r\n   * @param {string} element - css query selector of the container dom element into which the chart is placed.\r\n   * @param {Object} [params] - options\r\n   * @param {Object} [params.barSize = 25] - the size of a bar in px.\r\n   * @param {Object[]} [params.data] - the data to be displayed. A list of bars that make up the bar chart.\r\n   * @param {string} [params.data[].label] - the labels underneath the bar.\r\n   * @param {Object[]} [params.data[].datasets] - each dataset represents one \"block\" of a bar.\r\n   * @param {number} params.data[].datasets[].value - the value of the block.\r\n   * @param {string} [params.data[].datasets[].title] - the title of the block.\r\n   * @param {number|string} [max = 'relative'] - the max value of the chart.\r\n   * @param {Object} [params.padding] - padding in all directions of the chart.\r\n   * @param {number|string} [params.padding.top] - top padding for the chart.\r\n   * @param {number|string} [params.padding.right] - right padding for the chart.\r\n   * @param {number|string} [params.padding.bottom] - bottom padding for the chart.\r\n   * @param {number|string} [params.padding.left] - left padding for the chart.\r\n   * @param {Object} [params.colors] - custom colors\r\n   * @param {string[]} [params.colors.foreground = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for each bar.\r\n   * @param {boolean} [params.colors.fixToTitle = true] - Whether bar-portions with the same title should also have the same color.\r\n   * @param {string} [params.colors.background = \"#E3E6E9\"] - the color of the background of the bars (not the color of background of the whole chart).\r\n   * @param {string} [params.colors.text = \"black\"] - the color of the text.\r\n   * @param {'vertical' | 'horizontal'} [params.orientation = 'vertical'] - orientation for the chart.\r\n   * @param {string} [params.font = 'Roboto'] - the font for all writing. Font must be imported separately.\r\n   * @param {Object} [params.hover] - options for the hover effect.\r\n   * @param {boolean} [params.hover.visible = true] - whether the titles should be shown on hover or not.\r\n   * @param {Function} [params.hover.callback] - function that returns html that is displayed in the hover effect. Receives (title, value).\r\n   * @param {'variable' | number} [params.distance = 'variable'] - whether the distance between timelines should be variable (based on svg size) or a fixed number of px.\r\n   * @param {boolean} [params.adjustSize = false] - whether the size of the container should be adjusted based on the needed space. Only works if params.distance != 'variable'.\r\n   * @throws Will throw an error if the container element is not found.\r\n   */\n  function Barchart(element, params) {\n    var _this = this;\n\n    _classCallCheck(this, Barchart);\n\n    this.container = document.querySelector(element);\n\n    if (this.container == null) {\n      console.error(\"Container for chart does not exist\");\n      return;\n    } // Extract parameters and sets defaults if parameters not available\n\n\n    mergeObjects(params, {\n      data: [],\n      padding: {\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0\n      },\n      colors: {\n        foreground: ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc'],\n        fixToTitle: true,\n        background: \"#E3E6E9\",\n        text: \"black\"\n      },\n      orientation: \"vertical\",\n      font: \"Roboto\",\n      hover: {\n        visible: true,\n        callback: function callback(title, value) {\n          return \"<span style=\\\"color: gray\\\">\".concat(value, \"</span>\").concat(title !== \"\" ? \": \" + title : \"\");\n        }\n      },\n      barSize: 25,\n      distance: 'variable',\n      adjustSize: false,\n      max: 'relative'\n    });\n    this.data = params.data;\n    this.padding = params.padding;\n    this.max = params.max;\n    this.foregroundColors = params.colors.foreground;\n    this.fixColorToTitle = params.colors.fixToTitle;\n    this.backgroundColor = params.colors.background;\n    this.textColor = params.colors.text;\n    this.orientation = params.orientation;\n    this.font = params.font;\n    this.hover = params.hover;\n    this.barSize = params.barSize;\n    this.distance = params.distance;\n    this.adjustSize = this.distance !== 'variable' && params.adjustSize;\n\n    if (this.orientation !== \"horizontal\") {\n      this.drawVertical();\n\n      if (typeof ResizeObserver === \"function\") {\n        var ro = new ResizeObserver(function (entries) {\n          _this.drawVertical();\n        });\n        ro.observe(this.container);\n      } else {\n        window.addEventListener('resize', function () {\n          _this.drawVertical();\n        });\n      }\n    } else {\n      this.drawHorizontal();\n\n      if (typeof ResizeObserver === \"function\") {\n        var _ro = new ResizeObserver(function (entries) {\n          _this.drawHorizontal();\n        });\n\n        _ro.observe(this.container);\n      } else {\n        window.addEventListener('resize', function () {\n          _this.drawHorizontal();\n        });\n      }\n    }\n  }\n  /**\r\n   * Draws a vertical chart\r\n   * @private\r\n   */\n\n\n  _createClass(Barchart, [{\n    key: \"drawVertical\",\n    value: function drawVertical() {\n      var _this2 = this;\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = 100 / realHeight;\n      var barCount = this.data.length;\n      var barWidth = this.barSize;\n      var barHeight = 100 - 25 * viewboxHeightScale;\n\n      if (this.adjustSize) {\n        var width = (barWidth + this.distance) * barCount + this.padding.left + this.padding.right;\n        this.container.style.width = \"\".concat(width, \"px\");\n      }\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = realWidth / 100;\n      var barSpacing = this.distance === 'variable' ? 100 * viewboxWidthScale / barCount - barWidth : this.distance; // Find max value\n\n      var max = 0;\n\n      if (this.max === 'relative') {\n        max = this.data.reduce(function (p, c) {\n          return Math.max(p, c.datasets.reduce(function (p, c) {\n            return p + c.value;\n          }, 0));\n        }, 0);\n      } else {\n        max = this.max;\n      }\n\n      var valueMap = {};\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100 * viewboxWidthScale, 100); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw data\n\n      for (var i = 0; i < barCount; i++) {\n        var label = this.data[i].label || \"\";\n        var rx = barWidth / 2;\n        var ry = barWidth / 2 * viewboxHeightScale;\n        var background = Draw.path(\"M \".concat((i + 0.5) * barSpacing + i * barWidth, \",\", 0, \" m 0, \").concat(barHeight - ry, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 \").concat(barWidth, \",0 v \").concat(ry * 2 - barHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 \").concat(-barWidth, \",0 z\"), this.backgroundColor);\n        this.svg.appendChild(background);\n        var y = 0; // height of the bar. Contains the position at which to draw the next rectangle\n\n        var _loop = function _loop(j) {\n          var value = _this2.data[i].datasets[j].value || 0;\n          var title = _this2.data[i].datasets[j].title || \"\";\n          var color = \"\";\n\n          if (_this2.fixColorToTitle) {\n            if (!(title in valueMap)) {\n              // sub-category has not be encountered before\n              color = _this2.foregroundColors[Object.keys(valueMap).length % _this2.foregroundColors.length];\n              valueMap[title] = color;\n            } else {\n              color = valueMap[title];\n            }\n          } else {\n            color = _this2.foregroundColors[j % _this2.foregroundColors.length];\n          }\n\n          var height = barHeight * value / max;\n\n          if (height > 0 && y < barHeight) {\n            var foreground = Draw.path(createVerticalBar((i + 0.5) * barSpacing + i * barWidth, barHeight, rx, ry, height, y, barHeight), color);\n\n            if (_this2.hover.visible) {\n              foreground.addEventListener('mouseenter', function (evt) {\n                _this2.showTooltip(true, foreground, value, title);\n              });\n              foreground.addEventListener(\"mouseleave\", function (evt) {\n                _this2.showTooltip(false);\n              });\n            }\n\n            if (y < barHeight) {\n              // only draw the part if it would not overshoot\n              _this2.svg.appendChild(foreground);\n            }\n\n            y = y + height;\n          }\n        };\n\n        for (var j = 0; j < this.data[i].datasets.length; j++) {\n          _loop(j);\n        }\n\n        var text = Draw.text((i + 0.5) * (barSpacing + barWidth), barHeight + 20 * viewboxHeightScale, label, this.textColor, this.font);\n        text.setAttribute(\"transform\", \"scale(1,\".concat(viewboxHeightScale, \") translate(0, \").concat(parseFloat(text.getAttribute(\"y\")) / viewboxHeightScale - parseFloat(text.getAttribute(\"y\")), \")\"));\n        this.svg.appendChild(text);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Draws a horizontal chart\r\n     * @private\r\n     */\n\n  }, {\n    key: \"drawHorizontal\",\n    value: function drawHorizontal() {\n      var _this3 = this;\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = 100 / realWidth;\n      var barCount = this.data.length;\n      var textWidth = this.data.reduce(function (p, c) {\n        return Math.max(p, c.label !== undefined && c.label.length > 0 ? (2 + c.label.length * 7.5) * viewboxWidthScale : 0);\n      }, 0); // 7.5 per char \n\n      var barWidth = 100 - textWidth;\n      var barHeight = this.barSize;\n\n      if (this.adjustSize) {\n        var height = (barCount + this.distance) * barHeight + this.padding.top + this.padding.bottom;\n        this.container.style.height = \"\".concat(height, \"px\");\n      }\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = realHeight / 100;\n      var barSpacing = this.distance === 'variable' ? 100 * viewboxHeightScale / barCount - barHeight : this.distance; // Find max value\n\n      var max = 0;\n\n      if (this.max === 'relative') {\n        max = this.data.reduce(function (p, c) {\n          return Math.max(p, c.datasets.reduce(function (p, c) {\n            return p + c.value;\n          }, 0));\n        }, 0);\n      } else {\n        max = this.max;\n      }\n\n      var valueMap = {};\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100, 100 * viewboxHeightScale); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw data\n\n      for (var i = 0; i < barCount; i++) {\n        var label = this.data[i].label || \"\";\n        var rx = barHeight / 2 * viewboxWidthScale;\n        var ry = barHeight / 2;\n        var background = Draw.path(\"M \".concat(textWidth + rx, \", \").concat((i + 0.5) * barSpacing + i * barHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(barHeight, \" h \").concat(barWidth - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-barHeight, \" z\"), this.backgroundColor);\n        this.svg.appendChild(background);\n        var x = 0; // width of the bar. Contains the position at which to draw the next rectangle\n\n        var _loop2 = function _loop2(j) {\n          var value = _this3.data[i].datasets[j].value || 0;\n          var title = _this3.data[i].datasets[j].title || \"\";\n          var color = \"\";\n\n          if (_this3.fixColorToTitle) {\n            if (!(title in valueMap)) {\n              // sub-category has not be encountered before\n              color = _this3.foregroundColors[Object.keys(valueMap).length % _this3.foregroundColors.length];\n              valueMap[title] = color;\n            } else {\n              color = valueMap[title];\n            }\n          } else {\n            color = _this3.foregroundColors[j % _this3.foregroundColors.length];\n          }\n\n          var width = barWidth * value / max;\n\n          if (width > 0 && x < barWidth) {\n            var foreground = Draw.path(createHorizontalBar(textWidth, (i + 0.5) * barSpacing + i * barHeight, rx, ry, width, x, barWidth), color);\n\n            if (_this3.hover.visible) {\n              foreground.addEventListener('mouseenter', function (evt) {\n                _this3.showTooltip(true, foreground, value, title);\n              });\n              foreground.addEventListener(\"mouseleave\", function (evt) {\n                _this3.showTooltip(false);\n              });\n            }\n\n            if (x < barWidth) {\n              // only draw the part if it would not overshoot\n              _this3.svg.appendChild(foreground);\n            }\n\n            x = x + barWidth * value;\n          }\n        };\n\n        for (var j = 0; j < this.data[i].datasets.length; j++) {\n          _loop2(j);\n        }\n\n        var text = Draw.text(0, (i + 0.5) * (barSpacing + barHeight), label, this.textColor, this.font, {\n          \"text-anchor\": \"start\",\n          \"alignment-baseline\": \"central\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n        this.svg.appendChild(text);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Draws a tooltip at the horizontal center of the element\r\n     * @private\r\n     * @param {boolean} show - Whether to show or hide the tooltip\r\n     * @param {Object} g - the element on which the tooltip is centered\r\n     * @param {number|string} value - the value of the element\r\n     * @param {number|string} title - the title of the element\r\n     */\n\n  }, {\n    key: \"showTooltip\",\n    value: function showTooltip(show, g, value, title) {\n      if (this.tooltip === undefined) {\n        this.tooltip = document.createElement('div');\n        this.tooltip.style.display = \"block\";\n        this.tooltip.style.position = \"absolute\";\n        this.tooltip.style.fontFamily = this.font;\n        this.tooltip.classList.add('time-chart-tooltip');\n        this.tooltip.appendChild(document.createElement('span'));\n        this.container.appendChild(this.tooltip);\n      }\n\n      if (!show) {\n        this.tooltip.style.visibility = \"hidden\";\n        return;\n      }\n\n      clear(this.tooltip);\n      this.tooltip.innerHTML = this.hover.callback(title, value);\n      this.tooltip.style.top = g.getBoundingClientRect().y - 43 + \"px\";\n      this.tooltip.style.left = \"calc(\".concat(g.getBoundingClientRect().x + g.getBoundingClientRect().width / 2 - this.tooltip.getBoundingClientRect().width / 2, \"px)\");\n      this.tooltip.style.visibility = \"visible\";\n    }\n    /**\r\n     * Replaces the existing data with new data.\r\n     * @param {array} [data] - the data to be displayed\r\n     * @param {string[]} [data.labels] - the labels underneath each bar\r\n     * @param {Object[]} [data.datasets] - each dataset represents one \"block\" of a bar. To create a stacked bar chart have multiple datasets.\r\n     * @param {number[]} data.datasets[].values - the values for each \"block\" of a bar. Should be between 0 and 1. \r\n     * @param {string} [data.datasets[].title] - the title for the dataset.\r\n     */\n\n  }, {\n    key: \"setData\",\n    value: function setData(data) {\n      this.data = data;\n\n      if (this.orientation !== \"horizontal\") {\n        this.drawVertical();\n      } else {\n        this.drawHorizontal();\n      }\n    }\n  }]);\n\n  return Barchart;\n}();\n/**\r\n * Creates a timeline\r\n * @class\r\n */\n\n\nvar Timeline =\n/*#__PURE__*/\nfunction () {\n  /**\r\n   * Constructs a timeline\r\n   * @constructor\r\n   * @param {string} element - css query selector of the container dom element into which the chart is placed.\r\n   * @param {Object} [params] - options.\r\n   * @param {Object} [params.lineHeight = 25] - the hight of a bar in a timeline in px.\r\n   * @param {Object} [params.scale] - options for the scale at the top of the timelines\r\n   * @param {number} [params.scale.from = 0] - the time in minutes at which the timeline should start.\r\n   * @param {number} [params.scale.to = 1440] - the time in minutes at which the timeline should end.\r\n   * @param {number} [params.scale.interval = 240] - the interval at which labels are shown on the scale.\r\n   * @param {number} [params.scale.intervalStart = 0] - the point at which the interval starts counting.\r\n   * @param {array} [params.data] - the data to be displayed.\r\n   * @param {Object[]} [params.data.timelines] - each object represents one timeline. For multiple timelines under each other, have multiple objects.\r\n   * @param {string} [params.data.timelines[].label] - the label to the right of the timeline.\r\n   * @param {Object[]} params.data.timelines[].values - the values (marked time slots).\r\n   * @param {number} params.data.timelines[].values[].start - the point at which the time slot starts in minutes.\r\n   * @param {number} params.data.timelines[].values[].length - the point at which the time slot ends in minutes.\r\n   * @param {string} [params.data.timelines[].values[].title] - the title of the time slot.\r\n   * @param {string[]} [params.data.timelines[].colors = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for the timeline.\r\n   * @param {Object} [params.padding] - padding in all directions of the chart.\r\n   * @param {number|string} [params.padding.top] - top padding for the chart.\r\n   * @param {number|string} [params.padding.right] - right padding for the chart.\r\n   * @param {number|string} [params.padding.bottom] - bottom padding for the chart.\r\n   * @param {number|string} [params.padding.left] - left padding for the chart.\r\n   * @param {Object} [params.colors] - custom colors\r\n   * @param {string} [params.colors.background = \"#E3E6E9\"] - the color of the background of the bars (not the color of background of the whole chart).\r\n   * @param {string} [params.colors.text = \"black\"] - the color of the text.\r\n   * @param {string} [params.font = 'Roboto'] - the font for all writing. Font must be imported separately.\r\n   * @param {Object} [params.hover] - options for the hover effect.\r\n   * @param {boolean} [params.hover.visible = true] - whether the titles should be shown on hover or not.\r\n   * @param {Function} [params.hover.callback] - function that returns html that is displayed in the hover effect. Receives (title, start, end).\r\n   * @param {Object} [params.legend] - options for the legend.\r\n   * @param {boolean} [params.legend.visible = true] - whether a legend should be shown underneath the timelines.\r\n   * @param {number} [params.legend.distance = 15] - distance from the last timeline to the legend in px. Always set to 0 if params.legend.visible === false.\r\n   * @param {number} [params.legend.textColor = \"white\"] - the color of the text in the legend.\r\n   * @param {'variable' | number} [params.distance = 'variable'] - whether the distance between timelines should be variable (based on svg size) or a fixed number of px.\r\n   * @param {boolean} [params.adjustSize = false] - whether the size of the container should be adjusted based on the needed space. Only works if params.distance != 'variable'.\r\n   * @throws Will throw an error if the container element is not found.\r\n   */\n  function Timeline(element, params) {\n    var _this4 = this;\n\n    _classCallCheck(this, Timeline);\n\n    this.container = document.querySelector(element);\n\n    if (this.container == null) {\n      console.error(\"Container for chart does not exist\");\n      return;\n    } // Extract parameters and sets defaults if parameters not available\n\n\n    mergeObjects(params, {\n      scale: {\n        from: 0,\n        to: 1440,\n        interval: 240,\n        intervalStart: 0\n      },\n      data: {\n        timelines: []\n      },\n      padding: {\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0\n      },\n      colors: {\n        background: \"#E3E6E9\",\n        text: \"black\"\n      },\n      font: \"Roboto\",\n      hover: {\n        visible: true,\n        callback: function callback(title, start, end) {\n          return \"<span style=\\\"color: gray\\\">\".concat(_this4.formatMinutes2(start), \" - \").concat(_this4.formatMinutes2(end), \"</span>\").concat(title !== \"\" ? \": \" + title : \"\");\n        }\n      },\n      legend: {\n        visible: true,\n        distance: 15,\n        textColor: \"white\"\n      },\n      lineHeight: 25,\n      distance: 'variable',\n      adjustSize: false\n    });\n    this.scale = params.scale;\n    this.data = params.data;\n    this.padding = params.padding;\n    this.font = params.font;\n    this.hover = params.hover;\n    this.legend = params.legend.visible;\n    this.legendDistance = params.legend.distance;\n    this.legendTextColor = params.legend.textColor;\n    this.lineHeight = params.lineHeight;\n    this.distance = params.distance;\n    this.adjustSize = this.distance !== 'variable' && params.adjustSize;\n    this.backgroundColor = params.colors.background;\n    this.textColor = params.colors.text;\n    this.draw();\n\n    if (typeof ResizeObserver === \"function\") {\n      var ro = new ResizeObserver(function (entries) {\n        _this4.draw();\n      });\n      ro.observe(this.container);\n    } else {\n      window.addEventListener('resize', function () {\n        _this4.draw();\n      });\n    }\n  }\n  /**\r\n   * Draws the timeline\r\n   * @private\r\n   */\n\n\n  _createClass(Timeline, [{\n    key: \"draw\",\n    value: function draw() {\n      var _this5 = this;\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = 100 / realWidth;\n      var lineCount = this.data.timelines.length;\n      var textWidth1 = this.data.timelines.reduce(function (p, c) {\n        return Math.max(p, c.label.length > 0 ? (40 + c.label.length * 7.5) * viewboxWidthScale : 0);\n      }, 0); // 7.5 per char \n\n      var textWidth2 = this.data.timelines.reduce(function (p, c) {\n        return Math.max(p, c.values.reduce(function (p, c) {\n          return Math.max(p, (10 + _this5.formatMinutes(c.length).length * 7.5) * viewboxWidthScale);\n        }, 0));\n      }, 0); // 7.5 per char\n\n      var widthLeft = Math.max(textWidth1 + textWidth2, 20 * viewboxWidthScale);\n      var widthRight = 20 * viewboxWidthScale;\n      var scaleHeight = 20;\n      var lineWidth = 100 - widthLeft - widthRight;\n      var lineHeight = this.lineHeight;\n      var legendHeight = this.legend ? lineHeight : 0;\n      var legendSpacing = this.legend ? this.legendDistance : 0;\n\n      if (this.adjustSize) {\n        var height = scaleHeight + legendHeight + legendSpacing + lineCount * (lineHeight + this.distance) + this.padding.top + this.padding.bottom;\n        this.container.style.height = \"\".concat(height, \"px\");\n      }\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = realHeight / 100;\n      var lineSpacing = this.distance === 'variable' ? (100 * viewboxHeightScale - scaleHeight - legendHeight - legendSpacing) / lineCount - lineHeight : this.distance;\n      var scaleStart = Math.max(0.5 * lineSpacing - scaleHeight, 0);\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100, 100 * viewboxHeightScale); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw scale\n\n      var from = this.scale.from;\n      var to = this.scale.to;\n      var interval = this.scale.interval;\n      var intervalStart = this.scale.intervalStart / (to - from) * lineWidth;\n      var intervalSteps = Math.floor((to - from) / interval);\n      var intervalStepsWidth = lineWidth / intervalSteps;\n\n      for (var i = 0; i <= intervalSteps; i++) {\n        var text = Draw.text(widthLeft + intervalStart + i * intervalStepsWidth, scaleStart, this.formatMinutes2(from + this.scale.intervalStart + i * interval), this.textColor, this.font, {\n          \"text-anchor\": \"middle\",\n          \"alignment-baseline\": \"text-before-edge\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n        this.svg.appendChild(text);\n      }\n\n      var x = 0; // Draw data\n\n      var _loop3 = function _loop3(_i3) {\n        var label = _this5.data.timelines[_i3].label || \"\";\n        var values = _this5.data.timelines[_i3].values || [];\n        var colors = _this5.data.timelines[_i3].colors || ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc'];\n        var valueMap = {}; // Helper to calculate grouped values and store color codes\n\n        var sum = _this5.data.timelines[_i3].values.reduce(function (p, c) {\n          return p + c.length;\n        }, 0);\n\n        var rx = lineHeight / 2 * viewboxWidthScale;\n        var ry = lineHeight / 2; // Draw background\n        // Gray background\n\n        var background = Draw.path(\"M \".concat(widthLeft + rx, \", \").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(lineHeight, \" h \").concat(lineWidth - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-lineHeight, \" z\"), _this5.backgroundColor);\n\n        _this5.svg.appendChild(background); // White stripes each hour\n\n\n        var steps = (to - from) / 60;\n        var stepWidth = lineWidth / steps;\n\n        for (var j = 1; j < steps; j++) {\n          var rect = Draw.rect(widthLeft + j * stepWidth - 1 * viewboxWidthScale, scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), 2 * viewboxWidthScale, lineHeight, \"white\");\n\n          _this5.svg.appendChild(rect);\n        } // Draw foreground\n\n\n        var _loop4 = function _loop4(_j) {\n          var relativeStart = Math.max(0, values[_j].start - from) / (to - from);\n          var relativeLength = Math.max(0, values[_j].start - from + values[_j].length) / (to - from);\n          var title = values[_j].title || \"\";\n          var color = \"\";\n\n          if (!(title in valueMap)) {\n            // sub-category has not be encountered before\n            color = colors[Object.keys(valueMap).length % colors.length];\n            valueMap[title] = {\n              color: color,\n              value: values[_j].length\n            };\n          } else {\n            color = valueMap[title].color;\n            valueMap[title].value = valueMap[title].value + values[_j].length;\n          }\n\n          var foreground = void 0;\n          var width = lineWidth * (relativeLength - relativeStart);\n\n          var polarToCartesian = function polarToCartesian(centerX, centerY, radius, angleInDegrees) {\n            var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;\n            return {\n              x: centerX + radius * Math.cos(angleInRadians),\n              y: centerY + radius * Math.sin(angleInRadians)\n            };\n          };\n\n          var partialCircle = function partialCircle(x, y, radius, startAngle, endAngle) {\n            var start = polarToCartesian(x, y, radius, endAngle);\n            var end = polarToCartesian(x, y, radius, startAngle);\n            var largeArcFlag = endAngle - startAngle <= 180 ? \"0\" : \"1\";\n            var d = [\"M\", start.x, start.y, \"A\", radius, radius, 0, largeArcFlag, 0, end.x, end.y, \"L\"].join(\" \");\n            return d;\n          };\n\n          var steepness = 0.05; // The smaller, the rounder\n\n          if (width - rx * 2 < 0) {\n            // bar to short to form circle\n            foreground = Draw.path(\"M \".concat(widthLeft + lineWidth * relativeStart + width / 2, \", \").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" c \").concat(-(width / 2 / 0.75), \" \").concat(lineHeight * steepness, \", \").concat(-(width / 2 / 0.75), \" \").concat(lineHeight * (1 - steepness), \", 0 \").concat(lineHeight, \" v \").concat(-lineHeight, \" c \").concat(width / 2 / 0.75, \" \").concat(lineHeight * steepness, \", \").concat(width / 2 / 0.75, \" \").concat(lineHeight * (1 - steepness), \", 0 \").concat(lineHeight, \" z\"), color);\n          } else {\n            foreground = Draw.path(\"M \".concat(widthLeft + lineWidth * relativeStart + rx, \",\").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(lineHeight, \" h \").concat(lineWidth * (relativeLength - relativeStart) - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-lineHeight, \" z\"), color);\n          }\n\n          _this5.svg.appendChild(foreground);\n\n          if (_this5.hover.visible) {\n            foreground.addEventListener('mouseenter', function (evt) {\n              _this5.showTooltip(true, foreground, values[_j].start, values[_j].start + values[_j].length, title);\n            });\n            foreground.addEventListener(\"mouseleave\", function (evt) {\n              _this5.showTooltip(false);\n            });\n          }\n        };\n\n        for (var _j = 0; _j < values.length; _j++) {\n          _loop4(_j);\n        } // Draw label\n\n\n        var text = Draw.text(0.5 * textWidth1, scaleStart + scaleHeight + _i3 * lineSpacing + (_i3 + 0.5) * lineHeight, label, _this5.textColor, _this5.font, {\n          \"text-anchor\": \"middle\",\n          \"alignment-baseline\": \"central\",\n          \"font-weight\": \"bold\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n\n        _this5.svg.appendChild(text); // Draw sum\n\n\n        var text2 = Draw.text(textWidth1, scaleStart + scaleHeight + _i3 * lineSpacing + (_i3 + 0.5) * lineHeight, _this5.formatMinutes(sum), _this5.textColor, _this5.font, {\n          \"text-anchor\": \"start\",\n          \"alignment-baseline\": \"central\"\n        });\n        text2.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text2.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text2.getAttribute(\"x\")), \", 0)\"));\n\n        _this5.svg.appendChild(text2); // Draw legend\n\n\n        if (_this5.legend) {\n          for (var _i4 = 0, _Object$keys2 = Object.keys(valueMap); _i4 < _Object$keys2.length; _i4++) {\n            var key = _Object$keys2[_i4];\n            var content = \"\".concat(key, \" - \").concat(_this5.formatMinutes(valueMap[key].value));\n            var width = content.length * 7.5 * viewboxWidthScale + 2 * rx;\n            var legend = Draw.path(\"M \".concat(widthLeft + x + rx, \",\").concat(scaleStart + legendSpacing + scaleHeight + (lineCount - 1) * lineSpacing + lineCount * lineHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(legendHeight, \" h \").concat(width - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-legendHeight, \" z\"), valueMap[key].color);\n\n            _this5.svg.appendChild(legend);\n\n            var _text = Draw.text(widthLeft + x + 0.5 * width, scaleStart + legendSpacing + legendHeight * 0.5 + scaleHeight + (lineCount - 1) * lineSpacing + lineCount * lineHeight, content, _this5.legendTextColor, _this5.font, {\n              \"text-anchor\": \"middle\",\n              \"alignment-baseline\": \"central\"\n            });\n\n            _text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(_text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(_text.getAttribute(\"x\")), \", 0)\"));\n\n            _this5.svg.appendChild(_text);\n\n            x = x + width + 10 * viewboxWidthScale; // previous x, width of the rectangle and padding\n          }\n        }\n      };\n\n      for (var _i3 = 0; _i3 < lineCount; _i3++) {\n        _loop3(_i3);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Converts a number of minutes into a string\r\n     * @private\r\n     * @param {number} minutes - the minutes\r\n     * @returns {string} - format: 4h 35m\r\n     */\n\n  }, {\n    key: \"formatMinutes\",\n    value: function formatMinutes(minutes) {\n      var h = Math.floor(minutes / 60);\n      var m = Math.floor(minutes % 60);\n\n      if (m === 0 && h === 0) {\n        return \"\";\n      } else if (m === 0) {\n        return \"\".concat(h, \"h\");\n      } else if (h === 0) {\n        return \"\".concat(m, \"m\");\n      }\n\n      {\n        return \"\".concat(h, \"h \").concat(m, \"m\");\n      }\n    }\n    /**\r\n     * Converts a number of minutes into a string\r\n     * @private\r\n     * @param {number} minutes - the minutes\r\n     * @returns {string} - format: 4:30 am\r\n     */\n\n  }, {\n    key: \"formatMinutes2\",\n    value: function formatMinutes2(minutes) {\n      var h = Math.floor(minutes / 60);\n      var ending = \"am\";\n      var m = Math.floor(minutes % 60);\n\n      if (h > 12) {\n        ending = \"pm\";\n        h = h - 12;\n      }\n\n      if (m === 0) {\n        return \"\".concat(h, \" \").concat(ending);\n      } else {\n        return \"\".concat(h, \":\").concat(m < 10 ? m + \"0\" : m, \" \").concat(ending);\n      }\n    }\n    /**\r\n     * Draws a tooltip at the horizontal center of the element\r\n     * @private\r\n     * @param {boolean} show - Whether to show or hide the tooltip\r\n     * @param {Object} g - the element on which the tooltip is centered\r\n     * @param {number} start - the start value in minutes\r\n     * @param {number} end - the vend value in minutes\r\n     * @param {number|string} title - the title of the element\r\n     */\n\n  }, {\n    key: \"showTooltip\",\n    value: function showTooltip(show, g, start, end, title) {\n      if (this.tooltip === undefined) {\n        this.tooltip = document.createElement('div');\n        this.tooltip.style.display = \"block\";\n        this.tooltip.style.position = \"absolute\";\n        this.tooltip.style.fontFamily = this.font;\n        this.tooltip.classList.add('time-chart-tooltip');\n        this.tooltip.appendChild(document.createElement('span'));\n        this.container.appendChild(this.tooltip);\n      }\n\n      if (!show) {\n        this.tooltip.style.visibility = \"hidden\";\n        return;\n      }\n\n      this.tooltip.style.top = g.getBoundingClientRect().y - 43 + \"px\";\n      clear(this.tooltip);\n      this.tooltip.innerHTML = this.hover.callback(title, start, end);\n      this.tooltip.style.left = \"calc(\".concat(g.getBoundingClientRect().x + g.getBoundingClientRect().width / 2 - this.tooltip.getBoundingClientRect().width / 2, \"px)\");\n      this.tooltip.style.visibility = \"visible\";\n    }\n    /**\r\n     * Replaces the existing data with new data. \r\n     * @param {array} [params.data] - the data to be displayed.\r\n     * @param {Object[]} [params.data.timelines] - each object represents one timeline. For multiple timelines under each other, have multiple objects.\r\n     * @param {string} [params.data.timelines[].label] - the label to the right of the timeline.\r\n     * @param {Object[]} params.data.timelines[].values - the values (marked time slots).\r\n     * @param {number} params.data.timelines[].values[].start - the point at which the time slot starts in minutes.\r\n     * @param {number} params.data.timelines[].values[].length - the point at which the time slot ends in minutes.\r\n     * @param {string} [params.data.timelines[].values[].title] - the title of the time slot.\r\n     * @param {string[]} [params.data.timelines[].colors = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for the timeline.\r\n     * @param {Object} [params.padding] - padding in all directions of the chart.\r\n     */\n\n  }, {\n    key: \"setData\",\n    value: function setData(data) {\n      this.data = data;\n      this.draw();\n    }\n  }]);\n\n  return Timeline;\n}(); // attach properties to the exports object to define\n// the exported module properties.\n\n\n\n\n//# sourceURL=webpack://TimeCharts/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Barchart\", function() { return Barchart; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Timeline\", function() { return Timeline; });\n/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ \"./src/index.css\");\n/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_0__);\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance\"); }\n\nfunction _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === \"[object Arguments]\") return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance\"); }\n\nfunction _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\n\n/**\r\n * A module to visualize time-related data.\r\n * @module TimeCharts\r\n */\n///// PRIVATE HELPERS /////\n\n/**\r\n * Sets multiple attributes for a dom element.\r\n * @private\r\n * @param {Object} obj - the dom element\r\n * @param {Object} params - the attributes to be set\r\n */\n\nfunction setAttributes(obj, params) {\n  for (var _i = 0, _Object$entries = Object.entries(params); _i < _Object$entries.length; _i++) {\n    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),\n        key = _Object$entries$_i[0],\n        value = _Object$entries$_i[1];\n\n    if (key === \"class\") {\n      var _obj$classList;\n\n      (_obj$classList = obj.classList).add.apply(_obj$classList, _toConsumableArray(value));\n    } else {\n      obj.setAttribute(key, value);\n    }\n  }\n}\n/**\r\n * Removes all child elements from a DOM element.\r\n * @private\r\n * @param {Object} obj - the dom element\r\n */\n\n\nfunction clear(obj) {\n  while (obj.firstChild) {\n    obj.removeChild(obj.firstChild);\n  }\n}\n/**\r\n * Merges an object into another one.\r\n * @private\r\n * @param {Object} obj - the object into which to merge \r\n * @param {Object} merger - the object to merge \r\n * @param {boolean} [overwrite = false] - whether to overwrite the original value of it exists\r\n */\n\n\nfunction mergeObjects(obj, merger, overwrite) {\n  overwrite = overwrite === true; // defaults to false\n\n  for (var _i2 = 0, _Object$keys = Object.keys(merger); _i2 < _Object$keys.length; _i2++) {\n    var key = _Object$keys[_i2];\n\n    if (!(key in obj)) {\n      obj[key] = merger[key];\n    } else if (_typeof(merger[key]) === \"object\") {\n      mergeObjects(obj[key], merger[key], overwrite);\n    } else if (overwrite) {\n      obj[key] = merger[key];\n    }\n  }\n}\n/**\r\n * Generates coordinates for arcs based on the center position, the radius and the angle\r\n * @param {number} centerX - the x-coordinate of the center\r\n * @param {number} centerY - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} angleInDegrees - the angle\r\n */\n\n\nfunction polarToCartesian(centerX, centerY, radiusX, radiusY, angleInDegrees) {\n  var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;\n  return {\n    x: centerX + radiusX * Math.cos(angleInRadians),\n    y: centerY + radiusY * Math.sin(angleInRadians)\n  };\n}\n/**\r\n * Creates the svg path string for an arc\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} startAngle - the angle at which the arc starts\r\n * @param {number} endAngle - the angle at which the arc ends\r\n * @param {number} outerArc - the flag for the outer arc\r\n */\n\n\nfunction describeArc(x, y, radiusX, radiusY, startAngle, endAngle, outerArc) {\n  var start = polarToCartesian(x, y, radiusX, radiusY, endAngle);\n  var end = polarToCartesian(x, y, radiusX, radiusY, startAngle);\n  var largeArcFlag = endAngle - startAngle <= 180 ? \"0\" : \"1\";\n  var d = [\"M\", start.x, start.y, \"A\", radiusX, radiusY, 0, largeArcFlag, outerArc, end.x, end.y].join(\" \");\n  return [d, start, end];\n}\n/**\r\n * Creates the svg path string for the top circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the arc (not the height of the bar i.e. must be <= radiusY - heightOld)\r\n * @param {number} heightOld - the old height (where the arc should start)\r\n */\n\n\nfunction createTopArc(x, y, radiusX, radiusY, heightDelta, heightOld) {\n  // Calculate degrees\n  var alphaOld = Math.asin((radiusY - heightOld) / radiusY) / Math.PI * 180;\n  var alphaNew = Math.asin((radiusY - (heightOld + heightDelta)) / radiusY) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, alphaOld, alphaNew, 1);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 360 - alphaOld, 360 - alphaNew, 0);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the right circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the arc (not the height of the bar i.e. must be <= radiusX - widthOld)\r\n * @param {number} widthOld - the old width (where the arc should start)\r\n */\n\n\nfunction createRightArc(x, y, radiusX, radiusY, widthDelta, widthOld) {\n  // Calculate degrees\n  var alphaOld = Math.asin((radiusX - widthOld) / radiusX) / Math.PI * 180;\n  var alphaNew = Math.asin((radiusX - (widthOld + widthDelta)) / radiusX) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 90 + alphaOld, 90 + alphaNew, 1);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 90 + 360 - alphaOld, 90 + 360 - alphaNew, 0);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the bottom circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the arc (not the height of the bar i.e. must be <= radiusY - heightOld)\r\n * @param {number} heightOld - the old height (where the arc should start)\r\n */\n\n\nfunction createBottomArc(x, y, radiusX, radiusY, heightDelta, heightOld) {\n  // Calculate degrees\n  var alphaOld = Math.acos((radiusY - heightOld) / radiusY) / Math.PI * 180;\n  var alphaNew = Math.acos((radiusY - (heightOld + heightDelta)) / radiusY) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 180 + alphaOld, 180 + alphaNew, 0);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 180 - alphaOld, 180 - alphaNew, 1);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for the left circle/arc of a bar\r\n * @param {number} x - the x-coordinate of the center\r\n * @param {number} y - the y-coordinate of the center\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the arc (not the height of the bar i.e. must be <= radiusX - widthOld)\r\n * @param {number} widthOld - the old width (where the arc should start)\r\n */\n\n\nfunction createLeftArc(x, y, radiusX, radiusY, widthDelta, widthOld) {\n  // Calculate degrees\n  var alphaOld = Math.acos((radiusX - widthOld) / radiusX) / Math.PI * 180;\n  var alphaNew = Math.acos((radiusX - (widthOld + widthDelta)) / radiusX) / Math.PI * 180;\n  var arc1 = describeArc(x, y, radiusX, radiusY, 90 + 180 + alphaOld, 90 + 180 + alphaNew, 0);\n  var arc2 = describeArc(x, y, radiusX, radiusY, 90 + 180 + 360 - alphaOld, 90 + 180 + 360 - alphaNew, 1);\n  var d = [arc1[0], \"L\", arc2[2].x, arc2[2].y, arc2[0], \"L\", arc1[1].x, arc1[1].y].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for a vertical bar\r\n * @param {number} x - x-coordinate of the left side of the bar\r\n * @param {number} y - y-coordinate of the bottom side of the bar\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} heightDelta - the height of the bar-portion\r\n * @param {number} heightOld - the height where the bar-portion should start\r\n * @param {number} heightMax - the full height of the bar chart\r\n */\n\n\nfunction createVerticalBar(x, y, radiusX, radiusY, heightDelta, heightOld, heightMax) {\n  var bottomArcHeight = 0;\n  var bottomArc = \"\";\n\n  if (heightOld < radiusY) {\n    // Bar starts in the bottom circle\n    bottomArcHeight = Math.min(heightDelta, radiusY - heightOld);\n    bottomArc = createBottomArc(x + radiusX, y - radiusY, radiusX, radiusY, bottomArcHeight, heightOld);\n  }\n\n  var topArcHeight = 0;\n  var topArc = \"\";\n\n  if (heightOld + heightDelta > heightMax - radiusY) {\n    // Bar ends in the top circle\n    topArcHeight = Math.min(heightDelta, heightOld + heightDelta - (heightMax - radiusY));\n    topArc = createTopArc(x + radiusX, y - heightMax + radiusY, radiusX, radiusY, topArcHeight, Math.max(0, heightOld - (heightMax - radiusY)));\n  }\n\n  var middleHeight = heightDelta - bottomArcHeight - topArcHeight;\n  var middle = \"\";\n\n  if (middleHeight > 0) {\n    middle = [\"M\", x, y - heightOld - bottomArcHeight, \"v\", -middleHeight, \"h\", radiusX * 2, \"v\", middleHeight, \"h\", -radiusX * 2].join(\" \");\n  }\n\n  var d = [bottomArc, middle, topArc].join(\" \");\n  return d;\n}\n/**\r\n * Creates the svg path string for a horizontal bar\r\n * @param {number} x - x-coordinate of the left side of the bar\r\n * @param {number} y - y-coordinate of the top side of the bar\r\n * @param {number} radiusX - the x-radius\r\n * @param {number} radiusY - the y-radius\r\n * @param {number} widthDelta - the width of the bar-portion\r\n * @param {number} widthOld - the width where the bar-portion should start\r\n * @param {number} widthMax - the full width of the bar chart\r\n */\n\n\nfunction createHorizontalBar(x, y, radiusX, radiusY, widthDelta, widthOld, widthMax) {\n  var leftArcWidth = 0;\n  var leftArc = \"\";\n\n  if (widthOld < radiusX) {\n    // Bar starts in the left circle\n    leftArcWidth = Math.min(widthDelta, radiusX - widthOld);\n    leftArc = createLeftArc(x + radiusX, y + radiusY, radiusX, radiusY, leftArcWidth, widthOld);\n  }\n\n  var rightArcWidth = 0;\n  var rightArc = \"\";\n\n  if (widthOld + widthDelta > widthMax - radiusX) {\n    // Bar ends in the top circle\n    rightArcWidth = Math.min(widthDelta, widthOld + widthDelta - (widthMax - radiusX));\n    rightArc = createRightArc(x + widthMax - radiusX, y + radiusY, radiusX, radiusY, rightArcWidth, Math.max(0, widthOld - (widthMax - radiusX)));\n  }\n\n  var middleWidth = widthDelta - leftArcWidth - rightArcWidth;\n  var middle = \"\";\n\n  if (middleWidth > 0) {\n    middle = [\"M\", x + widthOld + leftArcWidth, y, \"h\", middleWidth, \"v\", radiusY * 2, \"h\", -middleWidth, \"v\", -radiusY * 2].join(\" \");\n  }\n\n  var d = [leftArc, middle, rightArc].join(\" \");\n  return d;\n}\n\nvar Draw =\n/*#__PURE__*/\nfunction () {\n  function Draw() {\n    _classCallCheck(this, Draw);\n  }\n\n  _createClass(Draw, null, [{\n    key: \"svg\",\n\n    /**\r\n     * Creates an svg object.\r\n     * @private\r\n     * @param {number|string} width - width of the svg\r\n     * @param {number|string} height - height of the svg\r\n     * @param {number} vbWidth - width of the viewbox\r\n     * @param {number} vbHeight - height of the viewbox\r\n     * @param {Object} [options] - additional attributes for the svg\r\n     * @returns {Object} - svg object\r\n     */\n    value: function svg(width, height, vbWidth, vbHeight, options) {\n      var svg = document.createElementNS(\"http://www.w3.org/2000/svg\", \"svg\");\n      setAttributes(svg, {\n        width: width,\n        height: height,\n        viewBox: \"0 0 \" + vbWidth + \" \" + vbHeight,\n        preserveAspectRatio: \"none\"\n      });\n      setAttributes(svg, options || {});\n      return svg;\n    }\n    /**\r\n     * Draws an svg rectangle.\r\n     * @private\r\n     * @param {number} x - x-coordinate\r\n     * @param {number} y - y-coordinate\r\n     * @param {number} width - width of the rectangle\r\n     * @param {number} height - height of the rectangle\r\n     * @param {string} color - the fill color of the rectangle\r\n     * @param {Object} [options] additional attributes for the rectangle\r\n     * @returns {Object} - svg rectangle\r\n     */\n\n  }, {\n    key: \"rect\",\n    value: function rect(x, y, width, height, color, options) {\n      var rect = document.createElementNS(\"http://www.w3.org/2000/svg\", \"rect\");\n      setAttributes(rect, {\n        width: width,\n        height: height,\n        x: x,\n        y: y,\n        fill: color\n      });\n      setAttributes(rect, options || {});\n      return rect;\n    }\n    /**\r\n     * Draws an svg line.\r\n     * @private\r\n     * @param {number} x1 - x-coordinate where the line begins\r\n     * @param {number} y1 - y-coordinate where the line begins\r\n     * @param {number} x2 - x-coordinate where the line ends\r\n     * @param {number} y2 - y-coordinate where the line begins\r\n     * @param {string} color - color of the line\r\n     * @param {number} width - width of the line\r\n     * @param {Object} [options] - additional attributes for the line\r\n     * @returns {Object} - svg line\r\n     */\n\n  }, {\n    key: \"line\",\n    value: function line(x1, y1, x2, y2, color, width, options) {\n      var line = document.createElementNS(\"http://www.w3.org/2000/svg\", \"line\");\n      setAttributes(line, {\n        x1: x1,\n        y1: y1,\n        x2: x2,\n        y2: y2,\n        stroke: color,\n        \"stroke-width\": width\n      });\n      setAttributes(line, options || {});\n      return line;\n    }\n    /**\r\n     * Draws an svg path.\r\n     * @private\r\n     * @param {string} shape - the shape of the path \r\n     * @param {string} color - the color of the path\r\n     * @param {Object} [options] - additional attributes for the path\r\n     * @returns {Object} - svg path\r\n     */\n\n  }, {\n    key: \"path\",\n    value: function path(shape, color, options) {\n      var path = document.createElementNS(\"http://www.w3.org/2000/svg\", \"path\");\n      setAttributes(path, {\n        d: shape,\n        fill: color\n      });\n      setAttributes(path, options || {});\n      return path;\n    }\n    /**\r\n     * Draws an svg text.\r\n     * @private\r\n     * @param {number} x - x-coordinate of the top right left corner of the text\r\n     * @param {number} y - y-coordinate of the top right left corner of the text\r\n     * @param {string} content - the text that is displayed\r\n     * @param {string} color - the text color\r\n     * @param {string} [font = 'Roboto'] - the font name\r\n     * @param {Object} [options] - additional attributes for the text\r\n     * @returns {Object} - svg text\r\n     */\n\n  }, {\n    key: \"text\",\n    value: function text(x, y, content, color, font, options) {\n      color = color || \"black\";\n      font = font || 'Roboto';\n      var text = document.createElementNS(\"http://www.w3.org/2000/svg\", \"text\");\n      setAttributes(text, {\n        x: x,\n        y: y,\n        \"font-size\": \"14px\",\n        fill: color,\n        stroke: \"none\",\n        \"font-family\": font,\n        \"text-anchor\": \"middle\",\n        \"class\": [\"static\"]\n      });\n      setAttributes(text, options || {});\n      text.appendChild(document.createTextNode(content));\n      return text;\n    }\n    /**\r\n     * Creates an svg group.\r\n     * @private\r\n     * @returns {Object} - svg group\r\n     */\n\n  }, {\n    key: \"group\",\n    value: function group() {\n      return document.createElementNS(\"http://www.w3.org/2000/svg\", \"g\");\n    }\n  }]);\n\n  return Draw;\n}(); ///// PUBLIC FUNCTIONS /////\n\n/**\r\n * Creates a bar chart\r\n * @class\r\n */\n\n\nvar Barchart =\n/*#__PURE__*/\nfunction () {\n  /**\r\n   * Constructs a bar chart\r\n   * @constructor\r\n   * @param {string} element - css query selector of the container dom element into which the chart is placed.\r\n   * @param {Object} [params] - options\r\n   * @param {Object} [params.barSize = 25] - the size of a bar in px.\r\n   * @param {Object[]} [params.data] - the data to be displayed. A list of bars that make up the bar chart.\r\n   * @param {string} [params.data[].label] - the labels underneath the bar.\r\n   * @param {Object[]} [params.data[].datasets] - each dataset represents one \"block\" of a bar.\r\n   * @param {number} params.data[].datasets[].value - the value of the block.\r\n   * @param {string} [params.data[].datasets[].title] - the title of the block.\r\n   * @param {number|string} [max = 'relative'] - the max value of the chart.\r\n   * @param {Object} [params.padding] - padding in all directions of the chart.\r\n   * @param {number|string} [params.padding.top] - top padding for the chart.\r\n   * @param {number|string} [params.padding.right] - right padding for the chart.\r\n   * @param {number|string} [params.padding.bottom] - bottom padding for the chart.\r\n   * @param {number|string} [params.padding.left] - left padding for the chart.\r\n   * @param {Object} [params.colors] - custom colors\r\n   * @param {string[]} [params.colors.foreground = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for each bar.\r\n   * @param {boolean} [params.colors.fixToTitle = true] - Whether bar-portions with the same title should also have the same color.\r\n   * @param {string} [params.colors.background = \"#E3E6E9\"] - the color of the background of the bars (not the color of background of the whole chart).\r\n   * @param {string} [params.colors.text = \"black\"] - the color of the text.\r\n   * @param {'vertical' | 'horizontal'} [params.orientation = 'vertical'] - orientation for the chart.\r\n   * @param {string} [params.font = 'Roboto'] - the font for all writing. Font must be imported separately.\r\n   * @param {Object} [params.hover] - options for the hover effect.\r\n   * @param {boolean} [params.hover.visible = true] - whether the titles should be shown on hover or not.\r\n   * @param {Function} [params.hover.callback] - function that returns html that is displayed in the hover effect. Receives (title, value).\r\n   * @param {'variable' | number} [params.distance = 'variable'] - whether the distance between timelines should be variable (based on svg size) or a fixed number of px.\r\n   * @param {boolean} [params.adjustSize = false] - whether the size of the container should be adjusted based on the needed space. Only works if params.distance != 'variable'.\r\n   * @throws Will throw an error if the container element is not found.\r\n   */\n  function Barchart(element, params) {\n    var _this = this;\n\n    _classCallCheck(this, Barchart);\n\n    this.container = document.querySelector(element);\n\n    if (this.container == null) {\n      console.error(\"Container for chart does not exist\");\n      return;\n    } // Extract parameters and sets defaults if parameters not available\n\n\n    mergeObjects(params, {\n      data: [],\n      padding: {\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0\n      },\n      colors: {\n        foreground: ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc'],\n        fixToTitle: true,\n        background: \"#E3E6E9\",\n        text: \"black\"\n      },\n      orientation: \"vertical\",\n      font: \"Roboto\",\n      hover: {\n        visible: true,\n        callback: function callback(title, value) {\n          return \"<span style=\\\"color: gray\\\">\".concat(value, \"</span>\").concat(title !== \"\" ? \": \" + title : \"\");\n        }\n      },\n      barSize: 25,\n      distance: 'variable',\n      adjustSize: false,\n      max: 'relative'\n    });\n    this.data = params.data;\n    this.padding = params.padding;\n    this.max = params.max;\n    this.foregroundColors = params.colors.foreground;\n    this.fixColorToTitle = params.colors.fixToTitle;\n    this.backgroundColor = params.colors.background;\n    this.textColor = params.colors.text;\n    this.orientation = params.orientation;\n    this.font = params.font;\n    this.hover = params.hover;\n    this.barSize = params.barSize;\n    this.distance = params.distance;\n    this.adjustSize = this.distance !== 'variable' && params.adjustSize;\n\n    if (this.orientation !== \"horizontal\") {\n      this.drawVertical();\n\n      if (typeof ResizeObserver === \"function\") {\n        var ro = new ResizeObserver(function (entries) {\n          _this.drawVertical();\n        });\n        ro.observe(this.container);\n      } else {\n        window.addEventListener('resize', function () {\n          _this.drawVertical();\n        });\n      }\n    } else {\n      this.drawHorizontal();\n\n      if (typeof ResizeObserver === \"function\") {\n        var _ro = new ResizeObserver(function (entries) {\n          _this.drawHorizontal();\n        });\n\n        _ro.observe(this.container);\n      } else {\n        window.addEventListener('resize', function () {\n          _this.drawHorizontal();\n        });\n      }\n    }\n  }\n  /**\r\n   * Draws a vertical chart\r\n   * @private\r\n   */\n\n\n  _createClass(Barchart, [{\n    key: \"drawVertical\",\n    value: function drawVertical() {\n      var _this2 = this;\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = 100 / realHeight;\n      var barCount = this.data.length;\n      var barWidth = this.barSize;\n      var barHeight = 100 - 25 * viewboxHeightScale;\n\n      if (this.adjustSize) {\n        var width = (barWidth + this.distance) * barCount + this.padding.left + this.padding.right;\n        this.container.style.width = \"\".concat(width, \"px\");\n      }\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = realWidth / 100;\n      var barSpacing = this.distance === 'variable' ? 100 * viewboxWidthScale / barCount - barWidth : this.distance; // Find max value\n\n      var max = 0;\n\n      if (this.max === 'relative') {\n        max = this.data.reduce(function (p, c) {\n          return Math.max(p, c.datasets.reduce(function (p, c) {\n            return p + c.value;\n          }, 0));\n        }, 0);\n      } else {\n        max = this.max;\n      }\n\n      var valueMap = {};\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100 * viewboxWidthScale, 100); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw data\n\n      for (var i = 0; i < barCount; i++) {\n        var label = this.data[i].label || \"\";\n        var rx = barWidth / 2;\n        var ry = barWidth / 2 * viewboxHeightScale;\n        var background = Draw.path(\"M \".concat((i + 0.5) * barSpacing + i * barWidth, \",\", 0, \" m 0, \").concat(barHeight - ry, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 \").concat(barWidth, \",0 v \").concat(ry * 2 - barHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 \").concat(-barWidth, \",0 z\"), this.backgroundColor);\n        this.svg.appendChild(background);\n        var y = 0; // height of the bar. Contains the position at which to draw the next rectangle\n\n        var _loop = function _loop(j) {\n          var value = _this2.data[i].datasets[j].value || 0;\n          var title = _this2.data[i].datasets[j].title || \"\";\n          var color = \"\";\n\n          if (_this2.fixColorToTitle) {\n            if (!(title in valueMap)) {\n              // sub-category has not be encountered before\n              color = _this2.foregroundColors[Object.keys(valueMap).length % _this2.foregroundColors.length];\n              valueMap[title] = color;\n            } else {\n              color = valueMap[title];\n            }\n          } else {\n            color = _this2.foregroundColors[j % _this2.foregroundColors.length];\n          }\n\n          var height = barHeight * value / max;\n\n          if (height > 0 && y < barHeight) {\n            var foreground = Draw.path(createVerticalBar((i + 0.5) * barSpacing + i * barWidth, barHeight, rx, ry, height, y, barHeight), color);\n\n            if (_this2.hover.visible) {\n              foreground.addEventListener('mouseenter', function (evt) {\n                _this2.showTooltip(true, foreground, value, title);\n              });\n              foreground.addEventListener(\"mouseleave\", function (evt) {\n                _this2.showTooltip(false);\n              });\n            }\n\n            if (y < barHeight) {\n              // only draw the part if it would not overshoot\n              _this2.svg.appendChild(foreground);\n            }\n\n            y = y + height;\n          }\n        };\n\n        for (var j = 0; j < this.data[i].datasets.length; j++) {\n          _loop(j);\n        }\n\n        var text = Draw.text((i + 0.5) * (barSpacing + barWidth), barHeight + 20 * viewboxHeightScale, label, this.textColor, this.font);\n        text.setAttribute(\"transform\", \"scale(1,\".concat(viewboxHeightScale, \") translate(0, \").concat(parseFloat(text.getAttribute(\"y\")) / viewboxHeightScale - parseFloat(text.getAttribute(\"y\")), \")\"));\n        this.svg.appendChild(text);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Draws a horizontal chart\r\n     * @private\r\n     */\n\n  }, {\n    key: \"drawHorizontal\",\n    value: function drawHorizontal() {\n      var _this3 = this;\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = 100 / realWidth;\n      var barCount = this.data.length;\n      var textWidth = this.data.reduce(function (p, c) {\n        return Math.max(p, c.label !== undefined && c.label.length > 0 ? (2 + c.label.length * 7.5) * viewboxWidthScale : 0);\n      }, 0); // 7.5 per char \n\n      var barWidth = 100 - textWidth;\n      var barHeight = this.barSize;\n\n      if (this.adjustSize) {\n        var height = (barCount + this.distance) * barHeight + this.padding.top + this.padding.bottom;\n        this.container.style.height = \"\".concat(height, \"px\");\n      }\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = realHeight / 100;\n      var barSpacing = this.distance === 'variable' ? 100 * viewboxHeightScale / barCount - barHeight : this.distance; // Find max value\n\n      var max = 0;\n\n      if (this.max === 'relative') {\n        max = this.data.reduce(function (p, c) {\n          return Math.max(p, c.datasets.reduce(function (p, c) {\n            return p + c.value;\n          }, 0));\n        }, 0);\n      } else {\n        max = this.max;\n      }\n\n      var valueMap = {};\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100, 100 * viewboxHeightScale); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw data\n\n      for (var i = 0; i < barCount; i++) {\n        var label = this.data[i].label || \"\";\n        var rx = barHeight / 2 * viewboxWidthScale;\n        var ry = barHeight / 2;\n        var background = Draw.path(\"M \".concat(textWidth + rx, \", \").concat((i + 0.5) * barSpacing + i * barHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(barHeight, \" h \").concat(barWidth - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-barHeight, \" z\"), this.backgroundColor);\n        this.svg.appendChild(background);\n        var x = 0; // width of the bar. Contains the position at which to draw the next rectangle\n\n        var _loop2 = function _loop2(j) {\n          var value = _this3.data[i].datasets[j].value || 0;\n          var title = _this3.data[i].datasets[j].title || \"\";\n          var color = \"\";\n\n          if (_this3.fixColorToTitle) {\n            if (!(title in valueMap)) {\n              // sub-category has not be encountered before\n              color = _this3.foregroundColors[Object.keys(valueMap).length % _this3.foregroundColors.length];\n              valueMap[title] = color;\n            } else {\n              color = valueMap[title];\n            }\n          } else {\n            color = _this3.foregroundColors[j % _this3.foregroundColors.length];\n          }\n\n          var width = barWidth * value / max;\n\n          if (width > 0 && x < barWidth) {\n            var foreground = Draw.path(createHorizontalBar(textWidth, (i + 0.5) * barSpacing + i * barHeight, rx, ry, width, x, barWidth), color);\n\n            if (_this3.hover.visible) {\n              foreground.addEventListener('mouseenter', function (evt) {\n                _this3.showTooltip(true, foreground, value, title);\n              });\n              foreground.addEventListener(\"mouseleave\", function (evt) {\n                _this3.showTooltip(false);\n              });\n            }\n\n            if (x < barWidth) {\n              // only draw the part if it would not overshoot\n              _this3.svg.appendChild(foreground);\n            }\n\n            x = x + width;\n          }\n        };\n\n        for (var j = 0; j < this.data[i].datasets.length; j++) {\n          _loop2(j);\n        }\n\n        var text = Draw.text(0, (i + 0.5) * (barSpacing + barHeight), label, this.textColor, this.font, {\n          \"text-anchor\": \"start\",\n          \"alignment-baseline\": \"central\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n        this.svg.appendChild(text);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Draws a tooltip at the horizontal center of the element\r\n     * @private\r\n     * @param {boolean} show - Whether to show or hide the tooltip\r\n     * @param {Object} g - the element on which the tooltip is centered\r\n     * @param {number|string} value - the value of the element\r\n     * @param {number|string} title - the title of the element\r\n     */\n\n  }, {\n    key: \"showTooltip\",\n    value: function showTooltip(show, g, value, title) {\n      if (this.tooltip === undefined) {\n        this.tooltip = document.createElement('div');\n        this.tooltip.style.display = \"block\";\n        this.tooltip.style.position = \"absolute\";\n        this.tooltip.style.fontFamily = this.font;\n        this.tooltip.classList.add('time-chart-tooltip');\n        this.tooltip.appendChild(document.createElement('span'));\n        this.container.appendChild(this.tooltip);\n      }\n\n      if (!show) {\n        this.tooltip.style.visibility = \"hidden\";\n        return;\n      }\n\n      clear(this.tooltip);\n      this.tooltip.innerHTML = this.hover.callback(title, value);\n      this.tooltip.style.top = g.getBoundingClientRect().y - 43 + \"px\";\n      this.tooltip.style.left = \"calc(\".concat(g.getBoundingClientRect().x + g.getBoundingClientRect().width / 2 - this.tooltip.getBoundingClientRect().width / 2, \"px)\");\n      this.tooltip.style.visibility = \"visible\";\n    }\n    /**\r\n     * Replaces the existing data with new data.\r\n     * @param {array} [data] - the data to be displayed\r\n     * @param {string[]} [data.labels] - the labels underneath each bar\r\n     * @param {Object[]} [data.datasets] - each dataset represents one \"block\" of a bar. To create a stacked bar chart have multiple datasets.\r\n     * @param {number[]} data.datasets[].values - the values for each \"block\" of a bar. Should be between 0 and 1. \r\n     * @param {string} [data.datasets[].title] - the title for the dataset.\r\n     */\n\n  }, {\n    key: \"setData\",\n    value: function setData(data) {\n      this.data = data;\n\n      if (this.orientation !== \"horizontal\") {\n        this.drawVertical();\n      } else {\n        this.drawHorizontal();\n      }\n    }\n  }]);\n\n  return Barchart;\n}();\n/**\r\n * Creates a timeline\r\n * @class\r\n */\n\n\nvar Timeline =\n/*#__PURE__*/\nfunction () {\n  /**\r\n   * Constructs a timeline\r\n   * @constructor\r\n   * @param {string} element - css query selector of the container dom element into which the chart is placed.\r\n   * @param {Object} [params] - options.\r\n   * @param {Object} [params.lineHeight = 25] - the hight of a bar in a timeline in px.\r\n   * @param {Object} [params.scale] - options for the scale at the top of the timelines\r\n   * @param {number} [params.scale.from = 0] - the time in minutes at which the timeline should start.\r\n   * @param {number} [params.scale.to = 1440] - the time in minutes at which the timeline should end.\r\n   * @param {number} [params.scale.interval = 240] - the interval at which labels are shown on the scale.\r\n   * @param {number} [params.scale.intervalStart = 0] - the point at which the interval starts counting.\r\n   * @param {array} [params.data] - the data to be displayed.\r\n   * @param {Object[]} [params.data.timelines] - each object represents one timeline. For multiple timelines under each other, have multiple objects.\r\n   * @param {string} [params.data.timelines[].label] - the label to the right of the timeline.\r\n   * @param {Object[]} params.data.timelines[].values - the values (marked time slots).\r\n   * @param {number} params.data.timelines[].values[].start - the point at which the time slot starts in minutes.\r\n   * @param {number} params.data.timelines[].values[].length - the point at which the time slot ends in minutes.\r\n   * @param {string} [params.data.timelines[].values[].title] - the title of the time slot.\r\n   * @param {string[]} [params.data.timelines[].colors = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for the timeline.\r\n   * @param {Object} [params.padding] - padding in all directions of the chart.\r\n   * @param {number|string} [params.padding.top] - top padding for the chart.\r\n   * @param {number|string} [params.padding.right] - right padding for the chart.\r\n   * @param {number|string} [params.padding.bottom] - bottom padding for the chart.\r\n   * @param {number|string} [params.padding.left] - left padding for the chart.\r\n   * @param {Object} [params.colors] - custom colors\r\n   * @param {string} [params.colors.background = \"#E3E6E9\"] - the color of the background of the bars (not the color of background of the whole chart).\r\n   * @param {string} [params.colors.text = \"black\"] - the color of the text.\r\n   * @param {string} [params.font = 'Roboto'] - the font for all writing. Font must be imported separately.\r\n   * @param {Object} [params.hover] - options for the hover effect.\r\n   * @param {boolean} [params.hover.visible = true] - whether the titles should be shown on hover or not.\r\n   * @param {Function} [params.hover.callback] - function that returns html that is displayed in the hover effect. Receives (title, start, end).\r\n   * @param {Object} [params.legend] - options for the legend.\r\n   * @param {boolean} [params.legend.visible = true] - whether a legend should be shown underneath the timelines.\r\n   * @param {number} [params.legend.distance = 15] - distance from the last timeline to the legend in px. Always set to 0 if params.legend.visible === false.\r\n   * @param {number} [params.legend.textColor = \"white\"] - the color of the text in the legend.\r\n   * @param {'variable' | number} [params.distance = 'variable'] - whether the distance between timelines should be variable (based on svg size) or a fixed number of px.\r\n   * @param {boolean} [params.adjustSize = false] - whether the size of the container should be adjusted based on the needed space. Only works if params.distance != 'variable'.\r\n   * @throws Will throw an error if the container element is not found.\r\n   */\n  function Timeline(element, params) {\n    var _this4 = this;\n\n    _classCallCheck(this, Timeline);\n\n    this.container = document.querySelector(element);\n\n    if (this.container == null) {\n      console.error(\"Container for chart does not exist\");\n      return;\n    } // Extract parameters and sets defaults if parameters not available\n\n\n    mergeObjects(params, {\n      scale: {\n        from: 0,\n        to: 1440,\n        interval: 240,\n        intervalStart: 0\n      },\n      data: {\n        timelines: []\n      },\n      padding: {\n        top: 0,\n        right: 0,\n        bottom: 0,\n        left: 0\n      },\n      colors: {\n        background: \"#E3E6E9\",\n        text: \"black\"\n      },\n      font: \"Roboto\",\n      hover: {\n        visible: true,\n        callback: function callback(title, start, end) {\n          return \"<span style=\\\"color: gray\\\">\".concat(_this4.formatMinutes2(start), \" - \").concat(_this4.formatMinutes2(end), \"</span>\").concat(title !== \"\" ? \": \" + title : \"\");\n        }\n      },\n      legend: {\n        visible: true,\n        distance: 15,\n        textColor: \"white\"\n      },\n      lineHeight: 25,\n      distance: 'variable',\n      adjustSize: false\n    });\n    this.scale = params.scale;\n    this.data = params.data;\n    this.padding = params.padding;\n    this.font = params.font;\n    this.hover = params.hover;\n    this.legend = params.legend.visible;\n    this.legendDistance = params.legend.distance;\n    this.legendTextColor = params.legend.textColor;\n    this.lineHeight = params.lineHeight;\n    this.distance = params.distance;\n    this.adjustSize = this.distance !== 'variable' && params.adjustSize;\n    this.backgroundColor = params.colors.background;\n    this.textColor = params.colors.text;\n    this.draw();\n\n    if (typeof ResizeObserver === \"function\") {\n      var ro = new ResizeObserver(function (entries) {\n        _this4.draw();\n      });\n      ro.observe(this.container);\n    } else {\n      window.addEventListener('resize', function () {\n        _this4.draw();\n      });\n    }\n  }\n  /**\r\n   * Draws the timeline\r\n   * @private\r\n   */\n\n\n  _createClass(Timeline, [{\n    key: \"draw\",\n    value: function draw() {\n      var _this5 = this;\n\n      var realWidth = this.container.clientWidth - this.padding.right - this.padding.left;\n      var viewboxWidthScale = 100 / realWidth;\n      var lineCount = this.data.timelines.length;\n      var textWidth1 = this.data.timelines.reduce(function (p, c) {\n        return Math.max(p, c.label.length > 0 ? (40 + c.label.length * 7.5) * viewboxWidthScale : 0);\n      }, 0); // 7.5 per char \n\n      var textWidth2 = this.data.timelines.reduce(function (p, c) {\n        return Math.max(p, c.values.reduce(function (p, c) {\n          return Math.max(p, (10 + _this5.formatMinutes(c.length).length * 7.5) * viewboxWidthScale);\n        }, 0));\n      }, 0); // 7.5 per char\n\n      var widthLeft = Math.max(textWidth1 + textWidth2, 20 * viewboxWidthScale);\n      var widthRight = 20 * viewboxWidthScale;\n      var scaleHeight = 20;\n      var lineWidth = 100 - widthLeft - widthRight;\n      var lineHeight = this.lineHeight;\n      var legendHeight = this.legend ? lineHeight : 0;\n      var legendSpacing = this.legend ? this.legendDistance : 0;\n\n      if (this.adjustSize) {\n        var height = scaleHeight + legendHeight + legendSpacing + lineCount * (lineHeight + this.distance) + this.padding.top + this.padding.bottom;\n        this.container.style.height = \"\".concat(height, \"px\");\n      }\n\n      var realHeight = this.container.clientHeight - this.padding.top - this.padding.bottom;\n      var viewboxHeightScale = realHeight / 100;\n      var lineSpacing = this.distance === 'variable' ? (100 * viewboxHeightScale - scaleHeight - legendHeight - legendSpacing) / lineCount - lineHeight : this.distance;\n      var scaleStart = Math.max(0.5 * lineSpacing - scaleHeight, 0);\n      this.svg = Draw.svg(\"calc(100% - \".concat(this.padding.right + this.padding.left, \"px)\"), \"calc(100% - \".concat(this.padding.top + this.padding.bottom, \"px)\"), 100, 100 * viewboxHeightScale); // Padding\n\n      this.svg.style.paddingTop = this.padding.top;\n      this.svg.style.paddingRight = this.padding.right;\n      this.svg.style.paddingBottom = this.padding.bottom;\n      this.svg.style.paddingLeft = this.padding.left;\n      this.svg.style.boxSizing = \"initial\"; // Draw scale\n\n      var from = this.scale.from;\n      var to = this.scale.to;\n      var interval = this.scale.interval;\n      var intervalStart = this.scale.intervalStart / (to - from) * lineWidth;\n      var intervalSteps = Math.floor((to - from) / interval);\n      var intervalStepsWidth = lineWidth / intervalSteps;\n\n      for (var i = 0; i <= intervalSteps; i++) {\n        var text = Draw.text(widthLeft + intervalStart + i * intervalStepsWidth, scaleStart, this.formatMinutes2(from + this.scale.intervalStart + i * interval), this.textColor, this.font, {\n          \"text-anchor\": \"middle\",\n          \"alignment-baseline\": \"text-before-edge\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n        this.svg.appendChild(text);\n      }\n\n      var x = 0; // Draw data\n\n      var _loop3 = function _loop3(_i3) {\n        var label = _this5.data.timelines[_i3].label || \"\";\n        var values = _this5.data.timelines[_i3].values || [];\n        var colors = _this5.data.timelines[_i3].colors || ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc'];\n        var valueMap = {}; // Helper to calculate grouped values and store color codes\n\n        var sum = _this5.data.timelines[_i3].values.reduce(function (p, c) {\n          return p + c.length;\n        }, 0);\n\n        var rx = lineHeight / 2 * viewboxWidthScale;\n        var ry = lineHeight / 2; // Draw background\n        // Gray background\n\n        var background = Draw.path(\"M \".concat(widthLeft + rx, \", \").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(lineHeight, \" h \").concat(lineWidth - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-lineHeight, \" z\"), _this5.backgroundColor);\n\n        _this5.svg.appendChild(background); // White stripes each hour\n\n\n        var steps = (to - from) / 60;\n        var stepWidth = lineWidth / steps;\n\n        for (var j = 1; j < steps; j++) {\n          var rect = Draw.rect(widthLeft + j * stepWidth - 1 * viewboxWidthScale, scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), 2 * viewboxWidthScale, lineHeight, \"white\");\n\n          _this5.svg.appendChild(rect);\n        } // Draw foreground\n\n\n        var _loop4 = function _loop4(_j) {\n          var relativeStart = Math.max(0, values[_j].start - from) / (to - from);\n          var relativeLength = Math.max(0, values[_j].start - from + values[_j].length) / (to - from);\n          var title = values[_j].title || \"\";\n          var color = \"\";\n\n          if (!(title in valueMap)) {\n            // sub-category has not be encountered before\n            color = colors[Object.keys(valueMap).length % colors.length];\n            valueMap[title] = {\n              color: color,\n              value: values[_j].length\n            };\n          } else {\n            color = valueMap[title].color;\n            valueMap[title].value = valueMap[title].value + values[_j].length;\n          }\n\n          var foreground = void 0;\n          var width = lineWidth * (relativeLength - relativeStart);\n\n          var polarToCartesian = function polarToCartesian(centerX, centerY, radius, angleInDegrees) {\n            var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;\n            return {\n              x: centerX + radius * Math.cos(angleInRadians),\n              y: centerY + radius * Math.sin(angleInRadians)\n            };\n          };\n\n          var partialCircle = function partialCircle(x, y, radius, startAngle, endAngle) {\n            var start = polarToCartesian(x, y, radius, endAngle);\n            var end = polarToCartesian(x, y, radius, startAngle);\n            var largeArcFlag = endAngle - startAngle <= 180 ? \"0\" : \"1\";\n            var d = [\"M\", start.x, start.y, \"A\", radius, radius, 0, largeArcFlag, 0, end.x, end.y, \"L\"].join(\" \");\n            return d;\n          };\n\n          var steepness = 0.05; // The smaller, the rounder\n\n          if (width - rx * 2 < 0) {\n            // bar to short to form circle\n            foreground = Draw.path(\"M \".concat(widthLeft + lineWidth * relativeStart + width / 2, \", \").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" c \").concat(-(width / 2 / 0.75), \" \").concat(lineHeight * steepness, \", \").concat(-(width / 2 / 0.75), \" \").concat(lineHeight * (1 - steepness), \", 0 \").concat(lineHeight, \" v \").concat(-lineHeight, \" c \").concat(width / 2 / 0.75, \" \").concat(lineHeight * steepness, \", \").concat(width / 2 / 0.75, \" \").concat(lineHeight * (1 - steepness), \", 0 \").concat(lineHeight, \" z\"), color);\n          } else {\n            foreground = Draw.path(\"M \".concat(widthLeft + lineWidth * relativeStart + rx, \",\").concat(scaleStart + scaleHeight + _i3 * (lineSpacing + lineHeight), \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(lineHeight, \" h \").concat(lineWidth * (relativeLength - relativeStart) - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-lineHeight, \" z\"), color);\n          }\n\n          _this5.svg.appendChild(foreground);\n\n          if (_this5.hover.visible) {\n            foreground.addEventListener('mouseenter', function (evt) {\n              _this5.showTooltip(true, foreground, values[_j].start, values[_j].start + values[_j].length, title);\n            });\n            foreground.addEventListener(\"mouseleave\", function (evt) {\n              _this5.showTooltip(false);\n            });\n          }\n        };\n\n        for (var _j = 0; _j < values.length; _j++) {\n          _loop4(_j);\n        } // Draw label\n\n\n        var text = Draw.text(0.5 * textWidth1, scaleStart + scaleHeight + _i3 * lineSpacing + (_i3 + 0.5) * lineHeight, label, _this5.textColor, _this5.font, {\n          \"text-anchor\": \"middle\",\n          \"alignment-baseline\": \"central\",\n          \"font-weight\": \"bold\"\n        });\n        text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text.getAttribute(\"x\")), \", 0)\"));\n\n        _this5.svg.appendChild(text); // Draw sum\n\n\n        var text2 = Draw.text(textWidth1, scaleStart + scaleHeight + _i3 * lineSpacing + (_i3 + 0.5) * lineHeight, _this5.formatMinutes(sum), _this5.textColor, _this5.font, {\n          \"text-anchor\": \"start\",\n          \"alignment-baseline\": \"central\"\n        });\n        text2.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(text2.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(text2.getAttribute(\"x\")), \", 0)\"));\n\n        _this5.svg.appendChild(text2); // Draw legend\n\n\n        if (_this5.legend) {\n          for (var _i4 = 0, _Object$keys2 = Object.keys(valueMap); _i4 < _Object$keys2.length; _i4++) {\n            var key = _Object$keys2[_i4];\n            var content = \"\".concat(key, \" - \").concat(_this5.formatMinutes(valueMap[key].value));\n            var width = content.length * 7.5 * viewboxWidthScale + 2 * rx;\n            var legend = Draw.path(\"M \".concat(widthLeft + x + rx, \",\").concat(scaleStart + legendSpacing + scaleHeight + (lineCount - 1) * lineSpacing + lineCount * lineHeight, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(legendHeight, \" h \").concat(width - rx * 2, \" a \").concat(rx, \",\").concat(ry, \" 0 0 0 0,\").concat(-legendHeight, \" z\"), valueMap[key].color);\n\n            _this5.svg.appendChild(legend);\n\n            var _text = Draw.text(widthLeft + x + 0.5 * width, scaleStart + legendSpacing + legendHeight * 0.5 + scaleHeight + (lineCount - 1) * lineSpacing + lineCount * lineHeight, content, _this5.legendTextColor, _this5.font, {\n              \"text-anchor\": \"middle\",\n              \"alignment-baseline\": \"central\"\n            });\n\n            _text.setAttribute(\"transform\", \"scale(\".concat(viewboxWidthScale, \",1) translate(\").concat(parseFloat(_text.getAttribute(\"x\")) / viewboxWidthScale - parseFloat(_text.getAttribute(\"x\")), \", 0)\"));\n\n            _this5.svg.appendChild(_text);\n\n            x = x + width + 10 * viewboxWidthScale; // previous x, width of the rectangle and padding\n          }\n        }\n      };\n\n      for (var _i3 = 0; _i3 < lineCount; _i3++) {\n        _loop3(_i3);\n      }\n\n      clear(this.container);\n      this.tooltip = undefined;\n      this.container.appendChild(this.svg);\n    }\n    /**\r\n     * Converts a number of minutes into a string\r\n     * @private\r\n     * @param {number} minutes - the minutes\r\n     * @returns {string} - format: 4h 35m\r\n     */\n\n  }, {\n    key: \"formatMinutes\",\n    value: function formatMinutes(minutes) {\n      var h = Math.floor(minutes / 60);\n      var m = Math.floor(minutes % 60);\n\n      if (m === 0 && h === 0) {\n        return \"\";\n      } else if (m === 0) {\n        return \"\".concat(h, \"h\");\n      } else if (h === 0) {\n        return \"\".concat(m, \"m\");\n      }\n\n      {\n        return \"\".concat(h, \"h \").concat(m, \"m\");\n      }\n    }\n    /**\r\n     * Converts a number of minutes into a string\r\n     * @private\r\n     * @param {number} minutes - the minutes\r\n     * @returns {string} - format: 4:30 am\r\n     */\n\n  }, {\n    key: \"formatMinutes2\",\n    value: function formatMinutes2(minutes) {\n      var h = Math.floor(minutes / 60);\n      var ending = \"am\";\n      var m = Math.floor(minutes % 60);\n\n      if (h > 12) {\n        ending = \"pm\";\n        h = h - 12;\n      }\n\n      if (m === 0) {\n        return \"\".concat(h, \" \").concat(ending);\n      } else {\n        return \"\".concat(h, \":\").concat(m < 10 ? m + \"0\" : m, \" \").concat(ending);\n      }\n    }\n    /**\r\n     * Draws a tooltip at the horizontal center of the element\r\n     * @private\r\n     * @param {boolean} show - Whether to show or hide the tooltip\r\n     * @param {Object} g - the element on which the tooltip is centered\r\n     * @param {number} start - the start value in minutes\r\n     * @param {number} end - the vend value in minutes\r\n     * @param {number|string} title - the title of the element\r\n     */\n\n  }, {\n    key: \"showTooltip\",\n    value: function showTooltip(show, g, start, end, title) {\n      if (this.tooltip === undefined) {\n        this.tooltip = document.createElement('div');\n        this.tooltip.style.display = \"block\";\n        this.tooltip.style.position = \"absolute\";\n        this.tooltip.style.fontFamily = this.font;\n        this.tooltip.classList.add('time-chart-tooltip');\n        this.tooltip.appendChild(document.createElement('span'));\n        this.container.appendChild(this.tooltip);\n      }\n\n      if (!show) {\n        this.tooltip.style.visibility = \"hidden\";\n        return;\n      }\n\n      this.tooltip.style.top = g.getBoundingClientRect().y - 43 + \"px\";\n      clear(this.tooltip);\n      this.tooltip.innerHTML = this.hover.callback(title, start, end);\n      this.tooltip.style.left = \"calc(\".concat(g.getBoundingClientRect().x + g.getBoundingClientRect().width / 2 - this.tooltip.getBoundingClientRect().width / 2, \"px)\");\n      this.tooltip.style.visibility = \"visible\";\n    }\n    /**\r\n     * Replaces the existing data with new data. \r\n     * @param {array} [params.data] - the data to be displayed.\r\n     * @param {Object[]} [params.data.timelines] - each object represents one timeline. For multiple timelines under each other, have multiple objects.\r\n     * @param {string} [params.data.timelines[].label] - the label to the right of the timeline.\r\n     * @param {Object[]} params.data.timelines[].values - the values (marked time slots).\r\n     * @param {number} params.data.timelines[].values[].start - the point at which the time slot starts in minutes.\r\n     * @param {number} params.data.timelines[].values[].length - the point at which the time slot ends in minutes.\r\n     * @param {string} [params.data.timelines[].values[].title] - the title of the time slot.\r\n     * @param {string[]} [params.data.timelines[].colors = ['#7cd6fd', '#5e64ff', '#743ee2', '#ff5858', '#ffa00a', '#feef72', '#28a745', '#98d85b', '#b554ff', '#ffa3ef', '#36114C', '#bdd3e6', '#f0f4f7', '#b8c2cc']] - the colors for the timeline.\r\n     * @param {Object} [params.padding] - padding in all directions of the chart.\r\n     */\n\n  }, {\n    key: \"setData\",\n    value: function setData(data) {\n      this.data = data;\n      this.draw();\n    }\n  }]);\n\n  return Timeline;\n}(); // attach properties to the exports object to define\n// the exported module properties.\n\n\n\n\n//# sourceURL=webpack://TimeCharts/./src/index.js?");
 
 /***/ })
 
@@ -9572,8 +9573,8 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 });
 </script>
 
-	<!-- Css (place under the other imports as it overrides styles from dependencies) -->
-	<style>
+    <!-- Css (place under the other imports as it overrides styles from dependencies) -->
+    <style>
 /* Color Scheme */
 
 html[dark_mode = "true"] {
@@ -9729,7 +9730,7 @@ html[dark_mode = "false"] {
 }
 
 </style>
-	<style>
+    <style>
 /* View */
 .view_container {
 	width: 100%;
@@ -9810,7 +9811,7 @@ html[dark_mode = "false"] {
 	margin-bottom: 10px;
 }
 </style>
-	<style>
+    <style>
 
 
 #title_container {
@@ -9944,7 +9945,7 @@ html[dark_mode = "false"] {
 	background-color: var(--menu_item_background_b);
 }
 </style>
-	<style>
+    <style>
 #setting_ignore_app_container {
 	max-height: calc(100vh - 300px);
 	min-height: 100px;
@@ -9970,7 +9971,7 @@ html[dark_mode = "false"] {
 
 
 </style>
-	<style>
+    <style>
 #bugreport {
 	color: var(--default_text_color);
 	background-color: var(--content_background);
@@ -9985,7 +9986,7 @@ html[dark_mode = "false"] {
 	outline: none;
 }
 </style>
-	<style>
+    <style>
 /* Day Picker */
 .day_picker_navigator {
 	vertical-align: top;
@@ -10122,7 +10123,7 @@ html[dark_mode = "false"] {
 	margin-bottom: -5px;
 }
 </style>
-	<style>
+    <style>
 /* Report */
 .searchbar {
 	box-shadow: none;
@@ -10292,7 +10293,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 </style>
-	<style>
+    <style>
 /* SETTINGS */
 
 .setting {
@@ -10381,7 +10382,7 @@ input::-webkit-calendar-picker-indicator {
 }
 
 </style>
-	<style>
+    <style>
 /* Table */
 .spacer {
 	display: inline-block;
@@ -10415,7 +10416,7 @@ input::-webkit-calendar-picker-indicator {
 	background-color: var(--table_highlight_selected);
 }
 </style>
-	<style>
+    <style>
 /* color overrides for datepicker */
 .lightpick {
 	background-color: var(--daypicker_background);
@@ -10473,1143 +10474,747 @@ input::-webkit-calendar-picker-indicator {
 }
 </style>
 
-	<!-- Main Javascript  -->
-	<script>
+    <!-- SimpleViewJs -->
+    <script>
+class SimpleViewRepository {
+    static classes = new Map();
+    static navigationPoints = new Map();
 
-/* Constants */
+    static registerClass(c) {
+        SimpleViewRepository.classes.set(c.name, c);
+    }
 
-let current_view;
-let VIEW_DAILY;
-let VIEW_WEEKLY;
-let VIEW_SETTINGS;
-let VIEW_TRACKING_SETTINGS;
-let VIEW_EDIT_DATA;
+    static getClass(name) {
+        return SimpleViewRepository.classes.get(name);
+    }
+
+    static getClasses() {
+        return SimpleViewRepository.classes;
+    }
+
+    static registerNavigationPoint(navigationPoint) {
+        const name = navigationPoint.nodeName.toLowerCase().substr(3).split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+        SimpleViewRepository.navigationPoints.set(name, navigationPoint);
+    }
+
+    static navigate(view) {
+        for (const [key, value] of SimpleViewRepository.classes.entries()) {
+            if (SimpleViewRepository.navigationPoints.has(key)) {
+                if (key === view)
+                    SimpleViewRepository.navigationPoints.get(key).show();
+                else
+                    SimpleViewRepository.navigationPoints.get(key).hide();
+            } else {
+                console.error(`Could not show ${key} because the view does not exist.`);
+            }
+        }
+    }
+
+    static afterLoad() {
+        
+    }
+}
+
+const handler = {
+    get: function (target, name) {
+        return name in target ?
+            target[name] :
+            "";
+    },
+    set: function (target, key, value) {
+        target[key] = value;
+        if (key in target['_domChange'])
+            target['_domChange'][key](value);
+        return true;
+    }
+};
+
+class SimpleViewProxy {
+    constructor() {
+        this._listeners = {};
+        this._domChange = {}; // handle the change of the DOM element
+    }
+
+    attachListener(name, callback) {
+        this._listeners[name] = callback;
+    }
+
+    attachDomChange(name, callback) {
+        this._domChange[name] = callback;
+    }
+}
+
+class SimpleView extends HTMLElement {
+    constructor() {
+        super();
+
+        SimpleViewRepository.registerNavigationPoint(this);
+
+        this.display = this.style.display;
+        this.hide();
+
+        this.state = new Proxy(new SimpleViewProxy, handler);
+
+        this.attachBindings(this);
+    }
+
+    attachBindings(elem) {
+        // Set up value binding
+        for (const obj of elem.querySelectorAll('*[sv-value]')) {
+            const variableName = obj.getAttribute('sv-value');
+
+            // Listen for changes in the JS variable and transfer them to the DOM
+            this.state.attachDomChange(variableName, value => {
+                obj.value = value;
+            });
+
+            this.state.attachListener(variableName, val => {
+                this.state[variableName] = val;
+            });
+
+            // Listen for changes in the DOM and transfer them to js
+            obj.oninput = event => {
+                const newValue = obj.value;
+                obj.value = this.state[variableName]; // Keep old value until js value changes
+                this.state._listeners[variableName](newValue);
+            }
+        }
+
+        // Set up attribute bindings
+        for (const obj of Array.from(elem.querySelectorAll('*'))
+            .filter(
+                e => Array.from(e.attributes).filter(
+                    ({ name, value }) => name.startsWith('sv-bind-attribute-')).length
+            )) {
+            const attributes = Array.from(obj.attributes).filter(({ name, value }) => name.startsWith('sv-bind-attribute-'));
+
+            for(const attribute of attributes) {
+                const attributeName = attribute.name.substr(18);
+                const variableName = attribute.value;
+
+                // Listen for changes in the JS variable and transfer them to the DOM
+                this.state.attachDomChange(variableName, value => {
+                    obj.setAttribute(attributeName, value);
+                });
+            }
+        }
+
+        // Set up function bindings
+        for (const obj of Array.from(elem.querySelectorAll('*'))
+            .filter(
+                e => Array.from(e.attributes).filter(
+                    ({ name, value }) => name.startsWith('sv-bind-function-')).length
+            )) {
+            const attributes = Array.from(obj.attributes).filter(({ name, value }) => name.startsWith('sv-bind-function-'));
+
+            for(const attribute of attributes) {
+                const eventName = attribute.name.substr(17);
+                let functionName = attribute.value;
+                let variableName = /\((\{)?(.*?)(\})?\)/.exec(functionName);
+                let argument;
+
+                if(variableName) {
+                    if(variableName[1] === "{") {
+                        variableName = variableName[2];
+                        functionName = functionName.replace(`({${variableName}})`, "");
+                        argument = obj[variableName];
+                    } else {
+                        variableName = variableName[2];
+                        functionName = functionName.replace(`(${variableName})`, "");
+                        argument = variableName;
+                    }
+                }
+
+                const that = this;
+
+                obj.addEventListener(eventName, e => {that[functionName].call(that, e, argument)});
+            }
+        }
+
+        // Set up for loops
+        for (const obj of elem.querySelectorAll('*[sv-for-of]')) {
+            const attributeContent = obj.getAttribute('sv-for-of');
+            const loopName = attributeContent.split('of')[0].trim();
+            const variableName = attributeContent.split('of')[1].trim();
+
+            let template = document.createElement('template');
+            template.innerHTML = obj.innerHTML;
+            while (obj.firstChild) {
+                obj.removeChild(obj.firstChild);
+            }
+            //let shadowRoot = obj.attachShadow({mode: 'open'});
+
+            // Listen for changes in the JS variable and transfer them to the DOM
+            this.state.attachDomChange(variableName, value => {
+                while (obj.firstChild) {
+                    obj.removeChild(obj.firstChild);
+                }
+                for(const element of value) {
+                    const node = template.content.cloneNode(true);
+                    obj.appendChild(node);
+
+                    for(const o of obj.querySelectorAll('*[sv-for-value="'+ loopName +'"]:last-child, *:last-child *[sv-for-value="'+ loopName +'"]')) {
+                        const render = o.getAttribute('sv-for-render');
+
+                        o[loopName] = element;
+
+                        if(render) 
+                            o.innerHTML = this[render](element);
+                        else
+                            o.innerHTML = element;
+
+                        o.removeAttribute('sv-for-value');
+                    }
+                }
+                this.attachBindings(obj);
+            });
+        }
+    }
+
+    show() {
+        this.style.display = this.display;
+
+        if ('onShow' in this)
+            this.onShow();
+    }
+
+    hide() {
+        this.style.display = 'none';
+
+        if ('onHide' in this)
+            this.onHide();
+    }
+}
+
+const prepViews = event => {
+    const customElements = document.evaluate("//*[starts-with(name(),'sv-')]", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+    for (let i = 0; i < customElements.snapshotLength; i++) {
+        const node = customElements.snapshotItem(i);
+        const name = node.nodeName.toLowerCase();
+
+        if (!document.createElement(name).constructor !== HTMLElement) {
+            let className = "";
+            for (const partialName of name.substr(3).split('-')) {
+                className = className + partialName.charAt(0).toUpperCase() + partialName.slice(1);
+            }
+
+            window.customElements.define(name, SimpleViewRepository.getClass(className));
+        }
+    }
+
+    // Connect navigation points
+    for (const obj of document.querySelectorAll('*[sv-navigate]')) {
+        const navigationPoint = obj.getAttribute('sv-navigate');
+        const navigationClass = obj.getAttribute('sv-navigation-class');
+        obj.addEventListener('click', event => {
+            SimpleViewRepository.navigate(navigationPoint);
+            if (navigationClass) {
+                Array.from(obj.parentElement.children).forEach(child => child.classList.remove(navigationClass));
+                obj.classList.add(navigationClass);
+            }
+        });
+    }
+
+    SimpleViewRepository.afterLoad();
+}
+
+if (window.attachEvent) {
+    window.attachEvent('onload', prepViews);
+} else {
+    if (window.onload) {
+        const currentOnLoad = window.onload;
+        const newOnLoad = function (evt) {
+            currentOnLoad(evt);
+            prepViews(evt);
+        };
+        window.onload = newOnLoad;
+    } else {
+        window.onload = prepViews;
+    }
+}
+
+
+
+</script>
+
+    <!-- Main Javascript  -->
+    <script>
+// ----------------- Variables --------------------
+
+const keyMapping = {
+    8: "backspace", //  backspace
+    9: "tab", //  tab
+    13: "enter", //  enter
+    16: "shift", //  shift
+    17: "ctrl", //  ctrl
+    18: "alt", //  alt
+    19: "pause/break", //  pause/break
+    20: "caps lock", //  caps lock
+    27: "escape", //  escape
+    33: "page up", // page up, to avoid displaying alternate character and confusing people	         
+    34: "page down", // page down
+    35: "end", // end
+    36: "home", // home
+    37: "left arrow", // left arrow
+    38: "up arrow", // up arrow
+    39: "right arrow", // right arrow
+    40: "down arrow", // down arrow
+    45: "insert", // insert
+    46: "delete", // delete
+    91: "left window", // left window
+    92: "right window", // right window
+    93: "select key", // select key
+    96: "numpad 0", // numpad 0
+    97: "numpad 1", // numpad 1
+    98: "numpad 2", // numpad 2
+    99: "numpad 3", // numpad 3
+    100: "numpad 4", // numpad 4
+    101: "numpad 5", // numpad 5
+    102: "numpad 6", // numpad 6
+    103: "numpad 7", // numpad 7
+    104: "numpad 8", // numpad 8
+    105: "numpad 9", // numpad 9
+    106: "multiply", // multiply
+    107: "add", // add
+    109: "subtract", // subtract
+    110: "decimal point", // decimal point
+    111: "divide", // divide
+    112: "F1", // F1
+    113: "F2", // F2
+    114: "F3", // F3
+    115: "F4", // F4
+    116: "F5", // F5
+    117: "F6", // F6
+    118: "F7", // F7
+    119: "F8", // F8
+    120: "F9", // F9
+    121: "F10", // F10
+    122: "F11", // F11
+    123: "F12", // F12
+    144: "num lock", // num lock
+    145: "scroll lock", // scroll lock
+    186: ";", // semi-colon
+    187: "=", // equal-sign
+    188: ",", // comma
+    189: "-", // dash
+    190: ".", // period
+    191: "/", // forward slash
+    192: "`", // grave accent
+    219: "[", // open bracket
+    220: "\\", // back slash
+    221: "]", // close bracket
+    222: "'" // single quote
+};
 
 // ----------------- General --------------------
 
 let open_link = (url) => {
-	//Todo - open link in C#
-	window.open(url, '_blank');
-}
-
-// ----------------- Menu --------------------
-
-let toggle_menu = () => {
-	document.getElementById("menu").classList.toggle("hide");
-}
-
-let expand_menu = () => {
-	console.log("expanding")
-	document.getElementById("menu").classList.remove("hide");
-}
-
-let unexpand_menu = () => {
-	console.log("unexpand menu")
-	document.getElementById("menu").classList.add("hide");
-}
-
-
-// ----------------- View/Window Management --------------------
-
-class View {
-	constructor(options) {
-		this.view_id = options.view_id;
-		this.button_id = options.button_id;
-		this.components = options.components;
-
-		this.view = document.getElementById(this.view_id);
-		this.button = document.getElementById(this.button_id);
-	}
-
-	select_view() {
-		if (this === current_view)
-			return;
-
-		if (current_view !== undefined)
-			current_view.hide()
-
-		this.show()
-		current_view = this;
-	}
-
-	/* Show and hide content panel*/
-	show() {
-		this.view.classList.add("show_view")
-		this.button.classList.add("selected");
-	}
-	hide() {
-		this.view.classList.remove("show_view")
-		this.button.classList.remove("selected");
-	}
-}
-
-// ----------------- Overrides for niceness sake --------------------
-
-Date.prototype.nth = getOrdinalNum = (n) => {
-	return n + (n > 0 ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : '');
-}
-
-Date.prototype.add_days = function (days) {
-	var date = new Date(this.valueOf());
-	date.setDate(date.getDate() + days);
-	return date;
-}
-
-Date.prototype.add_months = function (months) {
-	var date = new Date(this.valueOf());
-	date.setMonth(date.getMonth() + months);
-	return date;
-}
-
-// ----------------- Day Picker --------------------
-
-class DayPickerDay {
-	constructor(date, parent) {
-		this.date = date;
-		this.parent = parent;
-
-		this.div = document.createElement("div");
-		this.div.className = "day";
-		this.div.parentClassElement = this;
-
-		this.div_number = document.createElement("div");
-		this.div_number.textContent = getOrdinalNum(date.getDate());
-		this.div_number.className = "number"
-
-		this.div_month = document.createElement("div");
-		this.div_month.textContent = date.toLocaleString('en-us', { month: 'long' }) + " '" + (date.getFullYear() + "").slice(2);
-		this.div_month.className = "month"
-
-		this.div.appendChild(this.div_number);
-		this.div.appendChild(this.div_month);
-
-		//Overriden if center
-		this.div.onclick = () => {
-			this.parent.set_center_date(date);
-		}
-	}
-
-	set_selected() {
-		this.div.classList.add("selected");
-		this.div.onclick = (e) => {
-
-			//Stop container from closing straight away
-			e.stopPropagation();
-
-			if (!this.parent.datepicker_open) {
-				this.parent.open()
-			}
-			else {
-				this.parent.close()
-			}
-
-		}
-	}
-
-	set_unselected() {
-		this.div.classList.remove("selected");
-	}
-}
-
-class DayPicker {
-	constructor(options) {
-
-		//General
-		this.date = options.date;
-		this.dayChart = options.dayChart;
-		this.weekChart1 = options.weekChart1;
-		this.weekChart2 = options.weekChart2;
-
-		//Element ids
-		//Navigation & Co
-		this.days_container_id = options.days_container_id;
-		this.button_back_days_id = options.button_back_days_id;
-		this.button_forward_days_id = options.button_forward_days_id;
-		this.button_back_months_id = options.button_back_months_id;
-		this.button_forward_months_id = options.button_forward_months_id;
-		//Datepicker
-		this.datepicker_container_id = options.datepicker_container_id;
-		this.button_to_today_id = options.button_to_today_id;
-
-		//Get components
-		this.div_days_container = document.getElementById(this.days_container_id);
-		this.button_back_days = document.getElementById(this.button_back_days_id)
-		this.button_forward_days = document.getElementById(this.button_forward_days_id)
-		this.button_back_months = document.getElementById(this.button_back_months_id)
-		this.button_forward_months = document.getElementById(this.button_forward_months_id)
-
-		this.datepicker_container = document.getElementById(this.datepicker_container_id)
-		this.button_to_today = document.getElementById(this.button_to_today_id)
-
-		//Days visible
-		this.day_picker_dates = [];
-
-		//Datepicker creation
-		this.date_picker = new Lightpick({
-			field: document.getElementById("day_picker_dummy_field"),
-			inline: true,
-			lang: 'en',
-			onSelect: (date) => {
-				this.set_center_date(date.toDate())
-				this.close()
-			}
-		});
-		this.date_picker.setDate(new Date())
-		this.date_picker_open = false;
-
-		this.datepicker_container.onclick = (e) => {
-			e.stopPropagation();
-		}
-
-		//Listeners
-		this._add_button_listeners();
-
-		//Init
-		this.set_center_date(this.date)
-	}
-
-	_add_button_listeners() {
-		this.button_to_today.onclick = () => {
-			this.set_center_date(new Date())
-		}
-		this.button_back_days.onclick = () => {
-			this.shift_days(-5);
-		}
-		this.button_forward_days.onclick = () => {
-			this.shift_days(+5);
-		}
-		this.button_back_months.onclick = () => {
-			this.shift_months(-1)
-		}
-		this.button_forward_months.onclick = () => {
-			this.shift_months(+1)
-		}
-	}
-
-	_add_date_components() {
-		this.day_picker_dates = [];
-		let tmp_date = new Date(this.date)
-		tmp_date.setDate(this.date.getDate() - 2);
-		for (let i = 0; i < 5; i++) {
-			let day_picker = new DayPickerDay(new Date(tmp_date), this);
-			this.day_picker_dates.push(day_picker)
-			this.div_days_container.appendChild(day_picker.div)
-			tmp_date.setDate(tmp_date.getDate() + 1);
-		}
-	}
-
-	_remove_all() {
-		while (this.div_days_container.firstChild) {
-			this.div_days_container.firstChild.remove();
-		}
-	}
-
-	open() {
-		document.getElementById("day_picker_dummy_container").style.display = "inline";
-		this.datepicker_open = true;
-		document.body.addEventListener("click", this.close)
-	}
-
-	close() {
-		document.body.removeEventListener("click", this.close)
-		document.getElementById("day_picker_dummy_container").style.display = "none";
-		this.datepicker_open = false;
-	}
-
-	get_center_div() {
-		return this.day_picker_dates[parseInt(Math.floor(this.day_picker_dates / 2))]
-	}
-
-	set_center_date(date) {
-
-		this.date = date;
-		this.dayChart.setData({ timelines: [] });
-		getDayData(date.toJSON()).then(timelines => {
-			this.dayChart.setData({ timelines: timelines });
-		});
-
-		this.weekChart1.setData([]);
-		getWeekDataBreakdown(date.toJSON(), 7).then(data => {
-			this.weekChart1.setData(data);
-		});
-
-		this.weekChart2.setData([]);
-		getWeekDataSum(date.toJSON(), 7).then(data => {
-			this.weekChart2.setData(data);
-		});
-
-		this._remove_all();
-		this._add_date_components();
-
-		let center_day_picker = this.day_picker_dates.filter(day_picker => day_picker.date.getDate() === this.date.getDate())[0];
-		center_day_picker.set_selected();
-
-		this.close();
-	}
-
-	shift_days(amount_of_days) {
-		this.date_picker.setDate(this.date.add_days(amount_of_days));
-	}
-
-	shift_months(amount_of_months) {
-		this.date_picker.setDate(this.date.add_months(amount_of_months));
-	}
-
-}
-
-let day_picker;
-const date_to_day_of_year = (date) => {
-	var start = new Date(date.getFullYear(), 0, 0);
-	var diff = (date - start) + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
-	var day = Math.floor(diff / (1000 * 60 * 60 * 24));
-	return day;
-}
-
-// ----------------- Settings --------------------
-
-let dark_mode = (status) => {
-	document.getElementById("setting_dark_mode").setAttribute("status", status);
-	document.documentElement.setAttribute("dark_mode", status)
-}
-
-// ----------------- Edit Data --------------------
-
-const data = [
-	['Google', 100, 100, 100, 100, 1998, 807.80],
-	['Apple', 100, 100, 100, 100, 1976, 116.52],
-	['Yahoo', 100, 100, 100, 100, 1994, 38.66],
-	['Google', 100, 100, 100, 100, 1998, 807.80],
-	['Apple', 100, 100, 100, 100, 1976, 116.52],
-	['Yahoo', 100, 100, 100, 100, 1994, 38.66],
-	['Google', 100, 100, 100, 100, 1998, 807.80],
-	['Apple', 100, 100, 100, 100, 1976, 116.52],
-	['Yahoo', 100, 100, 100, 100, 1994, 38.66],
-	['Google', 100, 100, 100, 100, 1998, 807.80],
-	['Apple', 100, 100, 100, 100, 1976, 116.52],
-	['Yahoo', 100, 100, 100, 100, 1994, 38.66],
-];
-
-// ----------------- Report --------------------
-
-class TagBar {
-	constructor(options) {
-
-		this.options = options.options;
-		this.selected = options.selected || [];
-
-		this.tag_container_id = options.tag_container_id;
-		this.div = document.getElementById(this.tag_container_id);
-
-		this.input_id = options.input_id;
-		this.div_input = document.getElementById(this.input_id);
-
-		this._add_input_listeners();
-		this._make_datalist();
-		this._set_datalist_options(this.options);
-	}
-
-	_add_input_listeners() {
-		let last_non_matching = null;
-		this.div_input.onkeyup = (e) => {
-			/* this works because when appending from the datalist via enter, no key is
-			pressed even tho the keyup is triggered - dont ask me why */
-			if (e.keyCode === undefined) {
-				this.div_input.value = last_non_matching;
-			}
-		}
-
-		this.div_input.oninput = (e) => {
-			if (this.options.includes(e.srcElement.value)) {
-				this.select_tag(e.srcElement.value);
-			} else {
-				last_non_matching = e.srcElement.value;
-			}
-		}
-	}
-
-	_make_datalist() {
-		this.datalist = document.createElement("datalist")
-		this.datalist.id = this.tag_container_id + "_datalist";
-		this.div.appendChild(this.datalist)
-	}
-
-	_set_datalist_options(options) {
-		while (this.datalist.firstChild) {
-			this.datalist.removeChild(this.datalist.firstChild);
-		}
-		for (let option of options) {
-			let datalist_option = document.createElement("option");
-			datalist_option.value = option;
-			this.datalist.appendChild(datalist_option);
-		}
-	}
-
-	add_option(option) {
-		this.options.push(option);
-		this.update_options();
-	}
-
-	remove_option(option) {
-		this.unselect_tag(option)
-		let index = this.selected.indexOf(tag);
-
-		if (index === -1)
-			return;
-
-		this.selected.splice(index, 1);
-		this.options.push(option);
-		this.update_options();
-	}
-
-	update_options() {
-		let selected_options = this.selected.map(tag => tag.tag_name);
-		let left_options = this.options.filter((el) => !selected_options.includes(el));
-		this._set_datalist_options(left_options);
-	}
-
-	select_tag(tag_name) {
-
-		if (!this.options.includes(tag_name)) {
-			console.error(`Trying to add tag "${tag_name}", not in options.`);
-			return;
-		}
-
-		if (this.selected.filter(tag => tag.tag_name === tag_name).length !== 0) {
-			console.error(`Trying to add tag "${tag_name}", already selected.`);
-			return;
-		}
-
-		let tag = new Tag(tag_name, this);
-		this.selected.push(tag);
-		this.div.appendChild(tag.div);
-		this.update_options();
-	}
-
-	unselect_tag(tag_name) {
-		let tag = this.selected.filter(tag => tag.tag_name === tag_name);
-		if (tag.length === 0)
-			return;
-
-		tag = tag[0];
-		let index = this.selected.indexOf(tag);
-		this.selected.splice(index, 1);
-		this.div.removeChild(tag.div)
-		this.update_options();
-	}
-}
-
-class Tag {
-	constructor(tag_name, parent) {
-		this.tag_name = tag_name;
-		this.parent = parent;
-		this.create_dom();
-	}
-	create_dom() {
-		this.div = document.createElement("div");
-		this.div.className = "tag";
-		this.div.textContent = this.tag_name;
-		this.div_close = document.createElement("i");
-		this.div_close.className = "fas fa-times";
-		this.div.appendChild(this.div_close);
-
-		this.div.onclick = (e) => {
-			this.parent.unselect_tag(this.tag_name);
-		}
-	}
-}
-
-// -----------------------------------------------------------------
-
-let test = (options) => {
-	if (!options.test2) {
-		console.error("missing argument");
-		return;
-	}
-	console.log("reached next");
-}
-
-// -----------------------------------------------------------------
-
-const getDayData = async (date) => {
-	return new Promise(async (resolve, reject) => {
-		if (typeof boundAsync === "undefined")
-			await CefSharp.BindObjectAsync("boundAsync");
-
-		boundAsync.getDayData(date).then(result => {
-			resolve(JSON.parse(result));
-		});
-	});
-}
-
-const getWeekDataBreakdown = async (date, day) => {
-	return new Promise(async (resolve, reject) => {
-		if (typeof boundAsync === "undefined")
-			await CefSharp.BindObjectAsync("boundAsync");
-
-		boundAsync.getWeekBreakdownData(date, day).then(result => {
-			resolve(JSON.parse(result));
-		});
-	});
-}
-
-const getWeekDataSum = async (date, day) => {
-	return new Promise(async (resolve, reject) => {
-		if (typeof boundAsync === "undefined")
-			await CefSharp.BindObjectAsync("boundAsync");
-
-		boundAsync.getWeekSumData(date, day).then(result => {
-			console.log(JSON.parse(result));
-			resolve(JSON.parse(result));
-		});
-	});
+    //Todo - open link in C#
+    window.open(url, '_blank');
 }
 
 const toTime = value => {
 	return Math.round(value * 100) / 100 + "h";
 }
 
-init = () => {
-	const chart1 = new TimeCharts.Timeline("#chart_daily", {
-		scale: {
-			from: 0 * 60,
-			to: 24 * 60,
-			intervalStart: 0
-		},
-		data: {
-			timelines: [],
-		},
-		legend: {
-			visible: true,
-			distance: 15
-		},
-		padding: {
-			top: 20,
-			right: 20,
-			bottom: 20,
-			left: 20
-		},
-		distance: 20,
-		adjustSize: true,
-	});
+// ----------------- Menu --------------------
 
-	const chart2 = new TimeCharts.Barchart("#chart_weekly_1", {
-		data: [],
-		padding: {
-			top: 20,
-			right: 20,
-			bottom: 20,
-			left: 20
-		},
-		distance: 20,
-		hover: {
-			callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
-		}
-	});
-
-	const chart3 = new TimeCharts.Barchart("#chart_weekly_2", {
-		data: [],
-		orientation: "horizontal",
-		padding: {
-			top: 20,
-			right: 20,
-			bottom: 20,
-			left: 20
-		},
-		distance: 20,
-		hover: {
-			callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
-		}
-	});
-
-	day_picker = new DayPicker({
-		date: new Date(),
-		days_container_id: "day_picker",
-		button_back_days_id: "day_back",
-		button_forward_days_id: "day_forward",
-		button_back_months_id: "month_back",
-		button_forward_months_id: "month_forward",
-		datepicker_container_id: "day_picker_dummy_container",
-		// datepicker_clingy_field_id: "day_picker_dummy_field",
-		button_to_today_id: "button_to_today",
-		dayChart: chart1,
-		weekChart1: chart2,
-		weekChart2: chart3
-	});
-	VIEW_DAILY = new View({
-		view_id: "view_daily",
-		button_id: "button_view_daily",
-		components: { day_picker: day_picker }
-	});
-
-	VIEW_EDIT_DATA = new View({
-		view_id: "view_edit_data",
-		button_id: "button_view_edit_data",
-		components: {
-
-		}
-	});
-
-	// let tag_selector = new TagBar({
-	// 	options: ["Wish You Were Here", "Welcome to the Machine", "Have a Cigar", "Shine On You Crazy Diamond", "Another Brick in the Wall"],
-	// 	tag_container_id: "tags_bar",
-	// 	input_id: "datalist_report_select"
-	// });
-	let date_picker = new Lightpick({
-		field: document.getElementById('datepicker'),
-		singleDate: false,
-		numberOfMonths: 2,
-     });
-     console.log(date_picker);
-	VIEW_REPORT = new View({
-		view_id: "view_report",
-		button_id: "button_view_report",
-		components: {
-			date_picker: date_picker
-		}
-	});
-
-
-	VIEW_ABOUT = new View({
-		view_id: "view_about",
-		button_id: "button_view_about"
-	});
-
-	VIEW_BUGREPORT = new View({
-		view_id: "view_bugreport",
-		button_id: "button_view_bugreport"
-	});
-
-	VIEW_SETTINGS = new View({
-		view_id: "view_settings",
-		button_id: "button_view_settings"
-	});
-
-	let ignore_apps = new IgnoreApps({
-		div_container_id: "setting_ignore_app_container",
-		button_add_id: "add_app_to_ignore",
-		apps_to_ignore: ["explorer", "WindowsTimeTracker", "AdobeXD", "Java", "explorer", "WindowsTimeTracker", "AdobeXD", "Java", "explorer", "WindowsTimeTracker", "AdobeXD", "Java", "explorer", "WindowsTimeTracker", "AdobeXD", "Java"]
-	})
-
-	VIEW_TRACKING_SETTINGS = new View({
-		view_id: "view_tracking_settings",
-		button_id: "button_view_tracking_settings",
-		components: {
-			ignore_apps: ignore_apps
-		}
-	});
-
-	let tag_options = [
-		{
-			name: "Over1",
-			children: [
-				{
-					name: "Under 1x",
-				},
-				{
-					name: "Under 1y",
-				},
-			]
-		},
-		{
-			name: "Over2",
-			children: [
-				{
-					name: "Under2z",
-					level: 1,
-				},
-				{
-					name: "Under2a",
-					level: 1,
-				},
-			]
-		},
-		{
-			name: "Over3",
-			children: [
-				{
-					name: "Under 1x",
-				},
-				{
-					name: "Under 1y",
-				},
-			]
-		},
-		{
-			name: "Over1",
-			children: [
-				{
-					name: "Under 1",
-				},
-				{
-					name: "Under 1",
-				},
-			]
-		},
-		{
-			name: "Over1",
-			children: [
-				{
-					name: "Under 1",
-				},
-				{
-					name: "Under 1",
-				},
-			]
-		}
-	]
-	tagselector = new TagSelector({
-		container_id: "tags_suggestion_container",
-		input_id: "tags_selector",
-		button_tags_select_all_id: "button_tags_select_all",
-		button_tags_unselect_all_id: "button_tags_unselect_all",
-		tag_bar_id: "tags_bar",
-		tag_options: tag_options
-	});
-
-	VIEW_DAILY.select_view();
+let toggle_menu = () => {
+    document.getElementById("menu").classList.toggle("hide");
 }
 
-class TagSelector {
-	constructor(options) {
-		this.container_id = options.container_id;
-		this.input_id = options.input_id;
-		this.button_tags_select_all_id = options.button_tags_select_all_id;
-		this.button_tags_unselect_all_id = options.button_tags_unselect_all_id;
-		this.tag_bar_id = options.tag_bar_id;
-
-		this.container = document.getElementById(this.container_id);
-		this.input = document.getElementById(this.input_id);
-		this.button_tags_select_all = document.getElementById(this.button_tags_select_all_id);
-		this.button_tags_unselect_all = document.getElementById(this.button_tags_unselect_all_id);
-		this.tag_bar = document.getElementById(this.tag_bar_id);
-
-		this.tag_options = options.tag_options;
-
-		this.hovering = false;
-		this.mode_add = true;
-
-		this.children = [];
-
-		for (let tag_option of this.tag_options) {
-			// this.createGuiElement(tag_option)
-			let tag = new Tag2({
-				tag_name: tag_option.name,
-				level: 0,
-				handler: this,
-				children: []
-			})
-			this.children.push(tag);
-			this.container.appendChild(tag.div);
-			this.tag_bar.appendChild(tag.div_tag);
-			if (tag_option.children) {
-				for (let tag_child of tag_option.children) {
-					let tag_c = new Tag2({
-						tag_name: tag_child.name,
-						level: 1,
-						handler: this,
-						parent: tag
-					})
-					tag.children.push(tag_c);
-					this.container.appendChild(tag_c.div);
-					this.tag_bar.appendChild(tag_c.div_tag);
-				}
-			}
-		}
-
-		this._add_listeners()
-	}
-
-	_add_listeners() {
-		//Upon clicking the input box, open the selector
-		this.input.onclick = (e) => {
-			e.stopPropagation();
-			this.open();
-		}
-		//When clicking on the selector, stop event propagation (otherwise would close itself)
-		this.container.onclick = (e) => {
-			e.stopPropagation();
-		}
-
-		//Upon typing, search
-		this.input.oninput = (e) => {
-			this.filter(this.input.value);
-		}
-
-		//Buttons
-		this.button_tags_select_all.onclick = () => {
-			this.input.focus();
-			this.children.map(child => {
-				if (child.showing)
-					child.select()
-			});
-		}
-		this.button_tags_unselect_all.onclick = () => {
-			this.input.focus();
-			this.children.map(child => {
-				if (child.showing)
-					child.unselect()
-			});
-		}
-	}
-
-	select_all_visibile() {
-		this.children.map(child => {
-			if (child.showing) {
-				child.select();
-			}
-		});
-	}
-
-	filter(query) {
-		this.children.map(child => child.filter(query));
-	}
-
-	open() {
-		this.container.style.display = "inherit";
-		this.showing = true;
-		document.body.addEventListener("click", this.close)
-	}
-
-	close() {
-		this.container.style.display = "none";
-		this.showing = false;
-		document.body.removeEventListener("click", this.close)
-	}
-
-	createGuiElement(tag_option) {
-		let div_tag = document.createElement("div");
-		div_tag.textContent = tag_option.name;
-		div_tag.classList.add("tag_suggestion")
-		if (tag_option.level === 0)
-			div_tag.classList.add("l0")
-		else
-			div_tag.classList.add("l1")
-		this.container.appendChild(div_tag)
-
-		div_tag.onmousedown = (e) => {
-			console.log("down", tag_option.name);
-
-			if (div_tag.classList.contains("selected")) {
-				this.mode_add = false;
-			} else {
-				this.mode_add = true;
-			}
-			div_tag.classList.toggle("selected");
-
-			this.hovering = true;
-		}
-		div_tag.onmouseup = (e) => {
-			console.log("up", tag_option.name);
-			this.hovering = false;
-		}
-		div_tag.onmouseenter = (e) => {
-			// console.log("enter", tag_option.name);
-			if (this.hovering && this.mode_add) {
-				div_tag.classList.add("selected");
-			} else if (this.hovering && !this.mode_add) {
-				div_tag.classList.remove("selected");
-			}
-		}
-	}
+let expand_menu = () => {
+    document.getElementById("menu").classList.remove("hide");
 }
 
-class TagX {
-	constructor(tag_name, parent) {
-		this.tag_name = tag_name;
-		this.parent = parent;
-		this.create_dom();
-	}
-	create_dom() {
-		this.div = document.createElement("div");
-		this.div.className = "tag";
-		this.div.textContent = this.tag_name;
-		this.div_close = document.createElement("i");
-		this.div_close.className = "fas fa-times";
-		this.div.appendChild(this.div_close);
-
-		this.div.onclick = (e) => {
-			this.parent.unselect();
-		}
-	}
+let unexpand_menu = () => {
+    document.getElementById("menu").classList.add("hide");
 }
 
-class Tag2 {
-	constructor(options) {
-		this.tag_name = options.tag_name;
-		this.level = options.level;
-		this.children = options.children || [];
-		this.parent = options.parent || undefined;
-		this.handler = options.handler;
+// ----------------- Views --------------------
+SimpleViewRepository.registerClass(class ViewDaily extends SimpleView {
+    constructor() {
+        super();
 
-		this.selectable = true;
+        this.display = 'block';
 
-		//Create gui element for tag
-		this.div_tag = document.createElement("div");
-		this.div_tag.className = "tag hide";
-		this.div_tag.textContent = this.tag_name;
-		this.div_tag_close = document.createElement("i");
-		this.div_tag_close.className = "fas fa-times";
-		this.div_tag.appendChild(this.div_tag_close);
+        this.datePicker = new Lightpick({
+            field: document.getElementById("day_picker_dummy_field"),
+            inline: true,
+            lang: 'en',
+            onSelect: (date) => {
+                this.setCenterDate(date.toDate());
+                this.close();
+            }
+        });
 
-		//Create gui element in selector
-		this.div = document.createElement("div");
-		this.div.textContent = this.tag_name;
-		this.div.classList.add("tag_suggestion")
+        this.state.attachDomChange('day', date => {
+            this.setDays();
 
-		if (this.level === 0)
-			this.div.classList.add("l0")
-		else
-			this.div.classList.add("l1")
+            if (this.dayChart) {
+                this.dayChart.setData({ timelines: [] });
+                this.getDayData(date.toJSON()).then(timelines => {
+                    this.dayChart.setData({ timelines: timelines });
+                });
+            }
 
-		this._add_listeners();
-	}
+            if (this.weekChart1) {
+                this.weekChart1.setData([]);
+                this.getWeekDataBreakdown(date.toJSON(), 7).then(data => {
+                    this.weekChart1.setData(data);
+                });
+            }
 
-	_add_listeners() {
-		this.div.onmousedown = (e) => {
-			// console.log("down", this.tag_name);
+            if (this.weekChart2) {
+                this.weekChart2.setData([]);
+                this.getWeekDataSum(date.toJSON(), 7).then(data => {
+                    this.weekChart2.setData(data);
+                });
+            }
+        });
 
-			if (this, this.is_selected) {
-				this.handler.mode_add = false;
-				this.unselect();
-			} else {
-				this.handler.mode_add = true;
-				this.select();
-			}
+        this.datePicker.setDate(moment());
+        this.datePickerOpen = false;
+    }
 
-			this.handler.hovering = true;
-		}
-		this.div.onmouseup = (e) => {
-			// console.log("up", this.tag_name);
-			this.handler.hovering = false;
-		}
-		this.div.onmouseenter = (e) => {
-			// console.log("enter", tag_option.name);
-			if (this.handler.hovering && this.handler.mode_add) {
-				if (this.children.length === 0)
-					this.select();
-			} else if (this.handler.hovering && !this.handler.mode_add) {
-				if (this.children.length === 0)
-					this.unselect();
-			}
-		}
-		this.showing = true;
+    async getDayData(date) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
 
-		this.div_tag.onclick = () => {
-			this.unselect();
-		}
-	}
-
-	_set_unselectable() {
-		this.div.classList.add("unselectable");
-		this.selectable = false;
-	}
-	_set_selectable() {
-		this.div.classList.remove("unselectable");
-		this.selectable = true;
-	}
-
-	filter(query) {
-		if (this.tag_name.includes(query)) {
-			this.show();
-			this._set_selectable();
-			this.children.map(child => child.show());
-			return true;
-		} else {
-			let found = this.children.filter(child => child.filter(query)).length;
-			// console.log(this.tag_name, found, query)
-			if (found !== 0 && found === this.children.length) {
-				this.show();
-				this._set_selectable();
-			} else if (found !== 0) {
-				this._set_unselectable();
-				this.show();
-			} else {
-				this.hide();
-			}
-		}
-	}
-
-	show() {
-		this.showing = true;
-		this.div.classList.remove("hide")
-	}
-
-	hide() {
-		this.showing = false;
-		this.div.classList.add("hide")
-	}
-
-	//Selects & permutates to children
-	select() {
-		if (this.selectable) {
-			for (let child of this.children) {
-				child.select()
-			}
-			if (this.children.length === 0)
-				this.div.classList.add("selected")
-			this.is_selected = true;
-
-			if (this.children.length === 0)
-				this.div_tag.classList.remove("hide")
-		}
-	}
-
-	// Unselects only iteself
-	unselect_excl() {
-		this.is_selected = false;
-		this.div.classList.remove("selected")
-	}
-
-	// Unselects & permutates to children
-	unselect() {
-		for (let child of this.children) {
-			child.unselect()
-		}
-		if (this.parent) {
-			this.parent.unselect_excl();
-		}
-		this.is_selected = false;
-		this.div.classList.remove("selected")
-		this.div_tag.classList.add("hide")
-	}
-}
+            boundAsync.getDayData(date).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
 
 
-class IgnoreApps {
-	constructor(options) {
-		this.div_container_id = options.div_container_id;
-		this.div_container = document.getElementById(this.div_container_id);
+    async getWeekDataBreakdown(date, day) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
 
-		this.button_add_id = options.button_add_id;
-		this.button_add = document.getElementById(this.button_add_id);
+            boundAsync.getWeekBreakdownData(date, day).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
 
-		this.elements = [];
-		if (options.apps_to_ignore !== undefined) {
-			for (let app of options.apps_to_ignore) {
-				this.create(app);
-			}
-		}
+    async getWeekDataSum(date, day) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
 
-		this.button_add.onclick = () => {
-			this.create();
-		}
-	}
+            boundAsync.getWeekSumData(date, day).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
 
-	tolist() {
-		this.elements.map(element => element.get_text());
-	}
+    onShow() {
+        const date = this.state.day;
 
-	create(text = "") {
-		let ignore_app_element = new IgnoreAppElement(text, this);
-		this.div_container.appendChild(ignore_app_element.div);
-		this.elements.push(ignore_app_element);
-		this.div_container.scrollTop = this.div_container.scrollHeight;
-	}
+        this.dayChart = new TimeCharts.Timeline("#chart_daily", {
+            scale: {
+                from: 0 * 60,
+                to: 24 * 60,
+                intervalStart: 0
+            },
+            data: {
+                timelines: [],
+            },
+            legend: {
+                visible: true,
+                distance: 15
+            },
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+            },
+            distance: 20,
+            adjustSize: true,
+        });
 
-	remove(ignore_app_element) {
-		this.div_container.removeChild(ignore_app_element.div);
-		this.elements.splice(this.elements.indexOf(ignore_app_element), 1);
-	}
-}
+        this.weekChart1 = new TimeCharts.Barchart("#chart_weekly_1", {
+            data: [],
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+            },
+            distance: 20,
+            hover: {
+                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+            }
+        });
 
-class IgnoreAppElement {
-	constructor(text, parent) {
-		this.parent = parent;
+        this.weekChart2 = new TimeCharts.Barchart("#chart_weekly_2", {
+            data: [],
+            orientation: "horizontal",
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+            },
+            distance: 20,
+            hover: {
+                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+            }
+        });
 
-		this.div = document.createElement("div");
-		this.div.className = "setting_ignore_app";
+        this.dayChart.setData({ timelines: [] });
+        this.getDayData(date.toJSON()).then(timelines => {
+            this.dayChart.setData({ timelines: timelines });
+        });
 
-		this.div_entry = document.createElement("input");
-		this.div_entry.className = "setting_entry";
-		this.div_entry.value = text;
+        this.weekChart1.setData([]);
+        this.getWeekDataBreakdown(date.toJSON(), 7).then(data => {
+            this.weekChart1.setData(data);
+        });
 
-		this.button = document.createElement("button");
-		this.button.className = "standard_button";
-		this.button.setAttribute("icononly", "true");
+        this.weekChart2.setData([]);
+        this.getWeekDataSum(date.toJSON(), 7).then(data => {
+            this.weekChart2.setData(data);
+        });
+    }
 
-		this.icon = document.createElement("i")
-		this.icon.className = "fas fa-times";
+    open() {
+        document.getElementById("day_picker_dummy_container").style.display = "inline";
+        this.datePickerOpen = true;
+        document.body.addEventListener("click", this.close)
+    }
 
-		this.button.appendChild(this.icon)
-		this.div.appendChild(this.div_entry)
-		this.div.appendChild(this.button)
+    close() {
+        document.body.removeEventListener("click", this.close)
+        document.getElementById("day_picker_dummy_container").style.display = "none";
+        this.datePickerOpen = false;
+    }
 
-		this.button.onclick = () => {
-			this.parent.remove(this);
-		}
-	}
+    setCenterDate(date) {
+        date = moment(date);
+        this.state.day = date;
 
-	get_text() {
-		return this.div_entry.value;
-	}
-}
+        this.close();
+    }
+
+    dayClick(e, day) {
+        e.stopPropagation();
+        if (day.isSame(this.state.day)) { // center date clicked
+            this.open();
+        } else {
+            this.datePicker.setDate(day);
+        }
+    }
+
+    dayRender(day) {
+        return `<div class="number">${day.format('Do')}</div>
+                <div class="month">${day.format("MMMM 'YY")}</div>`;
+    }
+
+    setDays() {
+        this.state.days = [
+            this.state.day.clone().subtract(2, "days"),
+            this.state.day.clone().subtract(1, "days"),
+            this.state.day.clone(),
+            this.state.day.clone().add(1, "days"),
+            this.state.day.clone().add(2, "days"),
+        ]
+    }
+
+    shiftDays(e, days) {
+        this.datePicker.setDate(this.state.day.add(days, 'days'));
+    }
+
+    shiftMonths(e, months) {
+        this.datePicker.setDate(this.state.day.add(months, 'months'));
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewReport extends SimpleView {
+    constructor() {
+        super();
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewSettings extends SimpleView {
+    constructor() {
+        super();
+
+        this.display = 'block';
+        this.state.darkMode = false;
+        this.state.timeVisibleOnScreen = 10;
+        this.state.playNotificationSound = false;
+        this.state.timeUntilAskedAgain = 30;
+        this.state.timeout = 30;
+        this.state.hotkeyEnabled = false;
+        this.state.hotkeys = "";
+
+        this.keys = [];
+        this.keysRendered = [];
+    }
+
+    darkModeClick() {
+        this.state.darkMode = !this.state.darkMode;
+        document.documentElement.setAttribute("dark_mode", this.state.darkMode);
+    }
+
+    playNotificationSoundClick() {
+        this.state.playNotificationSound = !this.state.playNotificationSound;
+    }
+
+    hotkeyEnabledClick() {
+        this.state.hotkeyEnabled = !this.state.hotkeyEnabled;
+    }
+
+    hotkey_on_key_down(event) {
+        event.preventDefault();
+        const char = event.which || event.keyCode;
+
+        if (this.keys.length === 0) { // new hotkey input
+            this.keys = [];
+            this.keysRendered = [];
+        }
+
+        const i = this.keys.indexOf(char);
+
+        if (i < 0) {
+            this.keys.push(char);
+            this.keysRendered.push(char);
+        }
+
+        this.hotkey_render_output();
+    }
+
+    hotkey_on_key_up(event) {
+        event.preventDefault();
+        const char = event.which || event.keyCode;
+
+        const i = this.keys.indexOf(char);
+
+        if (i >= 0) {
+            this.keys.splice(i, 1);
+        }
+    }
+
+    hotkey_on_key_press(event) {
+        return false;
+    }
+
+    hotkey_render_output() {
+        let value = [];
+
+        for (const key of this.keysRendered) {
+            value.push(keyMapping[key] || String.fromCharCode(key));
+        }
+
+        this.state.hotkeys = value.join(" + ");
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewTackingSettings extends SimpleView {
+    constructor() {
+        super();
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewEditData extends SimpleView {
+    constructor() {
+        super();
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewBugReport extends SimpleView {
+    constructor() {
+        super();
+    }
+});
+
+SimpleViewRepository.registerClass(class ViewAbout extends SimpleView {
+    constructor() {
+        super();
+    }
+});
+
+
+SimpleViewRepository.afterLoad = () => SimpleViewRepository.navigate('ViewDaily');
 </script>
-</head>
-	
-<style>
-	/* Overrides */
-	*:not(.time-chart-tooltip):not(.time-chart-tooltip *):not(.fas):not(.fas *) {
-		box-sizing: border-box;
-		color: var(--default_text_color);
-		transition: 0.15s ease-in-out;
-	}
 
-	body {
-		margin: 0px;
-		display: flex;
-		height: 100%;
-		font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
-		color: var(--default_text_color);
-	}
 
-	/* For fontawesome - take original color */
-	.fas {
-		color: none;
-		/* color: inherit */
-	}
+    <style>
+        /* Overrides */
+        *:not(.time-chart-tooltip):not(.time-chart-tooltip *):not(.fas):not(.fas *) {
+            box-sizing: border-box;
+            color: var(--default_text_color);
+            transition: 0.15s ease-in-out;
+        }
 
-	/* Site stuff components (Important, thats why its here) :)*/
-	#menu {
-		flex: 0 200px;
-		background-color: var(--menu_background);
-		height: 100vh;
-		z-index: 2;
-		overflow: hidden;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-	}
-	#menu.hide {
-		flex: 0 53px;
-	}
-	.content {
-		height: 100vh;
-		flex: 1 0;
-		box-sizing: border-box;
-		padding: 20px;
-		background-color: var(--content_background);
-		display: none;
-		overflow-x: hidden;
-		overflow-y: hidden;
-	}
-	.show_view {
-		display: inline;
-	}
+        body {
+            margin: 0px;
+            display: flex;
+            height: 100%;
+            font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
+            color: var(--default_text_color);
+        }
 
-	/* -------------------------------------------------- */
+        /* For fontawesome - take original color */
+        .fas {
+            color: none;
+            /* color: inherit */
+        }
 
-	@media only screen and (max-height: 450px) {
-		#title_image {
-			margin-top: 0px;
-			width: 40px;
-		}
-		#menu.hide .menu_item {
-			height: 30px;
-			font-size: 12px;
-		}
-		#title_text {
-			display: none;
-		}
-	}
-	/* @media only screen and (max-height: 650px) {
+        /* Site stuff components (Important, thats why its here) :)*/
+        #menu {
+            flex: 0 200px;
+            background-color: var(--menu_background);
+            height: 100vh;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        #menu.hide {
+            flex: 0 53px;
+        }
+
+        .content {
+            height: 100vh;
+            flex: 1 0;
+            box-sizing: border-box;
+            padding: 20px;
+            background-color: var(--content_background);
+            display: none;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        .show_view {
+            display: inline;
+        }
+
+        /* -------------------------------------------------- */
+
+        @media only screen and (max-height: 450px) {
+            #title_image {
+                margin-top: 0px;
+                width: 40px;
+            }
+
+            #menu.hide .menu_item {
+                height: 30px;
+                font-size: 12px;
+            }
+
+            #title_text {
+                display: none;
+            }
+        }
+
+        /* @media only screen and (max-height: 650px) {
 		.menu_item {
 			height: 30px;
 			font-size: 12px;
@@ -11631,346 +11236,180 @@ class IgnoreAppElement {
 			font-size: 14px;
 		}
 	} */
+    </style>
+</head>
 
-</style>
+<body>
+    <div id="menu" class="hide">
+        <button id="expand_menu" class="menu_item" onclick="toggle_menu()">
+            <i class="far fa-caret-square-left" id="menu_unexpand" style="color: inherit"></i>
+            <i class="fas fa-caret-square-right" id="menu_expand" style="color: inherit"></i>
+        </button>
+        <div id="title_container" class="title">
+            <img id="title_image" src="Icon.png" width="100%">
+            <div id="title_text">TimeTracker</div>
+        </div>
+        <div class="menu_item description">
+            VIEWS
+        </div>
+        <button class="menu_item menu_button typea" id="button_view_daily" sv-navigate="ViewDaily"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-calendar-day"></i>
+            Daily
+        </button>
+        <button class="menu_item menu_button typeb" id="button_view_report" sv-navigate="ViewReport"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-calendar-alt"></i>
+            Monthly
+        </button>
+        <div class="menu_item description">
+            TRACKING
+        </div>
+        <button class="menu_item menu_button typea" id="button_view_edit_data" sv-navigate="ViewEditData"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-edit"></i>
+            Edit data
+        </button>
+        <div class="menu_item description">
+            SETTINGS
+        </div>
+        <button class="menu_item menu_button typea" id="button_view_tracking_settings" sv-navigate="ViewTackingSettings"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-sliders-h"></i>
+            Tracking
+        </button>
+        <button class="menu_item menu_button typeb" id="button_view_settings" sv-navigate="ViewSettings"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-cog"></i>
+            General
+        </button>
+        <div class="menu_item description">
+            ABOUT
+        </div>
+        <button class="menu_item menu_button typea" id="button_view_bugreport" sv-navigate="ViewBugReport"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-bug"></i>
+            Report Issue
+        </button>
+        <button class="menu_item menu_button typeb" id="button_view_about" sv-navigate="ViewAbout"
+            sv-navigation-class="selected">
+            <i class="menu_icon fas fa-info"></i>
+            About
+        </button>
+    </div>
 
-<body onload="init()">
-	<div id="menu" class="hide">
-		<button id="expand_menu" class="menu_item" onclick="toggle_menu()">
-			<i class="far fa-caret-square-left" id="menu_unexpand" style="color: inherit"></i>
-			<i class="fas fa-caret-square-right" id="menu_expand" style="color: inherit"></i>
-		</button>
-		<div id="title_container" class="title">
-			<img id="title_image" src="Icon.png" width="100%">
-			<div id="title_text">Timetracker</div>
-		</div>
-		<div class="menu_item description">
-			<!-- <i class="menu_icon fas fa-chart-line"></i> -->
-			VIEWS
-		</div>
-		<button class="menu_item menu_button typea" id="button_view_daily" onclick="VIEW_DAILY.select_view();">
-			<i class="menu_icon fas fa-calendar-day"></i>
-			Daily
-		</button>
-		<button class="menu_item menu_button typeb" id="button_view_report" onclick="VIEW_REPORT.select_view();">
-			<i class="menu_icon fas fa-calendar-alt"></i>
-			Monthly
-		</button>
-		<!-- <div class="menu_item description">STATISTICS</div>
-		<button class="menu_item menu_button typea">
-			<i class="fas fa-chart-line"></i>
-			Overall
-		</button> -->
-		<div class="menu_item description">
-			<!-- <i class="menu_icon fas fa-keyboard"></i> -->
-			TRACKING
-		</div>
-		<button class="menu_item menu_button typea" id="button_view_edit_data" onclick="VIEW_EDIT_DATA.select_view()">
-			<i class="menu_icon fas fa-edit"></i>
-			Edit data
-		</button>
-		<div class="menu_item description">
-			<!-- <i class="menu_icon fas fa-cogs"></i> -->
-			SETTINGS
-		</div>
-		<button class="menu_item menu_button typea" id="button_view_tracking_settings" onclick="VIEW_TRACKING_SETTINGS.select_view()">
-			<i class="menu_icon fas fa-sliders-h"></i>
-			Tracking
-		</button>
-		<button class="menu_item menu_button typeb" id="button_view_settings" onclick="VIEW_SETTINGS.select_view()">
-			<i class="menu_icon fas fa-cog"></i>
-			General
-		</button>
-		<div class="menu_item description">
-			<!-- <i class="menu_icon fas fa-bars"></i> -->
-			ABOUT
-		</div>
-		<button class="menu_item menu_button typea" id="button_view_bugreport" onclick="VIEW_BUGREPORT.select_view()">
-			<i class="menu_icon fas fa-bug"></i>
-			Report Issue
-		</button>
-		<button class="menu_item menu_button typeb" id="button_view_about" onclick="VIEW_ABOUT.select_view()">
-			<i class="menu_icon fas fa-info"></i>
-			About
-		</button>
-		<!--
-		<div id="bottom_box">
-			<button id="test_menu_item" class="menu_item menu_button typea">About</button>
-			<button id="test_menu_item" class="menu_item menu_button typeb">App Settings</button>
-		</div>
-		-->
-	</div>
+    <sv-view-daily class="content">
+        <div id="day_picker_container">
+            <div class="day_placeholder"></div>
+            <div id="month_back" class="day_picker_navigator" sv-bind-function-click="shiftMonths(-1)">
+                <i class="fas fa-angle-double-left" style="color: inherit"></i>
+            </div>
+            <div id="day_back" class="day_picker_navigator" sv-bind-function-click="shiftDays(-5)">
+                <i class="fas fa-angle-left" style="color: inherit"></i>
+            </div>
+            <!-- Has to be exactly here, otherwise wont work for positioning! -->
+            <div id="day_picker_dummy_container">
+                <div id="day_picker_addition">
+                    <button id="button_to_today" class="standard_button mini">
+                        <!-- <i class="fas fa-crosshairs"></i> -->
+                        <i class="fas fa-calendar-day"></i>
+                        Today
+                    </button>
+                </div>
+                <!-- Because the datepicker needs an element to cling onto -->
+                <div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
+            </div>
+            <div id="day_picker" sv-for-of="day of days" >
+                <div sv-for-value="day" sv-for-render="dayRender" sv-bind-function-click="dayClick({day})" class="day">
+                </div>
+            </div>
+            <div id="day_forward" class="day_picker_navigator" sv-bind-function-click="shiftDays(5)">
+                <i class="fas fa-angle-right" style="color: inherit"></i>
+            </div>
+            <div id="month_forward" class="day_picker_navigator" sv-bind-function-click="shiftMonths(1)">
+                <i class="fas fa-angle-double-right" style="color: inherit"></i>
+            </div>
+            <div class="day_placeholder"></div>
+        </div>
+        <div id="element_daily" class="chart">
+            <div class="title">This day</div>
+            <div id="chart_daily">HI</div>
+        </div>
+        <div id="element_weekly" class="chart">
+            <div class="title">This week</div>
+            <div class="view_container">
+                <div id="chart_weekly_1"></div>
+                <div id="chart_weekly_2"></div>
+            </div>
+        </div>
+    </sv-view-daily>
 
-	<div id="view_bugreport" class="content">
-		<div class="header">Bug Report</div>
-		<div class="text">Since you're here, something seems to have gone wrong. We're sorry to heart that!</div>
-		<br>
-		<div class="text">Please tell us what didn't work and we'll have a look.</div>
-		<br><br>
-		<textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform"></textarea>
-		<br><br>
-		<button class="standard_button">
-			<i class="fas fa-paper-plane"></i>
-			Send
-		</button>
-	</div>
+    <sv-view-settings id="view_settings" class="content">
+        <div class="header">General Settings</div>
+        <div class="subheader">Application</div>
+        <div class="setting" sv-bind-attribute-status="darkMode" id="setting_dark_mode" sv-bind-function-click="darkModeClick">
+            <i class="setting_no fas fa-toggle-off"></i>
+            <i class="setting_yes fas fa-toggle-on"></i>
+            <div class="setting_text">Dark Mode</div>
+        </div>
+        <br>
+        <div>
+            <div class="subheader">Notifications</div>
+            <div class="setting">
+                <input class="setting_entry" sv-value="timeVisibleOnScreen">
+                <div class="setting_text">Amount of time a notification is visible on screen</div>
+            </div>
+            <div class="setting" sv-bind-attribute-status="playNotificationSound" sv-bind-function-click=playNotificationSoundClick>
+                <i class="setting_no fas fa-toggle-off"></i>
+                <i class="setting_yes fas fa-toggle-on"></i>
+                <div class="setting_text">Make a sound every time a notification is shown</div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="subheader">Trigger Delay</div>
+            <div class="setting" status="false">
+                <input class="setting_entry" sv-value="timeUntilAskedAgain">
+                <div class="setting_text">
+                    Amount of time that must have passed before the TimeTracker asks again
+                    to what activity a window belongs
+                </div>
+            </div>
+            <div class="setting" status="false">
+                <input class="setting_entry" sv-value="timeout">
+                <div class="setting_text">
+                    Amount of time in which the TimeTracker does not ask for an activity after selecting one
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="subheader">Hotkeys</div>
+            <div class="setting" sv-bind-attribute-status="hotkeyEnabled" sv-bind-function-click="hotkeyEnabledClick">
+                <i class="setting_no fas fa-toggle-off"></i>
+                <i class="setting_yes fas fa-toggle-on"></i>
+                <div class="setting_text">Enable global hotkey</div>
+            </div>
+            <div class="setting" status="false">
+                <input class="setting_entry" id="settings_hotkey" sv-value="hotkeys"
+                    sv-bind-function-keydown="hotkey_on_key_down" sv-bind-function-keyup="hotkey_on_key_up"
+                    sv-bind-function-keypress="hotkey_on_key_press">
+                <div class="setting_text">
+                    Enter Hotkey
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="standard_button">
+            <i class="fas fa-backspace"></i>
+            Discard
+        </button>
+        <button class="standard_button">
+            <i class="fas fa-save"></i>
+            Save
+        </button>
+    </sv-view-settings>
 
-	<div id="view_about" class="content">
-		<div class="header">About</div>
-		<div class="text">Made with &#x2764; by&nbsp;</div>
-		<button class="standard_button" onclick="open_link('https://github.com/RobinWeitzel')">
-			<i class="fab fa-github"></i>
-			RobinWeitzel
-		</button>
-		<div class="text">&nbsp;and&nbsp;</div>
-		<button class="standard_button" onclick="open_link('https://github.com/TristanMenzinger')">
-			<i class="fab fa-github"></i>
-			TristanMenzinger
-		</button>
-		<br><br>
-		<div class="subheader">Data Protection</div>
-		<div class="text">
-			We made this app so you can track yourself, for yourself. <br>
-			All data is stored locally, there is zero traffic to any servers. We encourage you to have a look at the Project
-			on GitHub and have a see for yourself. <br> Since we won't ever interrupt you for feedback and don't track usage statistics by default, we rely on you to send us feedback.
-		</div>
-		<br><br>
-		<div class="subheader">Feedback or suggestion?</div>
-		<div class="text">Write an&nbsp;</div>
-		<button class="standard_button">
-			<i class="fas fa-envelope"></i>
-			E-Mail
-		</button>
-		<br><br>
-		<div class="subheader">Want to have a look?</div>
-		<div class="text">Visit the project on&nbsp;</div>
-		<button class="standard_button" onclick="open_link('https://github.com/RobinWeitzel/WindowsTimeTracker')">
-			<i class="fab fa-github"></i>
-			GitHub
-		</button>
-		<br><br>
-		<div class="subheader">Dependencies</div>
-		<div class="text">CsvHelper by JoshClose (Apache-2.0)</div><br>
-		<div class="text">CefSharp by CefSharp Community (BSD)</div><br>
-		<div class="text">Lighpick by wakirin (MIT)</div><br>
-		<div class="text">JExcel2 by paulhodel (MIT)</div><br>
-	</div>
-
-	<div id="view_edit_data" class="content">
-		<div class="header">Manually Edit Data</div>
-		<button class="standard_button">
-			<i class="fas fa-folder-open"></i>
-			Open
-		</button>
-		<button class="standard_button">
-			<i class="fas fa-archive"></i>
-			Export / Backup
-		</button>
-		<div class="spacer">|</div>
-		<button class="standard_button">
-			<i class="fas fa-backspace"></i>
-			Discard Changes
-		</button>
-		<button class="standard_button">
-			<i class="fas fa-save"></i>
-			Save
-		</button>
-		<div class="spacer">|</div>
-		<button class="standard_button" icononly="true">
-				<i class="fas fa-undo"></i>
-			</button>
-		<button class="standard_button" icononly="true">
-			<i class="fas fa-redo"></i>
-		</button>
-		<br><br>
-		<div id="edit_data_table"></div>
-	</div>
-
-	<div id="view_settings" class="content">
-		<div class="header">General Settings</div>
-		<div class="subheader">Application</div>
-		<div class="setting" status="false" id="setting_dark_mode">
-			<i class="setting_no fas fa-toggle-off" onclick="dark_mode(true)"></i>
-			<i class="setting_yes fas fa-toggle-on" onclick="dark_mode(false)"></i>
-			<div class="setting_text">Dark Mode</div>
-		</div>
-		<br>
-		<div>
-			<div class="subheader">Notifications</div>
-			<div class="setting">
-				<input class="setting_entry">
-				<div class="setting_text">Amount of time a notification is visible on screen</div>
-			</div>
-			<div class="setting" status="false">
-				<i class="setting_no fas fa-toggle-off"></i>
-				<i class="setting_yes fas fa-toggle-on"></i>
-				<div class="setting_text">Make a sound every time a notification is shown</div>
-			</div>
-		</div>
-		<br>
-		<div>
-			<div class="subheader">Trigger Delay</div>
-			<div class="setting" status="false">
-				<input class="setting_entry">
-				<div class="setting_text">
-					Amount of time that must have passed before the Timetracker asks again
-					to what activity a window belongs
-				</div>
-			</div>
-			<div class="setting" status="false">
-				<input class="setting_entry">
-				<div class="setting_text">
-					Amount of time in which the Timetracker does not ask for an activity after selecting one
-				</div>
-			</div>
-		</div>
-		<br>
-		<div>
-			<div class="subheader">Hotkeys</div>
-			<div class="setting" status="false">
-				<i class="setting_no fas fa-toggle-off"></i>
-				<i class="setting_yes fas fa-toggle-on"></i>
-				<div class="setting_text">Enable global hotkey</div>
-			</div>
-			<div class="setting" status="false">
-				<input class="setting_entry">
-				<div class="setting_text">
-					Enter Hotkey
-				</div>
-			</div>
-		</div>
-		<div class="text">s = Seconds, m = Minutes, h = Hours</div>
-		<br><br>
-		<div>
-			<div class="subheader">Telemetry</div>
-				<div class="setting" status="true">
-					<i class="setting_no fas fa-toggle-off"></i>
-					<i class="setting_yes fas fa-toggle-on"></i>
-					<div class="setting_text">Send usage statistics</div>
-				</div>
-				<div class="text">
-					We do not send any activity data or personal information. 
-					Upon installation, a unique ID is generated that is sent 
-					along with the number of app uses.
-				</div>
-				<br>
-			</div>
-		<br>
-		<!-- <div class="setting">
-			<div class="setting_text">Choose sensitivity</div>
-			<br>
-			<div class="setting_slider_text">0</div>
-			<input class="setting_slider" type="range" min="1" max="100" value="50">
-			<div class="setting_slider_text">100</div>
-		</div> -->
-		<button class="standard_button">
-			<i class="fas fa-backspace"></i>
-			Discard
-		</button>
-		<button class="standard_button">
-			<i class="fas fa-save"></i>
-			Save
-		</button>
-	</div>
-
-	<div id="view_tracking_settings" class="content">
-		<div class="header">Tracking Settings</div>
-		<div class="subheader">Blacklist Apps</div>
-		<button class="standard_button" icononly="true" id="add_app_to_ignore">
-			<i class="fas fa-plus-circle"></i>
-		</button>
-		<br>
-		<div id="setting_ignore_app_container">
-			<!-- <div class="setting_ignore_app">
-				<input class="setting_entry">
-				<button class="standard_button" icononly="true">
-					<i class="fas fa-trash-alt"></i>
-				</button>
-			</div> -->
-		</div>
-		<br>
-		<!-- <button class="standard_button">
-			<i class="fas fa-archive"></i>
-			Export / Backup
-		</button> -->
-		<button class="standard_button right">
-			<i class="fas fa-backspace"></i>
-			Discard
-		</button>
-		<button class="standard_button right">
-			<i class="fas fa-save"></i>
-			Save
-		</button>
-	</div>
-
-	<div id="view_report" class="content">
-		<div class="header">Activity Report</div>
-		<!-- <input id="datalist_report_select" list="tags_bar_datalist" class="searchbar" type="text" placeholder="Activity or Group Name" multiple> -->
-		<input type="text" id="tags_selector" class="searchbar"/>
-		<input type="text" id="datepicker"/>
-		<div id="tags_bar"></div>
-		<div id="tags_suggestion_container" class="hide">
-			<div id="tags_suggestion_buttons_container">
-				<button id="button_tags_select_all" class="standard_button mini">
-					<i class="fas fa-circle"></i>
-					Select
-				</button>
-				<button id="button_tags_unselect_all" class="standard_button mini">
-					<i class="far fa-circle"></i>
-					Unselect
-				</button>
-			</div>
-		</div>
-		<div id="chart_single_inbox_activity_heatmap_single"></div>
-	</div>
-
-	<div id="view_daily" class="content">
-		<div id="day_picker_container">
-			<div class="day_placeholder"></div>
-			<div id="month_back" class="day_picker_navigator">
-				<i class="fas fa-angle-double-left" style="color: inherit"></i>
-			</div>
-			<div id="day_back" class="day_picker_navigator">
-				<i class="fas fa-angle-left" style="color: inherit"></i>
-			</div>
-			<!-- Has to be exactly here, otherwise wont work for positioning! -->
-			<div id="day_picker_dummy_container">
-				<div id="day_picker_addition">
-					<button id="button_to_today" class="standard_button mini">
-						<!-- <i class="fas fa-crosshairs"></i> -->
-						<i class="fas fa-calendar-day"></i>
-						Today
-					</button>
-				</div>
-				<!-- Because the datepicker needs an element to cling onto -->
-				<div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
-			</div>
-			<div id="day_picker">
-				<!-- <div class="day">
-					<div class="number">17th</div>
-					<div class="month">MARCH</div>
-				</div> -->
-			</div>
-			<div id="day_forward" class="day_picker_navigator">
-				<i class="fas fa-angle-right" style="color: inherit"></i>
-			</div>
-			<div id="month_forward" class="day_picker_navigator">
-				<i class="fas fa-angle-double-right" style="color: inherit"></i>
-			</div>
-			<div class="day_placeholder"></div>
-		</div>
-		<div id="element_daily" class="chart">
-			<div class="title">This day</div>
-			<div id="chart_daily">HI</div>
-		</div>
-		<div id="element_weekly" class="chart">
-			<div class="title">This week</div>
-			<div class="view_container">
-				<div id="chart_weekly_1"></div>
-				<div id="chart_weekly_2"></div>
-			</div>
-		</div>
-	</div>
 </body>
 
 </html>
