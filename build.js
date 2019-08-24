@@ -26,7 +26,11 @@ const escapeRegExp = string => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
+let errors = 0;
+
 const myArgs = process.argv.slice(2);
+
+console.log("--- BUILD STARTED ---");
 
 fs.readFile('index.html', 'utf8', async (err, html) => {
 
@@ -34,45 +38,65 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     const scripts = html.match(/<script [\s\S]*?<\/script>/g);
 
     // Styles
-    for (const match of styles) {
-        const href = match.match(/href=["|'](.*?)["|']/)[1];
+    console.log("LOADING STYLES:");
+    console.log(styles.length + " styles found.");
+    for (let i = 0; i < styles.length; i++) {
+        try{
+            const match = styles[i];
+            const href = match.match(/href=["|'](.*?)["|']/)[1];
 
-        let content;
+            let content;
 
-        if (href.startsWith("http")) { // file must be downloaded from the web
-            content = await get(href);
-        } else { // local file
-            content = await getLocal(href);
+            console.log("Loading " + (i+1) + " style from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
+            if (href.startsWith("http")) { // file must be downloaded from the web
+                content = await get(href);
+            } else { // local file
+                content = await getLocal(href);
+            }
+
+            
+            const start = html.search(new RegExp(escapeRegExp(match)));
+            
+            const replacement = `<style>\n${content}\n</style>`;
+            
+            html = html.substr(0, start) + replacement + html.substr(start + match.length);
+            
+            console.log("Finished loading " + (i+1) + ". style.");
+        } catch(e) {
+            errors++;
+            console.error("Could not load " + (i+1) + ". style.");
         }
-
-        const start = html.search(new RegExp(escapeRegExp(match)));
-
-        const replacement = `<style>\n${content}\n</style>`;
-
-        html = html.substr(0, start) + replacement + html.substr(start + match.length);
-
-        //html = html.replace(new RegExp(match), `<style>\n${content}\n</style>`);
     }
+    console.log("");
 
     // Scripts
-    for (const match of scripts) {
-        const href = match.match(/src=["|'](.*?)["|']/)[1];
+    console.log("LOADING SCRIPTS:");
+    console.log(styles.length + " scripts found.");
+    for (let i = 0; i < scripts.length; i++) {
+        try{
+            const match = scripts[i];
+            const href = match.match(/src=["|'](.*?)["|']/)[1];
 
-        let content;
+            let content;
 
-        if (href.startsWith("http")) { // file must be downloaded from the web
-            content = await get(href);
-        } else { // local file
-            content = await getLocal(href);
+            console.log("Loading " + (i+1) + ". script from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
+            if (href.startsWith("http")) { // file must be downloaded from the web
+                content = await get(href);
+            } else { // local file
+                content = await getLocal(href);
+            }
+
+            const start = html.search(new RegExp(escapeRegExp(match)));
+
+            const replacement = `<script>\n${content}\n</script>`;
+
+            html = html.substr(0, start) + replacement + html.substr(start + match.length);
+
+            console.log("Finished loading " + (i+1) + ". script.");
+        } catch(e) {
+            errors++;
+            console.error("Could not load " + (i+1) + ". script.");
         }
-
-        const start = html.search(new RegExp(escapeRegExp(match)));
-
-        const replacement = `<script>\n${content}\n</script>`;
-
-        html = html.substr(0, start) + replacement + html.substr(start + match.length);
-
-        //html = html.replace(new RegExp(match), `<script>\n${content}\n</script>`);
     }
 
     // Minify
@@ -87,13 +111,24 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     });*/
 
     // Output file
-    if(!fs.existsSync('dist'))
-        fs.mkdirSync('dist');
-    fs.writeFile("dist/index.html", html, function (err) {
-        if (err) {
-            return console.log(err);
-        }
+    try {
+        if(!fs.existsSync('dist'))
+            fs.mkdirSync('dist');
+        fs.writeFile("dist/index.html", html, function (err) {
+            if (err) {
+                return console.log(err);
+            }
 
-        console.log("The file was saved!");
-    });
+            console.log("Saved file");
+        });
+    } catch(e) {
+        errors++;
+        console.error("Could not save file.");
+    }
+
+    if(errors === 0) {
+        console.log("--- BUILD FINISHED SUCCESSFULLY ---");
+    } else {
+        console.log("--- BUILD FINISHED WITH ERRORS ---");
+    }
 });
