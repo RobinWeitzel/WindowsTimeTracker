@@ -324,28 +324,13 @@
 				<div class="setting_text">Enable global hotkey</div>
 			</div>
 			<div class="setting" status="false">
-				<input class="setting_entry">
+				<input class="setting_entry" id="settings_hotkey" onkeydown="hotkey_on_key_down(event)" onkeyup="hotkey_on_key_up(event)" onkeypress="return false;">
 				<div class="setting_text">
 					Enter Hotkey
 				</div>
 			</div>
 		</div>
-		<div class="text">s = Seconds, m = Minutes, h = Hours</div>
-		<br><br>
-		<div>
-			<div class="subheader">Telemetry</div>
-				<div class="setting" status="true">
-					<i class="setting_no fas fa-toggle-off"></i>
-					<i class="setting_yes fas fa-toggle-on"></i>
-					<div class="setting_text">Send usage statistics</div>
-				</div>
-				<div class="text">
-					We do not send any activity data or personal information. 
-					Upon installation, a unique ID is generated that is sent 
-					along with the number of app uses.
-				</div>
-				<br>
-			</div>
+		<!--<div class="text">s = Seconds, m = Minutes, h = Hours</div>-->
 		<br>
 		<!-- <div class="setting">
 			<div class="setting_text">Choose sensitivity</div>
