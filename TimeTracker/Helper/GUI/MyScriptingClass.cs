@@ -7,7 +7,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TimeTracker.Helper.Models;
+using TimeTracker.Properties;
 
 namespace TimeTracker.Helper
 {
@@ -50,10 +52,10 @@ namespace TimeTracker.Helper
                 .OrderBy(t => t.Label)
                 .ToList();
 
-            string json = JsonConvert.SerializeObject(Timelines);
+            string Json = JsonConvert.SerializeObject(Timelines);
 
             // Add the data as a JSON string to the result
-            return json;
+            return Json;
         }
 
         public string GetWeekBreakdownData(string date, int daysBack)
@@ -114,10 +116,10 @@ namespace TimeTracker.Helper
                 }).OrderBy(dd => dd.Title).ToList()
             }).OrderBy(d => d.Label).ToList();
 
-            string json = JsonConvert.SerializeObject(Bardata);
+            string Json = JsonConvert.SerializeObject(Bardata);
 
             // Add the data as a JSON string to the result
-            return json;
+            return Json;
         }
 
         public string GetWeekSumData(string date, int daysBack)
@@ -167,10 +169,31 @@ namespace TimeTracker.Helper
                     }).OrderBy(d => d.Title).ToList()
                 }).OrderBy(d => d.Label).ToList();
 
-            string json = JsonConvert.SerializeObject(Bardata);
+            string Json = JsonConvert.SerializeObject(Bardata);
 
             // Add the data as a JSON string to the result
-            return json;
+            return Json;
+        }
+
+        public string GetSettings()
+        {
+            Models.Settings Settings = new Models.Settings
+            {
+                TimeNotificationVisible = Properties.Settings.Default.TimeNotificationVisible,
+                TimeBeforeAskingAgain = Properties.Settings.Default.TimeBeforeAskingAgain,
+                TimeSinceAppLastUsed = Properties.Settings.Default.TimeSinceAppLastUsed,
+                DarkMode = Properties.Settings.Default.DarkMode,
+                HotkeyDisabled = Properties.Settings.Default.HotkeyDisabled,
+                Hotkeys = Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
+                PlayNotificationSound = Properties.Settings.Default.PlayNotificationSound,
+                OfflineTracking = Properties.Settings.Default.OfflineTracking,
+                Blacklist = Properties.Settings.Default.Blacklist.Cast<string>().ToList(),
+            };
+
+            string Json = JsonConvert.SerializeObject(Settings);
+
+            // Add the data as a JSON string to the result
+            return Json;
         }
 
         /*public string GetOverviewData(int value)

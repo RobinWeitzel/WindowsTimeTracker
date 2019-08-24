@@ -156,7 +156,7 @@ namespace TimeTracker
             NotifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => DoNotDisturb();
             NotifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow(StorageHandler, AppStateTracker).Show();
             NotifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit(StorageHandler).Show();
-            NotifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
+            //NotifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
             NotifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
 

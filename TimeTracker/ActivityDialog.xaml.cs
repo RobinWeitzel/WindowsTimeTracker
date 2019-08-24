@@ -86,7 +86,7 @@ namespace TimeTracker
             ComboBox.SelectedItem = Activities.Where(a => a.Name.Equals(DefaultName)).FirstOrDefault();
             TextBlock2.Text = AppStateTracker.CurrentWindow?.Name.Trim() ?? "No window active";
 
-            Timeout = Settings.Default.Timeout * 1000; // Convert to ms
+            Timeout = Settings.Default.TimeNotificationVisible * 1000; // Convert to ms
 
             if (Settings.Default.PlayNotificationSound)
                 SystemSounds.Hand.Play();

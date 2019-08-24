@@ -227,6 +227,7 @@
     <Compile Include="Helper\GUI\MyScriptingClass.cs" />
     <Compile Include="Helper\Models\Dataset.cs" />
     <Compile Include="Helper\Models\BarData.cs" />
+    <Compile Include="Helper\Models\Settings.cs" />
     <Compile Include="Helper\Models\Timeline.cs" />
     <Compile Include="Helper\Models\TimelineValue.cs" />
     <Compile Include="HTMLDataWindow.xaml.cs">
@@ -245,15 +246,6 @@
       <DependentUpon>AwayFromPCDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\Listeners\ProgramSwitchListener.cs" />
-    <Compile Include="SettingsBlacklist.xaml.cs">
-      <DependentUpon>SettingsBlacklist.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsGeneral.xaml.cs">
-      <DependentUpon>SettingsGeneral.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsAbout.xaml.cs">
-      <DependentUpon>SettingsAbout.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Logic\StorageHandler.cs" />
     <Compile Include="ActivityDialog.xaml.cs">
       <DependentUpon>ActivityDialog.xaml</DependentUpon>
@@ -263,9 +255,6 @@
     </Compile>
     <Compile Include="NewVersion.xaml.cs">
       <DependentUpon>NewVersion.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
@@ -304,22 +293,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewVersion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsBlacklist.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsGeneral.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsAbout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

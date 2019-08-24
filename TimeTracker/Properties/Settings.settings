@@ -8,10 +8,10 @@
     <Setting Name="TimeSinceAppLastUsed" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="Timeout" Type="System.Int64" Scope="User">
+    <Setting Name="TimeNotificationVisible" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="Timeout2" Type="System.Int64" Scope="User">
+    <Setting Name="TimeBeforeAskingAgain" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="PlayNotificationSound" Type="System.Boolean" Scope="User">
@@ -44,10 +44,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Hotkeys" Type="System.Collections.Generic.List&lt;System.Windows.Input.Key&gt;" Scope="User">
-      <Value Profile="(Default)"></Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="HotkeyDisabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DarkMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

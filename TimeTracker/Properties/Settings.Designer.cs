@@ -50,24 +50,24 @@ namespace TimeTracker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public long Timeout {
+        public long TimeNotificationVisible {
             get {
-                return ((long)(this["Timeout"]));
+                return ((long)(this["TimeNotificationVisible"]));
             }
             set {
-                this["Timeout"] = value;
+                this["TimeNotificationVisible"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public long Timeout2 {
+        public long TimeBeforeAskingAgain {
             get {
-                return ((long)(this["Timeout2"]));
+                return ((long)(this["TimeBeforeAskingAgain"]));
             }
             set {
-                this["Timeout2"] = value;
+                this["TimeBeforeAskingAgain"] = value;
             }
         }
         
@@ -147,6 +147,18 @@ namespace TimeTracker.Properties {
             }
             set {
                 this["HotkeyDisabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DarkMode {
+            get {
+                return ((bool)(this["DarkMode"]));
+            }
+            set {
+                this["DarkMode"] = value;
             }
         }
     }

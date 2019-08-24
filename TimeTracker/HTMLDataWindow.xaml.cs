@@ -65,6 +65,8 @@ namespace TimeTracker
             ChromeBrowser.BrowserSettings = BrowserSettings;
             ChromeBrowser.JavascriptObjectRepository.Register("boundAsync", new MyScriptingClass(storageHandler, appStateTracker), true);
 
+            ChromeBrowser.FrameLoadEnd += (e, r) => ChromeBrowser.ShowDevTools();
+
             WindowsFormsHost.Child = ChromeBrowser;
         }
     }

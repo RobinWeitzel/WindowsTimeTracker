@@ -110,7 +110,7 @@ namespace TimeTracker
 
             // Load need variables from settings
             long TimeNotUsed = Settings.Default.TimeSinceAppLastUsed * 60 * 1000;  // Convert to ms 
-            long Timeout2 = Settings.Default.Timeout2;
+            long Timeout2 = Settings.Default.TimeBeforeAskingAgain;
 
             // Stop if the current activity is blacklisted or a file path
             if (Settings.Default.Blacklist.Contains(ProgramTitle) || ProgramTitle.Contains("\\"))
