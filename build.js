@@ -120,15 +120,21 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             }
 
             console.log("Saved file");
+
+            if(errors === 0) {
+                console.log("--- BUILD FINISHED SUCCESSFULLY ---");
+            } else {
+                console.log("--- BUILD FINISHED WITH ERRORS ---");
+            }
         });
     } catch(e) {
         errors++;
         console.error("Could not save file.");
-    }
 
-    if(errors === 0) {
-        console.log("--- BUILD FINISHED SUCCESSFULLY ---");
-    } else {
-        console.log("--- BUILD FINISHED WITH ERRORS ---");
+        if(errors === 0) {
+            console.log("--- BUILD FINISHED SUCCESSFULLY ---");
+        } else {
+            console.log("--- BUILD FINISHED WITH ERRORS ---");
+        }
     }
 });
