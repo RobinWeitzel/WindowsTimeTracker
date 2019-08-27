@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="css/overrides_lightpick.css">
 
     <!-- SimpleViewJs -->
-    <script src="https://unpkg.com/the-simple-framework@1.0.4/the-simple-framework.js"></script>
+    <script src="https://unpkg.com/the-simple-framework@1.0.5/the-simple-framework.js"></script>
 
     <!-- Main Javascript  -->
     <script src="js/main.js"></script>
@@ -166,13 +166,13 @@
                 <i class="menu_icon fas fa-calendar-alt"></i>
                 Monthly
             </button>
-            <div class="menu_item description">
+            <!--<div class="menu_item description">
                 TRACKING
             </div>
             <button class="menu_item menu_button typea" id="button_view_edit_data">
                 <i class="menu_icon fas fa-edit"></i>
                 Edit data
-            </button>
+            </button>-->
             <div class="menu_item description">
                 SETTINGS
             </div>
@@ -232,7 +232,7 @@
             </div>
             <div id="element_daily" class="chart">
                 <div class="title">This day</div>
-                <div id="chart_daily">HI</div>
+                <div id="chart_daily"></div>
             </div>
             <div id="element_weekly" class="chart">
                 <div class="title">This week</div>
@@ -246,8 +246,8 @@
         <tsf-view-tracking-settings class="content" tsf-if="this.display === 'ViewTrackingSettings'">
             <div class="header">Tracking Settings</div>
             <div class="subheader">Offline Tracking</div>
-            <div class="setting" tsf-bind-attribute-status="offlineTracking"
-                tsf-bind-function-click="offlineTrackingClick">
+            <div class="setting" tsf-bind-attribute-status="this.offlineTracking"
+                tsf-bind-function-click="this.offlineTrackingClick">
                 <i class="setting_no fas fa-toggle-off"></i>
                 <i class="setting_yes fas fa-toggle-on"></i>
                 <div class="setting_text">Upon returning to the computer, ask the user what he was doing</div>
@@ -278,7 +278,7 @@
                 <i class="fas fa-backspace"></i>
                 Discard
             </button>
-            <button class="standard_button right">
+            <button class="standard_button right" tsf-bind-function-click="this.setSettings">
                 <i class="fas fa-save"></i>
                 Save
             </button>
@@ -297,7 +297,7 @@
             <div>
                 <div class="subheader">Notifications</div>
                 <div class="setting">
-                    <input class="setting_entry" tsf-value="this.timeNotificationVisible">
+                    <input class="setting_entry" tsf-value="timeNotificationVisible">
                     <div class="setting_text">Amount of time a notification is visible on screen</div>
                 </div>
                 <div class="setting" tsf-bind-attribute-status="this.playNotificationSound" tsf-bind-function-click="this.playNotificationSoundClick">
@@ -310,14 +310,14 @@
             <div>
                 <div class="subheader">Trigger Delay</div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" tsf-value="this.timeBeforeAskingAgain">
+                    <input class="setting_entry" tsf-value="timeBeforeAskingAgain">
                     <div class="setting_text">
                         Amount of time that must have passed before the TimeTracker asks again
                         to what activity a window belongs
                     </div>
                 </div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" tsf-value="this.timeSinceAppLastUsed">
+                    <input class="setting_entry" tsf-value="timeSinceAppLastUsed">
                     <div class="setting_text">
                         Amount of time in which the TimeTracker does not ask for an activity after selecting one
                     </div>
@@ -333,7 +333,7 @@
                     <div class="setting_text">Enable global hotkey</div>
                 </div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" id="settings_hotkey" tsf-value="this.hotkeys"
+                    <input class="setting_entry" id="settings_hotkey" tsf-value="hotkeys"
                         tsf-bind-function-keydown="this.hotkey_on_key_down" tsf-bind-function-keyup="this.hotkey_on_key_up"
                         tsf-bind-function-keypress="this.hotkey_on_key_press" tsf-bind-boolean-attribute-disabled="this.hotkeyDisabled">
                     <div class="setting_text">
@@ -362,9 +362,9 @@
                 <br>
                 <div class="text">Please tell us what didn't work and we'll have a look.</div>
                 <br><br>
-                <textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform"></textarea>
+                <textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform" tsf-value="report"></textarea>
                 <br><br>
-                <button class="standard_button">
+                <button class="standard_button" tsf-bind-function-click="this.sendReport">
                     <i class="fas fa-paper-plane"></i>
                     Send
                 </button>

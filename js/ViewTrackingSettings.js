@@ -6,12 +6,8 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
         
         this.getSettings().then(settings => {
             this.state.offlineTracking = settings.offlineTracking;
+            this.state.blacklist = settings.blacklist;
         });
-
-        this.state.blacklist = [
-            "test1",
-            "test2"
-        ]
     }
 
     async getSettings() {
@@ -30,8 +26,9 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getTrackingSettings({
-                OfflineTracking: this.state.offlineTracking
+            boundAsync.setTrackingSettings({
+                OfflineTracking: this.state.offlineTracking,
+                Blacklist: this.state.blacklist.map(item => item) 
             }).then(result => {
                 resolve(JSON.parse(result));
             });

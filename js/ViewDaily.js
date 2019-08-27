@@ -132,6 +132,9 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             }
         });
 
+        if(date === "")
+            return;
+
         this.dayChart.setData({ timelines: [] });
         this.getDayData(date.toJSON()).then(timelines => {
             this.dayChart.setData({ timelines: timelines });
