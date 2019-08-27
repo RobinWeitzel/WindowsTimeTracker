@@ -42,9 +42,9 @@
 	background-color: var(--content_background);
 	margin-right: 12px;
 	border: 1px solid var(--input_border);
-     margin-top: 5px;
-     width: 75px;
-     color: inherit;
+    margin-top: 5px;
+    width: 125px;
+    color: inherit;
 }
 .setting_entry:hover {
 	border-color: var(--input_hover_border); 

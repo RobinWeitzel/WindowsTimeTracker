@@ -34,10 +34,17 @@
     <link rel="stylesheet" type="text/css" href="css/overrides_lightpick.css">
 
     <!-- SimpleViewJs -->
-    <script src="https://unpkg.com/simpleviewjs@1.0.12/SimpleView.js"></script>
+    <script src="https://unpkg.com/the-simple-framework@1.0.4/the-simple-framework.js"></script>
 
     <!-- Main Javascript  -->
     <script src="js/main.js"></script>
+    <script src="js/NavigationContainer.js"></script>
+    <script src="js/ViewDaily.js"></script>
+    <script src="js/ViewSettings.js"></script>
+    <script src="js/ViewTrackingSettings.js"></script>
+    <script src="js/ViewBugreport.js"></script>
+    <script src="js/ViewAbout.js"></script>
+    <script src="js/ViewReport.js"></script>
 
 
     <style>
@@ -50,6 +57,9 @@
 
         body {
             margin: 0px;
+        }
+
+        tsf-navigation-container {     
             display: flex;
             height: 100%;
             font-family: system-ui, Roboto, Helvetica, Arial, sans-serif;
@@ -135,176 +145,272 @@
 </head>
 
 <body>
-    <div id="menu" class="hide">
-        <button id="expand_menu" class="menu_item" onclick="toggle_menu()">
-            <i class="far fa-caret-square-left" id="menu_unexpand" style="color: inherit"></i>
-            <i class="fas fa-caret-square-right" id="menu_expand" style="color: inherit"></i>
-        </button>
-        <div id="title_container" class="title">
-            <img id="title_image" src="Icon.png" width="100%">
-            <div id="title_text">TimeTracker</div>
+    <tsf-navigation-container>
+        <div id="menu" class="hide">
+            <button id="expand_menu" class="menu_item" onclick="toggle_menu()">
+                <i class="far fa-caret-square-left" id="menu_unexpand" style="color: inherit"></i>
+                <i class="fas fa-caret-square-right" id="menu_expand" style="color: inherit"></i>
+            </button>
+            <div id="title_container" class="title">
+                <img id="title_image" src="Icon.png" width="100%">
+                <div id="title_text">TimeTracker</div>
+            </div>
+            <div class="menu_item description">
+                VIEWS
+            </div>
+            <button class="menu_item menu_button typea" id="button_view_daily" tsf-bind-function-click="this.navigate('ViewDaily')" tsf-bind-class-selected="this.display === 'ViewDaily'">
+                <i class="menu_icon fas fa-calendar-day"></i>
+                Daily
+            </button>
+            <button class="menu_item menu_button typeb" id="button_view_report" tsf-bind-function-click="this.navigate('ViewReport')" tsf-bind-class-selected="this.display === 'ViewReport'">
+                <i class="menu_icon fas fa-calendar-alt"></i>
+                Monthly
+            </button>
+            <div class="menu_item description">
+                TRACKING
+            </div>
+            <button class="menu_item menu_button typea" id="button_view_edit_data">
+                <i class="menu_icon fas fa-edit"></i>
+                Edit data
+            </button>
+            <div class="menu_item description">
+                SETTINGS
+            </div>
+            <button class="menu_item menu_button typea" id="button_view_tracking_settings" tsf-bind-function-click="this.navigate('ViewTrackingSettings')" tsf-bind-class-selected="this.display === 'ViewTrackingSettings'">
+                <i class="menu_icon fas fa-sliders-h"></i>
+                Tracking
+            </button>
+            <button class="menu_item menu_button typeb" id="button_view_settings" tsf-bind-function-click="this.navigate('ViewSettings')" tsf-bind-class-selected="this.display === 'ViewSettings'">
+                <i class="menu_icon fas fa-cog"></i>
+                General
+            </button>
+            <div class="menu_item description">
+                ABOUT
+            </div>
+            <button class="menu_item menu_button typea" id="button_view_bugreport" tsf-bind-function-click="this.navigate('ViewBugreport')" tsf-bind-class-selected="this.display === 'ViewBugreport'">
+                <i class="menu_icon fas fa-bug"></i>
+                Report Issue
+            </button>
+            <button class="menu_item menu_button typeb" id="button_view_about" tsf-bind-function-click="this.navigate('ViewAbout')" tsf-bind-class-selected="this.display === 'ViewAbout'">
+                <i class="menu_icon fas fa-info"></i>
+                About
+            </button>
         </div>
-        <div class="menu_item description">
-            VIEWS
-        </div>
-        <button class="menu_item menu_button typea" id="button_view_daily" sv-navigate="ViewDaily"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-calendar-day"></i>
-            Daily
-        </button>
-        <button class="menu_item menu_button typeb" id="button_view_report" sv-navigate="ViewReport"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-calendar-alt"></i>
-            Monthly
-        </button>
-        <div class="menu_item description">
-            TRACKING
-        </div>
-        <button class="menu_item menu_button typea" id="button_view_edit_data" sv-navigate="ViewEditData"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-edit"></i>
-            Edit data
-        </button>
-        <div class="menu_item description">
-            SETTINGS
-        </div>
-        <button class="menu_item menu_button typea" id="button_view_tracking_settings" sv-navigate="ViewTackingSettings"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-sliders-h"></i>
-            Tracking
-        </button>
-        <button class="menu_item menu_button typeb" id="button_view_settings" sv-navigate="ViewSettings"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-cog"></i>
-            General
-        </button>
-        <div class="menu_item description">
-            ABOUT
-        </div>
-        <button class="menu_item menu_button typea" id="button_view_bugreport" sv-navigate="ViewBugReport"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-bug"></i>
-            Report Issue
-        </button>
-        <button class="menu_item menu_button typeb" id="button_view_about" sv-navigate="ViewAbout"
-            sv-navigation-class="selected">
-            <i class="menu_icon fas fa-info"></i>
-            About
-        </button>
-    </div>
 
-    <sv-view-daily class="content">
-        <div id="day_picker_container">
-            <div class="day_placeholder"></div>
-            <div id="month_back" class="day_picker_navigator" sv-bind-function-click="shiftMonths(-1)">
-                <i class="fas fa-angle-double-left" style="color: inherit"></i>
+        <tsf-view-daily class="content" tsf-if="this.display === 'ViewDaily'">
+            <div id="day_picker_container">
+                <div class="day_placeholder"></div>
+                <div id="month_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftMonths(-1)">
+                    <i class="fas fa-angle-double-left" style="color: inherit"></i>
+                </div>
+                <div id="day_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(-5)">
+                    <i class="fas fa-angle-left" style="color: inherit"></i>
+                </div>
+                <!-- Has to be exactly here, otherwise wont work for positioning! -->
+                <div id="day_picker_dummy_container">
+                    <div id="day_picker_addition">
+                        <button id="button_to_today" class="standard_button mini">
+                            <!-- <i class="fas fa-crosshairs"></i> -->
+                            <i class="fas fa-calendar-day"></i>
+                            Today
+                        </button>
+                    </div>
+                    <!-- Because the datepicker needs an element to cling onto -->
+                    <div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
+                </div>
+                <div id="day_picker" tsf-for-of="day of days">
+                    <div tsf-html="local.day" tsf-html-render="this.dayRender" tsf-bind-function-click="this.dayClick(local.day)" class="day">
+                    </div>
+                </div>
+                <div id="day_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(5)">
+                    <i class="fas fa-angle-right" style="color: inherit"></i>
+                </div>
+                <div id="month_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftMonths(1)">
+                    <i class="fas fa-angle-double-right" style="color: inherit"></i>
+                </div>
+                <div class="day_placeholder"></div>
             </div>
-            <div id="day_back" class="day_picker_navigator" sv-bind-function-click="shiftDays(-5)">
-                <i class="fas fa-angle-left" style="color: inherit"></i>
+            <div id="element_daily" class="chart">
+                <div class="title">This day</div>
+                <div id="chart_daily">HI</div>
             </div>
-            <!-- Has to be exactly here, otherwise wont work for positioning! -->
-            <div id="day_picker_dummy_container">
-                <div id="day_picker_addition">
-                    <button id="button_to_today" class="standard_button mini">
-                        <!-- <i class="fas fa-crosshairs"></i> -->
-                        <i class="fas fa-calendar-day"></i>
-                        Today
+            <div id="element_weekly" class="chart">
+                <div class="title">This week</div>
+                <div class="view_container">
+                    <div id="chart_weekly_1"></div>
+                    <div id="chart_weekly_2"></div>
+                </div>
+            </div>
+        </tsf-view-daily>
+
+        <tsf-view-tracking-settings class="content" tsf-if="this.display === 'ViewTrackingSettings'">
+            <div class="header">Tracking Settings</div>
+            <div class="subheader">Offline Tracking</div>
+            <div class="setting" tsf-bind-attribute-status="offlineTracking"
+                tsf-bind-function-click="offlineTrackingClick">
+                <i class="setting_no fas fa-toggle-off"></i>
+                <i class="setting_yes fas fa-toggle-on"></i>
+                <div class="setting_text">Upon returning to the computer, ask the user what he was doing</div>
+            </div>
+            <div class="subheader">Blacklist Apps</div>
+            <div class="setting_text">
+                Apps that will be ignored by TimeTracker
+            </div>
+            <button class="standard_button" icononly="true" id="add_app_to_ignore" tsf-bind-function-click="this.addItem">
+                <i class="fas fa-plus-circle"></i>
+            </button>
+            <br>
+            <div id="setting_ignore_app_container" tsf-for-of="item of blacklist">
+                <div class="setting_ignore_app">
+                    <input class="setting_entry" tsf-bind-attribute-value="local.item"
+                        tsf-bind-function-input="this.blacklistInput(local.item.index)">
+                    <button class="standard_button" icononly="true" tsf-bind-function-click="this.deleteItem(local.item)">
+                        <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
-                <!-- Because the datepicker needs an element to cling onto -->
-                <div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
             </div>
-            <div id="day_picker" sv-for-of="day of days" >
-                <div sv-for-value="day" sv-for-render="dayRender" sv-bind-function-click="dayClick({day})" class="day">
-                </div>
-            </div>
-            <div id="day_forward" class="day_picker_navigator" sv-bind-function-click="shiftDays(5)">
-                <i class="fas fa-angle-right" style="color: inherit"></i>
-            </div>
-            <div id="month_forward" class="day_picker_navigator" sv-bind-function-click="shiftMonths(1)">
-                <i class="fas fa-angle-double-right" style="color: inherit"></i>
-            </div>
-            <div class="day_placeholder"></div>
-        </div>
-        <div id="element_daily" class="chart">
-            <div class="title">This day</div>
-            <div id="chart_daily">HI</div>
-        </div>
-        <div id="element_weekly" class="chart">
-            <div class="title">This week</div>
-            <div class="view_container">
-                <div id="chart_weekly_1"></div>
-                <div id="chart_weekly_2"></div>
-            </div>
-        </div>
-    </sv-view-daily>
+            <br>
+            <!-- <button class="standard_button">
+                <i class="fas fa-archive"></i>
+                Export / Backup
+            </button> -->
+            <button class="standard_button right">
+                <i class="fas fa-backspace"></i>
+                Discard
+            </button>
+            <button class="standard_button right">
+                <i class="fas fa-save"></i>
+                Save
+            </button>
+        </tsf-view-tracking-settings>
 
-    <sv-view-settings id="view_settings" class="content">
-        <div class="header">General Settings</div>
-        <div class="subheader">Application</div>
-        <div class="setting" sv-bind-attribute-status="darkMode" id="setting_dark_mode" sv-bind-function-click="darkModeClick">
-            <i class="setting_no fas fa-toggle-off"></i>
-            <i class="setting_yes fas fa-toggle-on"></i>
-            <div class="setting_text">Dark Mode</div>
-        </div>
-        <br>
-        <div>
-            <div class="subheader">Notifications</div>
-            <div class="setting">
-                <input class="setting_entry" sv-value="timeVisibleOnScreen">
-                <div class="setting_text">Amount of time a notification is visible on screen</div>
-            </div>
-            <div class="setting" sv-bind-attribute-status="playNotificationSound" sv-bind-function-click=playNotificationSoundClick>
+        <tsf-view-settings class="content" tsf-if="this.display === 'ViewSettings'">
+            <div class="header">General Settings</div>
+            <div class="subheader">Application</div>
+            <div class="setting" tsf-bind-attribute-status="this.darkMode" id="setting_dark_mode"
+                tsf-bind-function-click="this.darkModeClick">
                 <i class="setting_no fas fa-toggle-off"></i>
                 <i class="setting_yes fas fa-toggle-on"></i>
-                <div class="setting_text">Make a sound every time a notification is shown</div>
+                <div class="setting_text">Dark Mode</div>
             </div>
-        </div>
-        <br>
-        <div>
-            <div class="subheader">Trigger Delay</div>
-            <div class="setting" status="false">
-                <input class="setting_entry" sv-value="timeUntilAskedAgain">
-                <div class="setting_text">
-                    Amount of time that must have passed before the TimeTracker asks again
-                    to what activity a window belongs
+            <br>
+            <div>
+                <div class="subheader">Notifications</div>
+                <div class="setting">
+                    <input class="setting_entry" tsf-value="this.timeNotificationVisible">
+                    <div class="setting_text">Amount of time a notification is visible on screen</div>
+                </div>
+                <div class="setting" tsf-bind-attribute-status="this.playNotificationSound" tsf-bind-function-click="this.playNotificationSoundClick">
+                    <i class="setting_no fas fa-toggle-off"></i>
+                    <i class="setting_yes fas fa-toggle-on"></i>
+                    <div class="setting_text">Make a sound every time a notification is shown</div>
                 </div>
             </div>
-            <div class="setting" status="false">
-                <input class="setting_entry" sv-value="timeout">
-                <div class="setting_text">
-                    Amount of time in which the TimeTracker does not ask for an activity after selecting one
+            <br>
+            <div>
+                <div class="subheader">Trigger Delay</div>
+                <div class="setting" status="false">
+                    <input class="setting_entry" tsf-value="this.timeBeforeAskingAgain">
+                    <div class="setting_text">
+                        Amount of time that must have passed before the TimeTracker asks again
+                        to what activity a window belongs
+                    </div>
+                </div>
+                <div class="setting" status="false">
+                    <input class="setting_entry" tsf-value="this.timeSinceAppLastUsed">
+                    <div class="setting_text">
+                        Amount of time in which the TimeTracker does not ask for an activity after selecting one
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div>
-            <div class="subheader">Hotkeys</div>
-            <div class="setting" sv-bind-attribute-status="hotkeyEnabled" sv-bind-function-click="hotkeyEnabledClick">
-                <i class="setting_no fas fa-toggle-off"></i>
-                <i class="setting_yes fas fa-toggle-on"></i>
-                <div class="setting_text">Enable global hotkey</div>
-            </div>
-            <div class="setting" status="false">
-                <input class="setting_entry" id="settings_hotkey" sv-value="hotkeys"
-                    sv-bind-function-keydown="hotkey_on_key_down" sv-bind-function-keyup="hotkey_on_key_up"
-                    sv-bind-function-keypress="hotkey_on_key_press">
-                <div class="setting_text">
-                    Enter Hotkey
+            <br>
+            <div>
+                <div class="subheader">Hotkeys</div>
+                <div class="setting" tsf-bind-attribute-status="this.hotkeyDisabled"
+                    tsf-bind-function-click="this.hotkeyEnabledClick">
+                    <i class="setting_no fas fa-toggle-on"></i>
+                    <i class="setting_yes fas fa-toggle-off"></i>
+                    <div class="setting_text">Enable global hotkey</div>
+                </div>
+                <div class="setting" status="false">
+                    <input class="setting_entry" id="settings_hotkey" tsf-value="this.hotkeys"
+                        tsf-bind-function-keydown="this.hotkey_on_key_down" tsf-bind-function-keyup="this.hotkey_on_key_up"
+                        tsf-bind-function-keypress="this.hotkey_on_key_press" tsf-bind-boolean-attribute-disabled="this.hotkeyDisabled">
+                    <div class="setting_text">
+                        Enter Hotkey
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <button class="standard_button">
-            <i class="fas fa-backspace"></i>
-            Discard
-        </button>
-        <button class="standard_button">
-            <i class="fas fa-save"></i>
-            Save
-        </button>
-    </sv-view-settings>
+            <br>
+            <button class="standard_button">
+                <i class="fas fa-backspace"></i>
+                Discard
+            </button>
+            <button class="standard_button" tsf-bind-function-click="this.setSettings">
+                <i class="fas fa-save"></i>
+                Save
+            </button>
+        </tsf-view-settings>
 
+        <tsf-view-report tsf-if="this.display === 'ViewReport'" class="content">
+            <div class="header">Activity Report</div>
+        </tsf-view-report>
+
+        <tsf-view-bugreport tsf-if="this.display === 'ViewBugreport'" class="content">
+                <div class="header">Bug Report</div>
+                <div class="text">Since you're here, something seems to have gone wrong. We're sorry to heart that!</div>
+                <br>
+                <div class="text">Please tell us what didn't work and we'll have a look.</div>
+                <br><br>
+                <textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform"></textarea>
+                <br><br>
+                <button class="standard_button">
+                    <i class="fas fa-paper-plane"></i>
+                    Send
+                </button>
+            </tsf-view-bugreport>
+    
+        <tsf-view-about tsf-if="this.display === 'ViewAbout'" class="content">
+                <div class="header">About</div>
+                <div class="text">Made with &#x2764; by&nbsp;</div>
+                <button class="standard_button" onclick="open_link('https://github.com/RobinWeitzel')">
+                    <i class="fab fa-github"></i>
+                    RobinWeitzel
+                </button>
+                <div class="text">&nbsp;and&nbsp;</div>
+                <button class="standard_button" onclick="open_link('https://github.com/TristanMenzinger')">
+                    <i class="fab fa-github"></i>
+                    TristanMenzinger
+                </button>
+                <br><br>
+                <div class="subheader">Data Protection</div>
+                <div class="text">
+                    We made this app so you can track yourself, for yourself. <br>
+                    All data is stored locally, there is zero traffic to any servers. We encourage you to have a look at the Project
+                    on GitHub and have a see for yourself. <br> Since we won't ever interrupt you for feedback and don't track usage statistics by default, we rely on you to send us feedback.
+                </div>
+                <br><br>
+                <div class="subheader">Feedback or suggestion?</div>
+                <div class="text">Write an&nbsp;</div>
+                <button class="standard_button">
+                    <i class="fas fa-envelope"></i>
+                    E-Mail
+                </button>
+                <br><br>
+                <div class="subheader">Want to have a look?</div>
+                <div class="text">Visit the project on&nbsp;</div>
+                <button class="standard_button" onclick="open_link('https://github.com/RobinWeitzel/WindowsTimeTracker')">
+                    <i class="fab fa-github"></i>
+                    GitHub
+                </button>
+                <br><br>
+                <div class="subheader">Dependencies</div>
+                <div class="text">CsvHelper by JoshClose (Apache-2.0)</div><br>
+                <div class="text">CefSharp by CefSharp Community (BSD)</div><br>
+                <div class="text">Lighpick by wakirin (MIT)</div><br>
+                <div class="text">JExcel2 by paulhodel (MIT)</div><br>
+            </tsf-view-about>
+    </tsf-navigation-container>
 </body>
 
 </html>
