@@ -11819,6 +11819,30 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
 TSFRepository.registerComponent(class ViewBugreport extends TSFComponent {
     constructor() {
         super();
+
+        this.state.report = "";
+    }
+
+    sendReport(e) {
+        const escapeHtml = unsafe => {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;")
+                 .replace(/\n/g, "%0A")
+                 .replace(/ /g, "%20");
+         }
+
+        const xmlHttp = new XMLHttpRequest();
+        /*xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }*/
+        xmlHttp.open("GET", `https://hooks.zapier.com/hooks/catch/3466553/obv012p/?issue_body=${escapeHtml(this.state.report)}`, true); // true for asynchronous 
+        xmlHttp.send(null);
+        this.state.report = "";
     }
 });
 </script>
@@ -11957,13 +11981,13 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 <i class="menu_icon fas fa-calendar-alt"></i>
                 Monthly
             </button>
-            <div class="menu_item description">
+            <!--<div class="menu_item description">
                 TRACKING
             </div>
             <button class="menu_item menu_button typea" id="button_view_edit_data">
                 <i class="menu_icon fas fa-edit"></i>
                 Edit data
-            </button>
+            </button>-->
             <div class="menu_item description">
                 SETTINGS
             </div>
@@ -12088,7 +12112,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             <div>
                 <div class="subheader">Notifications</div>
                 <div class="setting">
-                    <input class="setting_entry" tsf-value="this.timeNotificationVisible">
+                    <input class="setting_entry" tsf-value="timeNotificationVisible">
                     <div class="setting_text">Amount of time a notification is visible on screen</div>
                 </div>
                 <div class="setting" tsf-bind-attribute-status="this.playNotificationSound" tsf-bind-function-click="this.playNotificationSoundClick">
@@ -12101,14 +12125,14 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             <div>
                 <div class="subheader">Trigger Delay</div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" tsf-value="this.timeBeforeAskingAgain">
+                    <input class="setting_entry" tsf-value="timeBeforeAskingAgain">
                     <div class="setting_text">
                         Amount of time that must have passed before the TimeTracker asks again
                         to what activity a window belongs
                     </div>
                 </div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" tsf-value="this.timeSinceAppLastUsed">
+                    <input class="setting_entry" tsf-value="timeSinceAppLastUsed">
                     <div class="setting_text">
                         Amount of time in which the TimeTracker does not ask for an activity after selecting one
                     </div>
@@ -12124,7 +12148,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                     <div class="setting_text">Enable global hotkey</div>
                 </div>
                 <div class="setting" status="false">
-                    <input class="setting_entry" id="settings_hotkey" tsf-value="this.hotkeys"
+                    <input class="setting_entry" id="settings_hotkey" tsf-value="hotkeys"
                         tsf-bind-function-keydown="this.hotkey_on_key_down" tsf-bind-function-keyup="this.hotkey_on_key_up"
                         tsf-bind-function-keypress="this.hotkey_on_key_press" tsf-bind-boolean-attribute-disabled="this.hotkeyDisabled">
                     <div class="setting_text">
@@ -12153,9 +12177,9 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 <br>
                 <div class="text">Please tell us what didn't work and we'll have a look.</div>
                 <br><br>
-                <textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform"></textarea>
+                <textarea id="bugreport" rows="4" cols="50" name="comment" form="usrform" tsf-value="report"></textarea>
                 <br><br>
-                <button class="standard_button">
+                <button class="standard_button" tsf-bind-function-click="this.sendReport">
                     <i class="fas fa-paper-plane"></i>
                     Send
                 </button>
