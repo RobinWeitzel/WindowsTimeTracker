@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TimeTracker.Helper.Models
 {
-    class Settings
+    public class Settings
     {
         [JsonProperty(PropertyName = "timeNotificationVisible")]
         public long TimeNotificationVisible { get; set; } // Amount of time a notification is visible on screen
@@ -20,12 +20,6 @@ namespace TimeTracker.Helper.Models
 
         [JsonProperty(PropertyName = "timeBeforeAskingAgain")]
         public long TimeBeforeAskingAgain { get; set; } // Amount of time in which the Timetracker does not ask for an activity after selecting one
-
-        [JsonProperty(PropertyName = "offlineTracking")]
-        public bool OfflineTracking { get; set; } // Upon returning to the computer, ask the user what he was doing
-
-        [JsonProperty(PropertyName = "blacklist")]
-        public List<string> Blacklist { get; set; } // Apps that will be ignored by TimeTracker
 
         [JsonProperty(PropertyName = "hotkeys")]
         public List<int> Hotkeys { get; set; }

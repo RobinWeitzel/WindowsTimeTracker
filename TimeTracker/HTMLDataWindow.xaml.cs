@@ -18,25 +18,6 @@ namespace TimeTracker
         {
             InitializeComponent();
             InitializeChromium(storageHandler, appStateTracker);
-
-            /*string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            if (!Cef.IsInitialized)
-            {
-                CefSettings CefSettings = new CefSettings();
-                CefSettings.BrowserSubprocessPath = String.Format("{0}CefSharp.BrowserSubprocess.exe", CurrentDirectory); // **Path where the CefSharp.BrowserSubprocess.exe exists**
-                CefSettings.CachePath = "ChromiumBrowserControlCache";
-                CefSettings.IgnoreCertificateErrors = true;
-                CefSettings.SetOffScreenRenderingBestPerformanceArgs();
-                Cef.Initialize(CefSettings);
-            }
-
-            WebBrowser.FrameLoadEnd += (a, b) =>
-            {
-                WebBrowser.ShowDevTools();
-            };
-            WebBrowser.Address = String.Format("file:///{0}index.html", CurrentDirectory);
-            WebBrowser.JavascriptObjectRepository.Register("boundAsync", new MyScriptingClass(storageHandler, appStateTracker), true);*/
         }
 
         public void InitializeChromium(StorageHandler storageHandler, AppStateTracker appStateTracker)
