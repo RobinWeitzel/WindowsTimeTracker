@@ -3,6 +3,11 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
         super();
 
         this.display = 'block';
+        this.counters = [
+            0,
+            0,
+            0
+        ]
 
         this.datePicker = new Lightpick({
             field: document.getElementById("day_picker_dummy_field"),
@@ -21,21 +26,21 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
                 this.dayChart.setData({ timelines: [] });
                 this.getDayData(date.toJSON()).then(timelines => {
                     this.dayChart.setData({ timelines: timelines });
-                });
+                }).catch(e => console.log("Old data"));
             }
 
             if (this.weekChart1) {
                 this.weekChart1.setData([]);
                 this.getWeekDataBreakdown(date.toJSON(), 10).then(data => {
                     this.weekChart1.setData(data);
-                });
+                }).catch(e => console.log("Old data"));
             }
 
             if (this.weekChart2) {
                 this.weekChart2.setData([]);
                 this.getWeekDataSum(date.toJSON(), 7).then(data => {
                     this.weekChart2.setData(data);
-                });
+                }).catch(e => console.log("Old data"));
             }
         });
 
@@ -48,8 +53,12 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getDayData(date).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.getDayData(date, ++this.counters[0]).then(result => {
+                result = JSON.parse(result);
+                if(result.counter === this.counters[0])
+                    resolve(result.value);
+                else
+                    reject();
             });
         });
     }
@@ -59,8 +68,12 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getWeekBreakdownData(date, day).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.getWeekBreakdownData(date, day, ++this.counters[1]).then(result => {
+                result = JSON.parse(result);
+                if(result.counter === this.counters[1])
+                    resolve(result.value);
+                else
+                    reject();
             });
         });
     }
@@ -70,8 +83,12 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getWeekSumData(date, day).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.getWeekSumData(date, day, ++this.counters[2]).then(result => {
+                result = JSON.parse(result);
+                if(result.counter === this.counters[2])
+                    resolve(result.value);
+                else
+                    reject();
             });
         });
     }
@@ -141,20 +158,23 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
         if(date === "")
             return;
 
+        if(!this.counters)
+            this.counters = [0, 0, 0];
+
         this.dayChart.setData({ timelines: [] });
         this.getDayData(date.toJSON()).then(timelines => {
             this.dayChart.setData({ timelines: timelines });
-        });
+        }).catch(e => console.log("Old data"));
 
         this.weekChart1.setData([]);
         this.getWeekDataBreakdown(date.toJSON(), 10).then(data => {
             this.weekChart1.setData(data);
-        });
+        }).catch(e => console.log("Old data"));
 
         this.weekChart2.setData([]);
         this.getWeekDataSum(date.toJSON(), 7).then(data => {
             this.weekChart2.setData(data);
-        });
+        }).catch(e => console.log("Old data"));
     }
 
     open() {
