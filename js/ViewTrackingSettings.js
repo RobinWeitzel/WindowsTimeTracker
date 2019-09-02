@@ -3,11 +3,13 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
         super();
 
         this.display = 'block';
-        
+
         this.getSettings().then(settings => {
-            this.state.offlineTracking = settings.offlineTracking;
-            this.state.blacklist = settings.blacklist;
+            this.state.blacklist = settings.blacklist.map(b => {return {name: b, active: false}});
         });
+        this.state.newEntry = "";
+        this.state.deletePossible = false;
+        this.state.header = false;
     }
 
     async getSettings() {
@@ -21,15 +23,12 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
         });
     }
 
-    async setSettings() {
+    async setBlacklist(blacklist) {
         return new Promise(async (resolve, reject) => {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.setTrackingSettings({
-                OfflineTracking: this.state.offlineTracking,
-                Blacklist: this.state.blacklist.map(item => item) 
-            }).then(result => {
+            boundAsync.setBlacklist(blacklist).then(result => {
                 resolve(JSON.parse(result));
             });
         });
@@ -39,23 +38,78 @@ TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent 
         this.state.offlineTracking = !this.state.offlineTracking;
     }
 
-    deleteItem(e, item) {
-        const i = this.state.blacklist.indexOf(item);
+    add() {
+        this.setBlacklist([...this.state.blacklist.map(item => item.name), this.state.newEntry]).then(result => {
+            this.state.blacklist = result.map(b => {return {name: b, active: false}});
+            this.state.newEntry = "";
+            document.querySelector('#blacklist-header > tr').classList.remove('active');
+        });
+    }
 
-        if(i >= 0) {
-            this.state.blacklist.splice(i, 1);
+    delete() {
+        const blacklist = this.state.blacklist.filter(b => !b.active).map(b => b.name);
+
+        this.setBlacklist(blacklist).then(result => {
+            this.state.blacklist = result.map(b => {return {name: b, active: false}});
+            this.state.deletePossible = false;
+            document.querySelector('#blacklist-header > tr').classList.remove('active');
+        });
+    }
+
+    restore() {
+        const blacklist = [
+            "TimeTracker",
+            "Neue Benachrichtigung",
+            "Explorer",
+            "Cortana",
+            "Akkuinformationen",
+            "Start",
+            "UnlockingWindow",
+            "Status",
+            "Aktive Anwendungen",
+            "Window Dialog",
+            "Info-Center",
+            "Windows-Standardsperrbildschirm",
+            "Host für die Windows Shell-Oberfläche",
+            "F12PopupWindow",
+            "LockingWindow",
+            "CTX_RX_SYSTRAY",
+            "[]"
+        ];
+
+        this.setBlacklist(blacklist).then(result => {
+            this.state.blacklist = result.map(b => {return {name: b, active: false}});
+            this.state.deletePossible = false;
+            this.state.header = false;
+        });
+    }
+
+    headerClick(e) {
+        this.state.header = !this.state.header;
+
+        if (this.state.header) {
+            this.state.blacklist = this.state.blacklist.map(b => {return {name: b.name, active: true}});
+            this.state.deletePossible = true;
+        } else {
+            this.state.blacklist = this.state.blacklist.map(b => {return {name: b.name, active: false}});
+            this.state.deletePossible = false;
         }
     }
 
-    blacklistInput(e, index) {
-        const value = e.path[0].value;
-        this.state.blacklist[index] = value;
-        const input = document.getElementById('setting_ignore_app_container').children[index].querySelector('input');
-        input.focus();
-        input.setSelectionRange(value.length, value.length);
-    }
-
-    addItem(e) {
-        this.state.blacklist.push("");
+    rowClick(e, index) {
+        if (e.target.nodeName === "DIV") {
+            if (this.state.blacklist[index].active) {
+                this.state.blacklist[index].active = false;
+                this.state.header = false;
+                this.state.deletePossible = this.state.blacklist.filter(b => b.active).length > 0;
+            } else {
+                this.state.blacklist[index].active = true;
+                this.state.deletePossible = true;
+            }
+        }
+        else {
+            this.state.blacklist[index].active = true;
+            this.state.deletePossible = true;
+        }
     }
 });

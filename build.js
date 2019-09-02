@@ -54,6 +54,10 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
                 content = await getLocal(href);
             }
 
+            // Remove BOM
+            if (content.charCodeAt(0) === 0xFEFF) {
+                content = content.substr(1);
+            }
             
             const start = html.search(new RegExp(escapeRegExp(match)));
             
@@ -84,6 +88,11 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
                 content = await get(href);
             } else { // local file
                 content = await getLocal(href);
+            }
+
+            // Remove BOM
+            if (content.charCodeAt(0) === 0xFEFF) {
+                content = content.substr(1);
             }
 
             const start = html.search(new RegExp(escapeRegExp(match)));

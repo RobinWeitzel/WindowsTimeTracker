@@ -35,6 +35,10 @@
 	border-bottom: 2px solid var(--default_border);
 }
 
+#day_picker > .day[center] {
+	border-bottom-color: rgb(0, 120, 215);
+}
+
 #day_picker > .day > .number {
 	height: 20px;
 }
@@ -111,16 +115,9 @@
 	margin-bottom: 10px;
 }
 
-#element_daily, #element_weekly {
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-	background-color: white;
-	border-radius: 4px;
-	background-color: var(--chart_container_background);
-}
-
 #day_picker_dummy_container {
 	position: absolute;
-	top: 100px;
+	top: 120px;
 	border-radius: 5px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
@@ -132,4 +129,30 @@
 	padding: 10px;
 	z-index: 9999;
 	margin-bottom: -5px;
+}
+
+.chart-container-row {
+	display: flex;
+	margin-top: 20px;
+}
+
+.chart-container-row > div:first-child {
+	flex: 3;
+	margin-right: 10px;
+}
+
+.chart-container-row > div:last-child {
+	flex: 2;
+	margin-left: 10px;
+}
+
+.chart-container {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 23px 0px;
+	background-color: white;
+	padding: 20px;
+}
+
+.chart-content {
+	display: grid;
+	grid-template-rows: 110px minmax(300px, 30%) minmax(40%, 500px);
 }

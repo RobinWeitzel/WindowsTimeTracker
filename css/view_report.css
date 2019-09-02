@@ -165,3 +165,12 @@ input::-webkit-calendar-picker-indicator {
 .tag_suggestion.l1:hover.selected {
 	background-color: var(--highlight_color_dark);
 }
+
+.report-chart-content {
+	display: grid;
+	grid-template-rows: min-content 60px minmax(300px, 30%) minmax(40%, 500px);
+}
+
+#report_chart1 {
+	height: 100%;
+}

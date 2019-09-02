@@ -26,7 +26,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
 
             if (this.weekChart1) {
                 this.weekChart1.setData([]);
-                this.getWeekDataBreakdown(date.toJSON(), 7).then(data => {
+                this.getWeekDataBreakdown(date.toJSON(), 10).then(data => {
                     this.weekChart1.setData(data);
                 });
             }
@@ -53,7 +53,6 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             });
         });
     }
-
 
     async getWeekDataBreakdown(date, day) {
         return new Promise(async (resolve, reject) => {
@@ -91,7 +90,8 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             },
             legend: {
                 visible: true,
-                distance: 15
+                distance: 15,
+                textWidth: 160
             },
             padding: {
                 top: 20,
@@ -111,9 +111,12 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
                 bottom: 20,
                 left: 20
             },
-            distance: 20,
+            distance: "variable",
             hover: {
-                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+                callback: (title, value) => `<span style="color: gray">${toTime(value) + (title !== "" ? " - " : "")}</span>${title}`
+            },
+            scale: {
+                visible: false
             }
         });
 
@@ -129,6 +132,9 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             distance: 20,
             hover: {
                 callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+            },
+            scale: {
+                visible: false
             }
         });
 
@@ -141,7 +147,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
         });
 
         this.weekChart1.setData([]);
-        this.getWeekDataBreakdown(date.toJSON(), 7).then(data => {
+        this.getWeekDataBreakdown(date.toJSON(), 10).then(data => {
             this.weekChart1.setData(data);
         });
 
