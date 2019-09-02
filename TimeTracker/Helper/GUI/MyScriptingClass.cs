@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -187,7 +188,7 @@ namespace TimeTracker.Helper
                 DarkMode = Properties.Settings.Default.DarkMode,
                 HotkeyDisabled = Properties.Settings.Default.HotkeyDisabled,
                 Hotkeys = Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
-                PlayNotificationSound = Properties.Settings.Default.PlayNotificationSound                
+                PlayNotificationSound = Properties.Settings.Default.PlayNotificationSound
             };
 
             string Json = JsonConvert.SerializeObject(Settings);
@@ -216,12 +217,60 @@ namespace TimeTracker.Helper
             return JsonConvert.SerializeObject(Properties.Settings.Default.DarkMode);
         }
 
-        public string SetTimeNotificationVisible(long setTimeNotificationVisible)
+        public string SetPlayNotificationSound(bool playNotificationSound)
         {
-            Properties.Settings.Default.TimeNotificationVisible = setTimeNotificationVisible;
+            Properties.Settings.Default.PlayNotificationSound = playNotificationSound;
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.PlayNotificationSound);
+        }
+
+        public string SetHotkeyDisabled(bool hotkeyDisabled)
+        {
+            Properties.Settings.Default.HotkeyDisabled = hotkeyDisabled;
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.HotkeyDisabled);
+        }
+
+        public string SetOfflineTracking(bool offlineTracking)
+        {
+            Properties.Settings.Default.OfflineTracking = offlineTracking;
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.OfflineTracking);
+        }
+
+        public string SetTimeNotificationVisible(string timeNotificationVisible)
+        {
+            Properties.Settings.Default.TimeNotificationVisible = Int32.Parse(timeNotificationVisible);
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeNotificationVisible);
+        }
+
+        public string SetTimeBeforeAskingAgain(string timeBeforeAskingAgain)
+        {
+            Properties.Settings.Default.TimeBeforeAskingAgain = Int32.Parse(timeBeforeAskingAgain);
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.TimeBeforeAskingAgain);
+        }
+
+        public string SetTimeSinceAppLastUsed(string timeSinceAppLastUsed)
+        {
+            Properties.Settings.Default.TimeSinceAppLastUsed = Int32.Parse(timeSinceAppLastUsed);
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.TimeSinceAppLastUsed);
+        }
+
+        public string SetHotkeys(List<Object> hotkeys)
+        {
+            Properties.Settings.Default.Hotkeys = hotkeys.Cast<int>().Select(k => KeyInterop.KeyFromVirtualKey(k)).ToList();
+            Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList());
         }
 
         public string GetTrackingSettings()
@@ -238,77 +287,146 @@ namespace TimeTracker.Helper
             return Json;
         }
 
-        public void SetTrackingSettings(IDictionary<string, object> settings)
+        public string SetBlacklist(List<Object> blacklist)
         {
-            Properties.Settings.Default.OfflineTracking = (bool)settings["OfflineTracking"];
-            List<Object> Blacklist = settings["Blacklist"] as List<Object>;
             StringCollection stringCollection = new StringCollection();
-            foreach (string item in Blacklist.Cast<string>())
+            foreach (string item in blacklist.Cast<string>())
             {
                 stringCollection.Add(item);
             }
             Properties.Settings.Default.Blacklist = stringCollection;
             Properties.Settings.Default.Save();
+
+            return JsonConvert.SerializeObject(Properties.Settings.Default.Blacklist.Cast<string>().ToList());
         }
 
-        /*public string GetOverviewData(int value)
+        /// <summary>
+        /// Opens a browser window poiting to the provided link
+        /// </summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event (contains the url to which the browser should point)</param>
+        public void OpenUrl(string url)
         {
-            string Result = "{";
+            Process.Start(url);
+        }
 
-            DateTime DayInQuestion = DateTime.Today.AddDays(value);
-            DateTime DayInQuestionAfter = DayInQuestion.AddDays(1);
+        public string GetActivities()
+        {
+            List<string> Activities = StorageHandler.GetActivitiesByLambda(a => true).GroupBy(a => a.Name).Select(g => g.Key).ToList();
+            return JsonConvert.SerializeObject(Activities);
+        }
 
-            DateTime StartOfWeek = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
-            DateTime StartOfNextWeek = StartOfWeek.AddDays(7);
+        public string GetReportData1(List<Object> activities, string start, string end, int zoom)
+        {
+            List<string> Activities = activities.Cast<string>().ToList();
+            DateTime StartPeriod = DateTime.Parse(start).Date;
+            DateTime EndPeriod = DateTime.Parse(end).Date;
 
-            /////// Compute colors //////
-            Dictionary<string, string> Colors = new ColorHandler().getColorDictionary(StorageHandler.GetLastActivitiesGrouped().Select(g => g.Key).ToList());
-            new ColorHandler().getColorDictionary(StorageHandler.GetLastestWindowsGrouped().Select(g => g.Key).ToList(), false).ToList()
-                .ForEach(g => {
-                    if (!Colors.ContainsKey(g.Key))
-                        Colors.Add(g.Key, g.Value);
-                });
+            List<(DateTime, Dictionary<string, double>)> Days = new List<(DateTime, Dictionary<string, double>)>();
 
-            string ColorsString = Colors.Aggregate("", (acc, kv) => acc += "\"" + kv.Key + "\":\"" + kv.Value + "\",");
-            ColorsString = ColorsString.Remove(ColorsString.Length - 1); // Remove the last comma
-
-            Result += "\"colors\": {" + ColorsString + "},";
-
-
-            /////// Load the data for the timeline //////
-            List<Activity> TodayActivities = StorageHandler.GetActivitiesByLambda(r => r.To >= DayInQuestion && r.From < DayInQuestionAfter);
-
-            // Check if the current activity should also be shown in the graph.
-            if (AppStateTracker.CurrentActivity != null && (DayInQuestionAfter > DateTime.Now && DayInQuestion < DateTime.Now))
-                TodayActivities.Add(AppStateTracker.CurrentActivity);
-
-            List<Event> Events = TodayActivities.Select(ta => new Event
+            foreach (DateTime Day in EachDay(StartPeriod, EndPeriod))
             {
-                From = Math.Round(ta.From >= DayInQuestion ? ta.From.Subtract(DayInQuestion).TotalHours : 0, 2),
-                To = Math.Round((ta.From >= DayInQuestion ? ta.From.Subtract(DayInQuestion).TotalHours : 0) + (ta.To == null || ta.To >= DayInQuestionAfter ? (DayInQuestion == DateTime.Today ? DateTime.Now : DayInQuestionAfter) : (DateTime)ta.To).Subtract(ta.From >= DayInQuestion ? ta.From : DayInQuestion).TotalHours, 2),
-                Name = ta.Name
-            }).OrderBy(ta => ta.From).ToList();
+                DateTime Start = Day;
+                DateTime End = Day.AddDays(1);
+
+                List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= Start && r.From < End && Activities.Contains(r.Name)).Select(aa => new Helper
+                {
+                    Name = aa.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
+                    From = aa.From > Start ? aa.From : Start,
+                    To = (DateTime)aa.To > End ? End : (DateTime)aa.To
+                }).ToList();
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && End >= DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
+                    ActivityHelper.Add(new Helper
+                    {
+                        Name = AppStateTracker.CurrentActivity.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
+                        From = AppStateTracker.CurrentActivity.From > Start ? AppStateTracker.CurrentActivity.From : Start,
+                        To = DateTime.Now
+                    });
+
+                // Compute time between Start and finish of the activity rounding to hours
+                foreach (Helper h in ActivityHelper)
+                {
+                    h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+                }
+
+                Dictionary<string, double> ActivityDict = new Dictionary<string, double>();
+
+                ActivityHelper
+                    .GroupBy(ah => ah.Name)
+                    .ToList()
+                    .ForEach(g =>
+                    {
+                        ActivityDict.Add(g.Key, g.Sum(h => h.Time));
+                    });
+
+                Days.Add((Day.Date, ActivityDict));
+            }
+
+            // construct data
+            List<Bardata> Bardata;
+            if (zoom == 0)
+            {
+                Bardata = Days.Select(d => new Bardata
+                {
+                    Label = d.Item1.ToString("dd.MM"),
+                    Datasets = d.Item2.Select(h => new Dataset
+                    {
+                        Title = h.Key,
+                        Value = h.Value
+                    }).OrderBy(dd => dd.Title).ToList()
+                }).OrderBy(d => d.Label).ToList();
+            } else if(zoom == 1)
+            {
+                Bardata = Days
+                    .GroupBy(d => new {
+                        week = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(d.Item1, CalendarWeekRule.FirstDay, DayOfWeek.Monday),
+                        year = d.Item1.Year
+                    })
+                    .Select(g => new Bardata {
+                        Label = "Week " + (g.Key.week + 1),
+                        Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value)}).OrderBy(d => d.Title).ToList()
+                }).OrderBy(d => d.Label).ToList();
+            } else
+            {
+                Bardata = Days
+                    .GroupBy(d => new {
+                        month = d.Item1.ToString("MMM", CultureInfo.InvariantCulture),
+                        year = d.Item1.Year
+                    })
+                    .Select(g => new Bardata
+                    {
+                        Label = g.Key.month,
+                        Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value) }).OrderBy(d => d.Title).ToList()
+                    }).OrderBy(d => d.Label).ToList();
+            }
+
+            string Json = JsonConvert.SerializeObject(Bardata);
 
             // Add the data as a JSON string to the result
-            Result += "\"overview\":" + CustomJSONSerializer(Events) + ",";
+            return Json;
+        }
 
+        public string GetReportData2(List<Object> activities, string start, string end)
+        {
+            List<string> Activities = activities.Cast<string>().ToList();
+            DateTime StartPeriod = DateTime.Parse(start).Date;
+            DateTime EndPeriod = DateTime.Parse(end).Date;
 
-            ////// Load the data for the left chart //////
-            DateTime MinDate = DateTime.Now.AddDays(-30);
-
-            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartOfWeek && r.From < StartOfNextWeek).Select(aa => new Helper
+            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From < EndPeriod && Activities.Contains(r.Name)).Select(aa => new Helper
             {
                 Name = aa.Name,
-                From = aa.From > StartOfWeek ? aa.From : StartOfWeek,
-                To = (DateTime)aa.To
+                From = aa.From > StartPeriod ? aa.From : StartPeriod,
+                To = (DateTime)aa.To > EndPeriod ? EndPeriod : (DateTime)aa.To
             }).ToList();
 
             // Check if the current activity should also be shown in the graph.
-            if (AppStateTracker.CurrentActivity != null && StartOfNextWeek >= DateTime.Today)
+            if (AppStateTracker.CurrentActivity != null && EndPeriod >= DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
                 ActivityHelper.Add(new Helper
                 {
                     Name = AppStateTracker.CurrentActivity.Name,
-                    From = AppStateTracker.CurrentActivity.From > StartOfWeek ? AppStateTracker.CurrentActivity.From : StartOfWeek,
+                    From = AppStateTracker.CurrentActivity.From > StartPeriod ? AppStateTracker.CurrentActivity.From : StartPeriod,
                     To = DateTime.Now
                 });
 
@@ -318,70 +436,164 @@ namespace TimeTracker.Helper
                 h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
             }
 
+            Dictionary<string, Dictionary<string, double>> Grouping = ActivityHelper
+                .GroupBy(ah => ah.Name.Split(new string[] { " - " }, StringSplitOptions.None).First())
+                .ToDictionary(g => g.Key, g => g
+                    .GroupBy(a => a.Name.Split(new string[] { " - " }, StringSplitOptions.None).Last())
+                    .ToDictionary(gg => gg.Key, gg => gg.Sum(h => h.Time))
+                );
+
+            // Extract labels and titles
+            List<Bardata> Bardata = Grouping
+                .OrderBy(g => g.Key)
+                .Select(g => new Bardata
+                {
+                    Label = g.Key,
+                    Datasets = g.Value.Select(d => new Dataset
+                    {
+                        Title = d.Key,
+                        Value = d.Value
+                    }).OrderBy(d => d.Title).ToList()
+                }).OrderBy(d => d.Label).ToList();
+
+            string Json = JsonConvert.SerializeObject(Bardata);
+
             // Add the data as a JSON string to the result
-            Result += "\"activities\":" + CustomJSONSerializer(
-                ActivityHelper
-                .GroupBy(h => h.Name.Split(new string[] { " - " }, StringSplitOptions.None).First())
-                .Where(g => g.Sum(h => h.Time) >= 0.1)
-                .Select(g => new Helper2
+            return Json;
+
+        }
+
+            /*public string GetOverviewData(int value)
+            {
+                string Result = "{";
+
+                DateTime DayInQuestion = DateTime.Today.AddDays(value);
+                DateTime DayInQuestionAfter = DayInQuestion.AddDays(1);
+
+                DateTime StartOfWeek = DateTime.Today.AddDays(value).StartOfWeek(DayOfWeek.Monday);
+                DateTime StartOfNextWeek = StartOfWeek.AddDays(7);
+
+                /////// Compute colors //////
+                Dictionary<string, string> Colors = new ColorHandler().getColorDictionary(StorageHandler.GetLastActivitiesGrouped().Select(g => g.Key).ToList());
+                new ColorHandler().getColorDictionary(StorageHandler.GetLastestWindowsGrouped().Select(g => g.Key).ToList(), false).ToList()
+                    .ForEach(g => {
+                        if (!Colors.ContainsKey(g.Key))
+                            Colors.Add(g.Key, g.Value);
+                    });
+
+                string ColorsString = Colors.Aggregate("", (acc, kv) => acc += "\"" + kv.Key + "\":\"" + kv.Value + "\",");
+                ColorsString = ColorsString.Remove(ColorsString.Length - 1); // Remove the last comma
+
+                Result += "\"colors\": {" + ColorsString + "},";
+
+
+                /////// Load the data for the timeline //////
+                List<Activity> TodayActivities = StorageHandler.GetActivitiesByLambda(r => r.To >= DayInQuestion && r.From < DayInQuestionAfter);
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && (DayInQuestionAfter > DateTime.Now && DayInQuestion < DateTime.Now))
+                    TodayActivities.Add(AppStateTracker.CurrentActivity);
+
+                List<Event> Events = TodayActivities.Select(ta => new Event
+                {
+                    From = Math.Round(ta.From >= DayInQuestion ? ta.From.Subtract(DayInQuestion).TotalHours : 0, 2),
+                    To = Math.Round((ta.From >= DayInQuestion ? ta.From.Subtract(DayInQuestion).TotalHours : 0) + (ta.To == null || ta.To >= DayInQuestionAfter ? (DayInQuestion == DateTime.Today ? DateTime.Now : DayInQuestionAfter) : (DateTime)ta.To).Subtract(ta.From >= DayInQuestion ? ta.From : DayInQuestion).TotalHours, 2),
+                    Name = ta.Name
+                }).OrderBy(ta => ta.From).ToList();
+
+                // Add the data as a JSON string to the result
+                Result += "\"overview\":" + CustomJSONSerializer(Events) + ",";
+
+
+                ////// Load the data for the left chart //////
+                DateTime MinDate = DateTime.Now.AddDays(-30);
+
+                List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartOfWeek && r.From < StartOfNextWeek).Select(aa => new Helper
+                {
+                    Name = aa.Name,
+                    From = aa.From > StartOfWeek ? aa.From : StartOfWeek,
+                    To = (DateTime)aa.To
+                }).ToList();
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && StartOfNextWeek >= DateTime.Today)
+                    ActivityHelper.Add(new Helper
+                    {
+                        Name = AppStateTracker.CurrentActivity.Name,
+                        From = AppStateTracker.CurrentActivity.From > StartOfWeek ? AppStateTracker.CurrentActivity.From : StartOfWeek,
+                        To = DateTime.Now
+                    });
+
+                // Compute time between Start and finish of the activity rounding to hours
+                foreach (Helper h in ActivityHelper)
+                {
+                    h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+                }
+
+                // Add the data as a JSON string to the result
+                Result += "\"activities\":" + CustomJSONSerializer(
+                    ActivityHelper
+                    .GroupBy(h => h.Name.Split(new string[] { " - " }, StringSplitOptions.None).First())
+                    .Where(g => g.Sum(h => h.Time) >= 0.1)
+                    .Select(g => new Helper2
+                    {
+                        Name = g.Key,
+                        Value = g.Sum(h => h.Time)
+                    })
+                    .ToList()) + ",";
+
+
+                ////// Load the data for the right chart //////
+                List<Window> Windows = StorageHandler.GetWindowsByLambda(r => r.To >= DayInQuestion && r.From <= DayInQuestionAfter);
+
+                List<Helper> Helper = TodayActivities.Select(ta => new Helper
+                {
+                    From = ta.From > DayInQuestion ? ta.From : DayInQuestion,
+                    To = ta.To ?? (DayInQuestionAfter > DateTime.Now ? DateTime.Now : DayInQuestionAfter),
+                    Name = ta.Name
+                }).ToList();
+
+                List<Helper> WindowHelper = new List<Helper>();
+
+                foreach (Helper h in Helper)
+                {
+                    WindowHelper.AddRange(
+                    Windows
+                        .Where(r => r.To >= h.From && r.From <= h.To)
+                        .Select(r => new Helper
+                        {
+                            Name = r.Name,
+                            From = r.From > h.From ? r.From : h.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = (DateTime)(r.To > h.To ? h.To : r.To) // If my window ended after the End of the activity only measure until the End of the activity
+                        }));
+
+                    // Check if the current window should also be shown in the graph.
+                    if (AppStateTracker.CurrentWindow != null)
+                        WindowHelper.Add(new Helper
+                        {
+                            Name = AppStateTracker.CurrentWindow.Name,
+                            From = AppStateTracker.CurrentWindow.From < h.From ? h.From : AppStateTracker.CurrentWindow.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = h.To
+                        });
+                }
+
+                // Compute time between Start and finish of the window rounding to hours
+                foreach (Helper h in WindowHelper)
+                {
+                    h.Time = Math.Max((h.To - h.From).TotalHours, 0);
+                }
+
+                // Add the data as a JSON string to the result
+                Result += "\"windows\":" + CustomJSONSerializer(WindowHelper.GroupBy(h => h.Name).Where(g => g.Sum(h => h.Time) >= 0.1).Select(g => new Helper2
                 {
                     Name = g.Key,
-                    Value = g.Sum(h => h.Time)
-                })
-                .ToList()) + ",";
+                    Value = Math.Round(g.Sum(h => h.Time), 2)
+                }).ToList()) + "}";
 
+                return Result;
+            }*/
 
-            ////// Load the data for the right chart //////
-            List<Window> Windows = StorageHandler.GetWindowsByLambda(r => r.To >= DayInQuestion && r.From <= DayInQuestionAfter);
-
-            List<Helper> Helper = TodayActivities.Select(ta => new Helper
-            {
-                From = ta.From > DayInQuestion ? ta.From : DayInQuestion,
-                To = ta.To ?? (DayInQuestionAfter > DateTime.Now ? DateTime.Now : DayInQuestionAfter),
-                Name = ta.Name
-            }).ToList();
-
-            List<Helper> WindowHelper = new List<Helper>();
-
-            foreach (Helper h in Helper)
-            {
-                WindowHelper.AddRange(
-                Windows
-                    .Where(r => r.To >= h.From && r.From <= h.To)
-                    .Select(r => new Helper
-                    {
-                        Name = r.Name,
-                        From = r.From > h.From ? r.From : h.From, // If my window started before the Start of the activity only measure from the beginning of the activity
-                        To = (DateTime)(r.To > h.To ? h.To : r.To) // If my window ended after the End of the activity only measure until the End of the activity
-                    }));
-
-                // Check if the current window should also be shown in the graph.
-                if (AppStateTracker.CurrentWindow != null)
-                    WindowHelper.Add(new Helper
-                    {
-                        Name = AppStateTracker.CurrentWindow.Name,
-                        From = AppStateTracker.CurrentWindow.From < h.From ? h.From : AppStateTracker.CurrentWindow.From, // If my window started before the Start of the activity only measure from the beginning of the activity
-                        To = h.To
-                    });
-            }
-
-            // Compute time between Start and finish of the window rounding to hours
-            foreach (Helper h in WindowHelper)
-            {
-                h.Time = Math.Max((h.To - h.From).TotalHours, 0);
-            }
-
-            // Add the data as a JSON string to the result
-            Result += "\"windows\":" + CustomJSONSerializer(WindowHelper.GroupBy(h => h.Name).Where(g => g.Sum(h => h.Time) >= 0.1).Select(g => new Helper2
-            {
-                Name = g.Key,
-                Value = Math.Round(g.Sum(h => h.Time), 2)
-            }).ToList()) + "}";
-
-            return Result;
-        }*/
-
-        private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+            private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
             for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
                 yield return day;

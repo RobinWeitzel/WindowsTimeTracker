@@ -225,9 +225,10 @@
     <Compile Include="Helper\GUI\Helper3.cs" />
     <Compile Include="Helper\GUI\Library.cs" />
     <Compile Include="Helper\GUI\MyScriptingClass.cs" />
+    <Compile Include="Helper\Models\Bardata2.cs" />
     <Compile Include="Helper\Models\TrackingSettings.cs" />
     <Compile Include="Helper\Models\Dataset.cs" />
-    <Compile Include="Helper\Models\BarData.cs" />
+    <Compile Include="Helper\Models\Bardata.cs" />
     <Compile Include="Helper\Models\Settings.cs" />
     <Compile Include="Helper\Models\Timeline.cs" />
     <Compile Include="Helper\Models\TimelineValue.cs" />
