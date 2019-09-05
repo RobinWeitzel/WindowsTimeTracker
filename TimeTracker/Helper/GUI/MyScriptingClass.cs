@@ -125,7 +125,7 @@ namespace TimeTracker.Helper
                     Value = h.Value,
                     Color = AppStateTracker.ColorAssingments[h.Key]
                 }).OrderBy(dd => dd.Title).ToList()
-            }).OrderBy(d => d.Label).ToList();
+            }).ToList();
 
             string Json = JsonConvert.SerializeObject(new { value = Bardata, counter });
 

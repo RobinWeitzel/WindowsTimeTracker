@@ -67,7 +67,7 @@ namespace TimeTracker
             // Attaches listeners
             NotifyIcon.DoubleClick += (s, args) => ASDL.ChangeActivity();
             MachineStateListener.StateChanged += ListenerEvent;
-            AppStateTracker.ChangeContextMenu += (s, args) => NotifyIcon.ContextMenuStrip.Items[1].Text = ((bool)args.Value) ? "Unpause" : "Pause";
+            AppStateTracker.ChangeContextMenu += (s, args) => NotifyIcon.ContextMenuStrip.Items[2].Text = ((bool)args.Value) ? "Unpause" : "Pause";
             ASDL.ShowActivityDialog += CreateActivityDialog;
             ASDL.ShowAwayFromPCDialog += CreateAwayFromPCDialog;
 
@@ -136,12 +136,12 @@ namespace TimeTracker
         {
             if (AppStateTracker.Disturb)
             {
-                NotifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
+                NotifyIcon.ContextMenuStrip.Items[3].Text = "Disable \"Do not disturb\"";
                 AppStateTracker.Disturb = false;
             }
             else
             {
-                NotifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
+                NotifyIcon.ContextMenuStrip.Items[3].Text = "Do not disturb";
                 AppStateTracker.Disturb = true;
             }
         }
