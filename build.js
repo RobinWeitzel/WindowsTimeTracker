@@ -41,13 +41,13 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     console.log("LOADING STYLES:");
     console.log(styles.length + " styles found.");
     for (let i = 0; i < styles.length; i++) {
-        try{
+        try {
             const match = styles[i];
             const href = match.match(/href=["|'](.*?)["|']/)[1];
 
             let content;
 
-            console.log("Loading style " + (i+1) +"/" + (styles.length) + " from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
+            console.log("Loading style " + (i + 1) + "/" + (styles.length) + " from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
             if (href.startsWith("http")) { // file must be downloaded from the web
                 content = await get(href);
             } else { // local file
@@ -58,17 +58,17 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             if (content.charCodeAt(0) === 0xFEFF) {
                 content = content.substr(1);
             }
-            
+
             const start = html.search(new RegExp(escapeRegExp(match)));
-            
+
             const replacement = `<style>\n${content}\n</style>`;
-            
+
             html = html.substr(0, start) + replacement + html.substr(start + match.length);
-            
-            console.log("Finished loading style " + (i+1) +"/" + (styles.length) + ".");
-        } catch(e) {
+
+            console.log("Finished loading style " + (i + 1) + "/" + (styles.length) + ".");
+        } catch (e) {
             errors++;
-            console.error("Could not load style " + (i+1) +"/" + (styles.length) + ".");
+            console.error("Could not load style " + (i + 1) + "/" + (styles.length) + ".");
         }
     }
     console.log("");
@@ -77,13 +77,13 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     console.log("LOADING SCRIPTS:");
     console.log(scripts.length + " scripts found.");
     for (let i = 0; i < scripts.length; i++) {
-        try{
+        try {
             const match = scripts[i];
             const href = match.match(/src=["|'](.*?)["|']/)[1];
 
             let content;
 
-            console.log("Loading script " + (i+1) +"/" + (scripts.length) + " from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
+            console.log("Loading script " + (i + 1) + "/" + (scripts.length) + " from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
             if (href.startsWith("http")) { // file must be downloaded from the web
                 content = await get(href);
             } else { // local file
@@ -101,27 +101,27 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
             html = html.substr(0, start) + replacement + html.substr(start + match.length);
 
-            console.log("Finished loading script " + (i+1) +"/" + (scripts.length) + ".");
-        } catch(e) {
+            console.log("Finished loading script " + (i + 1) + "/" + (scripts.length) + ".");
+        } catch (e) {
             errors++;
-            console.error("Could not load script " + (i+1) +"/" + (scripts.length) + ".");
+            console.error("Could not load script " + (i + 1) + "/" + (scripts.length) + ".");
         }
     }
 
     // Minify
-    /*html = minify(html, {
+    const minHtml = minify(html, {
         minifyCSS: true,
         minifyJS: true,
-        collapseWhitespace: true,
-        collapseInlineTagWhitespace: true,
+        collapseWhitespace: false,
+        collapseInlineTagWhitespace: false,
         html5: true,
-        removeComments: true,
+        removeComments: false,
 
-    });*/
+    });
 
     // Output file
     try {
-        if(!fs.existsSync('dist'))
+        if (!fs.existsSync('dist'))
             fs.mkdirSync('dist');
         fs.writeFile("dist/index.html", html, function (err) {
             if (err) {
@@ -130,17 +130,25 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
             console.log("Saved file");
 
-            if(errors === 0) {
-                console.log("--- BUILD FINISHED SUCCESSFULLY ---");
-            } else {
-                console.log("--- BUILD FINISHED WITH ERRORS ---");
-            }
+            fs.writeFile("dist/index.min.html", minHtml, function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+
+                console.log("Saved minified file");
+
+                if (errors === 0) {
+                    console.log("--- BUILD FINISHED SUCCESSFULLY ---");
+                } else {
+                    console.log("--- BUILD FINISHED WITH ERRORS ---");
+                }
+            });
         });
-    } catch(e) {
+    } catch (e) {
         errors++;
         console.error("Could not save file.");
 
-        if(errors === 0) {
+        if (errors === 0) {
             console.log("--- BUILD FINISHED SUCCESSFULLY ---");
         } else {
             console.log("--- BUILD FINISHED WITH ERRORS ---");

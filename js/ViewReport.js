@@ -2,6 +2,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
     constructor() {
         super();
 
+        this.counters = [0, 0, 0];
         this.state.scroll = 0;
         this.state.zoomLevel = 0;
         this.state.registerDomChangeListener("scroll", val => {
@@ -19,12 +20,19 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
         this.getActivities().then(activities => {
             this.state.activities = activities.map(b => {return {name: b, active: true}});
         });
+
         this.state.combobox = "";
 
         this.state.registerDomChangeListener('activities', val => {
             this.state.header = val.filter(a => a.name.startsWith(this.state.combobox) && !a.active).length === 0;
-            this.loadNewData1();
-            this.loadNewData2();
+        });
+
+        this.state.registerDomChangeListener('comboboxActive', val => {
+            if(!val) { // Combobox is closed
+                this.state.combobox = "";
+                this.loadNewData1();
+                this.loadNewData2();
+            }
         });
 
         this.state.registerDomChangeListener('combobox', val => {
@@ -89,8 +97,12 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getReportData1(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), zoomLevel).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.getReportData1(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), zoomLevel, ++this.counters[0]).then(result => {
+                result = JSON.parse(result);
+                if(this.counters[0] !== result.counter)
+                    reject();
+                else
+                    resolve(result.value);
             });
         });
     }
@@ -100,13 +112,19 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getReportData2(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON()).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.getReportData2(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), ++this.counters[1]).then(result => {
+                result = JSON.parse(result);
+                if(this.counters[1] !== result.counter)
+                    reject();
+                else
+                    resolve(result.value);
             });
         });
     }
 
     onShow() {
+        if(!this.counters)
+            this.counters = [0, 0, 0];
         this.chart1 = new TimeCharts.Barchart("#report_chart1", {
             data: [],
             padding: {
@@ -195,14 +213,14 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             }
                 
             this.chart1.setData(data);
-        });
+        }).catch(e => console.log("Old data"));
     }
 
     loadNewData2() {
         this.chart2.setData([]);
         this.getChart2Data(this.state.activities, this.state.start, this.state.end).then(data => {
             this.chart2.setData(data);
-        });
+        }).catch(e => console.log("Old data"));
     }
 
 });
