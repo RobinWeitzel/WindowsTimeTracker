@@ -135,10 +135,10 @@ namespace TimeTracker.Helper
 
         public string GetWeekSumData(string date, int daysBack, int counter)
         {
-            DateTime EndPeriod = DateTime.Parse(date).Date;
+            DateTime EndPeriod = DateTime.Parse(date).Date.AddDays(1); // To include the current day
             DateTime StartPeriod = EndPeriod.AddDays(-daysBack);
 
-            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From < EndPeriod).Select(aa => new Helper
+            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod).Select(aa => new Helper
             {
                 Name = aa.Name,
                 From = aa.From > StartPeriod ? aa.From : StartPeriod,
@@ -426,10 +426,10 @@ namespace TimeTracker.Helper
         public string GetReportData2(List<Object> activities, string start, string end, int counter)
         {
             List<string> Activities = activities.Cast<string>().ToList();
-            DateTime StartPeriod = DateTime.Parse(start).Date;
+            DateTime StartPeriod = DateTime.Parse(start).Date.AddDays(1);
             DateTime EndPeriod = DateTime.Parse(end).Date;
 
-            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From < EndPeriod && Activities.Contains(r.Name)).Select(aa => new Helper
+            List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod && Activities.Contains(r.Name)).Select(aa => new Helper
             {
                 Name = aa.Name,
                 From = aa.From > StartPeriod ? aa.From : StartPeriod,
