@@ -55,69 +55,111 @@ namespace TimeTracker
             Colors = new Dictionary<string, List<string>>();
 
             // Blue
-            Colors.Add("#0063B1", new List<string>
+            Colors.Add("#7cd6fd", new List<string>
             {
-                "#b3ddff",
-                "#80c7ff",
-                "#4db0ff",
-                "#1a9aff",
-                "#0080e6",
-                "#0064b3"
-            });
-
-            // Green
-            Colors.Add("#aaf38c", new List<string>
-            {
-                "#ccf8ba",
-                "#aaf38c",
-                "#88ee5d",
-                "#65e92f",
-                "#4cd016",
-                "#3ba211"
-            });
-
-            // Red
-            Colors.Add("#E81123", new List<string>
-            {
-                "#fab8bd",
-                "#f68891",
-                "#f35966",
-                "#ef293a",
-                "#d61020",
-                "#a60c19"
-            });
-
-            // Torquis
-            Colors.Add("#0becc8", new List<string>
-            {
-                "#b6fcf0",
-                "#85f9e7",
-                "#54f7dd",
-                "#24f5d3",
-                "#0adbba",
-                "#08ab91"
+                "#81d8fd",
+                "#4fc8fc",
+                "#1db8fc",
+                "#039fe2",
             });
 
             // Lila
-            Colors.Add("#b710a2", new List<string>
+            Colors.Add("#5e64ff", new List<string>
             {
-                "#f9b9f1",
-                "#f58ae7",
-                "#f15bde",
-                "#ed2cd4",
-                "#d312bb",
-                "#a40e91"
+                "#8084ff",
+                "#4d53ff",
+                "#1a22ff",
+                "#0009e6"
+            });
+
+            // Lila 2
+            Colors.Add("#743ee2", new List<string>
+            {
+                "#af90ee",
+                "#8f64e8",
+                "#6f37e1",
+                "#561ec8"
+            });
+
+            // Red
+            Colors.Add("#ff5858", new List<string>
+            {
+                "#ff8080",
+                "#ff4d4d",
+                "#ff1a1a",
+                "#e60000"
             });
 
             // Orange
-            Colors.Add("#FF8C00", new List<string>
+            Colors.Add("#ffa00a", new List<string>
             {
-                "#ffddb3",
-                "#ffc680",
-                "#ffaf4d",
-                "#ff981a",
-                "#e67e00",
-                "#b36200"
+                "#ffce80",
+                "#ffba4d",
+                "#ffa61a",
+                "#e68d00"
+            });
+
+            // Yellow
+            Colors.Add("#feef72", new List<string>
+            {
+                "#fef180",
+                "#feeb4e",
+                "#fde51b",
+                "#e4cc02"
+            });
+
+            // Green
+            Colors.Add("#28a745", new List<string>
+            {
+                "#98e6aa",
+                "#6fdd88",
+                "#46d366",
+                "#2cb94d"
+            });
+
+            // Green 2
+            Colors.Add("#98d85b", new List<string>
+            {
+                "#bee798",
+                "#a4dd6f",
+                "#8bd346",
+                "#71b92c"
+            });
+
+            // Lila 3
+            Colors.Add("#b554ff", new List<string>
+            {
+                "#c880ff",
+                "#b24dff",
+                "#9c1aff",
+                "#8200e6"
+            });
+
+            // Pink
+            Colors.Add("#ffa3ef", new List<string>
+            {
+                "#ff80e9",
+                "#ff4de0",
+                "#ff1ad7",
+                "#e600be"
+            });
+
+            // Blue 2
+            Colors.Add("#bdd3e6", new List<string>
+            {
+                "#a3c1dc",
+                "#7ea9ce",
+                "#5990c0",
+                "#3f77a6"
+            });
+
+            // Gray
+            Colors.Add("#b8c2cc", new List<string>
+            {
+                "#b5bfca",
+                "#97a6b4",
+                "#798c9f",
+                "#607386"
             });
 
             AssignColors();
@@ -247,15 +289,8 @@ namespace TimeTracker
         /// </summary>
         public void AssignColors()
         {
-            List<string> ColorsList = new List<string>
-            {
-                "#0063B1",
-                "#aaf38c",
-                "#E81123",
-                "#0becc8",
-                "#b710a2",
-                "#FF8C00"
-            };
+            List<string> ColorsList = Colors.Keys.ToList();
+
             int Counter = 0;
             Dictionary<string, int> Helper = new Dictionary<string, int>();
             Dictionary<string, string> Result = new Dictionary<string, string>();
@@ -285,7 +320,7 @@ namespace TimeTracker
                     if (!Result.ContainsKey(name))
                     {
                         int Index = Helper[ActivityCategory];
-                        Result.Add(name, Colors[Color][Index % 6]); // 6 is the length of the list inside the dictionary
+                        Result.Add(name, Colors[Color][Index % Colors.Min(c => c.Value.Count)]);
                         Helper[ActivityCategory] = Index + 1;
                     }
                 });

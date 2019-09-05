@@ -325,7 +325,7 @@ namespace TimeTracker.Helper
             return JsonConvert.SerializeObject(Activities);
         }
 
-        public string GetReportData1(List<Object> activities, string start, string end, int zoom)
+        public string GetReportData1(List<Object> activities, string start, string end, int zoom, int counter)
         {
             List<string> Activities = activities.Cast<string>().ToList();
             DateTime StartPeriod = DateTime.Parse(start).Date;
@@ -417,13 +417,13 @@ namespace TimeTracker.Helper
                     }).OrderBy(d => d.Label).ToList();
             }
 
-            string Json = JsonConvert.SerializeObject(Bardata);
+            string Json = JsonConvert.SerializeObject(new { value = Bardata, counter });
 
             // Add the data as a JSON string to the result
             return Json;
         }
 
-        public string GetReportData2(List<Object> activities, string start, string end)
+        public string GetReportData2(List<Object> activities, string start, string end, int counter)
         {
             List<string> Activities = activities.Cast<string>().ToList();
             DateTime StartPeriod = DateTime.Parse(start).Date;
@@ -472,7 +472,7 @@ namespace TimeTracker.Helper
                     }).OrderBy(d => d.Title).ToList()
                 }).OrderBy(d => d.Label).ToList();
 
-            string Json = JsonConvert.SerializeObject(Bardata);
+            string Json = JsonConvert.SerializeObject(new { value = Bardata, counter });
 
             // Add the data as a JSON string to the result
             return Json;
