@@ -145,8 +145,10 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             draggable: true,
             max: 12,
             onScroll: e => {
-                const newVal = Math.min(Math.max(0, this.state.scroll + e.deltaY), 700);
-                this.state.scroll = newVal;
+                if(this.chart1.data.length > 0) {
+                    const newVal = Math.min(Math.max(0, this.state.scroll + e.deltaY), 700);
+                    this.state.scroll = newVal;
+                }
             }
         });     
 
