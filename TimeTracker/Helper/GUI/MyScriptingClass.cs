@@ -119,7 +119,7 @@ namespace TimeTracker.Helper
                     }).ToList();
 
                     // Check if the current activity should also be shown in the graph.
-                    if (AppStateTracker.CurrentActivity != null && End >= DateTime.Today)
+                    if (AppStateTracker.CurrentActivity != null && StartPeriod == DateTime.Today)
                         ActivityHelper.Add(new Helper
                         {
                             Name = AppStateTracker.CurrentActivity.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
@@ -188,9 +188,11 @@ namespace TimeTracker.Helper
             await Task.Factory.StartNew(() =>
             {
                 GetWeekSumDataThread = Thread.CurrentThread;
-
-                DateTime EndPeriod = DateTime.Parse(date).Date.AddDays(1); // To include the current day
-                DateTime StartPeriod = EndPeriod.AddDays(-daysBack);
+                DateTime Date = DateTime.Parse(date);
+                int DayOfWeek = (int)Date.DayOfWeek;
+                List<int> Mapping = new List<int> { 7, 1, 2, 3, 4, 5, 6 };
+                DateTime EndPeriod = Date.AddDays(7 - Mapping[DayOfWeek]);
+                DateTime StartPeriod = Date.AddDays(-Mapping[DayOfWeek]);
 
                 List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod).Select(aa => new Helper
                 {
@@ -200,7 +202,7 @@ namespace TimeTracker.Helper
                 }).ToList();
 
                 // Check if the current activity should also be shown in the graph.
-                if (AppStateTracker.CurrentActivity != null && EndPeriod >= DateTime.Today)
+                if (AppStateTracker.CurrentActivity != null && EndPeriod == DateTime.Today)
                     ActivityHelper.Add(new Helper
                     {
                         Name = AppStateTracker.CurrentActivity.Name,
@@ -423,7 +425,7 @@ namespace TimeTracker.Helper
                     }).ToList();
 
                     // Check if the current activity should also be shown in the graph.
-                    if (AppStateTracker.CurrentActivity != null && End >= DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
+                    if (AppStateTracker.CurrentActivity != null && Start == DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
                         ActivityHelper.Add(new Helper
                         {
                             Name = AppStateTracker.CurrentActivity.Name.Split(new string[] { " - " }, StringSplitOptions.None).First(),
@@ -454,7 +456,7 @@ namespace TimeTracker.Helper
                 List<Bardata> Bardata;
                 if (zoom == 0)
                 {
-                    Bardata = Days.Select(d => new Bardata
+                    Bardata = Days.OrderBy(d => d.Item1).Select(d => new Bardata
                     {
                         Label = d.Item1.ToString("dd.MM"),
                         Datasets = d.Item2.Select(h => new Dataset
@@ -463,7 +465,7 @@ namespace TimeTracker.Helper
                             Value = h.Value,
                             Color = AppStateTracker.ColorAssingments[h.Key]
                         }).OrderBy(dd => dd.Title).ToList()
-                    }).OrderBy(d => d.Label).ToList();
+                    }).ToList();
                 }
                 else if (zoom == 1)
                 {
