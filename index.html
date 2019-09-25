@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="css/microsoft.css">
 
     <!-- SimpleViewJs -->
-    <script src="https://unpkg.com/the-simple-framework@1.1.7/the-simple-framework.js"></script>
+    <script src="https://unpkg.com/the-simple-framework@1.1.8/the-simple-framework.js"></script>
 
     <!-- Main Javascript  -->
     <script src="js/main.js"></script>
@@ -145,16 +145,16 @@
         <tsf-view-daily class="content chart-content" tsf-if="this.display === 'ViewDaily'" tsf-if-display="grid">
             <div id="day_picker_container">
                 <div class="day_placeholder"></div>
-                <div id="month_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftMonths(-1)">
+                <div id="month_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(-7)">
                     <i class="fas fa-angle-double-left" style="color: inherit"></i>
                 </div>
-                <div id="day_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(-5)">
+                <div id="day_back" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(-1)">
                     <i class="fas fa-angle-left" style="color: inherit"></i>
                 </div>
                 <!-- Has to be exactly here, otherwise wont work for positioning! -->
                 <div id="day_picker_dummy_container">
                     <div id="day_picker_addition">
-                        <button id="button_to_today" class="standard_button mini">
+                        <button id="button_to_today" class="standard_button mini" tsf-bind-function-click="this.shiftToday">
                             <!-- <i class="fas fa-crosshairs"></i> -->
                             <i class="fas fa-calendar-day" style="margin-right: 10px;"></i>
                             Today
@@ -163,16 +163,16 @@
                     <!-- Because the datepicker needs an element to cling onto -->
                     <div id="day_picker_dummy_field" class="lightpick__no_shadow"></div>
                 </div>
-                <div id="day_picker" tsf-for-of="day of days">
+                <div id="day_picker" tsf-for-of="day of this.days">
                     <div tsf-html="local.day" tsf-html-render="this.dayRender"
-                        tsf-bind-boolean-attribute-center="local.day.index === 2"
+                        tsf-bind-boolean-attribute-center="local.day:index === 2"
                         tsf-bind-function-click="this.dayClick(local.day)" class="day">
                     </div>
                 </div>
-                <div id="day_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(5)">
+                <div id="day_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(1)">
                     <i class="fas fa-angle-right" style="color: inherit"></i>
                 </div>
-                <div id="month_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftMonths(1)">
+                <div id="month_forward" class="day_picker_navigator" tsf-bind-function-click="this.shiftDays(7)">
                     <i class="fas fa-angle-double-right" style="color: inherit"></i>
                 </div>
                 <div class="day_placeholder"></div>
@@ -230,13 +230,13 @@
                                 <th>App Name</th>
                             </tr>
                         </thead>
-                        <tbody tsf-for-of="item of blacklist" id="blacklist-items">
-                            <tr tsf-bind-function-click="this.rowClick(local.item.index)"
-                                tsf-bind-class-active="local.item['active']">
+                        <tbody tsf-for-of="item of this.blacklist" id="blacklist-items">
+                            <tr tsf-bind-function-click="this.rowClick(local.item:index)"
+                                tsf-bind-class-active="local.item.active">
                                 <td>
                                     <div class="table-mark"></div>
                                 </td>
-                                <td tsf-html="local.item['name']"></td>
+                                <td tsf-html="local.item.name"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -323,14 +323,14 @@
                                     <th>Select Visible</th>
                                 </tr>
                             </thead>
-                            <tbody tsf-for-of="item of activities">
-                                <tr tsf-if="local.item['name']['startsWith'](this.combobox)" tsf-if-display="flex"
-                                    tsf-bind-function-click="this.rowClick(local.item.index)"
-                                    tsf-bind-class-active="local.item['active']">
+                            <tbody tsf-for-of="item of this.activities">
+                                <tr tsf-if="local.item.name.startsWith(this.combobox)" tsf-if-display="flex"
+                                    tsf-bind-function-click="this.rowClick(local.item:index)"
+                                    tsf-bind-class-active="local.item.active">
                                     <td>
                                         <div class="table-mark"></div>
                                     </td>
-                                    <td tsf-html="local.item['name']"></td>
+                                    <td tsf-html="local.item.name."></td>
                                 </tr>
                             </tbody>
                         </table>

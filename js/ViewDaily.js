@@ -224,7 +224,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
         this.datePicker.setDate(this.state.day.add(days, 'days'));
     }
 
-    shiftMonths(e, months) {
-        this.datePicker.setDate(this.state.day.add(months, 'months'));
+    shiftToday(e) {
+        this.datePicker.setDate(moment());
     }
 });
