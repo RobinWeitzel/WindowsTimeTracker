@@ -96,7 +96,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
     onShow() {
         const date = this.state.day;
 
-        this.dayChart = new TimeCharts.Timeline("#chart_daily", {
+        this.dayChart = this.dayChart || new TimeCharts.Timeline("#chart_daily", {
             scale: {
                 from: 0 * 60,
                 to: 24 * 60,
@@ -120,7 +120,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             adjustSize: true,
         });
 
-        this.weekChart1 = new TimeCharts.Barchart("#chart_weekly_1", {
+        this.weekChart1 = this.weekChart1 || new TimeCharts.Barchart("#chart_weekly_1", {
             data: [],
             padding: {
                 top: 20,
@@ -137,7 +137,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             }
         });
 
-        this.weekChart2 = new TimeCharts.Barchart("#chart_weekly_2", {
+        this.weekChart2 = this.weekChart2 || new TimeCharts.Barchart("#chart_weekly_2", {
             data: [],
             orientation: "horizontal",
             padding: {

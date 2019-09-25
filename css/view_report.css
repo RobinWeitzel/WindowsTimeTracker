@@ -1,8 +1,7 @@
-.report-chart-content {
-	display: grid;
-	grid-template-rows: min-content 60px minmax(300px, 30%) minmax(40%, 500px);
+#report_chart1, #report_chart2 {
+	flex: 1;
 }
 
-#report_chart1 {
-	height: 100%;
+#report_chart2 {
+	overflow: hidden;
 }

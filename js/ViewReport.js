@@ -125,7 +125,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
     onShow() {
         if(!this.counters)
             this.counters = [0, 0, 0];
-        this.chart1 = new TimeCharts.Barchart("#report_chart1", {
+        this.chart1 = this.chart1 || new TimeCharts.Barchart("#report_chart1", {
             data: [],
             padding: {
                 top: 20,
@@ -142,8 +142,8 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 interval: 2
             },
             minDistance: 50,
-            draggable: true,
             max: 12,
+            draggable: true,
             onScroll: e => {
                 if(this.chart1.data.length > 0) {
                     const newVal = Math.min(Math.max(0, this.state.scroll + e.deltaY), 700);
@@ -152,7 +152,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             }
         });     
 
-        this.chart2 = new TimeCharts.Barchart("#report_chart2", {
+        this.chart2 = this.chart2 || new TimeCharts.Barchart("#report_chart2", {
             data: [],
             orientation: "horizontal",
             padding: {
@@ -163,7 +163,8 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             },
             distance: 20,
             hover: {
-                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`
+                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`,
+                visible: true
             },
             scale: {
                 visible: false
@@ -198,22 +199,21 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
         }
     }
 
-    loadNewData1() {       
+    loadNewData1() {
+        if(this.state.zoomLevel === 2) {
+            this.chart1.max = 31 * 12;
+            this.chart1.scale.interval = 31 * 2;
+        }
+        else if(this.state.zoomLevel === 1) {
+            this.chart1.max = 7 * 12;
+            this.chart1.scale.interval = 7 * 2;
+        }
+        else  {
+            this.chart1.max = 12;
+            this.chart1.scale.interval = 2;
+        }   
         this.chart1.setData([]);
-        this.getChart1Data(this.state.activities, this.state.start, this.state.end, this.state.zoomLevel || 0).then(data => {
-            if(this.state.zoomLevel === 2) {
-                this.chart1.max = 31 * 12;
-                this.chart1.scale.interval = 31 * 2;
-            }
-            else if(this.state.zoomLevel === 1) {
-                this.chart1.max = 7 * 12;
-                this.chart1.scale.interval = 7 * 2;
-            }
-            else  {
-                this.chart1.max = 12;
-                this.chart1.scale.interval = 2;
-            }
-                
+        this.getChart1Data(this.state.activities, this.state.start, this.state.end, this.state.zoomLevel || 0).then(data => {                
             this.chart1.setData(data);
         }).catch(e => console.log("Old data"));
     }

@@ -6,7 +6,10 @@ let open_link = (url) => {
 }
 
 const toTime = value => {
-	return Math.round(value * 100) / 100 + "h";
+    const totalMinutes = Math.round(value * 60);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+	return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
 }
 
 // ----------------- Menu --------------------
@@ -26,27 +29,3 @@ let unexpand_menu = () => {
 // ----------------- Views --------------------
 
 TSFProxy.registerComparison('Moment', (a, b) => a._i === b._i);
-
-TSFRepository.registerComponent(class ViewReport extends TSFComponent {
-    constructor() {
-        super();
-    }
-});
-
-TSFRepository.registerComponent(class ViewEditData extends TSFComponent {
-    constructor() {
-        super();
-    }
-});
-
-TSFRepository.registerComponent(class ViewBugReport extends TSFComponent {
-    constructor() {
-        super();
-    }
-});
-
-TSFRepository.registerComponent(class ViewAbout extends TSFComponent {
-    constructor() {
-        super();
-    }
-});

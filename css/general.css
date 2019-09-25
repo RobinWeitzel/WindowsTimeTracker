@@ -65,3 +65,11 @@
      font-weight: 600;
 	margin-bottom: 10px;
 }
+
+tsf-navigation-container {
+	overflow-y: auto;
+}
+
+tsf-navigation-container > * {
+	min-height: 650px;
+}
