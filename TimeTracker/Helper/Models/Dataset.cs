@@ -14,5 +14,8 @@ namespace TimeTracker.Helper.Models
 
         [JsonProperty(PropertyName = "value")]
         public double Value { get; set; }
+
+        [JsonProperty(PropertyName = "color")]
+        public string Color { get; set; }
     }
 }

@@ -37,69 +37,78 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="uninstall" />
-                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Debug\TimeTracker.exe" />
-                <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Debug\cef.pak" />
-                <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Debug\cef_100_percent.pak" />
-                <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Debug\cef_200_percent.pak" />
-                <File Id="CEF_EXTENSIONS.PAK" Name="cef_extensions.pak" Source="..\bin\x64\Debug\cef_extensions.pak" />
-                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.DLL" Name="CefSharp.BrowserSubprocess.Core.dll" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.Core.dll" />
-                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.PDB" Name="CefSharp.BrowserSubprocess.Core.pdb" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.Core.pdb" />
-                <File Id="CEFSHARP.BROWSERSUBPROCESS.EXE" Name="CefSharp.BrowserSubprocess.exe" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.exe" />
-                <File Id="CEFSHARP.BROWSERSUBPROCESS.PDB" Name="CefSharp.BrowserSubprocess.pdb" Source="..\bin\x64\Debug\CefSharp.BrowserSubprocess.pdb" />
-                <File Id="CEFSHARP.CORE.DLL" Name="CefSharp.Core.dll" Source="..\bin\x64\Debug\CefSharp.Core.dll" />
-                <File Id="CEFSHARP.CORE.PDB" Name="CefSharp.Core.pdb" Source="..\bin\x64\Debug\CefSharp.Core.pdb" />
-                <File Id="CEFSHARP.CORE.XML" Name="CefSharp.Core.xml" Source="..\bin\x64\Debug\CefSharp.Core.xml" />
-                <File Id="CEFSHARP.DLL" Name="CefSharp.dll" Source="..\bin\x64\Debug\CefSharp.dll" />
-                <File Id="CEFSHARP.PDB" Name="CefSharp.pdb" Source="..\bin\x64\Debug\CefSharp.pdb" />
-                <File Id="CEFSHARP.WPF.DLL" Name="CefSharp.Wpf.dll" Source="..\bin\x64\Debug\CefSharp.Wpf.dll" />
-                <File Id="CEFSHARP.WPF.PDB" Name="CefSharp.Wpf.pdb" Source="..\bin\x64\Debug\CefSharp.Wpf.pdb" />
-                <File Id="CEFSHARP.WPF.XML" Name="CefSharp.Wpf.XML" Source="..\bin\x64\Debug\CefSharp.Wpf.XML" />
-                <File Id="CEFSHARP.XML" Name="CefSharp.XML" Source="..\bin\x64\Debug\CefSharp.XML" />
-                <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Debug\chrome_elf.dll" />
-                <File Id="CSVHELPER.DLL" Name="CsvHelper.dll" Source="..\bin\x64\Debug\CsvHelper.dll" />
-                <File Id="CSVHELPER.XML" Name="CsvHelper.xml" Source="..\bin\x64\Debug\CsvHelper.xml" />
-                <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Debug\d3dcompiler_47.dll" />
-                <File Id="DATAVIEW.HTML" Name="DataView.html" Source="..\bin\x64\Debug\DataView.html" />
-                <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Debug\debug.log" />
-                <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Debug\devtools_resources.pak" />
-                <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Debug\icudtl.dat" />
-                <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Debug\libcef.dll" />
-                <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\bin\x64\Debug\libEGL.dll" />
-                <File Id="LIBGLESV2.DLL" Name="libGLESv2.dll" Source="..\bin\x64\Debug\libGLESv2.dll" />
-                <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Debug\LiveCharts.dll" />
-                <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Debug\LiveCharts.pdb" />
-                <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Debug\LiveCharts.Wpf.dll" />
-                <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\x64\Debug\LiveCharts.Wpf.pdb" />
-                <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\x64\Debug\LiveCharts.Wpf.xml" />
-                <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\x64\Debug\LiveCharts.xml" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.dll" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.pdb" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Debug\Microsoft.Toolkit.Uwp.Notifications.xml" />
-                <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Debug\Microsoft.Win32.Primitives.dll" />
-                <File Id="NATIVES_BLOB.BIN" Name="natives_blob.bin" Source="..\bin\x64\Debug\natives_blob.bin" />
-                <File Id="SNAPSHOT_BLOB.BIN" Name="snapshot_blob.bin" Source="..\bin\x64\Debug\snapshot_blob.bin" />
-                <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Debug\System.AppContext.dll" />
-                <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Debug\System.Console.dll" />
-                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.dll" />
-                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Debug\System.Diagnostics.DiagnosticSource.xml" />
-                <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Debug\System.Globalization.Calendars.dll" />
-                <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\x64\Debug\System.IO.Compression.dll" />
-                <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\x64\Debug\System.IO.Compression.ZipFile.dll" />
-                <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.dll" />
-                <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\x64\Debug\System.IO.FileSystem.Primitives.dll" />
-                <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\x64\Debug\System.Net.Http.dll" />
-                <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\x64\Debug\System.Net.Sockets.dll" />
-                <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\x64\Debug\System.Runtime.InteropServices.RuntimeInformation.dll" />
-                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Algorithms.dll" />
-                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Encoding.dll" />
-                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.Primitives.dll" />
-                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Debug\System.Security.Cryptography.X509Certificates.dll" />
-                <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Debug\System.Xml.ReaderWriter.dll" />
-                <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Debug\TimeTracker.application" />
-                <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Debug\TimeTracker.exe.config" />
-                <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Debug\TimeTracker.exe.manifest" />
-                <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Debug\TimeTracker.pdb" />
-                <File Id="V8_CONTEXT_SNAPSHOT.BIN" Name="v8_context_snapshot.bin" Source="..\bin\x64\Debug\v8_context_snapshot.bin" />
+                <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Release\TimeTracker.exe" />
+                <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Release\cef.pak" />
+                <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Release\cef_100_percent.pak" />
+                <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Release\cef_200_percent.pak" />
+                <File Id="CEF_EXTENSIONS.PAK" Name="cef_extensions.pak" Source="..\bin\x64\Release\cef_extensions.pak" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.DLL" Name="CefSharp.BrowserSubprocess.Core.dll" Source="..\bin\x64\Release\CefSharp.BrowserSubprocess.Core.dll" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.CORE.PDB" Name="CefSharp.BrowserSubprocess.Core.pdb" Source="..\bin\x64\Release\CefSharp.BrowserSubprocess.Core.pdb" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.EXE" Name="CefSharp.BrowserSubprocess.exe" Source="..\bin\x64\Release\CefSharp.BrowserSubprocess.exe" />
+                <File Id="CEFSHARP.BROWSERSUBPROCESS.PDB" Name="CefSharp.BrowserSubprocess.pdb" Source="..\bin\x64\Release\CefSharp.BrowserSubprocess.pdb" />
+                <File Id="CEFSHARP.CORE.DLL" Name="CefSharp.Core.dll" Source="..\bin\x64\Release\CefSharp.Core.dll" />
+                <File Id="CEFSHARP.CORE.PDB" Name="CefSharp.Core.pdb" Source="..\bin\x64\Release\CefSharp.Core.pdb" />
+                <File Id="CEFSHARP.CORE.XML" Name="CefSharp.Core.xml" Source="..\bin\x64\Release\CefSharp.Core.xml" />
+                <File Id="CEFSHARP.DLL" Name="CefSharp.dll" Source="..\bin\x64\Release\CefSharp.dll" />
+                <File Id="CEFSHARP.PDB" Name="CefSharp.pdb" Source="..\bin\x64\Release\CefSharp.pdb" />
+                <File Id="CEFSHARP.WINFORMS.DLL" Name="CefSharp.WinForms.dll" Source="..\bin\x64\Release\CefSharp.WinForms.dll" />
+                <File Id="CEFSHARP.WINFORMS.PDB" Name="CefSharp.WinForms.pdb" Source="..\bin\x64\Release\CefSharp.WinForms.pdb" />
+                <File Id="CEFSHARP.WINFORMS.XML" Name="CefSharp.WinForms.XML" Source="..\bin\x64\Release\CefSharp.WinForms.XML" />
+                <File Id="CEFSHARP.WPF.DLL" Name="CefSharp.Wpf.dll" Source="..\bin\x64\Release\CefSharp.Wpf.dll" />
+                <File Id="CEFSHARP.WPF.PDB" Name="CefSharp.Wpf.pdb" Source="..\bin\x64\Release\CefSharp.Wpf.pdb" />
+                <File Id="CEFSHARP.WPF.XML" Name="CefSharp.Wpf.XML" Source="..\bin\x64\Release\CefSharp.Wpf.XML" />
+                <File Id="CEFSHARP.XML" Name="CefSharp.XML" Source="..\bin\x64\Release\CefSharp.XML" />
+                <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Release\chrome_elf.dll" />
+                <File Id="CSVHELPER.DLL" Name="CsvHelper.dll" Source="..\bin\x64\Release\CsvHelper.dll" />
+                <File Id="CSVHELPER.XML" Name="CsvHelper.xml" Source="..\bin\x64\Release\CsvHelper.xml" />
+                <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Release\d3dcompiler_47.dll" />
+                <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Release\debug.log" />
+                <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Release\devtools_resources.pak" />
+                <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Release\icudtl.dat" />
+                <File Id="INDEX.HTML" Name="index.html" Source="..\bin\x64\Release\index.html" />
+                <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Release\libcef.dll" />
+                <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\bin\x64\Release\libEGL.dll" />
+                <File Id="LIBGLESV2.DLL" Name="libGLESv2.dll" Source="..\bin\x64\Release\libGLESv2.dll" />
+                <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Release\LiveCharts.dll" />
+                <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Release\LiveCharts.pdb" />
+                <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Release\LiveCharts.Wpf.dll" />
+                <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\x64\Release\LiveCharts.Wpf.pdb" />
+                <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\x64\Release\LiveCharts.Wpf.xml" />
+                <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\x64\Release\LiveCharts.xml" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.dll" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.pdb" />
+                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.xml" />
+                <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Release\Microsoft.Win32.Primitives.dll" />
+                <File Id="NATIVES_BLOB.BIN" Name="natives_blob.bin" Source="..\bin\x64\Release\natives_blob.bin" />
+                <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\bin\x64\Release\Newtonsoft.Json.dll" />
+                <File Id="NEWTONSOFT.JSON.XML" Name="Newtonsoft.Json.xml" Source="..\bin\x64\Release\Newtonsoft.Json.xml" />
+                <File Id="README.TXT" Name="README.txt" Source="..\bin\x64\Release\README.txt" />
+                <File Id="SNAPSHOT_BLOB.BIN" Name="snapshot_blob.bin" Source="..\bin\x64\Release\snapshot_blob.bin" />
+                <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Release\System.AppContext.dll" />
+                <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Release\System.Console.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Release\System.Diagnostics.DiagnosticSource.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Release\System.Diagnostics.DiagnosticSource.xml" />
+                <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Release\System.Globalization.Calendars.dll" />
+                <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\x64\Release\System.IO.Compression.dll" />
+                <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\x64\Release\System.IO.Compression.ZipFile.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\x64\Release\System.IO.FileSystem.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\x64\Release\System.IO.FileSystem.Primitives.dll" />
+                <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\x64\Release\System.Net.Http.dll" />
+                <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\x64\Release\System.Net.Sockets.dll" />
+                <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\x64\Release\System.Runtime.InteropServices.RuntimeInformation.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Algorithms.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Encoding.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Primitives.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Release\System.Security.Cryptography.X509Certificates.dll" />
+                <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\bin\x64\Release\System.ValueTuple.dll" />
+                <File Id="SYSTEM.VALUETUPLE.XML" Name="System.ValueTuple.xml" Source="..\bin\x64\Release\System.ValueTuple.xml" />
+                <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Release\System.Xml.ReaderWriter.dll" />
+                <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Release\TimeTracker.application" />
+                <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Release\TimeTracker.exe.config" />
+                <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Release\TimeTracker.exe.manifest" />
+                <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Release\TimeTracker.pdb" />
+                <File Id="V8_CONTEXT_SNAPSHOT.BIN" Name="v8_context_snapshot.bin" Source="..\bin\x64\Release\v8_context_snapshot.bin" />
+                <File Id="LICENSE" Name="LICENSE" Source="..\LICENSE" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="swiftshaderFolder">
@@ -108,8 +117,8 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="swiftshaderFolder" On="uninstall" />
-                <File Id="LIBEGL.DLL_1" Name="libEGL.dll" Source="..\bin\x64\Debug\swiftshader\libEGL.dll" />
-                <File Id="LIBGLESV2.DLL_1" Name="libGLESv2.dll" Source="..\bin\x64\Debug\swiftshader\libGLESv2.dll" />
+                <File Id="LIBEGL.DLL_1" Name="libEGL.dll" Source="..\bin\x64\Release\swiftshader\libEGL.dll" />
+                <File Id="LIBGLESV2.DLL_1" Name="libGLESv2.dll" Source="..\bin\x64\Release\swiftshader\libGLESv2.dll" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="localesFolder">
@@ -118,59 +127,59 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="localesFolder" On="uninstall" />
-                <File Id="AM.PAK" Name="am.pak" Source="..\bin\x64\Debug\locales\am.pak" />
-                <File Id="AR.PAK" Name="ar.pak" Source="..\bin\x64\Debug\locales\ar.pak" />
-                <File Id="BG.PAK" Name="bg.pak" Source="..\bin\x64\Debug\locales\bg.pak" />
-                <File Id="BN.PAK" Name="bn.pak" Source="..\bin\x64\Debug\locales\bn.pak" />
-                <File Id="CA.PAK" Name="ca.pak" Source="..\bin\x64\Debug\locales\ca.pak" />
-                <File Id="CS.PAK" Name="cs.pak" Source="..\bin\x64\Debug\locales\cs.pak" />
-                <File Id="DA.PAK" Name="da.pak" Source="..\bin\x64\Debug\locales\da.pak" />
-                <File Id="DE.PAK" Name="de.pak" Source="..\bin\x64\Debug\locales\de.pak" />
-                <File Id="EL.PAK" Name="el.pak" Source="..\bin\x64\Debug\locales\el.pak" />
-                <File Id="EN_GB.PAK" Name="en-GB.pak" Source="..\bin\x64\Debug\locales\en-GB.pak" />
-                <File Id="EN_US.PAK" Name="en-US.pak" Source="..\bin\x64\Debug\locales\en-US.pak" />
-                <File Id="ES.PAK" Name="es.pak" Source="..\bin\x64\Debug\locales\es.pak" />
-                <File Id="ES_419.PAK" Name="es-419.pak" Source="..\bin\x64\Debug\locales\es-419.pak" />
-                <File Id="ET.PAK" Name="et.pak" Source="..\bin\x64\Debug\locales\et.pak" />
-                <File Id="FA.PAK" Name="fa.pak" Source="..\bin\x64\Debug\locales\fa.pak" />
-                <File Id="FI.PAK" Name="fi.pak" Source="..\bin\x64\Debug\locales\fi.pak" />
-                <File Id="FIL.PAK" Name="fil.pak" Source="..\bin\x64\Debug\locales\fil.pak" />
-                <File Id="FR.PAK" Name="fr.pak" Source="..\bin\x64\Debug\locales\fr.pak" />
-                <File Id="GU.PAK" Name="gu.pak" Source="..\bin\x64\Debug\locales\gu.pak" />
-                <File Id="HE.PAK" Name="he.pak" Source="..\bin\x64\Debug\locales\he.pak" />
-                <File Id="HI.PAK" Name="hi.pak" Source="..\bin\x64\Debug\locales\hi.pak" />
-                <File Id="HR.PAK" Name="hr.pak" Source="..\bin\x64\Debug\locales\hr.pak" />
-                <File Id="HU.PAK" Name="hu.pak" Source="..\bin\x64\Debug\locales\hu.pak" />
-                <File Id="ID.PAK" Name="id.pak" Source="..\bin\x64\Debug\locales\id.pak" />
-                <File Id="IT.PAK" Name="it.pak" Source="..\bin\x64\Debug\locales\it.pak" />
-                <File Id="JA.PAK" Name="ja.pak" Source="..\bin\x64\Debug\locales\ja.pak" />
-                <File Id="KN.PAK" Name="kn.pak" Source="..\bin\x64\Debug\locales\kn.pak" />
-                <File Id="KO.PAK" Name="ko.pak" Source="..\bin\x64\Debug\locales\ko.pak" />
-                <File Id="LT.PAK" Name="lt.pak" Source="..\bin\x64\Debug\locales\lt.pak" />
-                <File Id="LV.PAK" Name="lv.pak" Source="..\bin\x64\Debug\locales\lv.pak" />
-                <File Id="ML.PAK" Name="ml.pak" Source="..\bin\x64\Debug\locales\ml.pak" />
-                <File Id="MR.PAK" Name="mr.pak" Source="..\bin\x64\Debug\locales\mr.pak" />
-                <File Id="MS.PAK" Name="ms.pak" Source="..\bin\x64\Debug\locales\ms.pak" />
-                <File Id="NB.PAK" Name="nb.pak" Source="..\bin\x64\Debug\locales\nb.pak" />
-                <File Id="NL.PAK" Name="nl.pak" Source="..\bin\x64\Debug\locales\nl.pak" />
-                <File Id="PL.PAK" Name="pl.pak" Source="..\bin\x64\Debug\locales\pl.pak" />
-                <File Id="PT_BR.PAK" Name="pt-BR.pak" Source="..\bin\x64\Debug\locales\pt-BR.pak" />
-                <File Id="PT_PT.PAK" Name="pt-PT.pak" Source="..\bin\x64\Debug\locales\pt-PT.pak" />
-                <File Id="RO.PAK" Name="ro.pak" Source="..\bin\x64\Debug\locales\ro.pak" />
-                <File Id="RU.PAK" Name="ru.pak" Source="..\bin\x64\Debug\locales\ru.pak" />
-                <File Id="SK.PAK" Name="sk.pak" Source="..\bin\x64\Debug\locales\sk.pak" />
-                <File Id="SL.PAK" Name="sl.pak" Source="..\bin\x64\Debug\locales\sl.pak" />
-                <File Id="SR.PAK" Name="sr.pak" Source="..\bin\x64\Debug\locales\sr.pak" />
-                <File Id="SV.PAK" Name="sv.pak" Source="..\bin\x64\Debug\locales\sv.pak" />
-                <File Id="SW.PAK" Name="sw.pak" Source="..\bin\x64\Debug\locales\sw.pak" />
-                <File Id="TA.PAK" Name="ta.pak" Source="..\bin\x64\Debug\locales\ta.pak" />
-                <File Id="TE.PAK" Name="te.pak" Source="..\bin\x64\Debug\locales\te.pak" />
-                <File Id="TH.PAK" Name="th.pak" Source="..\bin\x64\Debug\locales\th.pak" />
-                <File Id="TR.PAK" Name="tr.pak" Source="..\bin\x64\Debug\locales\tr.pak" />
-                <File Id="UK.PAK" Name="uk.pak" Source="..\bin\x64\Debug\locales\uk.pak" />
-                <File Id="VI.PAK" Name="vi.pak" Source="..\bin\x64\Debug\locales\vi.pak" />
-                <File Id="ZH_CN.PAK" Name="zh-CN.pak" Source="..\bin\x64\Debug\locales\zh-CN.pak" />
-                <File Id="ZH_TW.PAK" Name="zh-TW.pak" Source="..\bin\x64\Debug\locales\zh-TW.pak" />
+                <File Id="AM.PAK" Name="am.pak" Source="..\bin\x64\Release\locales\am.pak" />
+                <File Id="AR.PAK" Name="ar.pak" Source="..\bin\x64\Release\locales\ar.pak" />
+                <File Id="BG.PAK" Name="bg.pak" Source="..\bin\x64\Release\locales\bg.pak" />
+                <File Id="BN.PAK" Name="bn.pak" Source="..\bin\x64\Release\locales\bn.pak" />
+                <File Id="CA.PAK" Name="ca.pak" Source="..\bin\x64\Release\locales\ca.pak" />
+                <File Id="CS.PAK" Name="cs.pak" Source="..\bin\x64\Release\locales\cs.pak" />
+                <File Id="DA.PAK" Name="da.pak" Source="..\bin\x64\Release\locales\da.pak" />
+                <File Id="DE.PAK" Name="de.pak" Source="..\bin\x64\Release\locales\de.pak" />
+                <File Id="EL.PAK" Name="el.pak" Source="..\bin\x64\Release\locales\el.pak" />
+                <File Id="EN_GB.PAK" Name="en-GB.pak" Source="..\bin\x64\Release\locales\en-GB.pak" />
+                <File Id="EN_US.PAK" Name="en-US.pak" Source="..\bin\x64\Release\locales\en-US.pak" />
+                <File Id="ES.PAK" Name="es.pak" Source="..\bin\x64\Release\locales\es.pak" />
+                <File Id="ES_419.PAK" Name="es-419.pak" Source="..\bin\x64\Release\locales\es-419.pak" />
+                <File Id="ET.PAK" Name="et.pak" Source="..\bin\x64\Release\locales\et.pak" />
+                <File Id="FA.PAK" Name="fa.pak" Source="..\bin\x64\Release\locales\fa.pak" />
+                <File Id="FI.PAK" Name="fi.pak" Source="..\bin\x64\Release\locales\fi.pak" />
+                <File Id="FIL.PAK" Name="fil.pak" Source="..\bin\x64\Release\locales\fil.pak" />
+                <File Id="FR.PAK" Name="fr.pak" Source="..\bin\x64\Release\locales\fr.pak" />
+                <File Id="GU.PAK" Name="gu.pak" Source="..\bin\x64\Release\locales\gu.pak" />
+                <File Id="HE.PAK" Name="he.pak" Source="..\bin\x64\Release\locales\he.pak" />
+                <File Id="HI.PAK" Name="hi.pak" Source="..\bin\x64\Release\locales\hi.pak" />
+                <File Id="HR.PAK" Name="hr.pak" Source="..\bin\x64\Release\locales\hr.pak" />
+                <File Id="HU.PAK" Name="hu.pak" Source="..\bin\x64\Release\locales\hu.pak" />
+                <File Id="ID.PAK" Name="id.pak" Source="..\bin\x64\Release\locales\id.pak" />
+                <File Id="IT.PAK" Name="it.pak" Source="..\bin\x64\Release\locales\it.pak" />
+                <File Id="JA.PAK" Name="ja.pak" Source="..\bin\x64\Release\locales\ja.pak" />
+                <File Id="KN.PAK" Name="kn.pak" Source="..\bin\x64\Release\locales\kn.pak" />
+                <File Id="KO.PAK" Name="ko.pak" Source="..\bin\x64\Release\locales\ko.pak" />
+                <File Id="LT.PAK" Name="lt.pak" Source="..\bin\x64\Release\locales\lt.pak" />
+                <File Id="LV.PAK" Name="lv.pak" Source="..\bin\x64\Release\locales\lv.pak" />
+                <File Id="ML.PAK" Name="ml.pak" Source="..\bin\x64\Release\locales\ml.pak" />
+                <File Id="MR.PAK" Name="mr.pak" Source="..\bin\x64\Release\locales\mr.pak" />
+                <File Id="MS.PAK" Name="ms.pak" Source="..\bin\x64\Release\locales\ms.pak" />
+                <File Id="NB.PAK" Name="nb.pak" Source="..\bin\x64\Release\locales\nb.pak" />
+                <File Id="NL.PAK" Name="nl.pak" Source="..\bin\x64\Release\locales\nl.pak" />
+                <File Id="PL.PAK" Name="pl.pak" Source="..\bin\x64\Release\locales\pl.pak" />
+                <File Id="PT_BR.PAK" Name="pt-BR.pak" Source="..\bin\x64\Release\locales\pt-BR.pak" />
+                <File Id="PT_PT.PAK" Name="pt-PT.pak" Source="..\bin\x64\Release\locales\pt-PT.pak" />
+                <File Id="RO.PAK" Name="ro.pak" Source="..\bin\x64\Release\locales\ro.pak" />
+                <File Id="RU.PAK" Name="ru.pak" Source="..\bin\x64\Release\locales\ru.pak" />
+                <File Id="SK.PAK" Name="sk.pak" Source="..\bin\x64\Release\locales\sk.pak" />
+                <File Id="SL.PAK" Name="sl.pak" Source="..\bin\x64\Release\locales\sl.pak" />
+                <File Id="SR.PAK" Name="sr.pak" Source="..\bin\x64\Release\locales\sr.pak" />
+                <File Id="SV.PAK" Name="sv.pak" Source="..\bin\x64\Release\locales\sv.pak" />
+                <File Id="SW.PAK" Name="sw.pak" Source="..\bin\x64\Release\locales\sw.pak" />
+                <File Id="TA.PAK" Name="ta.pak" Source="..\bin\x64\Release\locales\ta.pak" />
+                <File Id="TE.PAK" Name="te.pak" Source="..\bin\x64\Release\locales\te.pak" />
+                <File Id="TH.PAK" Name="th.pak" Source="..\bin\x64\Release\locales\th.pak" />
+                <File Id="TR.PAK" Name="tr.pak" Source="..\bin\x64\Release\locales\tr.pak" />
+                <File Id="UK.PAK" Name="uk.pak" Source="..\bin\x64\Release\locales\uk.pak" />
+                <File Id="VI.PAK" Name="vi.pak" Source="..\bin\x64\Release\locales\vi.pak" />
+                <File Id="ZH_CN.PAK" Name="zh-CN.pak" Source="..\bin\x64\Release\locales\zh-CN.pak" />
+                <File Id="ZH_TW.PAK" Name="zh-TW.pak" Source="..\bin\x64\Release\locales\zh-TW.pak" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="GPUCacheFolder">
@@ -179,11 +188,12 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="GPUCacheFolder" On="uninstall" />
-                <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Debug\GPUCache\data_0" />
-                <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Debug\GPUCache\data_1" />
-                <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Debug\GPUCache\data_2" />
-                <File Id="DATA_3" Name="data_3" Source="..\bin\x64\Debug\GPUCache\data_3" />
-                <File Id="INDEX" Name="index" Source="..\bin\x64\Debug\GPUCache\index" />
+                <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Release\GPUCache\data_0" />
+                <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Release\GPUCache\data_1" />
+                <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Release\GPUCache\data_2" />
+                <File Id="DATA_3" Name="data_3" Source="..\bin\x64\Release\GPUCache\data_3" />
+                <File Id="F_000001" Name="f_000001" Source="..\bin\x64\Release\GPUCache\f_000001" />
+                <File Id="INDEX" Name="index" Source="..\bin\x64\Release\GPUCache\index" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="apppublishFolder">
@@ -192,7 +202,7 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="apppublishFolder" On="uninstall" />
-                <File Id="TIMETRACKER.EXE_1" Name="TimeTracker.exe" Source="..\bin\x64\Debug\app.publish\TimeTracker.exe" />
+                <File Id="TIMETRACKER.EXE_1" Name="TimeTracker.exe" Source="..\bin\x64\Release\app.publish\TimeTracker.exe" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="ResourcesFolder">
@@ -201,113 +211,10 @@
                     <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
                 </RegistryKey>
                 <RemoveFolder Id="ResourcesFolder" On="uninstall" />
-                <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Debug\Resources\Bild1.png" />
-                <File Id="BILD2.PNG" Name="Bild2.png" Source="..\bin\x64\Debug\Resources\Bild2.png" />
-                <File Id="BILD3.PNG" Name="Bild3.png" Source="..\bin\x64\Debug\Resources\Bild3.png" />
-                <File Id="BILD4.PNG" Name="Bild4.png" Source="..\bin\x64\Debug\Resources\Bild4.png" />
-                <File Id="CHARTJS_PLUGIN_DATALABELS.MIN.JS" Name="chartjs-plugin-datalabels.min.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-datalabels.min.js" />
-                <File Id="CHARTJS_PLUGIN_ZOOM.JS" Name="chartjs-plugin-zoom.js" Source="..\bin\x64\Debug\Resources\chartjs-plugin-zoom.js" />
-                <File Id="HAMMER.MIN.JS" Name="hammer.min.js" Source="..\bin\x64\Debug\Resources\hammer.min.js" />
-                <File Id="CHART.BUNDLE.MIN.JS" Name="Chart.bundle.min.js" Source="..\bin\x64\Debug\Resources\Chart.bundle.min.js" />
-                <File Id="BOOTSTRAP.MIN.CSS" Name="bootstrap.min.css" Source="..\bin\x64\Debug\Resources\bootstrap.min.css" />
-                <File Id="DATERANGEPICKER.CSS" Name="daterangepicker.css" Source="..\bin\x64\Debug\Resources\daterangepicker.css" />
-                <File Id="DATERANGEPICKER.JS" Name="daterangepicker.js" Source="..\bin\x64\Debug\Resources\daterangepicker.js" />
-                <File Id="JQUERY.MIN.JS" Name="jquery.min.js" Source="..\bin\x64\Debug\Resources\jquery.min.js" />
-                <File Id="MOMENT.MIN.JS" Name="moment.min.js" Source="..\bin\x64\Debug\Resources\moment.min.js" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="fontawesomeFolder">
-            <Component Id="fontawesome" Guid="aeb0ac59-f987-4c15-9b68-5804fe183a02">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fontawesome" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="fontawesomeFolder" On="uninstall" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="cssFolder">
-            <Component Id="css" Guid="f721da46-b608-4f90-a6d0-0ce09cb78169">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\css" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="cssFolder" On="uninstall" />
-                <File Id="FONT_AWESOME.MIN.CSS" Name="font-awesome.min.css" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\css\font-awesome.min.css" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="fontsFolder">
-            <Component Id="fonts" Guid="6b487efd-8309-4267-b86c-c635d0f89e77">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\fonts" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="fontsFolder" On="uninstall" />
-                <File Id="FONTAWESOME_WEBFONT.EOT" Name="fontawesome-webfont.eot" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
-                <File Id="FONTAWESOME_WEBFONT.SVG" Name="fontawesome-webfont.svg" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
-                <File Id="FONTAWESOME_WEBFONT.WOFF" Name="fontawesome-webfont.woff" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
-                <File Id="FONTAWESOME_WEBFONT.WOFF2" Name="fontawesome-webfont.woff2" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="lessFolder">
-            <Component Id="less" Guid="cdcfd42d-1246-4046-8759-d51bd8f09b61">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\less" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="lessFolder" On="uninstall" />
-                <File Id="ANIMATED.LESS" Name="animated.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\animated.less" />
-                <File Id="BORDERED_PULLED.LESS" Name="bordered-pulled.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\bordered-pulled.less" />
-                <File Id="CORE.LESS" Name="core.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\core.less" />
-                <File Id="FIXED_WIDTH.LESS" Name="fixed-width.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\fixed-width.less" />
-                <File Id="FONT_AWESOME.LESS" Name="font-awesome.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\font-awesome.less" />
-                <File Id="ICONS.LESS" Name="icons.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\icons.less" />
-                <File Id="LARGER.LESS" Name="larger.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\larger.less" />
-                <File Id="LIST.LESS" Name="list.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\list.less" />
-                <File Id="MIXINS.LESS" Name="mixins.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\mixins.less" />
-                <File Id="PATH.LESS" Name="path.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\path.less" />
-                <File Id="ROTATED_FLIPPED.LESS" Name="rotated-flipped.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\rotated-flipped.less" />
-                <File Id="SCREEN_READER.LESS" Name="screen-reader.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\screen-reader.less" />
-                <File Id="STACKED.LESS" Name="stacked.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\stacked.less" />
-                <File Id="VARIABLES.LESS" Name="variables.less" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\less\variables.less" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="scssFolder">
-            <Component Id="scss" Guid="cbd31c38-5db1-45b5-b0e3-3e8e8e23eccc">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\scss" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="scssFolder" On="uninstall" />
-                <File Id="_ANIMATED.SCSS" Name="_animated.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_animated.scss" />
-                <File Id="_BORDERED_PULLED.SCSS" Name="_bordered-pulled.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
-                <File Id="_CORE.SCSS" Name="_core.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_core.scss" />
-                <File Id="_FIXED_WIDTH.SCSS" Name="_fixed-width.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_fixed-width.scss" />
-                <File Id="_ICONS.SCSS" Name="_icons.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_icons.scss" />
-                <File Id="_LARGER.SCSS" Name="_larger.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_larger.scss" />
-                <File Id="_LIST.SCSS" Name="_list.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_list.scss" />
-                <File Id="_MIXINS.SCSS" Name="_mixins.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_mixins.scss" />
-                <File Id="_PATH.SCSS" Name="_path.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_path.scss" />
-                <File Id="_ROTATED_FLIPPED.SCSS" Name="_rotated-flipped.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
-                <File Id="_SCREEN_READER.SCSS" Name="_screen-reader.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_screen-reader.scss" />
-                <File Id="_STACKED.SCSS" Name="_stacked.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_stacked.scss" />
-                <File Id="_VARIABLES.SCSS" Name="_variables.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\_variables.scss" />
-                <File Id="FONT_AWESOME.SCSS" Name="font-awesome.scss" Source="..\bin\x64\Debug\Resources\font-awesome-4.7.0\scss\font-awesome.scss" />
-            </Component>
-        </DirectoryRef>
-        <DirectoryRef Id="RobotoFolder">
-            <Component Id="Roboto" Guid="afcc24c9-408f-45aa-96ac-759c9011d13e">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\Roboto" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="RobotoFolder" On="uninstall" />
-                <File Id="LICENSE.TXT" Name="LICENSE.txt" Source="..\bin\x64\Debug\Resources\Roboto\LICENSE.txt" />
-                <File Id="ROBOTO_BLACK.TTF" Name="Roboto-Black.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Black.ttf" />
-                <File Id="ROBOTO_BLACKITALIC.TTF" Name="Roboto-BlackItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-BlackItalic.ttf" />
-                <File Id="ROBOTO_BOLD.TTF" Name="Roboto-Bold.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Bold.ttf" />
-                <File Id="ROBOTO_BOLDITALIC.TTF" Name="Roboto-BoldItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-BoldItalic.ttf" />
-                <File Id="ROBOTO_ITALIC.TTF" Name="Roboto-Italic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Italic.ttf" />
-                <File Id="ROBOTO_LIGHT.TTF" Name="Roboto-Light.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Light.ttf" />
-                <File Id="ROBOTO_LIGHTITALIC.TTF" Name="Roboto-LightItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-LightItalic.ttf" />
-                <File Id="ROBOTO_MEDIUM.TTF" Name="Roboto-Medium.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Medium.ttf" />
-                <File Id="ROBOTO_MEDIUMITALIC.TTF" Name="Roboto-MediumItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-MediumItalic.ttf" />
-                <File Id="ROBOTO_REGULAR.TTF" Name="Roboto-Regular.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Regular.ttf" />
-                <File Id="ROBOTO_THIN.TTF" Name="Roboto-Thin.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-Thin.ttf" />
-                <File Id="ROBOTO_THINITALIC.TTF" Name="Roboto-ThinItalic.ttf" Source="..\bin\x64\Debug\Resources\Roboto\Roboto-ThinItalic.ttf" />
+                <File Id="BILD1.PNG" Name="Bild1.png" Source="..\bin\x64\Release\Resources\Bild1.png" />
+                <File Id="BILD2.PNG" Name="Bild2.png" Source="..\bin\x64\Release\Resources\Bild2.png" />
+                <File Id="BILD3.PNG" Name="Bild3.png" Source="..\bin\x64\Release\Resources\Bild3.png" />
+                <File Id="BILD4.PNG" Name="Bild4.png" Source="..\bin\x64\Release\Resources\Bild4.png" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
@@ -324,12 +231,6 @@
             <ComponentRef Id="GPUCache" />
             <ComponentRef Id="apppublish" />
             <ComponentRef Id="Resources" />
-            <ComponentRef Id="fontawesome" />
-            <ComponentRef Id="css" />
-            <ComponentRef Id="fonts" />
-            <ComponentRef Id="less" />
-            <ComponentRef Id="scss" />
-            <ComponentRef Id="Roboto" />
             <ComponentRef Id="ApplicationPrograms" />
         </Feature>
         <!-- Step 2: Add UI to your installer / Step 4: Trigger the custom action -->

@@ -6,7 +6,7 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="Data - TimeTracker" Width="1000" Height="1000">
+        Title="Data - TimeTracker" Width="1400" Height="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <WindowsFormsHost x:Name="WindowsFormsHost" Height="Auto" Width="Auto">
         </WindowsFormsHost>
