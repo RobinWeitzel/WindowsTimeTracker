@@ -42,7 +42,6 @@ This software uses the following open source packages:
 
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
 - [CefSharp](https://github.com/cefsharp/CefSharp)
-- [Chart.js](https://github.com/chartjs/Chart.js)
 
 ## License
 
