@@ -1,0 +1,479 @@
+
+/* Colors */
+:root {
+    --main-background-color: #fff;
+    --secondary-background-color: rgb(230, 230, 230);
+
+    --main-accent-color: rgb(0, 120, 215);
+
+    --main-test-color: rgb(0, 0, 0);
+    --secondary-text-color: rgb(102, 102, 102);
+    --link-text-color: rgb(108, 160, 199);
+
+    --separator-color: rgb(184, 184, 184);
+
+    --main-hover-color: rgb(213, 213, 213);
+    --secondary-hover-color: rgb(205, 205, 205);
+    --tertiary-hover-color: rgb(164, 164, 164);
+
+    --active-color: rgb(184, 184, 184);
+}
+
+/* Menu */
+#menu {
+	width: 40px;
+	height: 100vh;
+	background-color: var(--secondary-background-color);
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#menu.expanded {
+	width: 200px;
+}
+
+#menu * {
+	margin: 0px;
+	padding: 0px;
+}
+
+button {
+	border: none;
+	outline: none;
+	background: transparent;
+	box-sizing: border-box;
+	min-height: 40px;
+	min-width: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button:hover {
+	background-color: var(--secondary-hover-color);
+	cursor: default;
+}
+
+button:active {
+	outline: none;
+	border: none;
+	background-color: var(--active-color);
+}
+
+i {
+	font-size: 16px !important;
+}
+
+#title-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#icon {
+	margin-top: 10px !important;
+	width: 30px;
+}
+
+#menu.expanded #icon {
+	margin-top: 0px !important;
+	width: 50px;
+}
+
+#title {
+	display: none;
+}
+
+#menu.expanded #title {
+	display: block;
+	margin-top: 10px;
+}
+
+#bottom-menu {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+
+.separator {
+	background-color: var(--separator-color);
+	height: 1px;
+	width: 70%;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	align-self: center;
+}
+
+#menu.expanded .separator {
+	width: 90%;
+}
+
+.menu-item {
+	display: flex;
+	align-items: center;
+}
+
+.menu-item>i {
+	box-sizing: border-box;
+	margin: 12px !important;
+}
+
+.menu-item>span {
+	box-sizing: border-box;
+	margin: 10px !important;
+	margin-left: 0px !important;
+	font-size: 14px;
+	display: none;
+}
+
+#menu.expanded .menu-item>span {
+	display: inline;
+}
+
+.menu-item:hover {
+	background-color: var(--main-hover-color);
+	cursor: default;
+}
+
+.menu-item.active>i {
+	margin-left: 6px !important;
+}
+
+.menu-item.active>.menu-item-active-indicator {
+	margin-left: 4px !important;
+}
+
+.menu-item-active-indicator {
+	display: none;
+	background-color: var(--main-accent-color);
+	width: 2px;
+	height: 26px;
+}
+
+.menu-item.active .menu-item-active-indicator {
+	display: inline-block;
+}
+
+/* Controls */
+
+button {
+    border: none;
+    outline: none;
+    background: transparent;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+    cursor: default;
+}
+
+button.primary {
+    background-color: #CCCCCC;
+    border-color: #CCCCCC;
+}
+
+button.primary:hover {
+    border-color: #7B7B7B;
+}
+
+button.primary:focus {
+    border-color: #000000;
+}
+
+button.primary:active {
+    outline: none;
+    background-color: var(--active-color);
+    border-color: var(--active-color);
+}
+
+button.accent {
+    background-color: var(--main-accent-color);
+    border-color: var(--main-accent-color);
+    color: white;
+}
+
+button.accent:hover {
+    background-color: var(--main-accent-color);
+    border-color: #004881;
+}
+
+button.accent:active {
+    outline: none;
+    background-color: var(--active-color);
+    border-color: var(--active-color);
+    color: black;
+}
+
+button.nav {
+    background-color: var(--secondary-background-color);
+    border-color: var(--secondary-background-color);
+}
+
+button.nav:hover {
+    background-color: var(--main-hover-color);
+    border-color: var(--main-hover-color);
+}
+
+button.nav:active {
+    background-color: var(--active-color);
+    border-color: var(--active-color);
+}
+
+button.link {
+    color: #0078D7;
+    text-decoration: underline;
+    display: inline;min-width: 0px;
+    border: none;
+    padding: 0px;
+}
+
+button.link:hover {
+    color: #666666;
+    background-color: transparent;
+}
+
+button.link:focus {
+    background-color: transparent;
+}
+
+button.link:active {
+    color: #999999;
+    border-color: transparent;
+}
+
+button.link:disabled {
+    color: #999999;
+}
+
+button:not(.link):disabled {
+    background-color: #CCCCCC;
+    border-color: #CCCCCC;
+    color: #7A7A7A;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    border: 2px solid #333333;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 28px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 5px;
+    bottom: 4px;
+    background-color: #333333;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:active+.slider {
+    background-color: #666666;
+    border-color: #666666;
+}
+
+input:hover+.slider {
+    border-color: black;
+}
+
+input:hover+.slider:before {
+    background-color: black;
+}
+
+input:checked+.slider {
+    background-color: #0078D7;
+    border-color: #0078D7;
+}
+
+input:checked:hover+.slider {
+    background-color: #4CA0E3;
+    border-color: #4CA0E3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
+    background-color: white;
+}
+
+.control-header {
+    margin: 0px;
+    margin-bottom: 3px;
+}
+
+input[type="text"], textarea {
+    border: 2px solid #999999;
+    outline: none;
+    height: 35px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: white;
+}
+
+textarea {
+    height: unset;
+}
+
+input[type="text"]::placeholder {
+    color: #666666;
+}
+
+input[type="text"]:hover, textarea:hover {
+    border-color: #666666;
+}
+
+input[type="text"]:disabled, textarea:disabled {
+    border-color: #CCCCCC;
+    background-color: #CCCCCC;
+    color: #7A7A7A;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: #0078D7;
+    outline: none;
+}
+
+/* table */
+table {
+    border-collapse: collapse;
+    color: rgb(50, 49, 48);
+    font-size: 14px;
+}
+
+tr {
+    height: 40px;
+    display: flex;
+    cursor: default;
+}
+
+tbody > tr {
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(243, 242, 241);
+    border-top: 1px solid white;
+}
+
+tbody > tr:first-child {
+    border-top-color: rgb(243, 242, 241);
+}
+
+tbody > tr.active {
+    background-color: rgb(237, 235, 233);
+    border-bottom-color: rgb(237, 235, 233);
+}
+
+tbody > tr:not(.active)+tr.active {
+    border-top-color: rgb(237, 235, 233);
+}
+
+tbody > tr:not(.active):hover {
+    background-color: rgb(243, 242, 241);
+    border-bottom-color: rgb(243, 242, 241);
+}
+
+tbody > tr.active:hover {
+    background-color: rgb(224, 223, 221);
+    border-color: rgb(224, 223, 221);
+}
+
+tbody > tr:not(.active)+tr:not(.active):hover {
+    border-top-color: rgb(243, 242, 241);
+}
+
+tbody > tr.active+tr.active:hover {
+    border-top-color: white;
+}
+
+th, td {
+    display: inline-flex;
+    align-items: center;
+    justify-content: start;
+}
+
+th:first-child, td:first-child {
+    padding-left: 20px;
+}
+
+th:last-child, td:last-child {
+    padding-right: 20px;
+}
+
+th:first-child, td:first-child {
+    width: 40px;
+}
+
+.table-mark {
+    border: 1.5px solid rgb(96, 94, 92);
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    display: none;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+tr:hover .table-mark, tr.active .table-mark {
+    display: inline-flex;
+}
+
+.table-mark:hover::before, tr.active .table-mark::before {
+    content: "\e73e";
+    font-family: "MDL2";
+    font-size: 10px;
+    font-weight: bold;
+}
+
+tr.active .table-mark {
+    border-color: white;
+    color: white;
+    background-color: rgb(0, 120, 212);;
+}
+
+/* Combobox */
+.combobox-item-container {
+    background-color: white;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 23px 0px;
+    display: none;
+}
+
+.combobox.active+.combobox-item-container {
+    display: block;
+    position: absolute;
+}

@@ -35,6 +35,10 @@
 	border-bottom: 2px solid var(--default_border);
 }
 
+#day_picker > .day[center] {
+	border-bottom-color: rgb(0, 120, 215);
+}
+
 #day_picker > .day > .number {
 	height: 20px;
 }
@@ -91,36 +95,24 @@
 }
 
 /* Placeholders */
-#chart_daily {
-	width: 100%;
-}
-
 #chart_weekly_1 {
-	flex: 60% 0;
-	height: 400px;
+	flex: 1;
 	margin-right: 20px;
 }
 
 #chart_weekly_2 {
-	flex: 1 0;
-	height: 400px;
+	flex: 1;
 	margin-left: 20px;
+	overflow: hidden;
 }
 
 #element_daily {
 	margin-bottom: 10px;
 }
 
-#element_daily, #element_weekly {
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-	background-color: white;
-	border-radius: 4px;
-	background-color: var(--chart_container_background);
-}
-
 #day_picker_dummy_container {
 	position: absolute;
-	top: 100px;
+	top: 120px;
 	border-radius: 5px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
@@ -132,4 +124,49 @@
 	padding: 10px;
 	z-index: 9999;
 	margin-bottom: -5px;
+}
+
+.chart-container-row {
+	display: flex;
+	margin-top: 20px;
+	flex: 1;
+	overflow: hidden;
+}
+
+.chart-container-row > div:first-child {
+	flex: 3;
+	margin-right: 10px;
+}
+
+.chart-container-row > div:last-child {
+	flex: 2;
+	margin-left: 10px;
+}
+
+.chart-container {
+	/*box-shadow:  0 1px 3px rgba(0, 0, 0, 0.25);*/
+	background-color: white;
+	padding: 0px;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.chart-container > * {
+	margin: 20px;
+}
+
+.chart-container > *:first-child {
+	margin-bottom: 0px;
+}
+
+.chart-container > *:last-child {
+	margin-top: 0px;
+}
+
+.chart-content {
+	/*display: grid;
+	grid-template-rows: 110px minmax(300px, min-content) minmax(20%, min-content);*/
+	display: flex;
+	flex-direction: column;
 }

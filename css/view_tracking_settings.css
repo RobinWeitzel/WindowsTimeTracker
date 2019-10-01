@@ -1,23 +1,31 @@
-#setting_ignore_app_container {
-	max-height: calc(100vh - 300px);
-	min-height: 100px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	width: 100%;
-	margin-top: 10px;
+#blacklist {
+	width: 800px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
-.setting_ignore_app > .setting_entry {
-	width: calc(100% - 70px);
-	border-width: 1px;
-	margin-right: 0px;
+#blacklist > div {
+	display: flex;
 }
 
-.setting_ignore_app > .standard_button {
-	border: none;
+#blacklist > div input {
+	height: 40px;
+	width: 260px;
+}
+
+#blacklist > div button {
+	width: 160px;
 	margin-left: 10px;
-	width: 30px;
-	height: 26px;
-	padding: 0px;
+}
+
+table {
+	width: 100%;
+}
+
+.table-container {
+	overflow-y: auto;
+	margin-top: 10px;
+	height: calc(100vh - 280px);
 }
 

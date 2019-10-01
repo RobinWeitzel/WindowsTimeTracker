@@ -306,10 +306,29 @@ TSFRepository.registerComponent(class ViewSettings extends TSFComponent {
             this.state.playNotificationSound = settings.playNotificationSound;
             this.state.timeBeforeAskingAgain = settings.timeBeforeAskingAgain;
             this.state.timeSinceAppLastUsed = settings.timeSinceAppLastUsed;
+            this.state.offlineTracking = settings.offlineTracking;
             this.state.hotkeyDisabled = settings.hotkeyDisabled;
             this.keysRendered = settings.hotkeys.map(k => k.toString(16).length === 1 ? "0" + k.toString(16).toUpperCase(): k.toString(16).toUpperCase());
             this.hotkey_render_output();
-        });
+
+            this.state.overwriteJsChangeListener("timeNotificationVisible", val => {
+                this.setTimeNotificationVisible(val).then(result => {
+                    this.state.timeNotificationVisible = result;
+                });
+            });
+    
+            this.state.overwriteJsChangeListener("timeBeforeAskingAgain", val => {
+                this.setTimeBeforeAskingAgain(val).then(result => {
+                    this.state.timeBeforeAskingAgain = result;
+                });
+            });
+    
+            this.state.overwriteJsChangeListener("timeSinceAppLastUsed", val => {
+                this.setTimeSinceAppLastUsed(val).then(result => {
+                    this.state.timeSinceAppLastUsed = result;
+                });
+            });
+        });        
     }
 
     async getSettings() {
@@ -341,24 +360,119 @@ TSFRepository.registerComponent(class ViewSettings extends TSFComponent {
             });
         });
     }
+    
+
+    async setTimeNotificationVisible(timeNotificationVisible) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setTimeNotificationVisible(timeNotificationVisible).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setTimeBeforeAskingAgain(timeBeforeAskingAgain) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setTimeBeforeAskingAgain(timeBeforeAskingAgain).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setTimeSinceAppLastUsed(timeSinceAppLastUsed) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setTimeSinceAppLastUsed(timeSinceAppLastUsed).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setHotkeys(hotkeys) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setHotkeys(hotkeys).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setDarkMode(darkMode) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setDarkMode(darkMode).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setPlayNotificationSound(playNotificationSound) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setPlayNotificationSound(playNotificationSound).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setHotkeyEnabled(hotkeyEnabled) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setHotkeyDisabled(!hotkeyEnabled).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
+
+    async setOfflineTracking(offlineTracking) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.setOfflineTracking(offlineTracking).then(result => {
+                resolve(JSON.parse(result));
+            });
+        });
+    }
 
     darkModeClick(e) {
-        if(e.target.nodeName !== "DIV") {
-            this.state.darkMode = !this.state.darkMode;
+        this.setDarkMode(!this.state.darkMode).then(result => {
+            this.state.darkMode = result;
             document.documentElement.setAttribute("dark_mode", this.state.darkMode);
-        }
+        });    
     }
 
     playNotificationSoundClick(e) {
-        if(e.target.nodeName !== "DIV") {
-            this.state.playNotificationSound = !this.state.playNotificationSound;
-        }
+        this.setPlayNotificationSound(!this.state.playNotificationSound).then(result => {
+            this.state.playNotificationSound = result; 
+        });   
     }
 
     hotkeyEnabledClick(e) {
-        if(e.target.nodeName !== "DIV") {
-            this.state.hotkeyDisabled = !this.state.hotkeyDisabled;
-        }
+        this.setHotkeyEnabled(!this.state.hotkeyDisabled).then(result => {
+            this.state.hotkeyDisabled = result; 
+        });  
+    }
+
+    offlineTrackingClick(e) {
+        this.setOfflineTracking(!this.state.offlineTracking).then(result => {
+            this.state.offlineTracking = result; 
+        });  
     }
 
     hotkey_on_key_down(event) {
@@ -374,10 +488,11 @@ TSFRepository.registerComponent(class ViewSettings extends TSFComponent {
 
         if (i < 0) {
             this.keys.push(char);
-            this.keysRendered.push(char);
+            this.setHotkeys([...this.keysRendered, char].map(k => parseInt(k, 16))).then(result => {
+                this.keysRendered = result.map(k => k.toString(16).length === 1 ? "0" + k.toString(16).toUpperCase(): k.toString(16).toUpperCase());;
+                this.hotkey_render_output();
+            });
         }
-
-        this.hotkey_render_output();
     }
 
     hotkey_on_key_up(event) {
