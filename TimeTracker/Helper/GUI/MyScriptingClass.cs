@@ -475,15 +475,18 @@ namespace TimeTracker.Helper
                             week = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(d.Item1, CalendarWeekRule.FirstDay, DayOfWeek.Monday),
                             year = d.Item1.Year
                         })
+                        .OrderBy(g => g.Key.year)
+                        .ThenBy(g => g.Key.week)
                         .Select(g => new Bardata
                         {
                             Label = "Week " + (g.Key.week + 1),
                             Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
-                        }).OrderBy(d => d.Label).ToList();
+                        }).ToList();
                 }
                 else
                 {
                     Bardata = Days
+                        .OrderBy(d => d.Item1)
                         .GroupBy(d => new
                         {
                             month = d.Item1.ToString("MMM", CultureInfo.InvariantCulture),
@@ -493,7 +496,7 @@ namespace TimeTracker.Helper
                         {
                             Label = g.Key.month,
                             Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
-                        }).OrderBy(d => d.Label).ToList();
+                        }).ToList();
                 }
 
                 Json = JsonConvert.SerializeObject(new { value = Bardata, counter });
