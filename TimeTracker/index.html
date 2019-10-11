@@ -12202,7 +12202,7 @@ class TSFComponent extends HTMLElement {
             obj.oninput = event => {
                 let val = obj.value;
 
-                if(!isNaN(val))
+                if(val !== "" && !isNaN(val))
                     val = Number(val);
 
                 const newValue = val;

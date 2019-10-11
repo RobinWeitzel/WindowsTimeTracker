@@ -64,6 +64,7 @@ namespace TimeTracker.Helper
                             Start = Math.Round(a.From >= DayInQuestion ? a.From.Subtract(DayInQuestion).TotalMinutes : 0), // Need to calculate start again to keep the order intact
                         Title = a.Name
                         }).OrderBy(tv => tv.Start)
+                        .Where(t => AppStateTracker.ColorAssingments.ContainsKey(t.Title))
                         .Select(t => AppStateTracker.ColorAssingments[t.Title])
                         .ToList()
                     })
@@ -150,7 +151,9 @@ namespace TimeTracker.Helper
                 List<Bardata> Bardata = Days.Select(d => new Bardata
                 {
                     Label = d.Item1,
-                    Datasets = d.Item2.Select(h => new Dataset
+                    Datasets = d.Item2
+                    .Where(h => AppStateTracker.ColorAssingments.ContainsKey(h.Key))
+                    .Select(h => new Dataset
                     {
                         Title = h.Key,
                         Value = h.Value,
@@ -229,7 +232,9 @@ namespace TimeTracker.Helper
                     .Select(g => new Bardata
                     {
                         Label = g.Key,
-                        Datasets = g.Value.Select(d => new Dataset
+                        Datasets = g.Value
+                        .Where(d => AppStateTracker.ColorAssingments.ContainsKey(g.Key + " - " + d.Key))
+                        .Select(d => new Dataset
                         {
                             Title = d.Key,
                             Value = d.Value,
@@ -459,7 +464,9 @@ namespace TimeTracker.Helper
                     Bardata = Days.OrderBy(d => d.Item1).Select(d => new Bardata
                     {
                         Label = d.Item1.ToString("dd.MM"),
-                        Datasets = d.Item2.Select(h => new Dataset
+                        Datasets = d.Item2
+                        .Where(h => AppStateTracker.ColorAssingments.ContainsKey(h.Key))
+                        .Select(h => new Dataset
                         {
                             Title = h.Key,
                             Value = h.Value,
@@ -480,7 +487,9 @@ namespace TimeTracker.Helper
                         .Select(g => new Bardata
                         {
                             Label = "Week " + (g.Key.week + 1),
-                            Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
+                            Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key)
+                            .Where(gg => AppStateTracker.ColorAssingments.ContainsKey(gg.Key))
+                            .Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
                         }).ToList();
                 }
                 else
@@ -495,7 +504,9 @@ namespace TimeTracker.Helper
                         .Select(g => new Bardata
                         {
                             Label = g.Key.month,
-                            Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key).Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
+                            Datasets = g.SelectMany(d => d.Item2).GroupBy(d => d.Key)
+                            .Where(gg => AppStateTracker.ColorAssingments.ContainsKey(gg.Key))
+                            .Select(gg => new Dataset { Title = gg.Key, Value = gg.Sum(d => d.Value), Color = AppStateTracker.ColorAssingments[gg.Key] }).OrderBy(d => d.Title).ToList()
                         }).ToList();
                 }
 
@@ -568,7 +579,9 @@ namespace TimeTracker.Helper
                     .Select(g => new Bardata
                     {
                         Label = g.Key,
-                        Datasets = g.Value.Select(d => new Dataset
+                        Datasets = g.Value
+                        .Where(d => AppStateTracker.ColorAssingments.ContainsKey(g.Key + " - " + d.Key))
+                        .Select(d => new Dataset
                         {
                             Title = d.Key,
                             Value = d.Value,
