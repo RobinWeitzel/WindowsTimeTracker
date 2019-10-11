@@ -33,8 +33,8 @@ Follow the tutorial, then type your first activity in the dialog on the bottom r
 
 ## Download
 
-You can download the latest installable version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.6.0/Automatic_Installer.msi).
-We also have a [manual installer](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.6.0/Manual_Installer.zip).
+You can download the latest installable version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.7.0/TimeTrackerSetup.msi).
+We also have a [manual installer](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.7.0/TimeTracker.zip).
 
 ## Credits
 
