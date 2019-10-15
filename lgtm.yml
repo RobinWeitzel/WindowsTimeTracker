@@ -1,7 +1,5 @@
 extraction:
   csharp:
     index:
-      solution: TimeTracker.sln
-      msbuild:
-        configuration: release   
-        platform: x64
+      buildless: true
+      nuget_restore: false
