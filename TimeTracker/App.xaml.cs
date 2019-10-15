@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -25,7 +26,7 @@ namespace TimeTracker
     /// <summary>
     /// Interaktionslogik für "App.xaml"
     /// </summary>
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         /* Variables */
         private System.Windows.Forms.NotifyIcon NotifyIcon;
@@ -66,7 +67,7 @@ namespace TimeTracker
             // Attaches listeners
             NotifyIcon.DoubleClick += (s, args) => ASDL.ChangeActivity();
             MachineStateListener.StateChanged += ListenerEvent;
-            AppStateTracker.ChangeContextMenu += (s, args) => NotifyIcon.ContextMenuStrip.Items[1].Text = ((bool)args.Value) ? "Unpause" : "Pause";
+            AppStateTracker.ChangeContextMenu += (s, args) => NotifyIcon.ContextMenuStrip.Items[2].Text = ((bool)args.Value) ? "Unpause" : "Pause";
             ASDL.ShowActivityDialog += CreateActivityDialog;
             ASDL.ShowAwayFromPCDialog += CreateAwayFromPCDialog;
 
@@ -135,12 +136,12 @@ namespace TimeTracker
         {
             if (AppStateTracker.Disturb)
             {
-                NotifyIcon.ContextMenuStrip.Items[2].Text = "Disable \"Do not disturb\"";
+                NotifyIcon.ContextMenuStrip.Items[3].Text = "Disable \"Do not disturb\"";
                 AppStateTracker.Disturb = false;
             }
             else
             {
-                NotifyIcon.ContextMenuStrip.Items[2].Text = "Do not disturb";
+                NotifyIcon.ContextMenuStrip.Items[3].Text = "Do not disturb";
                 AppStateTracker.Disturb = true;
             }
         }
@@ -151,13 +152,15 @@ namespace TimeTracker
         private void CreateContextMenu()
         {
             NotifyIcon.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            NotifyIcon.ContextMenuStrip.Items.Add("Open").Click += (s, e) => new HTMLDataWindow(StorageHandler, AppStateTracker).Show();
             NotifyIcon.ContextMenuStrip.Items.Add("Change Activity").Click += (s, e) => ASDL.ChangeActivity();
             NotifyIcon.ContextMenuStrip.Items.Add("Pause").Click += (s, e) => AppStateTracker.Pause(null);
             NotifyIcon.ContextMenuStrip.Items.Add("Do not Disturb").Click += (s, e) => DoNotDisturb();
-            NotifyIcon.ContextMenuStrip.Items.Add("View Data").Click += (s, e) => new HTMLDataWindow(StorageHandler, AppStateTracker).Show();
             NotifyIcon.ContextMenuStrip.Items.Add("Edit Activities").Click += (s, e) => new ManualEdit(StorageHandler).Show();
-            //NotifyIcon.ContextMenuStrip.Items.Add("Settings").Click += (s, e) => new SettingsWindow().Show();
             NotifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
+
+            ToolStripItem Item = NotifyIcon.ContextMenuStrip.Items[0];
+            Item.Font = new Font(Item.Font, System.Drawing.FontStyle.Bold);
         }
 
         /// <summary>

@@ -1,36 +1,104 @@
-﻿<Window x:Class="TimeTracker.ActivityDialog"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="TimeTracker.ActivityDialog"
         mc:Ignorable="d"
-        Title="Activity Dialog - TimeTracker" Height="180" Width="350" Topmost="True" 
+        Title="Activity Dialog - TimeTracker" Height="190" Width="370" Topmost="True" 
         WindowStartupLocation="Manual" WindowStyle="None" WindowState="Normal" ResizeMode="NoResize" 
-        Background="#147ec9" Foreground="AntiqueWhite" ShowInTaskbar="False" ShowActivated="False" 
+        Background="{DynamicResource WindowBackground}" ShowInTaskbar="False" ShowActivated="False" 
+        AllowsTransparency="True"
         Activated="Window_Activated" Deactivated="Window_Deactivated">
-    <Border>
-        <Border.Effect>
-            <DropShadowEffect Opacity="0.5" ShadowDepth="1" BlurRadius="2" />
-        </Border.Effect>
-        <Grid Margin="0,0,0,-1">
-            <ComboBox x:Name="ComboBox" DisplayMemberPath="Name" SelectedValuePath="Name" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Width="330" Height="37" IsEditable="True" FontSize="20" KeyUp="ComboBox_OnKeyUp">
-                <ComboBox.ItemContainerStyle>
-                    <Style TargetType="ComboBoxItem">
-                        <Setter
+    <Window.Resources>
+        <SolidColorBrush x:Key="WindowBackground" 
+                        Color="#FC2B2B2B"
+                        Opacity="1"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ComboBox x:Name="ComboBox" DisplayMemberPath="Name" SelectedValuePath="Name" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Width="330" Height="32" IsEditable="True" FontSize="18" KeyUp="ComboBox_OnKeyUp">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter
                     Property="IsEnabled"
                     Value="{Binding Selectable}" />
-                        <Setter
+                    <Setter
                     Property="Visibility"
                     Value="{Binding Visible}" />
-                    </Style>
-                </ComboBox.ItemContainerStyle>
-            </ComboBox>
-            <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="10,48,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="28" Width="330" FontSize="20"/>
-            <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="10,15,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="330" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="CloseButton2" IsTabStop="False" Content="Cancel" Click="CloseButton_Click" Margin="10,138,274,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" Padding="0, 0, 0, 0"/>
-            <Button x:Name="ConfirmButton" IsTabStop="False" Content="Confirm" Click="ConfirmButton_Click" Margin="252,138,10,15" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" Padding="0, 0, 0, 0"/>
-            <Button Name="CloseButton" IsTabStop="False" Content="x" Click="CloseButton_Click" Margin="320,0,0,151" Background="Transparent" BorderBrush="Transparent" Foreground="AntiqueWhite" FontSize="20" FontFamily="Consolas" FontWeight="Bold"/>
-        </Grid>
-    </Border>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+
+        <TextBlock x:Name="TextBlock" HorizontalAlignment="Left" Margin="70,48,0,0" TextWrapping="Wrap" Text="Still working on: " VerticalAlignment="Top" Height="29" Width="245" FontSize="18" Foreground="#FFC9C9C9"/>
+        <TextBlock x:Name="TextBlock2" HorizontalAlignment="Left" Margin="70,20,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="28" Width="245" FontSize="18" FontWeight="SemiBold" Foreground="White"/>
+        <Button x:Name="CloseButton2" IsTabStop="False" Content="Cancel" Click="CloseButton_Click" Margin="20,138,188,20" Padding="5" Foreground="White" FontSize="18">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#929292"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#5e5e5e"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button x:Name="ConfirmButton" IsTabStop="False" Content="Confirm" Click="ConfirmButton_Click" Margin="188,138,20,20" Foreground="White" FontSize="18" Padding="0, 0, 0, 0">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#0078d7"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#2b6fc1"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button x:Name="CloseButton" IsTabStop="False" Content="x" Click="CloseButton_Click" Margin="342,0,0,162" Padding="0" Foreground="White" FontSize="20" FontFamily="Consolas">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#5e5e5e"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="44" Source="Resources/Bild1.png" Margin="20,20,0,0"/>
+    </Grid>
 </Window>

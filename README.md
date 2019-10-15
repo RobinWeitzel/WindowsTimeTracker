@@ -16,7 +16,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/RobinWeitzel/WindowsTimeTracker/master/TimeTracker/Resources/Bild_Daily_View.png)
+![image](https://user-images.githubusercontent.com/12135433/65972810-afe1fc00-e46a-11e9-8f20-fa7cb7969a29.png)
 
 ## Key Features
 
@@ -33,8 +33,8 @@ Follow the tutorial, then type your first activity in the dialog on the bottom r
 
 ## Download
 
-You can download the latest installable version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.6.0/Automatic_Installer.msi).
-We also have a [manual installer](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.6.0/Manual_Installer.zip).
+You can download the latest installable version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.7.0/TimeTrackerSetup.msi).
+We also have a [manual installer](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/0.9.7.0/TimeTracker.zip).
 
 ## Credits
 
@@ -42,7 +42,6 @@ This software uses the following open source packages:
 
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
 - [CefSharp](https://github.com/cefsharp/CefSharp)
-- [Chart.js](https://github.com/chartjs/Chart.js)
 
 ## License
 

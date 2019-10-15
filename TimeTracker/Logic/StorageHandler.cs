@@ -43,6 +43,7 @@ namespace TimeTracker
             using (CsvReader Csv = new CsvReader(Reader))
             {
                 Good = new List<Activity>();
+                Csv.Configuration.Delimiter = ",";
 
                 while (Csv.Read())
                 {
@@ -72,6 +73,7 @@ namespace TimeTracker
             using (CsvReader Csv = new CsvReader(Reader))
             {
                 Good = new List<Window>();
+                Csv.Configuration.Delimiter = ",";
 
                 while (Csv.Read())
                 {
@@ -295,6 +297,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(WindowPath))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteHeader<Window>();
                     Csv.NextRecord();
                 }
@@ -305,6 +308,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(ActivityPath))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteHeader<Activity>();
                     Csv.NextRecord();
                 }
@@ -322,7 +326,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(ActivityPath, true))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
-
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteRecord(activity);
                     Csv.NextRecord();
                 }
@@ -348,6 +352,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(ActivityPath))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteRecords(activities);
                     Csv.NextRecord();
                 }
@@ -373,7 +378,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(WindowPath, true))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
-
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteRecord(window);
                     Csv.NextRecord();
                 }
@@ -400,6 +405,7 @@ namespace TimeTracker
                 using (TextWriter tw = new StreamWriter(WindowPath))
                 {
                     CsvWriter Csv = new CsvWriter(tw);
+                    Csv.Configuration.Delimiter = ",";
                     Csv.WriteRecords(windows);
                     Csv.NextRecord();
                 }
