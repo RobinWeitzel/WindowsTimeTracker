@@ -118,6 +118,7 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
             },
             distance: 20,
             adjustSize: true,
+            round: false
         });
 
         this.weekChart1 = this.weekChart1 || new TimeCharts.Barchart("#chart_weekly_1", {

@@ -81,6 +81,11 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             const match = scripts[i];
             const href = match.match(/src=["|'](.*?)["|']/)[1];
 
+            if(match.includes("CefSharp.js")) {
+                console.log("Finished loading script " + (i + 1) + "/" + (scripts.length) + ".");
+                continue;
+            }
+
             let content;
 
             console.log("Loading script " + (i + 1) + "/" + (scripts.length) + " from " + (href.startsWith("http") ? "the internet." : "local filesystem."))
