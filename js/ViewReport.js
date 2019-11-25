@@ -32,6 +32,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 this.state.combobox = "";
                 this.loadNewData1();
                 this.loadNewData2();
+                this.loadNewData3();
             }
         });
 
@@ -122,6 +123,22 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
         });
     }
 
+    
+    async getChart3Data(activities, start, end) {
+        return new Promise(async (resolve, reject) => {
+            if (typeof boundAsync === "undefined")
+                await CefSharp.BindObjectAsync("boundAsync");
+
+            boundAsync.getReportData3(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), ++this.counters[1]).then(result => {
+                result = JSON.parse(result);
+                if(this.counters[1] !== result.counter)
+                    reject();
+                else
+                    resolve(result.value);
+            });
+        });
+    }
+
     onShow() {
         if(!this.counters)
             this.counters = [0, 0, 0];
@@ -171,6 +188,17 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             }
         });
 
+        this.chart3 = this.chart3 || new TimeCharts.Piechart("#report_chart3", {
+            data: [],
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+            },
+            donutFactor: 0.6
+        });
+
         if(!this.datepicker) {
             this.datepicker = new Lightpick({ 
                 field: document.getElementById('report-datepicker'),
@@ -184,6 +212,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 onClose: () => {
                     this.loadNewData1();
                     this.loadNewData2();
+                    this.loadNewData3();
                 }
             });  
 
@@ -196,6 +225,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
         if(this.state.activities !== "") {
             this.loadNewData1();
             this.loadNewData2();
+            this.loadNewData3();
         }
     }
 
@@ -225,4 +255,10 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
         }).catch(e => console.log("Old data"));
     }
 
+    loadNewData3() {
+        this.chart3.setData([]);
+        this.getChart3Data(this.state.activities, this.state.start, this.state.end).then(data => {
+            this.chart3.setData(data);
+        }).catch(e => console.log("Old data"));
+    }
 });
