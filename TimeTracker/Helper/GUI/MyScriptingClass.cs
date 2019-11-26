@@ -706,8 +706,6 @@ namespace TimeTracker.Helper
                 Json = JsonConvert.SerializeObject(new { value = Piedata, counter });
             });
 
-           
-
             GetReportData3Thread = null;
             tcs.SetResult(Json);
             return tcs.Task.Result;
