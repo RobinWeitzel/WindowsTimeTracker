@@ -129,9 +129,9 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.getReportData3(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), ++this.counters[1]).then(result => {
+            boundAsync.getReportData3(activities.filter(a => a.active).map(a => a.name), start.toJSON(), end.toJSON(), ++this.counters[2]).then(result => {
                 result = JSON.parse(result);
-                if(this.counters[1] !== result.counter)
+                if(this.counters[2] !== result.counter)
                     reject();
                 else
                     resolve(result.value);
@@ -196,7 +196,11 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 bottom: 20,
                 left: 20
             },
-            donutFactor: 0.6
+            donutFactor: 0.6,
+            hover: {
+                callback: (title, value) => `<span style="color: gray">${toTime(value)}</span>${title !== "" ? " - " + title : ""}`,
+                visible: true
+            },
         });
 
         if(!this.datepicker) {

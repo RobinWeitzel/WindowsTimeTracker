@@ -66,23 +66,7 @@ class boundAsync {
 
     static async getReportData3(activities, start, end, id) {
         return new Promise((resolve, reject) => {
-            const data = {
-                value: [
-                    {
-                        value: 0.25,
-                        label: "Test"
-                    },
-                    {
-                        value: 0.5,
-                        label: "Test2"
-                    },
-                    {
-                        value: 0.25,
-                        label: "Test3"
-                    }
-                ],
-                counter: id
-            };
+            const data = {"value":[{"label":"Google Chrome","value":22.320000000000071},{"label":"Outlook","value":5.0399999999999787},{"label":"Excel","value":4.5799999999999832},{"label":"Visual Studio Code","value":3.7199999999999958},{"label":"PowerPoint","value":2.71},{"label":"Adobe Acrobat Reader DC","value":2.1900000000000008},{"label":"[Modul1 (Code)]","value":2.11},{"label":"OneNote","value":1.7200000000000006},{"label":"Nachricht (HTML) ","value":1.5900000000000003},{"label":"Desktop Viewer","value":1.5600000000000003},{"label":"Others","value":8.6499999999999879}],"counter":id};
             resolve(JSON.stringify(data));
         });
     }
