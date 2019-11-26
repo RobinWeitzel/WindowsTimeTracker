@@ -32,6 +32,9 @@ namespace TimeTracker
         private long Timeout;
         private StorageHandler StorageHandler;
         private AppStateTracker AppStateTracker;
+        private bool DeletedSuggestion;
+        private int DeletedSuggestionCounter;
+        private int TextLengthCounter;
 
         /// <summary>
         /// The activity dialog shown in the bottom right corner asking the users if he is still working on the same acitivity.
@@ -94,6 +97,10 @@ namespace TimeTracker
             if (focusToast)
                 ComboBox.Focus();
 
+            DeletedSuggestion = false;
+            DeletedSuggestionCounter = 0;
+            TextLengthCounter = ComboBox.Text.Length;
+
             SetupClose();
         }
 
@@ -136,6 +143,10 @@ namespace TimeTracker
 
         private void Window_Activated(object sender, EventArgs e)
         {
+            ComboBox.IsTextSearchEnabled = true;
+            DeletedSuggestion = false;
+            DeletedSuggestionCounter = 0;
+            TextLengthCounter = ComboBox.Text.Length;
             CancelClose.Push(true);
         }
 
@@ -168,7 +179,29 @@ namespace TimeTracker
             else if (e.Key == Key.Escape)
             {
                 SetNewActivity();
+            } else if(e.Key == Key.Back)
+            {
+                if (!DeletedSuggestion && TextLengthCounter - ComboBox.Text.Length > 1)
+                {
+                    DeletedSuggestion = true;
+                }
+                else
+                {
+                    if (DeletedSuggestion)
+                    {
+                        DeletedSuggestionCounter++;
+                    }
+
+                    if (DeletedSuggestionCounter >= 2)
+                    {
+                        ComboBox.IsTextSearchEnabled = false;
+                    }
+                }
+            } else
+            {
+                DeletedSuggestion = false;
             }
+            TextLengthCounter = ComboBox.Text.Length;
         }
     }
 }
