@@ -82,10 +82,11 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>951722232F50007959CD068EEBEA2785B174056A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>3CDFFEEDACBACD560587107D2BD8D7C35B4D8D53</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>TimeTracker_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -218,6 +219,7 @@
     <Compile Include="Helper\GUI\CustomComboBoxItem.cs" />
     <Compile Include="Helper\GUI\Helper.cs" />
     <Compile Include="Helper\GUI\MyScriptingClass.cs" />
+    <Compile Include="Helper\Models\Piedata.cs" />
     <Compile Include="Helper\Models\TrackingSettings.cs" />
     <Compile Include="Helper\Models\Dataset.cs" />
     <Compile Include="Helper\Models\Bardata.cs" />

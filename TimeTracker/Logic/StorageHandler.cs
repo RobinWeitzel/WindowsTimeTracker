@@ -74,7 +74,7 @@ namespace TimeTracker
             {
                 Good = new List<Window>();
                 Csv.Configuration.Delimiter = ",";
-
+                Csv.Configuration.BadDataFound = null;
                 while (Csv.Read())
                 {
                     try

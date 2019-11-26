@@ -610,6 +610,122 @@ namespace TimeTracker.Helper
             return task.Result;
         }
 
+        private Thread GetReportData3Thread = null;
+        private async Task<string> GetReportData3Async(List<Object> activities, string start, string end, int counter)
+        {
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+            string Json = "";
+            await Task.Factory.StartNew(() =>
+            {
+                GetReportData3Thread = Thread.CurrentThread;
+
+                List<string> Activities = activities.Cast<string>().ToList();
+                DateTime StartPeriod = DateTime.Parse(start).Date.AddDays(1);
+                DateTime EndPeriod = DateTime.Parse(end).Date;
+
+                List<Window> Windows = StorageHandler.GetWindowsByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod);
+
+
+                List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod && Activities.Contains(r.Name)).Select(aa => new Helper
+                {
+                    Name = aa.Name,
+                    From = aa.From > StartPeriod ? aa.From : StartPeriod,
+                    To = (DateTime)aa.To > EndPeriod ? EndPeriod : (DateTime)aa.To
+                }).ToList();
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && EndPeriod >= DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
+                    ActivityHelper.Add(new Helper
+                    {
+                        Name = AppStateTracker.CurrentActivity.Name,
+                        From = AppStateTracker.CurrentActivity.From > StartPeriod ? AppStateTracker.CurrentActivity.From : StartPeriod,
+                        To = DateTime.Now
+                });
+
+                List<Helper> WindowHelper = new List<Helper>();
+
+                foreach (Helper h in ActivityHelper)
+                {
+                    WindowHelper.AddRange(
+                    Windows
+                        .Where(r => r.To >= h.From && r.From <= h.To)
+                        .Select(r => new Helper
+                        {
+                            Name = r.Name,
+                            From = r.From > h.From ? r.From : h.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = (DateTime)(r.To > h.To ? h.To : r.To) // If my window ended after the End of the activity only measure until the End of the activity
+                        }));
+
+                    // Check if the current window should also be shown in the graph.
+                    if (AppStateTracker.CurrentWindow != null)
+                        WindowHelper.Add(new Helper
+                        {
+                            Name = AppStateTracker.CurrentWindow.Name,
+                            From = AppStateTracker.CurrentWindow.From < h.From ? h.From : AppStateTracker.CurrentWindow.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = h.To
+                        });
+                }
+
+                // Compute time between Start and finish of the activity rounding to minutes
+                foreach (Helper h in WindowHelper)
+                {
+                    h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+                }
+
+                // Extract labels and titles
+                List<Piedata> PiedataHelper = WindowHelper
+                    .GroupBy(h => h.Name)
+                    .Select(g => new Piedata
+                    {
+                        Label = g.Key,
+                        Value = g.Sum(h => h.Time)
+                    })
+                    .OrderByDescending(p => p.Value)
+                    .ToList();
+
+                Piedata Others = new Piedata
+                {
+                    Label = "Others",
+                    Value = 0
+                };
+                List<Piedata> Piedata = new List<Piedata>();
+
+                for (int i = 0; i < PiedataHelper.Count; i++)
+                {
+                    if(i < 10)
+                    {
+                        Piedata.Add(PiedataHelper[i]);
+                    } else
+                    {
+                        Others.Value += PiedataHelper[i].Value;
+                    }
+                }
+
+                Piedata.Add(Others);
+
+                Json = JsonConvert.SerializeObject(new { value = Piedata, counter });
+            });
+
+           
+
+            GetReportData3Thread = null;
+            tcs.SetResult(Json);
+            return tcs.Task.Result;
+        }
+
+        public string GetReportData3(List<Object> activities, string start, string end, int counter)
+        {
+            if (GetReportData3Thread != null)
+            {
+                GetReportData3Thread.Abort();
+                GetReportData3Thread = null;
+            }
+
+            var task = GetReportData3Async(activities, start, end, counter);
+
+            return task.Result;
+        }
+
         private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
             for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
