@@ -1,0 +1,256 @@
+     html {
+         /* TODO: Change this */
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Helvetica, sans-serif;
+     }
+     
+     html,
+     body {
+         margin: 0;
+     }
+     
+     body {
+         background-color: white;
+         background-repeat: repeat repeat;
+         /* background-repeat: repeat no-repeat; */
+         background-size: 1002px 798px;
+     }
+     /* Override of default components */
+     
+     a {
+         cursor: pointer;
+         outline: 0;
+         border-radius: 100px;
+         padding-left: 15px;
+         padding-right: 15px;
+         padding-top: 5px;
+         padding-bottom: 5px;
+         background-color: lightgray;
+         margin: 5px;
+         text-decoration: none;
+         color: black;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+     }
+     
+     bold {
+         font-weight: 600;
+     }
+     /* GENERAL */
+     /* Placeholder between two containers */
+     
+     .placeholder {
+         height: 75px;
+     }
+     
+     .muffled {
+         background-color: rgb(255, 255, 255, 0.70);
+     }
+     /* Removes the spacing from h1 and h2 headers */
+     
+     .nospaceheader {
+         margin-bottom: 0;
+         margin-top: 0;
+     }
+     /* Dropshadow */
+     
+     .shadow {
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+     }
+     /* Basic container left to right */
+     
+     .container {
+         padding: 10px;
+         padding-left: 20px;
+     }
+     
+     .container.semitranslucent {
+         background-color: rgb(255, 255, 255, 0.90);
+     }
+     
+     .container.phrase {
+         padding-left: 75px;
+         padding-right: 75px;
+         padding-top: 40px;
+         padding-bottom: 40px;
+     }
+     
+     .container.centertext {
+         text-align: center;
+     }
+     /* Navigation at the top */
+     
+     #navbar {
+         position: -webkit-sticky;
+         /* Safari */
+         position: sticky;
+         top: 0;
+         background-color: white;
+     }
+     
+     #navbar_button_download {
+         background-color: rgb(247, 185, 47);
+     }
+     
+     #image_background {
+         position: absolute;
+         margin-top: -10%;
+         width: 140%;
+         margin-left: -25%;
+         z-index: -10;
+     }
+     /* TimeTracker title */
+     
+     #title {
+         font-size: 50px;
+     }
+     /* Actions */
+     /* Action symbols */
+     
+     .action {
+         width: 25vw;
+         height: 25vw;
+         max-width: 175px;
+         max-height: 175px;
+         display: inline-block;
+         vertical-align: top;
+         border-radius: 10px;
+         padding: 10px;
+         padding-top: 20px;
+         margin-right: 10px;
+         margin-bottom: 20px;
+         font-weight: 600;
+         font-size: 12px;
+         cursor: pointer;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+         -webkit-box-sizing: border-box;
+         /* Safari/Chrome, other WebKit */
+         -moz-box-sizing: border-box;
+         /* Firefox, other Gecko */
+         box-sizing: border-box;
+     }
+     
+     .action:hover {
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+     }
+     
+     .icon_action {
+         bottom: 0;
+         display: block;
+         font-size: 5vw;
+         margin: 10px;
+         color: white;
+     }
+     /* Actions container components styling */
+     
+     #container_actions {}
+     
+     #action_autotrack {
+         background-color: rgb(0, 162, 255);
+     }
+     
+     #action_insights {
+         background-color: rgb(247, 185, 47);
+     }
+     
+     #action_report {
+         background-color: rgb(239, 95, 167);
+     }
+     /* Disclaimer */
+     
+     #wedonttrackyou {
+         background-color: rgb(154, 215, 98);
+     }
+     
+     #wedonttrackyou_text {
+         padding-top: 40px;
+         height: 100px;
+     }
+     /* Catchphrases */
+     
+     #catchphrase1 {
+         /* background-color: rgb(247, 185, 47); */
+     }
+     
+     #catchphrase2 {
+         background-color: rgb(0, 162, 255);
+     }
+     
+     #catchphrase3 {
+         background-color: rgb(247, 185, 47);
+     }
+     
+     #catchphrase4 {
+         background-color: rgb(239, 95, 167);
+     }
+     /* Showreel */
+     
+     #showreel {
+         width: 300%;
+         margin-left: calc(-100% - 20px);
+         text-align: center;
+     }
+     
+     .showreel_component {
+         width: 70vw;
+         height: 50vw;
+         max-width: 625px;
+         max-height: 446px;
+         display: inline-block;
+         background-color: rgba(0, 0, 0, 0.25);
+         border-radius: 10px;
+         margin: 10px;
+         overflow: hidden;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+     }
+     
+     .showreel_img {
+         width: 140%;
+     }
+     
+     .showreel_img.halfhidden {
+         filter: opacity(0.25);
+     }
+     /* Download section */
+     
+     #downloadbar {
+         background-color: rgb(255, 255, 255, 0.75);
+     }
+     
+     #button_download {
+         background-color: rgb(247, 185, 47);
+     }
+     
+     #button_download {
+         padding: 15px;
+         width: 50%;
+     }
+     
+     #button_main_text {
+         font-size: 20px;
+         font-weight: 600;
+     }
+     /* ------- */
+     
+     .feature_item {
+         margin-top: 10px;
+     }
+     
+     #main_button_download {
+         background-color: rgb(247, 185, 47);
+         padding: 15px;
+         padding-left: 40px;
+         padding-right: 40px;
+     }
+     
+     .action_title {
+         font-size: 20px;
+     }
+     
+     .action_icon {
+         padding: 5px;
+         width: 13vw;
+         max-width: 110px;
+     }
+     
+     #impressum {
+         font-size: 12px;
+     }

@@ -1,0 +1,66 @@
+
+     .resizable {
+          position: relative;
+     }
+
+     .resizer {
+          position: absolute;
+     }
+     
+     .resizer-n {
+          top: -5px;
+          width: 100%;
+          height: 5px;
+          cursor: ns-resize;
+     }
+
+     .resizer-s {
+          bottom: -5px;
+          width: 100%;
+          height: 5px;
+          cursor: ns-resize;
+     }
+
+     .resizer-w {
+          width: 5px;
+          left: -5px;
+          height: 100%;
+          cursor: ew-resize;
+     }
+
+     .resizer-e {
+          width: 5px;
+          height: 100%;
+          right: -5px;
+          cursor: ew-resize;
+     }
+
+     .resizer-lb,
+     .resizer-rb {
+          width: 10px;
+          height: 10px;
+     }
+
+     .resizer-lb {
+          cursor: nesw-resize;
+          left: -5px;
+          bottom: -5px;
+     }
+
+     .resizer-rb {
+          cursor: nwse-resize;
+          right: -5px;
+          bottom: -5px;
+     }
+
+     .framecover {
+          position: absolute;
+          width: 100%;
+          height: calc(100% - 30px);
+          background-color: transparent;
+          display: none;
+     }
+
+     .framecover.show {
+          display: inherit;
+     }

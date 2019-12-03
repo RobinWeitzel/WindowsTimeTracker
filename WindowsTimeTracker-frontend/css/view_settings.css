@@ -1,0 +1,7 @@
+/* SETTINGS */
+/* Yes - No - Setting */
+.setting_text {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 24px;
+}

@@ -1,0 +1,709 @@
+<html>
+
+<head>
+     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+     <link rel="stylesheet" href="resizers.css">
+</head>
+
+<style>
+     html,
+     body {
+          margin: 0;
+          font-family: 'Helvetica Neue';
+          height: 100vh;
+          width: 100vw;
+          overflow: hidden;
+     }
+
+     * {
+          -webkit-touch-callout: none;
+          /* iOS Safari */
+          -webkit-user-select: none;
+          /* Safari */
+          -khtml-user-select: none;
+          /* Konqueror HTML */
+          -moz-user-select: none;
+          /* Firefox */
+          -ms-user-select: none;
+          /* Internet Explorer/Edge */
+          user-select: none;
+          /* Non-prefixed version, currently supported by Chrome and Opera */
+     }
+
+     .window {
+          width: fit-content;
+          position: absolute;
+          cursor: auto !important;
+          /* Border */
+          border: 1px solid gray;
+          box-shadow: 0px 0px 3px grey;
+     }
+
+     .window.hide {
+          display: none;
+     }
+
+     .window-frame {
+          border: 0;
+          resize: both;
+          min-width: 800px;
+          min-height: 550px;
+          overflow: hidden;
+          padding: 0px;
+     }
+
+     .window-bar {
+          display: flex;
+          background-color: white;
+          justify-content: space-between;
+     }
+
+     /* Navbar styling */
+
+     .window-bar-navigation * {
+          display: inline-block;
+          padding: 8px;
+          padding-left: 20px;
+          padding-right: 20px;
+          cursor: pointer;
+     }
+
+     .window-bar-navigation .window-close {
+          font-size: 1.2em;
+     }
+
+     .window-minimize,
+     .window-maximize,
+     .window-close {
+          height: 20px;
+          vertical-align: top;
+     }
+
+     .window-close:hover {
+          background-color: rgb(114, 72, 72);
+     }
+
+     .window-minimize:hover,
+     .window-maximize:hover {
+          background-color: rgb(213, 213, 213);
+     }
+
+     /* Window title */
+     .window-bar-title {
+          padding: 8px;
+     }
+
+     #desktop {
+          width: 100vw;
+          height: 100vh;
+     }
+
+     #desktop-background {
+          /* background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */
+          background-image: url("images/background.jpg");
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+     }
+
+     #desktop-taskbar {
+          margin-top: -50px;
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.6);
+          width: 100vw;
+          height: 50px;
+          z-index: 100 !important;
+          align-items: baseline;
+          display: flex;
+          align-items: flex-start;
+          z-index: 100000;
+     }
+
+     #desktop-windows-logo {
+          color: white;
+          width: 50px;
+          height: 100%;
+
+          font-size: 25px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 50px;
+          margin-right: 15px;
+     }
+
+     #desktop-taskbar-item-container {
+          height: 100%;
+          flex: 1;
+     }
+
+     .taskbar-item {
+          color: white;
+          padding-left: 10px;
+          padding-right: 10px;
+          height: 50px;
+          line-height: 50px;
+          width: 250px;
+          box-sizing: border-box;
+          margin-right: 5px;
+          display: inline-block;
+     }
+
+     .taskbar-item:hover {
+          /* background-color: rgb(42, 42, 42); */
+     }
+
+     .taskbar-item.active {
+          border-bottom: 2px solid rgb(121, 186, 235);
+     }
+
+     .desktop-icon {
+          top: 600px;
+          height: 70px;
+          width: 60px;
+          position: absolute;
+          touch-action: none;
+          text-align: center;
+          cursor: auto !important;
+     }
+
+     .desktop-icon-title {
+          font-size: 0.8em;
+     }
+
+     .desktop-icon-img {
+          font-size: 50px;
+          height: 55px;
+          padding: 5px;
+          padding-bottom: 0px;
+     }
+
+     #move_bounds {
+          height: calc(100vh - 100px);
+          width: calc(100vw - 100px);
+          margin: 50px;
+          position: absolute;
+     }
+
+     /* Positioning  */
+
+     #about-icon {
+          right: 90px;
+          top: 80px;
+     }
+
+     #github-icon {
+          right: 90px;
+          top: 170px;
+     }
+
+     #window1 {
+          left: 5%;
+          top: 5%;
+     }
+
+     #window2 {
+          left: 15%;
+          top: 15%;
+     }
+
+     .frame {
+          width: calc(100%);
+          height: calc(100% - 35px);
+          border: 0;
+     }
+
+     .window {
+          position: absolute;
+     }
+
+     .window-bar * {
+          cursor: default;
+     }
+
+     #window_about {
+          width: 700px;
+          height: 500px;
+          left: 100px;
+          top: 100px;
+     }
+
+     #window_data {
+          width: 700px;
+          height: 500px;
+          left: 50px;
+          top: 50px;
+     }
+
+     #window_tt {
+          width: 700px;
+          height: 500px;
+          left: 150px;
+          top: 150px;
+     }
+</style>
+
+<body>
+     <div id="move_bounds"></div>
+     <div id="github-icon" class="desktop-icon">
+          <div class="desktop-icon-img"><i class="fab fa-github"></i></div>
+          <div class="desktop-icon-title">GitHub</div>
+     </div>
+     <div id="about-icon" class="desktop-icon">
+          <div class="desktop-icon-img"><i class="fas fa-question-circle"></i></div>
+          <div class="desktop-icon-title">About</div>
+     </div>
+
+     <div id="window_about" class="window resizable">
+          <div class="resizer resizer-n"></div>
+          <div class="resizer resizer-s"></div>
+          <div class="resizer resizer-w"></div>
+          <div class="resizer resizer-e"></div>
+          <div class="resizer resizer-lb"></div>
+          <div class="resizer resizer-rb"></div>
+          <div class="window-bar">
+               <div class="window-bar-title">About</div>
+               <div class="window-bar-navigation">
+                    <i class="window-minimize far fa-window-minimize"></i>
+                    <i class="window-maximize far fa-square"></i>
+                    <i class="window-close fas fa-times"></i>
+               </div>
+          </div>
+
+          <div class="framecover show"></div>
+          <!-- Call me stupid but this works to disable touch events on the stupid iframes -->
+          <iframe id="testframea" class="frame" src="frames/about.html"></iframe>
+     </div>
+
+     <div id="window_data" class="window resizable">
+          <div class="resizer resizer-n"></div>
+          <div class="resizer resizer-s"></div>
+          <div class="resizer resizer-w"></div>
+          <div class="resizer resizer-e"></div>
+          <div class="resizer resizer-lb"></div>
+          <div class="resizer resizer-rb"></div>
+          <div class="window-bar">
+               <div class="window-bar-title">Data Protection</div>
+               <div class="window-bar-navigation">
+                    <i class="window-minimize far fa-window-minimize"></i>
+                    <i class="window-maximize far fa-square"></i>
+                    <i class="window-close fas fa-times"></i>
+               </div>
+          </div>
+
+          <div class="framecover show"></div>
+          <iframe id="testframea" class="frame" src="frames/data.html"></iframe>
+     </div>
+
+     <div id="window_tt" class="window resizable">
+          <div class="resizer resizer-n"></div>
+          <div class="resizer resizer-s"></div>
+          <div class="resizer resizer-w"></div>
+          <div class="resizer resizer-e"></div>
+          <div class="resizer resizer-lb"></div>
+          <div class="resizer resizer-rb"></div>
+          <div class="window-bar">
+               <div class="window-bar-title">Data Protection</div>
+               <div class="window-bar-navigation">
+                    <i class="window-minimize far fa-window-minimize"></i>
+                    <i class="window-maximize far fa-square"></i>
+                    <i class="window-close fas fa-times"></i>
+               </div>
+          </div>
+
+          <div class="framecover show"></div>
+          <iframe id="testframea" class="frame" src="frames/a.html"></iframe>
+     </div>
+
+     <!-- 
+     <div id="main_window2" class="window resizable">
+          <div class="resizer resizer-n"></div>
+          <div class="resizer resizer-s"></div>
+          <div class="resizer resizer-w"></div>
+          <div class="resizer resizer-e"></div>
+          <div class="resizer resizer-lb"></div>
+          <div class="resizer resizer-rb"></div>
+          <div class="window-bar">
+               <div class="window-bar-title">Features</div>
+               <div class="window-bar-navigation">
+                    <i class="window-minimize far fa-window-minimize"></i>
+                    <i class="window-maximize far fa-square"></i>
+                    <i class="window-close fas fa-times"></i>
+               </div>
+          </div>
+
+          <div class="framecover"></div>
+          <iframe id="testframea" class="frame" src="frames/a.html"></iframe>
+     </div> -->
+
+     <div id="desktop">
+          <div id="desktop-background"></div>
+          <div id="desktop-taskbar">
+               <i id="desktop-windows-logo" class="fab fa-windows"></i>
+               <div id="desktop-taskbar-item-container">
+               </div>
+          </div>
+     </div>
+
+     <script>
+          const ORIENT_NORTH_SOUTH = "ns";
+          const ORIENT_EAST_WEST = "ew";
+          const ORIENT_BOTH = "both";
+
+          const LEFT_SIDE = "left";
+          const RIGHT_SIDE = "right";
+
+          let ALL_WINDOWS = []
+
+          let top_z_index = 10;
+
+          let dom_background = document.getElementById("desktop-background");
+
+          function add_drag_functionality(object, dom_element, dom_element_move_listener) {
+               let pos1 = 0,
+                    pos2 = 0,
+                    pos3 = 0,
+                    pos4 = 0;
+               dom_element_move_listener.onmousedown = dragMouseDown;
+
+               function dragMouseDown(e) {
+
+                    object.focus();
+                    object.ux_start();
+                    object.unfocus();
+
+                    e = e || window.event;
+                    e.preventDefault();
+                    // get the mouse cursor position at startup:
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+
+                    document.onmouseup = closeDragElement;
+                    // call a function whenever the cursor moves:
+                    document.onmousemove = elementDrag;
+                    dom_element.querySelector(".framecover").classList.add("show");
+               }
+
+               function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    // calculate the new cursor position:
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+
+                    if (object.halfed)
+                         object.set_size_to_pre_max_or_half();
+                    if (object.is_maximised) {
+                         object.set_size_to_pre_max_or_half();
+                         object.window_dom.style.left = e.clientX - (object.window_dom.offsetWidth / 2);
+                         object.window_dom.style.top = e.clientY - (object.window_dom.offsetHeight / 2);
+                    }
+
+                    // set the element's new position:
+                    const value_top = Math.max(0, (dom_element.offsetTop - pos2));
+                    const value_left = (dom_element.offsetLeft - pos1);
+                    dom_element.style.top = value_top + "px";
+                    dom_element.style.left = value_left + "px";
+               }
+
+               function closeDragElement(e) {
+                    // stop moving when mouse button is released:
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+
+                    object.ux_end();
+                    object.focus();
+
+                    if (e.clientX === 0) {
+                         // Moved to side
+                         object.half(LEFT_SIDE);
+                    } else if (e.clientX > dom_background.offsetWidth - 2) {
+                         // Moved to side
+                         object.half(RIGHT_SIDE);
+                    }
+                    
+                    object.trigger_resize_listeners();
+                    
+               }
+               
+          }
+
+          function add_resize_functionality(object, dom_element, dom_element_res_listener, orientation, reverse_ns, reverse_ew) {
+
+               let startX, startY, startWidth, startHeight;
+               let window_left, window_top;
+
+               if (reverse_ns)
+                    reverse_ns = -1;
+               else
+                    reverse_ns = 1;
+
+               if (reverse_ew)
+                    reverse_ew = -1;
+               else
+                    reverse_ew = 1;
+
+               dom_element_res_listener.onmousedown = (e) => {
+                    initDrag(e);
+               }
+
+               function initDrag(e) {
+                    window_left = dom_element.offsetLeft;
+                    window_top = dom_element.offsetTop;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseInt(document.defaultView.getComputedStyle(dom_element).width, 10);
+                    startHeight = parseInt(document.defaultView.getComputedStyle(dom_element).height, 10);
+
+                    object.ux_start();
+                    object.unfocus();
+
+                    document.documentElement.addEventListener("mousemove", doDrag, false);
+                    document.documentElement.addEventListener("mouseup", stopDrag, false);
+
+               }
+
+               function doDrag(e) {
+                    if (e.clientY > 0) {
+                         if (orientation === ORIENT_NORTH_SOUTH || orientation === ORIENT_BOTH) {
+                              // console.log(e.clientY - startY);
+                              dom_element.style.height = (startHeight + (e.clientY - startY) * reverse_ns) + 'px';
+                              if (reverse_ns == -1)
+                                   dom_element.style.top = window_top + e.clientY - startY + 'px';
+                         }
+                    }
+                    if (e.clientX > 0) {
+                         if (orientation === ORIENT_EAST_WEST || orientation === ORIENT_BOTH) {
+                              dom_element.style.width = (startWidth + (e.clientX - startX) * reverse_ew) + 'px';
+                              if (reverse_ew == -1)
+                                   dom_element.style.left = window_left + e.clientX - startX + 'px';
+                         }
+                    }
+               }
+
+               function stopDrag(e) {
+                    document.documentElement.removeEventListener('mousemove', doDrag, false);
+                    document.documentElement.removeEventListener('mouseup', stopDrag, false);
+                    object.ux_end();
+               }
+          }
+
+          class Window {
+               constructor(body) {
+                    this.window_dom = body.window_dom;
+                    this.title = body.title;
+
+                    this.window_bar = this.window_dom.querySelector('.window-bar');
+                    this.window_maximize = this.window_bar.querySelector('.window-maximize');
+                    this.window_minimize = this.window_bar.querySelector('.window-minimize');
+                    this.window_close = this.window_bar.querySelector('.window-close');
+
+                    this.resizer_n = this.window_dom.querySelector('.resizer-n');
+                    this.resizer_s = this.window_dom.querySelector('.resizer-s');
+                    this.resizer_e = this.window_dom.querySelector('.resizer-e');
+                    this.resizer_w = this.window_dom.querySelector('.resizer-w');
+                    this.resizer_lb = this.window_dom.querySelector('.resizer-lb');
+                    this.resizer_rb = this.window_dom.querySelector('.resizer-rb');
+                    
+                    this.iframe = this.window_dom.querySelector('iframe');
+
+                    this.is_maximised = false;
+                    this.is_minimized = false;
+                    this.ux_active = false;
+
+                    this.taskbar_item_dom = document.createElement("div");
+                    this.taskbar_item_dom.classList = "taskbar-item active";
+                    this.taskbar_item_dom.textContent = this.title;
+                    body.taskbar_dom.appendChild(this.taskbar_item_dom);
+
+                    this._add_listeners();
+                    this._add_taskbar_listener();
+                    this._add_ux();
+               }
+               
+               trigger_resize_listeners = () => {
+                    this.iframe.contentWindow.postMessage("resized");
+               }
+
+               open = () => {
+                    this.taskbar_item_dom.classList.add("active");
+               }
+
+               _add_taskbar_listener = () => {
+                    this.taskbar_item_dom.onclick = () => {
+                         if (this.is_minimized)
+                              this.unminimize();
+                         this.focus();
+                    }
+               }
+
+               _add_ux = () => {
+                    add_drag_functionality(this, this.window_dom, this.window_bar);
+
+                    // first: NS, second: EW
+
+                    //  Top one
+                    add_resize_functionality(this, this.window_dom, this.resizer_n, ORIENT_NORTH_SOUTH, true, false);
+
+                    //  Bottom 
+                    add_resize_functionality(this, this.window_dom, this.resizer_s, ORIENT_NORTH_SOUTH, false, false);
+
+                    // East
+                    add_resize_functionality(this, this.window_dom, this.resizer_e, ORIENT_EAST_WEST, false, false);
+
+                    // West
+                    add_resize_functionality(this, this.window_dom, this.resizer_w, ORIENT_EAST_WEST, false, true);
+
+                    // Bottom left corner 
+                    add_resize_functionality(this, this.window_dom, this.resizer_lb, ORIENT_BOTH, false, true);
+
+                    // Bottom right corner 
+                    add_resize_functionality(this, this.window_dom, this.resizer_rb, ORIENT_BOTH, false, false);
+               }
+
+               _add_listeners = () => {
+                    this.window_dom.onmousedown = (e) => {
+                         ALL_WINDOWS.map(w => w.unfocus());
+                         if (!this.ux_active) {
+                              this.window_dom.click();
+                              this.focus();
+                         }
+                    }
+
+                    this.window_dom.onclick = () => {
+                         this.ux_end();
+                         this.focus();
+                    }
+
+                    this.window_maximize.onclick = () => {
+                         if (this.is_maximised)
+                              this.unmaximize();
+                         else
+                              this.maximize();
+                    }
+
+                    this.window_minimize.onclick = () => {
+                         if (this.is_minimized)
+                              this.unminimize();
+                         else
+                              this.minimize();
+                    }
+                    this.window_close.onclick = this.window_minimize.onclick;
+               }
+
+               ux_start = () => {
+                    this.ux_active = true;
+               }
+
+               ux_end = () => {
+                    this.ux_active = false;
+               }
+
+               half = (side) => {
+                    this.halfed = true;
+
+                    this.pre_max_left = this.window_dom.offsetLeft;
+                    this.pre_max_top = this.window_dom.offsetTop;
+                    this.pre_max_width = this.window_dom.offsetWidth
+                    this.pre_max_height = this.window_dom.offsetHeight;
+
+                    this.window_dom.style.width = dom_background.offsetWidth / 2 + "px";
+                    this.window_dom.style.height = dom_background.offsetHeight + "px";
+                    this.window_dom.style.top = "0px";
+                    if (side === RIGHT_SIDE) {
+                         this.window_dom.style.left = dom_background.offsetWidth / 2 + "px";
+                    } else {
+                         this.window_dom.style.left = "0px";
+                    }
+               }
+
+               maximize = () => {
+                    this.is_maximised = true;
+                    this.pre_max_left = this.window_dom.offsetLeft;
+                    this.pre_max_top = this.window_dom.offsetTop;
+                    this.pre_max_width = this.window_dom.offsetWidth
+                    this.pre_max_height = this.window_dom.offsetHeight;
+                    this.window_dom.style.left = "0px";
+                    this.window_dom.style.top = "0px";
+                    this.window_dom.style.width = dom_background.offsetWidth + "px";
+                    this.window_dom.style.height = dom_background.offsetHeight + "px";
+                    this.halfed = false;
+               }
+
+               unmaximize = () => {
+                    this.set_size_to_pre_max_or_half();
+                    this.set_pos_to_pre_max_or_half();
+               }
+
+               set_pos_to_pre_max_or_half = () => {
+                    this.window_dom.style.left = this.pre_max_left + "px";
+                    this.window_dom.style.top = this.pre_max_top + "px";
+                    this.is_maximised = false;
+                    this.halfed = false;
+               }
+
+               set_size_to_pre_max_or_half = () => {
+                    this.window_dom.style.width = this.pre_max_width + "px";
+                    this.window_dom.style.height = this.pre_max_height + "px";
+
+                    this.is_maximised = false;
+                    this.halfed = false;
+               }
+
+               minimize = () => {
+                    this.window_dom.classList.add("hide");
+                    this.is_minimized = true;
+               }
+
+               unminimize = () => {
+                    this.window_dom.classList.remove("hide");
+                    this.is_minimized = false;
+               }
+
+               focus = () => {
+                    this.window_dom.querySelector(".framecover").classList.remove("show");
+                    top_z_index++;
+                    this.window_dom.style.zIndex = top_z_index + "";
+                    this.ux_end();
+                    this.window_dom.click();
+               }
+
+               unfocus = () => {
+                    this.window_dom.querySelector(".framecover").classList.add("show");
+               }
+          }
+
+          let w = new Window({
+               title: "About",
+               window_dom: document.getElementById("window_about"),
+               taskbar_dom: document.getElementById("desktop-taskbar-item-container")
+          });
+          ALL_WINDOWS.push(w);
+
+          let w2 = new Window({
+               title: "Data Protection",
+               window_dom: document.getElementById("window_data"),
+               taskbar_dom: document.getElementById("desktop-taskbar-item-container")
+          });
+          ALL_WINDOWS.push(w2);
+
+          let w3 = new Window({
+               title: "TimeTracker",
+               window_dom: document.getElementById("window_tt"),
+               taskbar_dom: document.getElementById("desktop-taskbar-item-container")
+          });
+          ALL_WINDOWS.push(w3);
+
+          //    One must focus, otherwise a bug appears
+          w.focus()
+          w.open();
+     </script>
+</body>
+
+</html>

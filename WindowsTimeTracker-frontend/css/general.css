@@ -1,0 +1,75 @@
+/* View */
+/* General Header */
+.header {
+	font-size: 35px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+/* .header[seperate="true"] {
+	margin-top: 30px;
+} */
+
+.text {
+	display: inline-block;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.subheader {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+/* General Button */
+.standard_button {
+	background-color: var(--button_background);
+     /* border-radius: 10px; */
+     border-radius: 15px;
+	/* border-color: var(--button_border); */
+	border-width: 0px;
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 14px;
+	cursor: pointer;
+	color: var(--default_text_color);
+	user-select: none;
+}
+
+.standard_button:focus {
+	outline: none;
+}
+.standard_button:hover {
+	background-color: var(--button_hover_background)
+}
+.standard_button:not([icononly = "true"]) i {
+	margin-right: 10px;
+}
+
+.standard_button.mini {
+	border: none;
+	height: 26px;
+}
+.standard_button.mini:hover {
+	background-color: var(--daypicker_buttons_hover)
+}
+
+/* .standard_button.right {
+	float: right;
+} */
+
+/* Chart titles */
+.chart > .title {
+     font-size: 18px;
+     font-weight: 600;
+	margin-bottom: 10px;
+}
+
+tsf-navigation-container {
+	overflow-y: auto;
+}
+
+tsf-navigation-container > * {
+	min-height: 650px;
+}

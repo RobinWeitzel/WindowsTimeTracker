@@ -1,0 +1,172 @@
+/* Day Picker */
+.day_picker_navigator {
+	vertical-align: top;
+	display: inline-block;
+	text-align: center;
+	height: 50px;
+	width: 50px;
+	line-height: 50px;
+	color: rgb(80, 80, 80);
+	cursor: pointer;
+}
+.day_picker_navigator:hover {
+	color: rgb(150, 150, 150);
+}
+/* .day_picker_navigator:active {
+	color: var(--daypicker_move_icon_active)
+} */
+
+#day_picker > .day {
+	display: inline-block;
+
+	width: 15%;
+	min-width: 50px;
+	max-width: 120px;
+
+	height: 50px;
+	line-height: 40px;
+	font-size: 20px;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.25s ease-in-out;
+	margin-left: 3px;
+	margin-right: 3px;
+
+	border-bottom: 2px solid rgb(120, 120, 120);
+}
+
+#day_picker > .day[center] {
+	border-bottom-color: rgb(0, 120, 215);
+}
+
+#day_picker > .day > .number {
+	height: 20px;
+}
+#day_picker > .day > .month {
+	height: 30px;
+	margin-top: -5px;
+	font-size: 10px;
+}
+#day_picker > .day:hover {
+	border-bottom-color:  rgb(220, 220, 220);
+}
+#day_picker > .day.selected {
+	border-bottom-color: black;
+}
+/* #day_picker > .day:active {
+	border-bottom-color: var(--highlight_color_light) !important;
+} */
+
+#day_picker {
+	vertical-align: top;
+	width: calc(100%);
+	max-width: 600px;
+	text-align: center;
+	overflow: hidden;
+	user-select: none;
+}
+
+/* #day_picker:first-child {
+	display: none !important;
+} */
+
+/* Components */
+#day_picker_container {
+	width: 100%;
+	padding: 20px;
+	justify-content: center;
+	display: flex;
+}
+
+#element_weekly {
+	height: auto;
+	padding: 20px;
+}
+
+#element_daily {
+	height: auto;
+	padding: 20px;
+}
+
+.chart_title {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+/* Placeholders */
+#chart_weekly_1 {
+	flex: 1;
+	margin-right: 20px;
+}
+
+#chart_weekly_2 {
+	flex: 1;
+	margin-left: 20px;
+	overflow: hidden;
+}
+
+#element_daily {
+	margin-bottom: 10px;
+}
+
+#day_picker_dummy_container {
+	position: absolute;
+	top: 120px;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+#day_picker_addition {
+	width: 276px;
+	background-color: rgb(243, 243, 243);
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+	margin-bottom: -5px;
+}
+
+.chart-container-row {
+	display: flex;
+	margin-top: 20px;
+	flex: 1;
+	overflow: hidden;
+}
+
+.chart-container-row > div:first-child {
+	flex: 3;
+	margin-right: 10px;
+}
+
+.chart-container-row > div:last-child {
+	flex: 2;
+	margin-left: 10px;
+}
+
+.chart-container {
+	/*box-shadow:  0 1px 3px rgba(0, 0, 0, 0.25);*/
+	background-color: white;
+	padding: 0px;
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
+.chart-container > * {
+	margin: 20px;
+}
+
+.chart-container > *:first-child {
+	margin-bottom: 0px;
+}
+
+.chart-container > *:last-child {
+	margin-top: 0px;
+}
+
+.chart-content {
+	/*display: grid;
+	grid-template-rows: 110px minmax(300px, min-content) minmax(20%, min-content);*/
+	display: flex;
+	flex-direction: column;
+}

@@ -1,0 +1,12 @@
+#report_chart1, #report_chart2 {
+	flex: 1;
+}
+
+#report_chart2 {
+	overflow: hidden;
+}
+
+#report_chart3 {
+	flex: 1;
+    overflow: hidden;
+}
