@@ -9,10 +9,25 @@
 </head>
 
 <style>
+     @font-face {
+          font-family: "Myriad";
+          src: url("MYRIADPRO-REGULAR.otf") format("opentype");
+     }
+
+     @font-face {
+          font-family: "MyriadBold";
+          src: url("MYRIADPRO-BOLD.otf") format("opentype");
+     }
+
+     /* @font-face {
+          font-family: "OpenSans";
+          src: url("OpenSans-Regular.ttf") format("truetype");
+     } */
+
      html,
      body {
           margin: 0;
-          font-family: 'Helvetica Neue';
+          font-family: "Myriad";
           height: 100vh;
           width: 100vw;
           overflow: hidden;
@@ -93,6 +108,7 @@
 
      /* Window title */
      .window-bar-title {
+          flex: 1;
           padding: 8px;
      }
 
@@ -101,22 +117,28 @@
           height: 100vh;
      }
 
-     #desktop-background {
-          /* background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */
+     #desktop-background-image {
+          position: absolute;
           background-image: url("images/background.jpg");
           width: 100%;
           height: 100%;
+          z-index: -1;
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;
      }
 
+     #desktop-background {
+          background-color: rgb(0, 0, 0, 0);
+          width: 100%;
+          height: calc(100% - 40px);
+     }
+
      #desktop-taskbar {
-          margin-top: -50px;
           position: absolute;
           background-color: rgba(0, 0, 0, 0.6);
           width: 100vw;
-          height: 50px;
+          height: 40px;
           z-index: 100 !important;
           align-items: baseline;
           display: flex;
@@ -126,13 +148,13 @@
 
      #desktop-windows-logo {
           color: white;
-          width: 50px;
+          width: 40px;
           height: 100%;
 
-          font-size: 25px;
+          font-size: 22px;
           text-align: center;
           vertical-align: middle;
-          line-height: 50px;
+          line-height: 40px;
           margin-right: 15px;
      }
 
@@ -141,12 +163,21 @@
           flex: 1;
      }
 
+     #desktop-taskbar-time {
+          color: white;
+          height: 100%;
+          line-height: 40px;
+          width: 150px;
+          text-align: right;
+          padding-right: 15px;
+     }
+
      .taskbar-item {
           color: white;
           padding-left: 10px;
           padding-right: 10px;
-          height: 50px;
-          line-height: 50px;
+          height: 40px;
+          line-height: 40px;
           width: 250px;
           box-sizing: border-box;
           margin-right: 5px;
@@ -154,7 +185,7 @@
      }
 
      .taskbar-item:hover {
-          /* background-color: rgb(42, 42, 42); */
+          background-color: rgba(0, 0, 0, 0.4);
      }
 
      .taskbar-item.active {
@@ -245,6 +276,77 @@
           left: 150px;
           top: 150px;
      }
+
+     #timetracker_popup {
+          position: absolute;
+          right: 10px;
+          bottom: 50px;
+          /* background-color: rgb(0,0,0,0.7); */
+          background-color: rgb(0, 0, 0);
+          width: 300px;
+          height: 125px;
+          padding: 15px;
+          color: white;
+          z-index: 100000;
+     }
+
+     #popup-logo {
+          display: inline-block;
+          height: 45px;
+          margin-bottom: 10px;
+     }
+
+     #popup-text-container {
+          display: inline-block;
+          width: calc(100% - 60px);
+          margin-top: 3px;
+          text-align: left;
+          padding-left: 10px;
+          vertical-align: top;
+     }
+
+     #popup-app-title {
+          font-family: "MyriadBold";
+     }
+
+     #popup-dropdown {
+          box-sizing: border-box;
+          height: 30px;
+          line-height: 30px;
+          padding-left: 7px;
+          padding-right: 7px;
+          width: 100%;
+          background-color: white;
+          color: black;
+          text-align: left;
+          margin-bottom: 10px;
+     }
+
+     #popup-cancel,
+     #popup-confirm {
+          height: 25px;
+          border: 0;
+          outline: 0;
+          display: inline-block;
+          width: calc(50% - 2px);
+          color: white;
+     }
+
+     #popup-cancel {
+          background-color: rgb(168, 168, 168);
+     }
+
+     #popup-cancel:hover {
+          background-color: rgb(148, 148, 148);
+     }
+
+     #popup-confirm {
+          background-color: rgb(16, 162, 250);
+     }
+
+     #popup-confirm:hover {
+          background-color: rgb(30, 133, 197);
+     }
 </style>
 
 <body>
@@ -307,7 +409,7 @@
           <div class="resizer resizer-lb"></div>
           <div class="resizer resizer-rb"></div>
           <div class="window-bar">
-               <div class="window-bar-title">Data Protection</div>
+               <div class="window-bar-title">TimeTracker</div>
                <div class="window-bar-navigation">
                     <i class="window-minimize far fa-window-minimize"></i>
                     <i class="window-maximize far fa-square"></i>
@@ -340,16 +442,45 @@
           <iframe id="testframea" class="frame" src="frames/a.html"></iframe>
      </div> -->
 
+     <div id="timetracker_popup">
+          <img src="images/Bild1.png" id="popup-logo"></img>
+          <div id="popup-text-container">
+               <div id="popup-app-title">Google Chrome</div>
+               <div id="popup-info">Still working on:</div>
+          </div>
+          <div id="popup-dropdown">Projekte - TimeTracker</div>
+          <button id="popup-cancel">Cancel</button>
+          <button id="popup-confirm">Confirm</button>
+     </div>
+
      <div id="desktop">
+          <div id="desktop-background-image"></div>
           <div id="desktop-background"></div>
           <div id="desktop-taskbar">
                <i id="desktop-windows-logo" class="fab fa-windows"></i>
-               <div id="desktop-taskbar-item-container">
-               </div>
+               <div id="desktop-taskbar-item-container"></div>
+               <div id="desktop-taskbar-time">19:11</div>
           </div>
      </div>
 
      <script>
+
+          // Time display in bottom right corner
+          let time_display = document.getElementById("desktop-taskbar-time");
+          let update_time = function () {
+               let dt = new Date();
+               time_display.innerHTML = ("" + dt.getDate()).padStart(2, '0') + "/"
+                    + ("" + (dt.getMonth() + 1)).padStart(2, '0') + "/"
+                    + ("" + dt.getFullYear()).substring(2, 4) + "&nbsp&nbsp&nbsp"
+                    + ("" + dt.getHours()).padStart(2, '0') + ":"
+                    + ("" + dt.getMinutes()).padStart(2, '0')
+          }
+          update_time();
+          setInterval(function () {
+               update_time();
+          }, 5000);
+
+
           const ORIENT_NORTH_SOUTH = "ns";
           const ORIENT_EAST_WEST = "ew";
           const ORIENT_BOTH = "both";
@@ -362,7 +493,6 @@
           let top_z_index = 10;
 
           let dom_background = document.getElementById("desktop-background");
-
           function add_drag_functionality(object, dom_element, dom_element_move_listener) {
                let pos1 = 0,
                     pos2 = 0,
@@ -420,18 +550,21 @@
                     object.ux_end();
                     object.focus();
 
-                    if (e.clientX === 0) {
+                    if (e.clientX < 5) {
                          // Moved to side
                          object.half(LEFT_SIDE);
-                    } else if (e.clientX > dom_background.offsetWidth - 2) {
+                    } else if (e.clientX > dom_background.offsetWidth - 5) {
                          // Moved to side
                          object.half(RIGHT_SIDE);
+                    } else if (e.clientY < 5) {
+                         // Moved to top
+                         object.maximize();
                     }
-                    
-                    object.trigger_resize_listeners();
-                    
+
+                    // object.trigger_resize_listeners();
+
                }
-               
+
           }
 
           function add_resize_functionality(object, dom_element, dom_element_res_listener, orientation, reverse_ns, reverse_ew) {
@@ -500,6 +633,7 @@
                     this.title = body.title;
 
                     this.window_bar = this.window_dom.querySelector('.window-bar');
+                    this.window_bar_title = this.window_dom.querySelector('.window-bar-title');
                     this.window_maximize = this.window_bar.querySelector('.window-maximize');
                     this.window_minimize = this.window_bar.querySelector('.window-minimize');
                     this.window_close = this.window_bar.querySelector('.window-close');
@@ -510,11 +644,13 @@
                     this.resizer_w = this.window_dom.querySelector('.resizer-w');
                     this.resizer_lb = this.window_dom.querySelector('.resizer-lb');
                     this.resizer_rb = this.window_dom.querySelector('.resizer-rb');
-                    
+
                     this.iframe = this.window_dom.querySelector('iframe');
 
                     this.is_maximised = false;
                     this.is_minimized = false;
+                    this.is_halfed = false;
+
                     this.ux_active = false;
 
                     this.taskbar_item_dom = document.createElement("div");
@@ -526,25 +662,29 @@
                     this._add_taskbar_listener();
                     this._add_ux();
                }
-               
-               trigger_resize_listeners = () => {
-                    this.iframe.contentWindow.postMessage("resized");
+
+               trigger_resize_listeners() {
+                    // this.iframe.contentWindow.postMessage("resized");
                }
 
-               open = () => {
+               // Opens the window in the taskbar
+               open() {
                     this.taskbar_item_dom.classList.add("active");
                }
 
-               _add_taskbar_listener = () => {
-                    this.taskbar_item_dom.onclick = () => {
-                         if (this.is_minimized)
-                              this.unminimize();
-                         this.focus();
+               // Adds ux listener for taskbar
+               _add_taskbar_listener() {
+                    let this_obj = this;
+                    this.taskbar_item_dom.onclick = function () {
+                         if (this_obj.is_minimized)
+                              this_obj.unminimize();
+                         this_obj.focus();
                     }
                }
 
-               _add_ux = () => {
-                    add_drag_functionality(this, this.window_dom, this.window_bar);
+               // Adds ux (resize and drag) listeners
+               _add_ux() {
+                    add_drag_functionality(this, this.window_dom, this.window_bar_title);
 
                     // first: NS, second: EW
 
@@ -567,46 +707,107 @@
                     add_resize_functionality(this, this.window_dom, this.resizer_rb, ORIENT_BOTH, false, false);
                }
 
-               _add_listeners = () => {
-                    this.window_dom.onmousedown = (e) => {
+               // Adds listeners to the buttons
+               _add_listeners() {
+                    let this_obj = this;
+                    this.window_dom.onmousedown = function (e) {
                          ALL_WINDOWS.map(w => w.unfocus());
-                         if (!this.ux_active) {
-                              this.window_dom.click();
-                              this.focus();
+                         if (!this_obj.ux_active) {
+                              this_obj.window_dom.click();
+                              this_obj.focus();
                          }
                     }
-
-                    this.window_dom.onclick = () => {
-                         this.ux_end();
-                         this.focus();
+                    this.window_dom.onclick = function () {
+                         this_obj.ux_end();
+                         this_obj.focus();
                     }
 
-                    this.window_maximize.onclick = () => {
-                         if (this.is_maximised)
-                              this.unmaximize();
+                    this.window_maximize.onclick = function () {
+                         console.log("window_maximize");
+                         if (this_obj.is_maximised) {
+                              this_obj.unmaximize();
+                         } else {
+                              this_obj.maximize();
+                         }
+                    }
+                    this.window_minimize.onclick = function () {
+                         console.log("window_minimize");
+                         this_obj.minimize();
+                    }
+                    this.window_close.onclick = function () {
+                         console.log("window_close");
+                         this_obj.minimize();
+                         this_obj.minimize();
+                         this_obj.minimize();
+                    }
+                    /*
+                    this.window_maximize.onclick = function () {
+                         console.log("max")
+                         if (this_obj.is_maximised)
+                              this_obj.unmaximize();
                          else
-                              this.maximize();
+                              this_obj.maximize();
                     }
 
-                    this.window_minimize.onclick = () => {
-                         if (this.is_minimized)
-                              this.unminimize();
+                    this.window_minimize.onclick = function () {
+                         if (this_obj.is_minimized)
+                              this_obj.unminimize();
                          else
-                              this.minimize();
+                              this_obj.minimize();
                     }
-                    this.window_close.onclick = this.window_minimize.onclick;
+                    this.window_close.onclick = function () {
+                         console.log("close");
+                         console.log(this_obj);
+                         this_obj.minimize();
+                    }
+                    */
                }
 
-               ux_start = () => {
+               // Sets the variables accordingly to the state passed
+               _set_halfed(is_halfed) {
+                    if (is_halfed) {
+                         this.is_maximised = false;
+                         this.is_minimized = false;
+                         this.halfed = true;
+                    } else {
+                         this.halfed = false;
+                    }
+               }
+
+               // Sets the variables accordingly to the state passed
+               _set_minimized(is_minimized) {
+                    if (is_minimized) {
+                         this.is_maximised = false;
+                         this.is_minimized = true;
+                         this.halfed = false;
+                    } else {
+                         this.is_minimized = false;
+                    }
+               }
+
+               // Sets the variables accordingly to the state passed
+               _set_maximized(is_maximised) {
+                    if (is_maximised) {
+                         this.is_maximised = true;
+                         this.is_minimized = false;
+                         this.halfed = false;
+                    } else {
+                         this.is_maximised = false;
+                    }
+               }
+
+               // Sets flag when touch events on the iframe are disabled 
+               ux_start() {
                     this.ux_active = true;
                }
-
-               ux_end = () => {
+               // Sets flag when touch events on the iframe are enabled
+               ux_end() {
                     this.ux_active = false;
                }
 
-               half = (side) => {
-                    this.halfed = true;
+               // Half the window to a side (RIGHT_SIDE or LEFT_SIDE)
+               half(side) {
+                    this._set_halfed(true);
 
                     this.pre_max_left = this.window_dom.offsetLeft;
                     this.pre_max_top = this.window_dom.offsetTop;
@@ -623,8 +824,9 @@
                     }
                }
 
-               maximize = () => {
-                    this.is_maximised = true;
+               // Maximizes the window
+               maximize() {
+                    this._set_maximized(true);
                     this.pre_max_left = this.window_dom.offsetLeft;
                     this.pre_max_top = this.window_dom.offsetTop;
                     this.pre_max_width = this.window_dom.offsetWidth
@@ -633,22 +835,25 @@
                     this.window_dom.style.top = "0px";
                     this.window_dom.style.width = dom_background.offsetWidth + "px";
                     this.window_dom.style.height = dom_background.offsetHeight + "px";
-                    this.halfed = false;
                }
 
-               unmaximize = () => {
+               // Unmaximizes the window
+               unmaximize() {
+                    this._set_maximized(false);
                     this.set_size_to_pre_max_or_half();
                     this.set_pos_to_pre_max_or_half();
                }
 
-               set_pos_to_pre_max_or_half = () => {
+               // Restore the window's old position
+               set_pos_to_pre_max_or_half() {
                     this.window_dom.style.left = this.pre_max_left + "px";
                     this.window_dom.style.top = this.pre_max_top + "px";
                     this.is_maximised = false;
                     this.halfed = false;
                }
 
-               set_size_to_pre_max_or_half = () => {
+               // Restore the window's old size
+               set_size_to_pre_max_or_half() {
                     this.window_dom.style.width = this.pre_max_width + "px";
                     this.window_dom.style.height = this.pre_max_height + "px";
 
@@ -656,17 +861,20 @@
                     this.halfed = false;
                }
 
-               minimize = () => {
+               // Minimizes the window to the taskbar
+               minimize() {
                     this.window_dom.classList.add("hide");
-                    this.is_minimized = true;
+                    this._set_minimized(true);
                }
 
-               unminimize = () => {
+               // Un-minimizes the window
+               unminimize() {
                     this.window_dom.classList.remove("hide");
-                    this.is_minimized = false;
+                    this._set_minimized(false);
                }
 
-               focus = () => {
+               // Shifts focus to this window
+               focus() {
                     this.window_dom.querySelector(".framecover").classList.remove("show");
                     top_z_index++;
                     this.window_dom.style.zIndex = top_z_index + "";
@@ -674,7 +882,8 @@
                     this.window_dom.click();
                }
 
-               unfocus = () => {
+               // Shifts focus from this window
+               unfocus() {
                     this.window_dom.querySelector(".framecover").classList.add("show");
                }
           }
