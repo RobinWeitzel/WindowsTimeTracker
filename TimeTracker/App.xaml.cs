@@ -38,6 +38,8 @@ namespace TimeTracker
         private HotkeyListener HotkeyListener;
         private ASDL ASDL;
 
+        private Mutex _instanceMutex = null;
+
         /// <summary>
         /// Sets up the base of the application.
         /// Everything is coordinated from here.
@@ -45,21 +47,13 @@ namespace TimeTracker
         /// <param name="e">The startup event</param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            //Mutex mit eindeutigem Namen (bspw. GUID)
-            Mutex mutex = new Mutex(true, "1ca95cf6-561b-4dc0-acd5-d83b3e4030b4");
-
-            //Prüfung, ob Mutex schon länger aktiv ist..
-            if (mutex.WaitOne(TimeSpan.Zero, true))
+            bool createdNew;
+            _instanceMutex = new Mutex(true, "1ca95cf6-561b-4dc0-acd5-d83b3e4030b4", out createdNew);
+            if (!createdNew)
             {
-                //Mutex ist gerade gestartet..
-                base.OnStartup(e);
-            }
-            else
-            {
-                //Mutex läuft bereits längere Zeit..
-                System.Windows.Forms.MessageBox.Show("Anwendung läuft bereits!");
-                //Anwendung beenden
-                Environment.Exit(0);
+                _instanceMutex = null;
+                System.Windows.Application.Current.Shutdown();
+                return;
             }
 
             // Set up app to run in the background
@@ -92,6 +86,16 @@ namespace TimeTracker
             ShowTutorialIfNeeded();
 
             CheckForUpdates();
+        }
+        /// <summary>
+        /// Disposes of the Mutex object on close.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_instanceMutex != null)
+                _instanceMutex.ReleaseMutex();
+            base.OnExit(e);
         }
 
         /// <summary>
