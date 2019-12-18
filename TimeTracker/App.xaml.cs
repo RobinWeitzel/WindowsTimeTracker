@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -44,6 +45,23 @@ namespace TimeTracker
         /// <param name="e">The startup event</param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            //Mutex mit eindeutigem Namen (bspw. GUID)
+            Mutex mutex = new Mutex(true, "1ca95cf6-561b-4dc0-acd5-d83b3e4030b4");
+
+            //Prüfung, ob Mutex schon länger aktiv ist..
+            if (mutex.WaitOne(TimeSpan.Zero, true))
+            {
+                //Mutex ist gerade gestartet..
+                base.OnStartup(e);
+            }
+            else
+            {
+                //Mutex läuft bereits längere Zeit..
+                System.Windows.Forms.MessageBox.Show("Anwendung läuft bereits!");
+                //Anwendung beenden
+                Environment.Exit(0);
+            }
+
             // Set up app to run in the background
             base.OnStartup(e);
 
@@ -82,7 +100,7 @@ namespace TimeTracker
         private void ShowTutorialIfNeeded()
         {
             // Check if the tutorial should be shown
-            if (true || !Settings.Default.TutorialViewed)
+            if (!Settings.Default.TutorialViewed)
             {
                 new Tutorial().Show();
                 Settings.Default.TutorialViewed = true;
