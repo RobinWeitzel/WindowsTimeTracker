@@ -270,6 +270,7 @@ namespace TimeTracker.Helper
                 TimeNotificationVisible = Properties.Settings.Default.TimeNotificationVisible,
                 TimeBeforeAskingAgain = Properties.Settings.Default.TimeBeforeAskingAgain,
                 TimeSinceAppLastUsed = Properties.Settings.Default.TimeSinceAppLastUsed,
+                OfflineTracking = Properties.Settings.Default.OfflineTracking,
                 DarkMode = Properties.Settings.Default.DarkMode,
                 HotkeyDisabled = Properties.Settings.Default.HotkeyDisabled,
                 Hotkeys = Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
@@ -362,7 +363,6 @@ namespace TimeTracker.Helper
         {
             Models.TrackingSettings Settings = new TrackingSettings
             {
-                OfflineTracking = Properties.Settings.Default.OfflineTracking,
                 Blacklist = Properties.Settings.Default.Blacklist.Cast<string>().ToList()
             };
 

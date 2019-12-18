@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dark_mode="false">
 
 <head>
@@ -13211,7 +13211,7 @@ TSFRepository.registerComponent(class ViewSettings extends TSFComponent {
     }
 
     hotkeyEnabledClick(e) {
-        this.setHotkeyEnabled(!this.state.hotkeyDisabled).then(result => {
+        this.setHotkeyEnabled(this.state.hotkeyDisabled).then(result => {
             this.state.hotkeyDisabled = result; 
         });  
     }
@@ -13954,7 +13954,7 @@ TSFRepository.registerComponent(class ViewReport extends TSFComponent {
                 <div class="subheader">Hotkeys</div>
                 <p class="control-header">Enable global hotkey</p>
                 <label class="switch">
-                    <input type="checkbox" tsf-bind-boolean-attribute-checked="this.hotkeyDisabled"
+                    <input type="checkbox" tsf-bind-boolean-attribute-checked="!this.hotkeyDisabled"
                         tsf-bind-function-click="this.hotkeyEnabledClick">
                     <span class="slider"></span>
                 </label>

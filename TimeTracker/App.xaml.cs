@@ -82,7 +82,7 @@ namespace TimeTracker
         private void ShowTutorialIfNeeded()
         {
             // Check if the tutorial should be shown
-            if (!Settings.Default.TutorialViewed)
+            if (true || !Settings.Default.TutorialViewed)
             {
                 new Tutorial().Show();
                 Settings.Default.TutorialViewed = true;
