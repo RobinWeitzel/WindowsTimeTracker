@@ -1,6 +1,26 @@
 const fs = require('fs');
 const request = require('request');
 const minify = require('html-minifier').minify;
+const Babel = require('@babel/standalone');
+
+
+Babel.registerPlugin(
+    '@babel/plugin-proposal-class-properties',
+    require('@babel/plugin-proposal-class-properties'),
+);
+/*"transform-custom-element-classes",
+                            "@babel/plugin-proposal-class-properties",*/
+Babel.registerPreset('@babel/preset-env', require('@babel/preset-env'));
+
+Babel.registerPreset("my-preset", {
+    presets: [
+      [Babel.availablePresets["@babel/preset-env"], { "targets": { "node": true } }]
+    ],
+    plugins: [
+      [Babel.availablePlugins["@babel/plugin-proposal-class-properties"]]
+    ],
+    moduleId: "main"
+  });
 
 const get = async url => {
     return new Promise((resolve, reject) => {
@@ -73,6 +93,8 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
     }
     console.log("");
 
+    let htmlEs5 = html;
+
     // Scripts
     console.log("LOADING SCRIPTS:");
     console.log(scripts.length + " scripts found.");
@@ -81,10 +103,10 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             const match = scripts[i];
             const href = match.match(/src=["|'](.*?)["|']/)[1];
 
-            if(match.includes("CefSharp.js")) {
+            /*if(match.includes("CefSharp.js")) {
                 console.log("Finished loading script " + (i + 1) + "/" + (scripts.length) + ".");
                 continue;
-            }
+            }*/
 
             let content;
 
@@ -103,13 +125,25 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
             const start = html.search(new RegExp(escapeRegExp(match)));
 
             const replacement = `<script>\n${content}\n</script>`;
+            let replacementEs5 = replacement;
+            if (match.includes("View") || match.includes("Navigation") || match.includes("CefSharp.js")) {
+                replacementEs5 = `<script>\n${Babel.transform(content, {
+                    presets: [
+                        'my-preset'
+                    ]
+                }).code}\n</script>`;
+            }
 
             html = html.substr(0, start) + replacement + html.substr(start + match.length);
+
+            const startEs5 = htmlEs5.search(new RegExp(escapeRegExp(match)));
+            htmlEs5 = htmlEs5.substr(0, startEs5) + replacementEs5 + htmlEs5.substr(startEs5 + match.length);
 
             console.log("Finished loading script " + (i + 1) + "/" + (scripts.length) + ".");
         } catch (e) {
             errors++;
             console.error("Could not load script " + (i + 1) + "/" + (scripts.length) + ".");
+            console.error(e);
         }
     }
 
@@ -142,11 +176,19 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
 
                 console.log("Saved minified file");
 
-                if (errors === 0) {
-                    console.log("--- BUILD FINISHED SUCCESSFULLY ---");
-                } else {
-                    console.log("--- BUILD FINISHED WITH ERRORS ---");
-                }
+                fs.writeFile("dist/index.es5.html", htmlEs5, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+
+                    console.log("Saved es5 file");
+
+                    if (errors === 0) {
+                        console.log("--- BUILD FINISHED SUCCESSFULLY ---");
+                    } else {
+                        console.log("--- BUILD FINISHED WITH ERRORS ---");
+                    }
+                });
             });
         });
     } catch (e) {
@@ -156,7 +198,7 @@ fs.readFile('index.html', 'utf8', async (err, html) => {
         if (errors === 0) {
             console.log("--- BUILD FINISHED SUCCESSFULLY ---");
         } else {
-            console.log("--- BUILD FINISHED WITH ERRORS ---");
+            console.error("--- BUILD FINISHED WITH ERRORS ---");
         }
     }
 });

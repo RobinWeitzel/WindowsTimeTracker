@@ -1,4 +1,4 @@
-TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
+TSF.Repository.registerComponent(class ViewDaily extends TSF.Component {
     constructor() {
         super();
 
@@ -227,5 +227,9 @@ TSFRepository.registerComponent(class ViewDaily extends TSFComponent {
 
     shiftToday(e) {
         this.datePicker.setDate(moment());
+    }
+
+    test() {
+        
     }
 });

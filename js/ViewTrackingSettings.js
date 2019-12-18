@@ -1,4 +1,4 @@
-TSFRepository.registerComponent(class ViewTrackingSettings extends TSFComponent {
+TSF.Repository.registerComponent(class ViewTrackingSettings extends TSF.Component {
     constructor() {
         super();
 

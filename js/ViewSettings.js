@@ -290,7 +290,7 @@ const keyCodesToHex = {
     220: "A6"
 }
 
-TSFRepository.registerComponent(class ViewSettings extends TSFComponent {
+TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
     constructor() {
         super();
 

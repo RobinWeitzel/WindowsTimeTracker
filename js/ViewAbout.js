@@ -1,4 +1,4 @@
-TSFRepository.registerComponent(class ViewAbout extends TSFComponent {
+TSF.Repository.registerComponent(class ViewAbout extends TSF.Component {
     constructor() {
         super();
     }

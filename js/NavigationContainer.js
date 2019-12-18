@@ -1,4 +1,4 @@
-TSFRepository.registerComponent(class NavigationContainer extends TSFComponent {
+TSF.Repository.registerComponent(class NavigationContainer extends TSF.Component {
     constructor() {
         super();
 

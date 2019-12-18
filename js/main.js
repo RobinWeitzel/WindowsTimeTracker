@@ -28,4 +28,4 @@ let unexpand_menu = () => {
 
 // ----------------- Views --------------------
 
-TSFProxy.registerComparison('Moment', (a, b) => a._i === b._i);
+TSF.Proxy.registerComparison('Moment', (a, b) => a._i === b._i);
