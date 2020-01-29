@@ -207,8 +207,11 @@ namespace TimeTracker
         /// <param name="e">The event</param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            AppStateTracker.SaveCurrentWindow();
-            AppStateTracker.SaveCurrentActivity();
+            if (AppStateTracker != null)
+            {
+                AppStateTracker.SaveCurrentWindow();
+                AppStateTracker.SaveCurrentActivity();
+            }
         }
 
         /// <summary>

@@ -29,8 +29,5 @@ namespace TimeTracker.Helper.Models
 
         [JsonProperty(PropertyName = "hotkeyDisabled")]
         public bool HotkeyDisabled { get; set; } // Enable global hotkey
-
-        [JsonProperty(PropertyName = "darkMode")]
-        public bool DarkMode { get; set; }
     }
 }

@@ -265,15 +265,15 @@ namespace TimeTracker.Helper
 
         public string GetSettings()
         {
+            List<System.Windows.Input.Key> Hotkeys = Properties.Settings.Default.Hotkeys ?? new List<System.Windows.Input.Key>();
             Models.Settings Settings = new Models.Settings
             {
                 TimeNotificationVisible = Properties.Settings.Default.TimeNotificationVisible,
                 TimeBeforeAskingAgain = Properties.Settings.Default.TimeBeforeAskingAgain,
                 TimeSinceAppLastUsed = Properties.Settings.Default.TimeSinceAppLastUsed,
                 OfflineTracking = Properties.Settings.Default.OfflineTracking,
-                DarkMode = Properties.Settings.Default.DarkMode,
                 HotkeyDisabled = Properties.Settings.Default.HotkeyDisabled,
-                Hotkeys = Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
+                Hotkeys = Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
                 PlayNotificationSound = Properties.Settings.Default.PlayNotificationSound
             };
 
@@ -281,26 +281,6 @@ namespace TimeTracker.Helper
 
             // Add the data as a JSON string to the result
             return Json;
-        }
-
-        public void SetSettings(IDictionary<string, object> settings)
-        {
-            Properties.Settings.Default.TimeNotificationVisible = (int)settings["TimeNotificationVisible"];
-            Properties.Settings.Default.TimeBeforeAskingAgain = (int)settings["TimeBeforeAskingAgain"];
-            Properties.Settings.Default.TimeSinceAppLastUsed = (int)settings["TimeSinceAppLastUsed"];
-            Properties.Settings.Default.DarkMode = (bool)settings["DarkMode"];
-            Properties.Settings.Default.HotkeyDisabled = (bool)settings["HotkeyDisabled"];
-            List<Object> HotkeyList = settings["Hotkeys"] as List<Object>;
-            Properties.Settings.Default.Hotkeys = HotkeyList.Cast<int>().Select(k => KeyInterop.KeyFromVirtualKey(k)).ToList();
-            Properties.Settings.Default.Save();
-        }
-
-        public string SetDarkMode(bool darkMode)
-        {
-            Properties.Settings.Default.DarkMode = darkMode;
-            Properties.Settings.Default.Save();
-
-            return JsonConvert.SerializeObject(Properties.Settings.Default.DarkMode);
         }
 
         public string SetPlayNotificationSound(bool playNotificationSound)

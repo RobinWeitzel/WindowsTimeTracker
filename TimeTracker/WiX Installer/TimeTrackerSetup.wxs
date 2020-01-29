@@ -11,7 +11,6 @@
                 <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker">
                     <Directory Name="swiftshader" Id="swiftshaderFolder" />
                     <Directory Name="locales" Id="localesFolder" />
-                    <Directory Name="GPUCache" Id="GPUCacheFolder" />
                     <Directory Name="app.publish" Id="apppublishFolder" />
                     <Directory Name="Resources" Id="ResourcesFolder">
                         <Directory Name="font-awesome-4.7.0" Id="fontawesomeFolder">
@@ -62,7 +61,6 @@
                 <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Release\chrome_elf.dll" />
                 <File Id="CSVHELPER.DLL" Name="CsvHelper.dll" Source="..\bin\x64\Release\CsvHelper.dll" />
                 <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Release\d3dcompiler_47.dll" />
-                <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Release\debug.log" />
                 <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Release\devtools_resources.pak" />
                 <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Release\icudtl.dat" />
                 <File Id="INDEX.HTML" Name="index.html" Source="..\bin\x64\Release\index.html" />
@@ -260,20 +258,6 @@
                 <File Id="ZH_TW.PAK" Name="zh-TW.pak" Source="..\bin\x64\Release\locales\zh-TW.pak" />
             </Component>
         </DirectoryRef>
-        <DirectoryRef Id="GPUCacheFolder">
-            <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="GPUCacheFolder" On="uninstall" />
-                <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Release\GPUCache\data_0" />
-                <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Release\GPUCache\data_1" />
-                <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Release\GPUCache\data_2" />
-                <File Id="DATA_3" Name="data_3" Source="..\bin\x64\Release\GPUCache\data_3" />
-                <File Id="F_000001" Name="f_000001" Source="..\bin\x64\Release\GPUCache\f_000001" />
-                <File Id="INDEX" Name="index" Source="..\bin\x64\Release\GPUCache\index" />
-            </Component>
-        </DirectoryRef>
         <DirectoryRef Id="apppublishFolder">
             <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\apppublish" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
@@ -306,7 +290,6 @@
             <ComponentRef Id="timetracker" />
             <ComponentRef Id="swiftshader" />
             <ComponentRef Id="locales" />
-            <ComponentRef Id="GPUCache" />
             <ComponentRef Id="apppublish" />
             <ComponentRef Id="Resources" />
             <ComponentRef Id="ApplicationPrograms" />
