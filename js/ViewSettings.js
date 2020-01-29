@@ -307,7 +307,7 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
             this.state.timeBeforeAskingAgain = settings.timeBeforeAskingAgain;
             this.state.timeSinceAppLastUsed = settings.timeSinceAppLastUsed;
             this.state.offlineTracking = settings.offlineTracking;
-            this.state.hotkeyDisabled = !settings.hotkeyDisabled;
+            this.state.hotkeyEnabled = !settings.hotkeyDisabled;
             this.keysRendered = settings.hotkeys.map(k => k.toString(16).length === 1 ? "0" + k.toString(16).toUpperCase(): k.toString(16).toUpperCase());
             this.hotkey_render_output();
 
@@ -341,27 +341,7 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
             });
         });
     }
-
-    async setSettings() {
-        return new Promise(async (resolve, reject) => {
-            if (typeof boundAsync === "undefined")
-                await CefSharp.BindObjectAsync("boundAsync");
-
-            boundAsync.setSettings({
-                DarkMode: this.state.darkMode,
-                TimeNotificationVisible: this.state.timeNotificationVisible,
-                PlayNotificationSound: this.state.playNotificationSound,
-                TimeBeforeAskingAgain: this.state.timeBeforeAskingAgain,
-                TimeSinceAppLastUsed: this.state.timeSinceAppLastUsed,
-                HotkeyDisabled: this.state.hotkeyDisabled,
-                Hotkeys: this.keysRendered.map(k => parseInt(k, 16))
-            }).then(result => {
-                resolve(JSON.parse(result));
-            });
-        });
-    }
     
-
     async setTimeNotificationVisible(timeNotificationVisible) {
         return new Promise(async (resolve, reject) => {
             if (typeof boundAsync === "undefined")
@@ -428,13 +408,13 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
         });
     }
 
-    async setHotkeyEnabled(hotkeyEnabled) {
+    async setHotkeyEnabled(newValue) {
         return new Promise(async (resolve, reject) => {
             if (typeof boundAsync === "undefined")
                 await CefSharp.BindObjectAsync("boundAsync");
 
-            boundAsync.setHotkeyDisabled(!hotkeyEnabled).then(result => {
-                resolve(JSON.parse(result));
+            boundAsync.setHotkeyDisabled(!newValue).then(result => {
+                resolve(!JSON.parse(result));
             });
         });
     }
@@ -464,8 +444,8 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
     }
 
     hotkeyEnabledClick(e) {
-        this.setHotkeyEnabled(this.state.hotkeyDisabled).then(result => {
-            this.state.hotkeyDisabled = result; 
+        this.setHotkeyEnabled(!this.state.hotkeyEnabled).then(result => {
+            this.state.hotkeyEnabled = result; 
         });  
     }
 

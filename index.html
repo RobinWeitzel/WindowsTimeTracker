@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="dependencies/lightpick/lightpick.css">
 
     <!-- Timecharts -->
-    <script src="https://unpkg.com/timecharts@1.0.45/dist/TimeCharts.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/timecharts@1.0.46/dist/TimeCharts.js" type="text/javascript"></script>
 
     <!-- Css (place under the other imports as it overrides styles from dependencies) -->
     <link rel="stylesheet" type="text/css" href="css/color_scheme.css">
@@ -298,7 +298,7 @@
                 <div class="subheader">Hotkeys</div>
                 <p class="control-header">Enable global hotkey</p>
                 <label class="switch">
-                    <input type="checkbox" tsf-bind-boolean-attribute-checked="!this.hotkeyDisabled"
+                    <input type="checkbox" tsf-bind-boolean-attribute-checked="this.hotkeyEnabled"
                         tsf-bind-function-click="this.hotkeyEnabledClick">
                     <span class="slider"></span>
                 </label>
@@ -306,7 +306,7 @@
                 <input type="text" id="settings_hotkey" tsf-value="hotkeys"
                     tsf-bind-function-keydown="this.hotkey_on_key_down" tsf-bind-function-keyup="this.hotkey_on_key_up"
                     tsf-bind-function-keypress="this.hotkey_on_key_press"
-                    tsf-bind-boolean-attribute-disabled="this.hotkeyDisabled">
+                    tsf-bind-boolean-attribute-disabled="!this.hotkeyEnabled">
             </div>
         </tsf-view-settings>
 
