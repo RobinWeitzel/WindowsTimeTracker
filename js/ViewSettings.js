@@ -307,7 +307,7 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
             this.state.timeBeforeAskingAgain = settings.timeBeforeAskingAgain;
             this.state.timeSinceAppLastUsed = settings.timeSinceAppLastUsed;
             this.state.offlineTracking = settings.offlineTracking;
-            this.state.hotkeyDisabled = settings.hotkeyDisabled;
+            this.state.hotkeyDisabled = !settings.hotkeyDisabled;
             this.keysRendered = settings.hotkeys.map(k => k.toString(16).length === 1 ? "0" + k.toString(16).toUpperCase(): k.toString(16).toUpperCase());
             this.hotkey_render_output();
 
@@ -464,7 +464,7 @@ TSF.Repository.registerComponent(class ViewSettings extends TSF.Component {
     }
 
     hotkeyEnabledClick(e) {
-        this.setHotkeyEnabled(!this.state.hotkeyDisabled).then(result => {
+        this.setHotkeyEnabled(this.state.hotkeyDisabled).then(result => {
             this.state.hotkeyDisabled = result; 
         });  
     }

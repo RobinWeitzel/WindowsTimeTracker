@@ -4,6 +4,7 @@
   "description": "",
   "main": "inline-script.js",
   "scripts": {
+    "build-web": "node build-web.js",
     "build": "node build.js"
   },
   "repository": {
