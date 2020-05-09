@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -37,6 +38,8 @@ namespace TimeTracker
         private HotkeyListener HotkeyListener;
         private ASDL ASDL;
 
+        private Mutex _instanceMutex = null;
+
         /// <summary>
         /// Sets up the base of the application.
         /// Everything is coordinated from here.
@@ -44,6 +47,15 @@ namespace TimeTracker
         /// <param name="e">The startup event</param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            bool createdNew;
+            _instanceMutex = new Mutex(true, "1ca95cf6-561b-4dc0-acd5-d83b3e4030b4", out createdNew);
+            if (!createdNew)
+            {
+                _instanceMutex = null;
+                System.Windows.Application.Current.Shutdown();
+                return;
+            }
+
             // Set up app to run in the background
             base.OnStartup(e);
 
@@ -52,7 +64,7 @@ namespace TimeTracker
 
             // Sets up the taskbar icon and the menu that show if you left-click on it
             NotifyIcon = new System.Windows.Forms.NotifyIcon();
-            NotifyIcon.Icon = TimeTracker.Properties.Resources.icon;
+            NotifyIcon.Icon = new Icon(TimeTracker.Properties.Resources.icon, SystemInformation.SmallIconSize);
             NotifyIcon.Visible = true;
             CreateContextMenu();
 
@@ -74,6 +86,16 @@ namespace TimeTracker
             ShowTutorialIfNeeded();
 
             CheckForUpdates();
+        }
+        /// <summary>
+        /// Disposes of the Mutex object on close.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_instanceMutex != null)
+                _instanceMutex.ReleaseMutex();
+            base.OnExit(e);
         }
 
         /// <summary>
@@ -185,8 +207,11 @@ namespace TimeTracker
         /// <param name="e">The event</param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            AppStateTracker.SaveCurrentWindow();
-            AppStateTracker.SaveCurrentActivity();
+            if (AppStateTracker != null)
+            {
+                AppStateTracker.SaveCurrentWindow();
+                AppStateTracker.SaveCurrentActivity();
+            }
         }
 
         /// <summary>

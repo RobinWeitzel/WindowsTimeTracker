@@ -19,7 +19,7 @@ namespace TimeTracker
         public event CustomEventDelegate ChangeContextMenu;
 
         /* Constants */
-        public const string Version = "0.9.7.0";
+        public const string Version = "1.0.0.0";
 
         /* Variables */
         public IDictionary<string, DateTime> WindowsLastSeen { get; set; }

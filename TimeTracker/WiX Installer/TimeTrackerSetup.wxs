@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="0.9.7" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
+    <Product Id="*" UpgradeCode="94ed6562-d6d5-4282-9c23-c843b86f80db" Version="1.0.0" Language="1033" Name="TimeTracker" Manufacturer="Robin Weitzel">
         <Package InstallerVersion="300" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
         <MajorUpgrade DowngradeErrorMessage="A later version of TimeTracker is already installed. Setup will now exit." />
         <Media Id="1" Cabinet="TimeTracker.cab" EmbedCab="yes" />
@@ -11,7 +11,6 @@
                 <Directory Id="APPLICATIONROOTDIRECTORY" Name="TimeTracker">
                     <Directory Name="swiftshader" Id="swiftshaderFolder" />
                     <Directory Name="locales" Id="localesFolder" />
-                    <Directory Name="GPUCache" Id="GPUCacheFolder" />
                     <Directory Name="app.publish" Id="apppublishFolder" />
                     <Directory Name="Resources" Id="ResourcesFolder">
                         <Directory Name="font-awesome-4.7.0" Id="fontawesomeFolder">
@@ -38,6 +37,7 @@
                 </RegistryKey>
                 <RemoveFolder Id="APPLICATIONROOTDIRECTORY" On="uninstall" />
                 <File Id="TIMETRACKER.EXE" Name="TimeTracker.exe" Source="..\bin\x64\Release\TimeTracker.exe" />
+                <File Id="LICENSE" Name="LICENSE" Source="..\LICENSE" />
                 <File Id="CEF.PAK" Name="cef.pak" Source="..\bin\x64\Release\cef.pak" />
                 <File Id="CEF_100_PERCENT.PAK" Name="cef_100_percent.pak" Source="..\bin\x64\Release\cef_100_percent.pak" />
                 <File Id="CEF_200_PERCENT.PAK" Name="cef_200_percent.pak" Source="..\bin\x64\Release\cef_200_percent.pak" />
@@ -60,55 +60,131 @@
                 <File Id="CEFSHARP.XML" Name="CefSharp.XML" Source="..\bin\x64\Release\CefSharp.XML" />
                 <File Id="CHROME_ELF.DLL" Name="chrome_elf.dll" Source="..\bin\x64\Release\chrome_elf.dll" />
                 <File Id="CSVHELPER.DLL" Name="CsvHelper.dll" Source="..\bin\x64\Release\CsvHelper.dll" />
-                <File Id="CSVHELPER.XML" Name="CsvHelper.xml" Source="..\bin\x64\Release\CsvHelper.xml" />
                 <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\bin\x64\Release\d3dcompiler_47.dll" />
-                <File Id="DEBUG.LOG" Name="debug.log" Source="..\bin\x64\Release\debug.log" />
                 <File Id="DEVTOOLS_RESOURCES.PAK" Name="devtools_resources.pak" Source="..\bin\x64\Release\devtools_resources.pak" />
                 <File Id="ICUDTL.DAT" Name="icudtl.dat" Source="..\bin\x64\Release\icudtl.dat" />
                 <File Id="INDEX.HTML" Name="index.html" Source="..\bin\x64\Release\index.html" />
                 <File Id="LIBCEF.DLL" Name="libcef.dll" Source="..\bin\x64\Release\libcef.dll" />
                 <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\bin\x64\Release\libEGL.dll" />
                 <File Id="LIBGLESV2.DLL" Name="libGLESv2.dll" Source="..\bin\x64\Release\libGLESv2.dll" />
-                <File Id="LIVECHARTS.DLL" Name="LiveCharts.dll" Source="..\bin\x64\Release\LiveCharts.dll" />
-                <File Id="LIVECHARTS.PDB" Name="LiveCharts.pdb" Source="..\bin\x64\Release\LiveCharts.pdb" />
-                <File Id="LIVECHARTS.WPF.DLL" Name="LiveCharts.Wpf.dll" Source="..\bin\x64\Release\LiveCharts.Wpf.dll" />
-                <File Id="LIVECHARTS.WPF.PDB" Name="LiveCharts.Wpf.pdb" Source="..\bin\x64\Release\LiveCharts.Wpf.pdb" />
-                <File Id="LIVECHARTS.WPF.XML" Name="LiveCharts.Wpf.xml" Source="..\bin\x64\Release\LiveCharts.Wpf.xml" />
-                <File Id="LIVECHARTS.XML" Name="LiveCharts.xml" Source="..\bin\x64\Release\LiveCharts.xml" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.DLL" Name="Microsoft.Toolkit.Uwp.Notifications.dll" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.dll" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.PDB" Name="Microsoft.Toolkit.Uwp.Notifications.pdb" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.pdb" />
-                <File Id="MICROSOFT.TOOLKIT.UWP.NOTIFICATIONS.XML" Name="Microsoft.Toolkit.Uwp.Notifications.xml" Source="..\bin\x64\Release\Microsoft.Toolkit.Uwp.Notifications.xml" />
+                <File Id="LICENSE_1" Name="LICENSE" Source="..\bin\x64\Release\LICENSE" />
                 <File Id="MICROSOFT.WIN32.PRIMITIVES.DLL" Name="Microsoft.Win32.Primitives.dll" Source="..\bin\x64\Release\Microsoft.Win32.Primitives.dll" />
                 <File Id="NATIVES_BLOB.BIN" Name="natives_blob.bin" Source="..\bin\x64\Release\natives_blob.bin" />
+                <File Id="NETSTANDARD.DLL" Name="netstandard.dll" Source="..\bin\x64\Release\netstandard.dll" />
                 <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\bin\x64\Release\Newtonsoft.Json.dll" />
                 <File Id="NEWTONSOFT.JSON.XML" Name="Newtonsoft.Json.xml" Source="..\bin\x64\Release\Newtonsoft.Json.xml" />
                 <File Id="README.TXT" Name="README.txt" Source="..\bin\x64\Release\README.txt" />
                 <File Id="SNAPSHOT_BLOB.BIN" Name="snapshot_blob.bin" Source="..\bin\x64\Release\snapshot_blob.bin" />
                 <File Id="SYSTEM.APPCONTEXT.DLL" Name="System.AppContext.dll" Source="..\bin\x64\Release\System.AppContext.dll" />
+                <File Id="SYSTEM.BUFFERS.DLL" Name="System.Buffers.dll" Source="..\bin\x64\Release\System.Buffers.dll" />
+                <File Id="SYSTEM.BUFFERS.XML" Name="System.Buffers.xml" Source="..\bin\x64\Release\System.Buffers.xml" />
+                <File Id="SYSTEM.COLLECTIONS.CONCURRENT.DLL" Name="System.Collections.Concurrent.dll" Source="..\bin\x64\Release\System.Collections.Concurrent.dll" />
+                <File Id="SYSTEM.COLLECTIONS.DLL" Name="System.Collections.dll" Source="..\bin\x64\Release\System.Collections.dll" />
+                <File Id="SYSTEM.COLLECTIONS.NONGENERIC.DLL" Name="System.Collections.NonGeneric.dll" Source="..\bin\x64\Release\System.Collections.NonGeneric.dll" />
+                <File Id="SYSTEM.COLLECTIONS.SPECIALIZED.DLL" Name="System.Collections.Specialized.dll" Source="..\bin\x64\Release\System.Collections.Specialized.dll" />
+                <File Id="SYSTEM.COMPONENTMODEL.DLL" Name="System.ComponentModel.dll" Source="..\bin\x64\Release\System.ComponentModel.dll" />
+                <File Id="SYSTEM.COMPONENTMODEL.EVENTBASEDASYNC.DLL" Name="System.ComponentModel.EventBasedAsync.dll" Source="..\bin\x64\Release\System.ComponentModel.EventBasedAsync.dll" />
+                <File Id="SYSTEM.COMPONENTMODEL.PRIMITIVES.DLL" Name="System.ComponentModel.Primitives.dll" Source="..\bin\x64\Release\System.ComponentModel.Primitives.dll" />
+                <File Id="SYSTEM.COMPONENTMODEL.TYPECONVERTER.DLL" Name="System.ComponentModel.TypeConverter.dll" Source="..\bin\x64\Release\System.ComponentModel.TypeConverter.dll" />
                 <File Id="SYSTEM.CONSOLE.DLL" Name="System.Console.dll" Source="..\bin\x64\Release\System.Console.dll" />
+                <File Id="SYSTEM.DATA.COMMON.DLL" Name="System.Data.Common.dll" Source="..\bin\x64\Release\System.Data.Common.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.CONTRACTS.DLL" Name="System.Diagnostics.Contracts.dll" Source="..\bin\x64\Release\System.Diagnostics.Contracts.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.DEBUG.DLL" Name="System.Diagnostics.Debug.dll" Source="..\bin\x64\Release\System.Diagnostics.Debug.dll" />
                 <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.DLL" Name="System.Diagnostics.DiagnosticSource.dll" Source="..\bin\x64\Release\System.Diagnostics.DiagnosticSource.dll" />
                 <File Id="SYSTEM.DIAGNOSTICS.DIAGNOSTICSOURCE.XML" Name="System.Diagnostics.DiagnosticSource.xml" Source="..\bin\x64\Release\System.Diagnostics.DiagnosticSource.xml" />
+                <File Id="SYSTEM.DIAGNOSTICS.FILEVERSIONINFO.DLL" Name="System.Diagnostics.FileVersionInfo.dll" Source="..\bin\x64\Release\System.Diagnostics.FileVersionInfo.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.PROCESS.DLL" Name="System.Diagnostics.Process.dll" Source="..\bin\x64\Release\System.Diagnostics.Process.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.STACKTRACE.DLL" Name="System.Diagnostics.StackTrace.dll" Source="..\bin\x64\Release\System.Diagnostics.StackTrace.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.TEXTWRITERTRACELISTENER.DLL" Name="System.Diagnostics.TextWriterTraceListener.dll" Source="..\bin\x64\Release\System.Diagnostics.TextWriterTraceListener.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.TOOLS.DLL" Name="System.Diagnostics.Tools.dll" Source="..\bin\x64\Release\System.Diagnostics.Tools.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.TRACESOURCE.DLL" Name="System.Diagnostics.TraceSource.dll" Source="..\bin\x64\Release\System.Diagnostics.TraceSource.dll" />
+                <File Id="SYSTEM.DIAGNOSTICS.TRACING.DLL" Name="System.Diagnostics.Tracing.dll" Source="..\bin\x64\Release\System.Diagnostics.Tracing.dll" />
+                <File Id="SYSTEM.DRAWING.PRIMITIVES.DLL" Name="System.Drawing.Primitives.dll" Source="..\bin\x64\Release\System.Drawing.Primitives.dll" />
+                <File Id="SYSTEM.DYNAMIC.RUNTIME.DLL" Name="System.Dynamic.Runtime.dll" Source="..\bin\x64\Release\System.Dynamic.Runtime.dll" />
                 <File Id="SYSTEM.GLOBALIZATION.CALENDARS.DLL" Name="System.Globalization.Calendars.dll" Source="..\bin\x64\Release\System.Globalization.Calendars.dll" />
+                <File Id="SYSTEM.GLOBALIZATION.DLL" Name="System.Globalization.dll" Source="..\bin\x64\Release\System.Globalization.dll" />
+                <File Id="SYSTEM.GLOBALIZATION.EXTENSIONS.DLL" Name="System.Globalization.Extensions.dll" Source="..\bin\x64\Release\System.Globalization.Extensions.dll" />
                 <File Id="SYSTEM.IO.COMPRESSION.DLL" Name="System.IO.Compression.dll" Source="..\bin\x64\Release\System.IO.Compression.dll" />
                 <File Id="SYSTEM.IO.COMPRESSION.ZIPFILE.DLL" Name="System.IO.Compression.ZipFile.dll" Source="..\bin\x64\Release\System.IO.Compression.ZipFile.dll" />
+                <File Id="SYSTEM.IO.DLL" Name="System.IO.dll" Source="..\bin\x64\Release\System.IO.dll" />
                 <File Id="SYSTEM.IO.FILESYSTEM.DLL" Name="System.IO.FileSystem.dll" Source="..\bin\x64\Release\System.IO.FileSystem.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.DRIVEINFO.DLL" Name="System.IO.FileSystem.DriveInfo.dll" Source="..\bin\x64\Release\System.IO.FileSystem.DriveInfo.dll" />
                 <File Id="SYSTEM.IO.FILESYSTEM.PRIMITIVES.DLL" Name="System.IO.FileSystem.Primitives.dll" Source="..\bin\x64\Release\System.IO.FileSystem.Primitives.dll" />
+                <File Id="SYSTEM.IO.FILESYSTEM.WATCHER.DLL" Name="System.IO.FileSystem.Watcher.dll" Source="..\bin\x64\Release\System.IO.FileSystem.Watcher.dll" />
+                <File Id="SYSTEM.IO.ISOLATEDSTORAGE.DLL" Name="System.IO.IsolatedStorage.dll" Source="..\bin\x64\Release\System.IO.IsolatedStorage.dll" />
+                <File Id="SYSTEM.IO.MEMORYMAPPEDFILES.DLL" Name="System.IO.MemoryMappedFiles.dll" Source="..\bin\x64\Release\System.IO.MemoryMappedFiles.dll" />
+                <File Id="SYSTEM.IO.PIPES.DLL" Name="System.IO.Pipes.dll" Source="..\bin\x64\Release\System.IO.Pipes.dll" />
+                <File Id="SYSTEM.IO.UNMANAGEDMEMORYSTREAM.DLL" Name="System.IO.UnmanagedMemoryStream.dll" Source="..\bin\x64\Release\System.IO.UnmanagedMemoryStream.dll" />
+                <File Id="SYSTEM.LINQ.DLL" Name="System.Linq.dll" Source="..\bin\x64\Release\System.Linq.dll" />
+                <File Id="SYSTEM.LINQ.EXPRESSIONS.DLL" Name="System.Linq.Expressions.dll" Source="..\bin\x64\Release\System.Linq.Expressions.dll" />
+                <File Id="SYSTEM.LINQ.PARALLEL.DLL" Name="System.Linq.Parallel.dll" Source="..\bin\x64\Release\System.Linq.Parallel.dll" />
+                <File Id="SYSTEM.LINQ.QUERYABLE.DLL" Name="System.Linq.Queryable.dll" Source="..\bin\x64\Release\System.Linq.Queryable.dll" />
+                <File Id="SYSTEM.MEMORY.DLL" Name="System.Memory.dll" Source="..\bin\x64\Release\System.Memory.dll" />
+                <File Id="SYSTEM.MEMORY.XML" Name="System.Memory.xml" Source="..\bin\x64\Release\System.Memory.xml" />
                 <File Id="SYSTEM.NET.HTTP.DLL" Name="System.Net.Http.dll" Source="..\bin\x64\Release\System.Net.Http.dll" />
+                <File Id="SYSTEM.NET.NAMERESOLUTION.DLL" Name="System.Net.NameResolution.dll" Source="..\bin\x64\Release\System.Net.NameResolution.dll" />
+                <File Id="SYSTEM.NET.NETWORKINFORMATION.DLL" Name="System.Net.NetworkInformation.dll" Source="..\bin\x64\Release\System.Net.NetworkInformation.dll" />
+                <File Id="SYSTEM.NET.PING.DLL" Name="System.Net.Ping.dll" Source="..\bin\x64\Release\System.Net.Ping.dll" />
+                <File Id="SYSTEM.NET.PRIMITIVES.DLL" Name="System.Net.Primitives.dll" Source="..\bin\x64\Release\System.Net.Primitives.dll" />
+                <File Id="SYSTEM.NET.REQUESTS.DLL" Name="System.Net.Requests.dll" Source="..\bin\x64\Release\System.Net.Requests.dll" />
+                <File Id="SYSTEM.NET.SECURITY.DLL" Name="System.Net.Security.dll" Source="..\bin\x64\Release\System.Net.Security.dll" />
                 <File Id="SYSTEM.NET.SOCKETS.DLL" Name="System.Net.Sockets.dll" Source="..\bin\x64\Release\System.Net.Sockets.dll" />
+                <File Id="SYSTEM.NET.WEBHEADERCOLLECTION.DLL" Name="System.Net.WebHeaderCollection.dll" Source="..\bin\x64\Release\System.Net.WebHeaderCollection.dll" />
+                <File Id="SYSTEM.NET.WEBSOCKETS.CLIENT.DLL" Name="System.Net.WebSockets.Client.dll" Source="..\bin\x64\Release\System.Net.WebSockets.Client.dll" />
+                <File Id="SYSTEM.NET.WEBSOCKETS.DLL" Name="System.Net.WebSockets.dll" Source="..\bin\x64\Release\System.Net.WebSockets.dll" />
+                <File Id="SYSTEM.NUMERICS.VECTORS.DLL" Name="System.Numerics.Vectors.dll" Source="..\bin\x64\Release\System.Numerics.Vectors.dll" />
+                <File Id="SYSTEM.NUMERICS.VECTORS.XML" Name="System.Numerics.Vectors.xml" Source="..\bin\x64\Release\System.Numerics.Vectors.xml" />
+                <File Id="SYSTEM.OBJECTMODEL.DLL" Name="System.ObjectModel.dll" Source="..\bin\x64\Release\System.ObjectModel.dll" />
+                <File Id="SYSTEM.REFLECTION.DLL" Name="System.Reflection.dll" Source="..\bin\x64\Release\System.Reflection.dll" />
+                <File Id="SYSTEM.REFLECTION.EXTENSIONS.DLL" Name="System.Reflection.Extensions.dll" Source="..\bin\x64\Release\System.Reflection.Extensions.dll" />
+                <File Id="SYSTEM.REFLECTION.PRIMITIVES.DLL" Name="System.Reflection.Primitives.dll" Source="..\bin\x64\Release\System.Reflection.Primitives.dll" />
+                <File Id="SYSTEM.RESOURCES.READER.DLL" Name="System.Resources.Reader.dll" Source="..\bin\x64\Release\System.Resources.Reader.dll" />
+                <File Id="SYSTEM.RESOURCES.RESOURCEMANAGER.DLL" Name="System.Resources.ResourceManager.dll" Source="..\bin\x64\Release\System.Resources.ResourceManager.dll" />
+                <File Id="SYSTEM.RESOURCES.WRITER.DLL" Name="System.Resources.Writer.dll" Source="..\bin\x64\Release\System.Resources.Writer.dll" />
+                <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="..\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.dll" />
+                <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.XML" Name="System.Runtime.CompilerServices.Unsafe.xml" Source="..\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.xml" />
+                <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.VISUALC.DLL" Name="System.Runtime.CompilerServices.VisualC.dll" Source="..\bin\x64\Release\System.Runtime.CompilerServices.VisualC.dll" />
+                <File Id="SYSTEM.RUNTIME.DLL" Name="System.Runtime.dll" Source="..\bin\x64\Release\System.Runtime.dll" />
+                <File Id="SYSTEM.RUNTIME.EXTENSIONS.DLL" Name="System.Runtime.Extensions.dll" Source="..\bin\x64\Release\System.Runtime.Extensions.dll" />
+                <File Id="SYSTEM.RUNTIME.HANDLES.DLL" Name="System.Runtime.Handles.dll" Source="..\bin\x64\Release\System.Runtime.Handles.dll" />
+                <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.DLL" Name="System.Runtime.InteropServices.dll" Source="..\bin\x64\Release\System.Runtime.InteropServices.dll" />
                 <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\x64\Release\System.Runtime.InteropServices.RuntimeInformation.dll" />
+                <File Id="SYSTEM.RUNTIME.NUMERICS.DLL" Name="System.Runtime.Numerics.dll" Source="..\bin\x64\Release\System.Runtime.Numerics.dll" />
+                <File Id="SYSTEM.RUNTIME.SERIALIZATION.FORMATTERS.DLL" Name="System.Runtime.Serialization.Formatters.dll" Source="..\bin\x64\Release\System.Runtime.Serialization.Formatters.dll" />
+                <File Id="SYSTEM.RUNTIME.SERIALIZATION.JSON.DLL" Name="System.Runtime.Serialization.Json.dll" Source="..\bin\x64\Release\System.Runtime.Serialization.Json.dll" />
+                <File Id="SYSTEM.RUNTIME.SERIALIZATION.PRIMITIVES.DLL" Name="System.Runtime.Serialization.Primitives.dll" Source="..\bin\x64\Release\System.Runtime.Serialization.Primitives.dll" />
+                <File Id="SYSTEM.RUNTIME.SERIALIZATION.XML.DLL" Name="System.Runtime.Serialization.Xml.dll" Source="..\bin\x64\Release\System.Runtime.Serialization.Xml.dll" />
+                <File Id="SYSTEM.SECURITY.CLAIMS.DLL" Name="System.Security.Claims.dll" Source="..\bin\x64\Release\System.Security.Claims.dll" />
                 <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ALGORITHMS.DLL" Name="System.Security.Cryptography.Algorithms.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Algorithms.dll" />
+                <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.CSP.DLL" Name="System.Security.Cryptography.Csp.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Csp.dll" />
                 <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.ENCODING.DLL" Name="System.Security.Cryptography.Encoding.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Encoding.dll" />
                 <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.PRIMITIVES.DLL" Name="System.Security.Cryptography.Primitives.dll" Source="..\bin\x64\Release\System.Security.Cryptography.Primitives.dll" />
                 <File Id="SYSTEM.SECURITY.CRYPTOGRAPHY.X509CERTIFICATES.DLL" Name="System.Security.Cryptography.X509Certificates.dll" Source="..\bin\x64\Release\System.Security.Cryptography.X509Certificates.dll" />
+                <File Id="SYSTEM.SECURITY.PRINCIPAL.DLL" Name="System.Security.Principal.dll" Source="..\bin\x64\Release\System.Security.Principal.dll" />
+                <File Id="SYSTEM.SECURITY.SECURESTRING.DLL" Name="System.Security.SecureString.dll" Source="..\bin\x64\Release\System.Security.SecureString.dll" />
+                <File Id="SYSTEM.TEXT.ENCODING.DLL" Name="System.Text.Encoding.dll" Source="..\bin\x64\Release\System.Text.Encoding.dll" />
+                <File Id="SYSTEM.TEXT.ENCODING.EXTENSIONS.DLL" Name="System.Text.Encoding.Extensions.dll" Source="..\bin\x64\Release\System.Text.Encoding.Extensions.dll" />
+                <File Id="SYSTEM.TEXT.REGULAREXPRESSIONS.DLL" Name="System.Text.RegularExpressions.dll" Source="..\bin\x64\Release\System.Text.RegularExpressions.dll" />
+                <File Id="SYSTEM.THREADING.DLL" Name="System.Threading.dll" Source="..\bin\x64\Release\System.Threading.dll" />
+                <File Id="SYSTEM.THREADING.OVERLAPPED.DLL" Name="System.Threading.Overlapped.dll" Source="..\bin\x64\Release\System.Threading.Overlapped.dll" />
+                <File Id="SYSTEM.THREADING.TASKS.DLL" Name="System.Threading.Tasks.dll" Source="..\bin\x64\Release\System.Threading.Tasks.dll" />
+                <File Id="SYSTEM.THREADING.TASKS.PARALLEL.DLL" Name="System.Threading.Tasks.Parallel.dll" Source="..\bin\x64\Release\System.Threading.Tasks.Parallel.dll" />
+                <File Id="SYSTEM.THREADING.THREAD.DLL" Name="System.Threading.Thread.dll" Source="..\bin\x64\Release\System.Threading.Thread.dll" />
+                <File Id="SYSTEM.THREADING.THREADPOOL.DLL" Name="System.Threading.ThreadPool.dll" Source="..\bin\x64\Release\System.Threading.ThreadPool.dll" />
+                <File Id="SYSTEM.THREADING.TIMER.DLL" Name="System.Threading.Timer.dll" Source="..\bin\x64\Release\System.Threading.Timer.dll" />
                 <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\bin\x64\Release\System.ValueTuple.dll" />
                 <File Id="SYSTEM.VALUETUPLE.XML" Name="System.ValueTuple.xml" Source="..\bin\x64\Release\System.ValueTuple.xml" />
                 <File Id="SYSTEM.XML.READERWRITER.DLL" Name="System.Xml.ReaderWriter.dll" Source="..\bin\x64\Release\System.Xml.ReaderWriter.dll" />
+                <File Id="SYSTEM.XML.XDOCUMENT.DLL" Name="System.Xml.XDocument.dll" Source="..\bin\x64\Release\System.Xml.XDocument.dll" />
+                <File Id="SYSTEM.XML.XMLDOCUMENT.DLL" Name="System.Xml.XmlDocument.dll" Source="..\bin\x64\Release\System.Xml.XmlDocument.dll" />
+                <File Id="SYSTEM.XML.XMLSERIALIZER.DLL" Name="System.Xml.XmlSerializer.dll" Source="..\bin\x64\Release\System.Xml.XmlSerializer.dll" />
+                <File Id="SYSTEM.XML.XPATH.DLL" Name="System.Xml.XPath.dll" Source="..\bin\x64\Release\System.Xml.XPath.dll" />
+                <File Id="SYSTEM.XML.XPATH.XDOCUMENT.DLL" Name="System.Xml.XPath.XDocument.dll" Source="..\bin\x64\Release\System.Xml.XPath.XDocument.dll" />
                 <File Id="TIMETRACKER.APPLICATION" Name="TimeTracker.application" Source="..\bin\x64\Release\TimeTracker.application" />
                 <File Id="TIMETRACKER.EXE.CONFIG" Name="TimeTracker.exe.config" Source="..\bin\x64\Release\TimeTracker.exe.config" />
                 <File Id="TIMETRACKER.EXE.MANIFEST" Name="TimeTracker.exe.manifest" Source="..\bin\x64\Release\TimeTracker.exe.manifest" />
                 <File Id="TIMETRACKER.PDB" Name="TimeTracker.pdb" Source="..\bin\x64\Release\TimeTracker.pdb" />
                 <File Id="V8_CONTEXT_SNAPSHOT.BIN" Name="v8_context_snapshot.bin" Source="..\bin\x64\Release\v8_context_snapshot.bin" />
-                <File Id="LICENSE" Name="LICENSE" Source="..\LICENSE" />
             </Component>
         </DirectoryRef>
         <DirectoryRef Id="swiftshaderFolder">
@@ -182,20 +258,6 @@
                 <File Id="ZH_TW.PAK" Name="zh-TW.pak" Source="..\bin\x64\Release\locales\zh-TW.pak" />
             </Component>
         </DirectoryRef>
-        <DirectoryRef Id="GPUCacheFolder">
-            <Component Id="GPUCache" Guid="84259b42-b758-4706-bfcc-e67e49652aba">
-                <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\locales" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-                    <RegistryValue Name="Version" Value="[ProductVersion]" Type="string" KeyPath="yes" />
-                </RegistryKey>
-                <RemoveFolder Id="GPUCacheFolder" On="uninstall" />
-                <File Id="DATA_0" Name="data_0" Source="..\bin\x64\Release\GPUCache\data_0" />
-                <File Id="DATA_1" Name="data_1" Source="..\bin\x64\Release\GPUCache\data_1" />
-                <File Id="DATA_2" Name="data_2" Source="..\bin\x64\Release\GPUCache\data_2" />
-                <File Id="DATA_3" Name="data_3" Source="..\bin\x64\Release\GPUCache\data_3" />
-                <File Id="F_000001" Name="f_000001" Source="..\bin\x64\Release\GPUCache\f_000001" />
-                <File Id="INDEX" Name="index" Source="..\bin\x64\Release\GPUCache\index" />
-            </Component>
-        </DirectoryRef>
         <DirectoryRef Id="apppublishFolder">
             <Component Id="apppublish" Guid="508591e6-e646-4d4b-a16c-13e9e2b9d739">
                 <RegistryKey Root="HKCU" Key="Software\TimeTracker\TimeTracker\apppublish" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
@@ -228,7 +290,6 @@
             <ComponentRef Id="timetracker" />
             <ComponentRef Id="swiftshader" />
             <ComponentRef Id="locales" />
-            <ComponentRef Id="GPUCache" />
             <ComponentRef Id="apppublish" />
             <ComponentRef Id="Resources" />
             <ComponentRef Id="ApplicationPrograms" />
