@@ -307,25 +307,25 @@ namespace TimeTracker.Helper
             return JsonConvert.SerializeObject(Properties.Settings.Default.OfflineTracking);
         }
 
-        public string SetTimeNotificationVisible(string timeNotificationVisible)
+        public string SetTimeNotificationVisible(int timeNotificationVisible)
         {
-            Properties.Settings.Default.TimeNotificationVisible = Int32.Parse(timeNotificationVisible);
+            Properties.Settings.Default.TimeNotificationVisible = timeNotificationVisible;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeNotificationVisible);
         }
 
-        public string SetTimeBeforeAskingAgain(string timeBeforeAskingAgain)
+        public string SetTimeBeforeAskingAgain(int timeBeforeAskingAgain)
         {
-            Properties.Settings.Default.TimeBeforeAskingAgain = Int32.Parse(timeBeforeAskingAgain);
+            Properties.Settings.Default.TimeBeforeAskingAgain = timeBeforeAskingAgain;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeBeforeAskingAgain);
         }
 
-        public string SetTimeSinceAppLastUsed(string timeSinceAppLastUsed)
+        public string SetTimeSinceAppLastUsed(int timeSinceAppLastUsed)
         {
-            Properties.Settings.Default.TimeSinceAppLastUsed = Int32.Parse(timeSinceAppLastUsed);
+            Properties.Settings.Default.TimeSinceAppLastUsed = timeSinceAppLastUsed;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeSinceAppLastUsed);

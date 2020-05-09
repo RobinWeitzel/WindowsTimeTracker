@@ -1,0 +1,312 @@
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\GUI\CustomComboBoxItem.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\GUI\Helper.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\GUI\MyScriptingClass.cs
+GetDayDataAsync 28
+GetDayDataAsync 15
+GetDayData 97
+GetDayData 93
+GetWeekBreakdownDataAsync 4
+GetWeekBreakdownDataAsync 0
+GetWeekBreakdownData 5
+GetWeekBreakdownData 0
+GetWeekSumDataAsync 4
+GetWeekSumDataAsync 0
+GetWeekSumData 5
+GetWeekSumData 0
+GetSettings 4
+GetSettings 0
+SetPlayNotificationSound 6
+SetPlayNotificationSound 15
+SetHotkeyDisabled 4
+SetHotkeyDisabled 0
+SetOfflineTracking 4
+SetOfflineTracking 0
+SetTimeNotificationVisible 4
+SetTimeNotificationVisible 0
+SetTimeBeforeAskingAgain 5
+SetTimeBeforeAskingAgain 0
+SetTimeSinceAppLastUsed 4
+SetTimeSinceAppLastUsed 0
+SetHotkeys 3
+SetHotkeys 0
+GetTrackingSettings 6
+GetTrackingSettings 15
+SetBlacklist 5
+SetBlacklist 0
+OpenUrl 4
+OpenUrl 0
+GetActivities 4
+GetActivities 0
+GetReportData1Async 4
+GetReportData1Async 0
+GetReportData1 4
+GetReportData1 0
+GetReportData2Async 3
+GetReportData2Async 0
+GetReportData2 4
+GetReportData2 0
+GetReportData3Async 3
+GetReportData3Async 0
+GetReportData3 4
+GetReportData3 0
+EachDay 3
+EachDay 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\Piedata.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\TrackingSettings.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\Dataset.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\Bardata.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\Settings.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\Timeline.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Models\TimelineValue.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\HTMLDataWindow.xaml.cs
+InitializeChromium 6
+InitializeChromium 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\AppStateTracker.cs
+Pause 2
+Pause 0
+CreateCurrentWindow 3
+CreateCurrentWindow 0
+CreateCurrentActivity 2
+CreateCurrentActivity 0
+SaveCurrentWindow 2
+SaveCurrentWindow 0
+SaveCurrentActivity 3
+SaveCurrentActivity 0
+AssignColors 2
+AssignColors 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\ASDL.cs
+ReattachHotkeyListener 5
+ReattachHotkeyListener 15
+ListenerEvent 5
+ListenerEvent 0
+ActivitySwitched 4
+ActivitySwitched 0
+ChangeActivity 4
+ChangeActivity 15
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Blacklist.xaml.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\CustomEventArgs.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Storage\Activity.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\Listeners\HotkeyListener.cs
+SetWindowsHookEx 4
+SetWindowsHookEx 0
+UnhookWindowsHookEx 3
+UnhookWindowsHookEx 0
+CallNextHookEx 3
+CallNextHookEx 0
+GetModuleHandle 3
+GetModuleHandle 0
+Dispose 4
+Dispose 0
+OnKeyCombinationPressed 3
+OnKeyCombinationPressed 0
+SetHook 3
+SetHook 0
+HookCallback 3
+HookCallback 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\Listeners\MachineStateListener.cs
+OnSessionSwitch 3
+OnSessionSwitch 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\AwayFromPCDialog.xaml.cs
+SetNewActivity 4
+SetNewActivity 0
+ConfirmButton_Click 3
+ConfirmButton_Click 0
+ComboBox_OnKeyUp 4
+ComboBox_OnKeyUp 0
+Button_Click 3
+Button_Click 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\Listeners\ProgramSwitchListener.cs
+SetWinEventHook 3
+SetWinEventHook 0
+GetForegroundWindow 3
+GetForegroundWindow 0
+GetWindowText 3
+GetWindowText 0
+GetParent 2
+GetParent 0
+GetActiveWindowTitle 6
+GetActiveWindowTitle 0
+WinEventProc 3
+WinEventProc 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Logic\StorageHandler.cs
+RestoreActivitiesCsv 3
+RestoreActivitiesCsv 0
+RestoreWindowsCsv 2
+RestoreWindowsCsv 0
+GetLastActivity 3
+GetLastActivity 0
+GetLastActivities 2
+GetLastActivities 0
+GetLastActivitiesGrouped 2
+GetLastActivitiesGrouped 0
+GetEarliestActivitiesGrouped 2
+GetEarliestActivitiesGrouped 0
+GetActivitiesByLambda 3
+GetActivitiesByLambda 0
+GetLastestWindowsGrouped 3
+GetLastestWindowsGrouped 0
+GetWindowsByLambda 3
+GetWindowsByLambda 15
+CreateFilesIfNoneExist 3
+CreateFilesIfNoneExist 0
+WriteActivity 2
+WriteActivity 0
+WriteActivities 3
+WriteActivities 0
+WriteWindow 3
+WriteWindow 0
+WriteWindows 3
+WriteWindows 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\ActivityDialog.xaml.cs
+SetupClose 3
+SetupClose 0
+SetNewActivity 4
+SetNewActivity 0
+Window_Activated 4
+Window_Activated 0
+Window_Deactivated 3
+Window_Deactivated 0
+Button_Click 3
+Button_Click 0
+CloseButton_Click 3
+CloseButton_Click 0
+ConfirmButton_Click 3
+ConfirmButton_Click 0
+ComboBox_OnKeyUp 3
+ComboBox_OnKeyUp 15
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\MainWindow.xaml.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\ManualEdit.xaml.cs
+LoadData 3
+LoadData 0
+Close_Click 4
+Close_Click 0
+Save_Click 4
+Save_Click 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\NewVersion.xaml.cs
+Hyperlink_RequestNavigate 5
+Hyperlink_RequestNavigate 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Tutorial.xaml.cs
+DrawImage 6
+DrawImage 0
+Button_Click 5
+Button_Click 0
+Button_Click_1 5
+Button_Click_1 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Helper\Storage\Window.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\App.xaml.cs
+OnStartup 4
+OnStartup 0
+OnExit 5
+OnExit 0
+ShowTutorialIfNeeded 5
+ShowTutorialIfNeeded 0
+CheckForUpdates 4
+CheckForUpdates 0
+DoNotDisturb 5
+DoNotDisturb 0
+CreateContextMenu 4
+CreateContextMenu 0
+ExitApplication 5
+ExitApplication 0
+Application_Exit 4
+Application_Exit 0
+CloseAllToasts 11
+CloseAllToasts 0
+CreateActivityDialog 4
+CreateActivityDialog 0
+CreateAwayFromPCDialog 7
+CreateAwayFromPCDialog 0
+ListenerEvent 4
+ListenerEvent 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Properties\AssemblyInfo.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Properties\Resources.Designer.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\Properties\Settings.Designer.cs
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Blacklist.g.cs
+InitializeComponent 5
+InitializeComponent 0
+Connect 5
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ActivityDialog.g.cs
+InitializeComponent 5
+InitializeComponent 0
+Connect 4
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\HTMLDataWindow.g.cs
+InitializeComponent 5
+InitializeComponent 0
+Connect 4
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\MainWindow.g.cs
+InitializeComponent 5
+InitializeComponent 0
+Connect 5
+Connect 15
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\ManualEdit.g.cs
+InitializeComponent 5
+InitializeComponent 0
+Connect 4
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\AwayFromPCDialog.g.cs
+InitializeComponent 4
+InitializeComponent 15
+Connect 3
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\NewVersion.g.cs
+InitializeComponent 3
+InitializeComponent 0
+Connect 3
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\Tutorial.g.cs
+InitializeComponent 3
+InitializeComponent 0
+Connect 3
+Connect 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\App.g.cs
+InitializeComponent 3
+InitializeComponent 0
+Main 3
+Main 0
+
+C:\Users\robin\source\repos\WindowsTimeTracker\TimeTracker\obj\x64\Debug\TimeTracker_Content.g.cs
+
+C:\Users\robin\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs
+

@@ -11923,7 +11923,7 @@ tr.active .table-mark {
 </script>
 
     <!-- Main Javascript  -->
-    
+    <!---->
     <script>
 // ----------------- General --------------------
 
@@ -13369,7 +13369,7 @@ TSF.Repository.registerComponent(class ViewReport extends TSF.Component {
             <div>
                 <div class="subheader">Notifications</div>
                 <p class="control-header">Amount of time a notification is visible on screen</p>
-                <input type="text" tsf-value="timeNotificationVisible">
+                <input type="text" tsf-value="this.timeNotificationVisible">
                 <p style="margin-top: 10px;" class="control-header">Make a sound every time a notification is shown</p>
                 <label class="switch">
                     <input type="checkbox" tsf-bind-boolean-attribute-checked="this.playNotificationSound"
@@ -13382,7 +13382,7 @@ TSF.Repository.registerComponent(class ViewReport extends TSF.Component {
                 <div class="subheader">Trigger Delay</div>
                 <p class="control-header">Amount of time that must have passed before the TimeTracker asks again to what
                     activity a window belongs</p>
-                <input type="text" tsf-value="timeBeforeAskingAgain">
+                <input type="text" tsf-value="this.timeBeforeAskingAgain">
                 <p style="margin-top: 10px;" class="control-header">Amount of time in which the TimeTracker does not ask
                     for an activity after selecting one</p>
                 <input type="text" tsf-value="this.timeSinceAppLastUsed">
