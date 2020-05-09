@@ -1,4 +1,3 @@
-
 <h1 align="center">
     <img src="https://raw.githubusercontent.com/RobinWeitzel/WindowsTimeTracker/master/TimeTracker/Resources/Bild1.png" alt="Markdownify" width="200"></img>
   <br>
@@ -7,24 +6,21 @@
 </h1>
 
 <h4 align="center">An offline program to keep track of what you worked on</h4>
-
-<p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#license">License</a>
-</p>
-
-![image](https://user-images.githubusercontent.com/12135433/65972810-afe1fc00-e46a-11e9-8f20-fa7cb7969a29.png)
-
-## Key Features
+<h4 align="center">Download <a href="https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/1.0.0.0/TimeTrackerSetup.msi">here</a> </h4>
 
 * Smart + manual activity tracking
 * No input needed 99% of the time
 * Different visualizations and analytics
 * Offline & Open source -> Your data is secure on your own machine
 * No admin rights needed
+
+## Impressions
+
+#### Your day, at a glance
+![image](ReadMeImages/Dashboard.png)
+
+#### Your activities in detail - last week, last month, last year 
+![image](ReadMeImages/Report.png)
 
 ## How To Use
 
@@ -33,7 +29,7 @@ Follow the tutorial, then type your first activity in the dialog on the bottom r
 
 ## Download
 
-You can download the latest installable version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/1.0.0.0/TimeTrackerSetup.msi).
+You can download the latest version of TimeTracker [here](https://github.com/RobinWeitzel/WindowsTimeTracker/releases/download/1.0.0.0/TimeTrackerSetup.msi).
 
 ## Credits
 
