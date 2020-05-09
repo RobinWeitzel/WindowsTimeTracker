@@ -1,0 +1,16 @@
+exported 55 
+unsupported 51 
+AsyncKeyword 7
+CoalesceExpression 4
+SimpleLambdaExpression 3
+ForEachStatement 1
+YieldReturnStatement 1
+ConditionalAccessExpression 4
+SwitchStatement 8
+ConditionalExpression 1
+UsingStatement 4
+LogicalAndExpression 2
+TryStatement 13
+LogicalOrExpression 1
+ParenthesizedLambdaExpression 2
+

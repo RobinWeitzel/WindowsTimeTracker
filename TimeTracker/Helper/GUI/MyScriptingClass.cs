@@ -265,14 +265,15 @@ namespace TimeTracker.Helper
 
         public string GetSettings()
         {
+            List<System.Windows.Input.Key> Hotkeys = Properties.Settings.Default.Hotkeys ?? new List<System.Windows.Input.Key>();
             Models.Settings Settings = new Models.Settings
             {
                 TimeNotificationVisible = Properties.Settings.Default.TimeNotificationVisible,
                 TimeBeforeAskingAgain = Properties.Settings.Default.TimeBeforeAskingAgain,
                 TimeSinceAppLastUsed = Properties.Settings.Default.TimeSinceAppLastUsed,
-                DarkMode = Properties.Settings.Default.DarkMode,
+                OfflineTracking = Properties.Settings.Default.OfflineTracking,
                 HotkeyDisabled = Properties.Settings.Default.HotkeyDisabled,
-                Hotkeys = Properties.Settings.Default.Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
+                Hotkeys = Hotkeys.Select(k => KeyInterop.VirtualKeyFromKey(k)).ToList(),
                 PlayNotificationSound = Properties.Settings.Default.PlayNotificationSound
             };
 
@@ -280,26 +281,6 @@ namespace TimeTracker.Helper
 
             // Add the data as a JSON string to the result
             return Json;
-        }
-
-        public void SetSettings(IDictionary<string, object> settings)
-        {
-            Properties.Settings.Default.TimeNotificationVisible = (int)settings["TimeNotificationVisible"];
-            Properties.Settings.Default.TimeBeforeAskingAgain = (int)settings["TimeBeforeAskingAgain"];
-            Properties.Settings.Default.TimeSinceAppLastUsed = (int)settings["TimeSinceAppLastUsed"];
-            Properties.Settings.Default.DarkMode = (bool)settings["DarkMode"];
-            Properties.Settings.Default.HotkeyDisabled = (bool)settings["HotkeyDisabled"];
-            List<Object> HotkeyList = settings["Hotkeys"] as List<Object>;
-            Properties.Settings.Default.Hotkeys = HotkeyList.Cast<int>().Select(k => KeyInterop.KeyFromVirtualKey(k)).ToList();
-            Properties.Settings.Default.Save();
-        }
-
-        public string SetDarkMode(bool darkMode)
-        {
-            Properties.Settings.Default.DarkMode = darkMode;
-            Properties.Settings.Default.Save();
-
-            return JsonConvert.SerializeObject(Properties.Settings.Default.DarkMode);
         }
 
         public string SetPlayNotificationSound(bool playNotificationSound)
@@ -326,25 +307,25 @@ namespace TimeTracker.Helper
             return JsonConvert.SerializeObject(Properties.Settings.Default.OfflineTracking);
         }
 
-        public string SetTimeNotificationVisible(string timeNotificationVisible)
+        public string SetTimeNotificationVisible(int timeNotificationVisible)
         {
-            Properties.Settings.Default.TimeNotificationVisible = Int32.Parse(timeNotificationVisible);
+            Properties.Settings.Default.TimeNotificationVisible = timeNotificationVisible;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeNotificationVisible);
         }
 
-        public string SetTimeBeforeAskingAgain(string timeBeforeAskingAgain)
+        public string SetTimeBeforeAskingAgain(int timeBeforeAskingAgain)
         {
-            Properties.Settings.Default.TimeBeforeAskingAgain = Int32.Parse(timeBeforeAskingAgain);
+            Properties.Settings.Default.TimeBeforeAskingAgain = timeBeforeAskingAgain;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeBeforeAskingAgain);
         }
 
-        public string SetTimeSinceAppLastUsed(string timeSinceAppLastUsed)
+        public string SetTimeSinceAppLastUsed(int timeSinceAppLastUsed)
         {
-            Properties.Settings.Default.TimeSinceAppLastUsed = Int32.Parse(timeSinceAppLastUsed);
+            Properties.Settings.Default.TimeSinceAppLastUsed = timeSinceAppLastUsed;
             Properties.Settings.Default.Save();
 
             return JsonConvert.SerializeObject(Properties.Settings.Default.TimeSinceAppLastUsed);
@@ -362,7 +343,6 @@ namespace TimeTracker.Helper
         {
             Models.TrackingSettings Settings = new TrackingSettings
             {
-                OfflineTracking = Properties.Settings.Default.OfflineTracking,
                 Blacklist = Properties.Settings.Default.Blacklist.Cast<string>().ToList()
             };
 
@@ -606,6 +586,120 @@ namespace TimeTracker.Helper
             }
 
             var task = GetReportData2Async(activities, start, end, counter);
+
+            return task.Result;
+        }
+
+        private Thread GetReportData3Thread = null;
+        private async Task<string> GetReportData3Async(List<Object> activities, string start, string end, int counter)
+        {
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+            string Json = "";
+            await Task.Factory.StartNew(() =>
+            {
+                GetReportData3Thread = Thread.CurrentThread;
+
+                List<string> Activities = activities.Cast<string>().ToList();
+                DateTime StartPeriod = DateTime.Parse(start).Date.AddDays(1);
+                DateTime EndPeriod = DateTime.Parse(end).Date;
+
+                List<Window> Windows = StorageHandler.GetWindowsByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod);
+
+
+                List<Helper> ActivityHelper = StorageHandler.GetActivitiesByLambda(r => r.To >= StartPeriod && r.From <= EndPeriod && Activities.Contains(r.Name)).Select(aa => new Helper
+                {
+                    Name = aa.Name,
+                    From = aa.From > StartPeriod ? aa.From : StartPeriod,
+                    To = (DateTime)aa.To > EndPeriod ? EndPeriod : (DateTime)aa.To
+                }).ToList();
+
+                // Check if the current activity should also be shown in the graph.
+                if (AppStateTracker.CurrentActivity != null && EndPeriod >= DateTime.Today && Activities.Contains(AppStateTracker.CurrentActivity.Name))
+                    ActivityHelper.Add(new Helper
+                    {
+                        Name = AppStateTracker.CurrentActivity.Name,
+                        From = AppStateTracker.CurrentActivity.From > StartPeriod ? AppStateTracker.CurrentActivity.From : StartPeriod,
+                        To = DateTime.Now
+                });
+
+                List<Helper> WindowHelper = new List<Helper>();
+
+                foreach (Helper h in ActivityHelper)
+                {
+                    WindowHelper.AddRange(
+                    Windows
+                        .Where(r => r.To >= h.From && r.From <= h.To)
+                        .Select(r => new Helper
+                        {
+                            Name = r.Name,
+                            From = r.From > h.From ? r.From : h.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = (DateTime)(r.To > h.To ? h.To : r.To) // If my window ended after the End of the activity only measure until the End of the activity
+                        }));
+
+                    // Check if the current window should also be shown in the graph.
+                    if (AppStateTracker.CurrentWindow != null)
+                        WindowHelper.Add(new Helper
+                        {
+                            Name = AppStateTracker.CurrentWindow.Name,
+                            From = AppStateTracker.CurrentWindow.From < h.From ? h.From : AppStateTracker.CurrentWindow.From, // If my window started before the Start of the activity only measure from the beginning of the activity
+                            To = h.To
+                        });
+                }
+
+                // Compute time between Start and finish of the activity rounding to minutes
+                foreach (Helper h in WindowHelper)
+                {
+                    h.Time = Math.Max(Math.Round((h.To - h.From).TotalHours, 2), 0);
+                }
+
+                // Extract labels and titles
+                List<Piedata> PiedataHelper = WindowHelper
+                    .GroupBy(h => h.Name)
+                    .Select(g => new Piedata
+                    {
+                        Label = g.Key,
+                        Value = g.Sum(h => h.Time)
+                    })
+                    .OrderByDescending(p => p.Value)
+                    .ToList();
+
+                Piedata Others = new Piedata
+                {
+                    Label = "Others",
+                    Value = 0
+                };
+                List<Piedata> Piedata = new List<Piedata>();
+
+                for (int i = 0; i < PiedataHelper.Count; i++)
+                {
+                    if(i < 10)
+                    {
+                        Piedata.Add(PiedataHelper[i]);
+                    } else
+                    {
+                        Others.Value += PiedataHelper[i].Value;
+                    }
+                }
+
+                Piedata.Add(Others);
+
+                Json = JsonConvert.SerializeObject(new { value = Piedata, counter });
+            });
+
+            GetReportData3Thread = null;
+            tcs.SetResult(Json);
+            return tcs.Task.Result;
+        }
+
+        public string GetReportData3(List<Object> activities, string start, string end, int counter)
+        {
+            if (GetReportData3Thread != null)
+            {
+                GetReportData3Thread.Abort();
+                GetReportData3Thread = null;
+            }
+
+            var task = GetReportData3Async(activities, start, end, counter);
 
             return task.Result;
         }

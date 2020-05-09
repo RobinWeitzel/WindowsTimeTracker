@@ -13,9 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Interop;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Defaults;
 
 namespace TimeTracker
 {

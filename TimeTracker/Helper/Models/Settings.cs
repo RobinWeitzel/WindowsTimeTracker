@@ -9,6 +9,9 @@ namespace TimeTracker.Helper.Models
 {
     public class Settings
     {
+        [JsonProperty(PropertyName = "offlineTracking")]
+        public bool OfflineTracking { get; set; } // Upon returning to the computer, ask the user what he was doing
+
         [JsonProperty(PropertyName = "timeNotificationVisible")]
         public long TimeNotificationVisible { get; set; } // Amount of time a notification is visible on screen
 
@@ -26,8 +29,5 @@ namespace TimeTracker.Helper.Models
 
         [JsonProperty(PropertyName = "hotkeyDisabled")]
         public bool HotkeyDisabled { get; set; } // Enable global hotkey
-
-        [JsonProperty(PropertyName = "darkMode")]
-        public bool DarkMode { get; set; }
     }
 }
